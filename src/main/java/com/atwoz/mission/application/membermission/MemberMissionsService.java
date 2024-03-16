@@ -33,10 +33,14 @@ public class MemberMissionsService {
         MemberMissions memberMissions = memberMissionsRepository.findByMemberId(memberId)
                 .orElseGet(() -> createNewMemberMissionsWithMemberId(memberId));
 
-        Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(MissionNotFoundException::new);
+        Mission mission = findMissionByMissionId(missionId);
 
         memberMissions.addMission(MemberMission.createDefault(mission));
+    }
+
+    private Mission findMissionByMissionId(final Long missionId) {
+        return missionRepository.findById(missionId)
+                .orElseThrow(MissionNotFoundException::new);
     }
 
     private MemberMissions createNewMemberMissionsWithMemberId(final Long memberId) {
