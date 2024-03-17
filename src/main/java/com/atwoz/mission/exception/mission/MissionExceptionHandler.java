@@ -14,37 +14,32 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class MissionExceptionHandler {
 
     @ExceptionHandler(MissionNotClearException.class)
-    public ResponseEntity<String> handleMissionNotClearException(final MissionNotClearException e) {
-        return getBadRequestResponse(e);
+    public ResponseEntity<String> handleMissionNotClearException(final MissionNotClearException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MissionNotFoundException.class)
-    public ResponseEntity<String> handleMissionNotFoundException(final MissionNotFoundException e) {
-        return getNotFoundResponse(e);
+    public ResponseEntity<String> handleMissionNotFoundException(final MissionNotFoundException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MissionTypeInvalidException.class)
-    public ResponseEntity<String> handleMissionTypeInvalidException(final MissionTypeInvalidException e) {
-        return getBadRequestResponse(e);
+    public ResponseEntity<String> handleMissionTypeInvalidException(final MissionTypeInvalidException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(PublicOptionInvalidException.class)
-    public ResponseEntity<String> handlePublicOptionInvalidException(final PublicOptionInvalidException e) {
-        return getBadRequestResponse(e);
+    public ResponseEntity<String> handlePublicOptionInvalidException(final PublicOptionInvalidException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(RewardValueInvalidException.class)
-    public ResponseEntity<String> handleRewardValueInvalidException(final RewardValueInvalidException e) {
-        return getBadRequestResponse(e);
+    public ResponseEntity<String> handleRewardValueInvalidException(final RewardValueInvalidException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
-    private ResponseEntity<String> getBadRequestResponse(final Exception e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(e.getMessage());
-    }
-
-    private ResponseEntity<String> getNotFoundResponse(final Exception e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
+    private ResponseEntity<String> getExceptionWithStatus(final Exception exception, final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .body(exception.getMessage());
     }
 }

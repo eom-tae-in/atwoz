@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class MemberMissionsExceptionHandler {
 
     @ExceptionHandler(MemberMissionsNotFoundException.class)
-    public ResponseEntity<String> handleMemberMissionNotFoundException(final MemberMissionsNotFoundException e) {
-        return getNotFoundResponse(e);
+    public ResponseEntity<String> handleMemberMissionNotFoundException(final MemberMissionsNotFoundException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MemberMissionNotFoundException.class)
-    public ResponseEntity<String> handleMemberMissionNotFoundException(final MemberMissionNotFoundException e) {
-        return getNotFoundResponse(e);
+    public ResponseEntity<String> handleMemberMissionNotFoundException(final MemberMissionNotFoundException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
     }
 
-    private ResponseEntity<String> getNotFoundResponse(final Exception e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
+    private ResponseEntity<String> getExceptionWithStatus(final Exception exception, final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .body(exception.getMessage());
     }
 }
