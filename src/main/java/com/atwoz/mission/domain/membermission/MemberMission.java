@@ -31,7 +31,7 @@ public class MemberMission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Mission mission;
 
     private boolean isStatusClear;
