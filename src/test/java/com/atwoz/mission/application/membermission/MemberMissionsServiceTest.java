@@ -5,7 +5,7 @@ import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
-import com.atwoz.mission.exception.mission.exceptions.MissionNotClearException;
+import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotClearException;
 import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionsNotFoundException;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_진행중;
 import static com.atwoz.mission.fixture.MemberMissionsFixture.멤버_미션들_생성;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개;
@@ -59,7 +59,7 @@ class MemberMissionsServiceTest {
     @Test
     void 회원의_미션_목록에서_특정_미션을_클리어한다() {
         // given
-        MemberMission memberMission = 멤버_미션_생성_완료();
+        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
         MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
         memberMissionsRepository.save(memberMissions);
 
@@ -70,7 +70,7 @@ class MemberMissionsServiceTest {
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(memberMission.isDoesGetReward()).isTrue();
+            softly.assertThat(memberMission.isDoesGetReward()).isFalse();
             softly.assertThat(memberMission.isStatusClear()).isTrue();
         });
     }
@@ -78,7 +78,7 @@ class MemberMissionsServiceTest {
     @Test
     void 회원의_미션_목록에서_특정_미션의_보상을_구한다() {
         // given
-        MemberMission memberMission = 멤버_미션_생성_완료();
+        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
         MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
         memberMissionsRepository.save(memberMissions);
 
@@ -94,15 +94,16 @@ class MemberMissionsServiceTest {
     @Test
     void 회원의_미션_목록에서_완료된_미션의_보상_총합을_구한다() {
         // given
-        MemberMission memberMission = 멤버_미션_생성_완료();
+        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
         MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
         memberMissionsRepository.save(memberMissions);
+        int expectedReward = 미션_생성_리워드_100_데일리_공개().getReward();
 
         // when
-        Integer reward = memberMissionsService.getAllClearMissionsRewards(memberMissions.getMemberId());
+        Integer reward = memberMissionsService.receiveAllClearMissionsRewards(memberMissions.getMemberId());
 
         // then
-        assertThat(reward).isEqualTo(memberMission.getReward());
+        assertThat(reward).isEqualTo(expectedReward);
     }
 
     @Nested
@@ -151,7 +152,7 @@ class MemberMissionsServiceTest {
             MemberMissions memberMissions = 멤버_미션들_생성();
             memberMissionsRepository.save(memberMissions);
 
-            MemberMission memberMission = 멤버_미션_생성_완료();
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
             Mission mission = memberMission.getMission();
 
             // when & then
@@ -170,7 +171,7 @@ class MemberMissionsServiceTest {
 
             // when & then
             assertThatThrownBy(() -> memberMissionsService.getRewardByMissionId(memberMissions.getMemberId(), mission.getId()))
-                    .isInstanceOf(MissionNotClearException.class);
+                    .isInstanceOf(MemberMissionNotClearException.class);
         }
 
         @Test
@@ -179,7 +180,7 @@ class MemberMissionsServiceTest {
             Long memberId = -1L;
 
             // when & then
-            assertThatThrownBy(() -> memberMissionsService.getAllClearMissionsRewards(memberId))
+            assertThatThrownBy(() -> memberMissionsService.receiveAllClearMissionsRewards(memberId))
                     .isInstanceOf(MemberMissionsNotFoundException.class);
         }
     }

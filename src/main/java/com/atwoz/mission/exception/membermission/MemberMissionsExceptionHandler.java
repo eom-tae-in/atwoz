@@ -1,5 +1,7 @@
 package com.atwoz.mission.exception.membermission;
 
+import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;
+import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotClearException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionsNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,16 @@ public class MemberMissionsExceptionHandler {
     @ExceptionHandler(MemberMissionNotFoundException.class)
     public ResponseEntity<String> handleMemberMissionNotFoundException(final MemberMissionNotFoundException exception) {
         return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MemberMissionNotClearException.class)
+    public ResponseEntity<String> handleMissionNotClearException(final MemberMissionNotClearException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MemberMissionAlreadyRewardedException.class)
+    public ResponseEntity<String> handleMemberMissionAlreadyRewardedException(final MemberMissionAlreadyRewardedException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<String> getExceptionWithStatus(final Exception exception, final HttpStatus status) {

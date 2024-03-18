@@ -14,7 +14,16 @@ public class MemberMissionFixture {
                 .build();
     }
 
-    public static MemberMission 멤버_미션_생성_완료() {
+    public static MemberMission 멤버_미션_생성_완료_보상_수령_안함() {
+        return MemberMission.builder()
+                .id(1L)
+                .isStatusClear(true)
+                .doesGetReward(false)
+                .mission(미션_생성_리워드_100_데일리_공개())
+                .build();
+    }
+
+    public static MemberMission 멤버_미션_생성_완료_보상_수령_완료() {
         return MemberMission.builder()
                 .id(1L)
                 .isStatusClear(true)

@@ -19,9 +19,9 @@ public class MemberMissionsService {
     private final MemberMissionsRepository memberMissionsRepository;
     private final MissionRepository missionRepository;
 
-    public Integer getAllClearMissionsRewards(final Long memberId) {
+    public Integer receiveAllClearMissionsRewards(final Long memberId) {
         MemberMissions memberMissions = findMemberMissionsByMemberId(memberId);
-        return memberMissions.getTotalClearedReward();
+        return memberMissions.receiveTotalClearedReward();
     }
 
     private MemberMissions findMemberMissionsByMemberId(final Long memberId) {
@@ -51,7 +51,7 @@ public class MemberMissionsService {
 
     public Integer getRewardByMissionId(final Long memberId, final Long missionId) {
         MemberMissions memberMissions = findMemberMissionsByMemberId(memberId);
-        return memberMissions.getRewardBy(missionId);
+        return memberMissions.receiveRewardBy(missionId);
     }
 
     public void clearMemberMission(final Long memberId, final Long missionId) {

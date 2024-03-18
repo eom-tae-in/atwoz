@@ -1,12 +1,12 @@
 package com.atwoz.mission.domain.membermission;
 
-import com.atwoz.mission.exception.mission.exceptions.MissionNotClearException;
+import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotClearException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_진행중;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,10 +34,10 @@ class MemberMissionTest {
         @Test
         void 보상을_정상적으로_받는다() {
             // given
-            MemberMission memberMission = 멤버_미션_생성_완료();
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
 
             // when
-            Integer reward = memberMission.getReward();
+            Integer reward = memberMission.receiveReward();
 
             // then
             assertThat(reward).isEqualTo(100);
@@ -49,8 +49,8 @@ class MemberMissionTest {
             MemberMission memberMission = 멤버_미션_생성_진행중();
 
             // when & then
-            assertThatThrownBy(memberMission::getReward)
-                    .isInstanceOf(MissionNotClearException.class);
+            assertThatThrownBy(memberMission::receiveReward)
+                    .isInstanceOf(MemberMissionNotClearException.class);
         }
     }
 }

@@ -82,6 +82,7 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
         // given
         Long memberId = 1L;
         Boolean isClear = true;
+        Boolean doesGetReward = false;
         List<MemberMission> memberMissionList = new ArrayList<>();
         MemberMissions memberMissions = MemberMissions.createWithMemberId(memberId);
 
@@ -107,7 +108,7 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
         List<MemberMissionSimpleResponse> expected = memberMissionList.stream()
                 .sorted(Comparator.comparing(MemberMission::getId).reversed())
                 .filter(memberMission -> isClear.equals(memberMission.isStatusClear()))
-                .filter(memberMission -> isClear.equals(memberMission.isDoesGetReward()))
+                .filter(memberMission -> doesGetReward.equals(memberMission.isDoesGetReward()))
                 .map(memberMission -> new MemberMissionSimpleResponse(
                         memberMission.getMission().getId(),
                         memberMission.isDoesGetReward(),

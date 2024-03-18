@@ -1,6 +1,5 @@
 package com.atwoz.mission.exception.mission;
 
-import com.atwoz.mission.exception.mission.exceptions.MissionNotClearException;
 import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
 import com.atwoz.mission.exception.mission.exceptions.MissionTypeInvalidException;
 import com.atwoz.mission.exception.mission.exceptions.PublicOptionInvalidException;
@@ -12,11 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class MissionExceptionHandler {
-
-    @ExceptionHandler(MissionNotClearException.class)
-    public ResponseEntity<String> handleMissionNotClearException(final MissionNotClearException exception) {
-        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
-    }
 
     @ExceptionHandler(MissionNotFoundException.class)
     public ResponseEntity<String> handleMissionNotFoundException(final MissionNotFoundException exception) {

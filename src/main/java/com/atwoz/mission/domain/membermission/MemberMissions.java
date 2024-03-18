@@ -57,21 +57,21 @@ public class MemberMissions extends BaseEntity {
                 .orElseThrow(MemberMissionNotFoundException::new);
 
         targetMemberMission.clearMission();
-        targetMemberMission.earnReward();
     }
 
-    public Integer getRewardBy(final Long missionId) {
+    public Integer receiveRewardBy(final Long missionId) {
         return this.memberMissions.stream()
                 .filter(memberMission -> memberMission.isSameMission(missionId))
                 .findAny()
                 .orElseThrow(MissionNotFoundException::new)
-                .getReward();
+                .receiveReward();
     }
 
-    public Integer getTotalClearedReward() {
+    public Integer receiveTotalClearedReward() {
         return this.memberMissions.stream()
                 .filter(MemberMission::isStatusClear)
-                .mapToInt(MemberMission::getReward)
+                .filter(memberMission -> !memberMission.isDoesGetReward())
+                .mapToInt(MemberMission::receiveReward)
                 .sum();
     }
 }

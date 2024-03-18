@@ -47,7 +47,7 @@ public class MemberMissionsController {
 
     @PostMapping("/reward")
     public ResponseEntity<RewardResponse> receiveAllRewards(@AuthMember final Long memberId) {
-        Integer reward = memberMissionsService.getAllClearMissionsRewards(memberId);
+        Integer reward = memberMissionsService.receiveAllClearMissionsRewards(memberId);
         return ResponseEntity.ok()
                 .body(new RewardResponse(reward));
     }
