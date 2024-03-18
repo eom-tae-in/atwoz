@@ -179,7 +179,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .param("missionId", missionId)
-                .patch(url + missionId)
+                .patch(url + missionId + "/clear")
                 .then().log().all()
                 .extract();
     }

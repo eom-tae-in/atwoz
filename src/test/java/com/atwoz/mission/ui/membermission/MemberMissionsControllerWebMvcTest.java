@@ -158,7 +158,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         doNothing().when(memberMissionsService).clearMemberMission(any(), any());
 
         // when & then
-        mockMvc.perform(patch("/api/members/me/missions/{missionId}", missionId)
+        mockMvc.perform(patch("/api/members/me/missions/{missionId}/clear", missionId)
                         .header(AUTHORIZATION, bearerToken))
                 .andExpect(status().isOk())
                 .andDo(print())
