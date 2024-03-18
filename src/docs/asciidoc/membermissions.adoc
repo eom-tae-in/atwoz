@@ -29,7 +29,7 @@ include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여
 include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/response-body.adoc[]
 include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/response-fields.adoc[]
 
-=== 완료된 미션의 모든 보상 조회 (GET /api/members/me/missions/all)
+=== 완료된 미션의 모든 보상 조회 (POST /api/members/me/missions/reward)
 
 ==== 요청
 include::{snippets}/member-missions-controller-web-mvc-test/회원_전체_보상/http-request.adoc[]
@@ -49,7 +49,7 @@ include::{snippets}/member-missions-controller-web-mvc-test/회원_미션과_목
 ==== 응답
 include::{snippets}/member-missions-controller-web-mvc-test/회원_미션과_목록_생성/http-response.adoc[]
 
-=== 완료된 특정 미션 보상 조회 (GET /api/members/me/missions/{missionId})
+=== 완료된 특정 미션 보상 조회 (POST /api/members/me/missions/{missionId}/reward)
 
 ==== 요청
 include::{snippets}/member-missions-controller-web-mvc-test/회원_특정_미션_보상/http-request.adoc[]
@@ -60,7 +60,7 @@ include::{snippets}/member-missions-controller-web-mvc-test/회원_특정_미션
 include::{snippets}/member-missions-controller-web-mvc-test/회원_특정_미션_보상/http-response.adoc[]
 include::{snippets}/member-missions-controller-web-mvc-test/회원_특정_미션_보상/response-fields.adoc[]
 
-=== 회원 미션 클리어 (PATCH /api/members/me/missions/{missionId})
+=== 회원 미션 클리어 (PATCH /api/members/me/missions/{missionId}/clear)
 
 ==== 요청
 include::{snippets}/member-missions-controller-web-mvc-test/회원_미션_클리어/http-request.adoc[]
