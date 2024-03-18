@@ -29,7 +29,7 @@ include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여
 include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/response-body.adoc[]
 include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/response-fields.adoc[]
 
-=== 완료된 미션의 모든 보상 조회 (POST /api/members/me/missions/reward)
+=== 완료된 미션의 모든 보상 수령 (미수령 미션 대상) (POST /api/members/me/missions/reward)
 
 ==== 요청
 include::{snippets}/member-missions-controller-web-mvc-test/회원_전체_보상/http-request.adoc[]
@@ -49,7 +49,7 @@ include::{snippets}/member-missions-controller-web-mvc-test/회원_미션과_목
 ==== 응답
 include::{snippets}/member-missions-controller-web-mvc-test/회원_미션과_목록_생성/http-response.adoc[]
 
-=== 완료된 특정 미션 보상 조회 (POST /api/members/me/missions/{missionId}/reward)
+=== 완료된 특정 미션 보상 수령 (미수령 대상) (POST /api/members/me/missions/{missionId}/reward)
 
 ==== 요청
 include::{snippets}/member-missions-controller-web-mvc-test/회원_특정_미션_보상/http-request.adoc[]
