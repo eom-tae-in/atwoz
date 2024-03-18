@@ -45,8 +45,8 @@ public class MemberMissionsController {
         return ResponseEntity.ok(memberMissionsQueryService.findMemberMissionsByStatus(memberId, isStatusClear));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<RewardResponse> getAllRewards(@AuthMember final Long memberId) {
+    @PostMapping("/reward")
+    public ResponseEntity<RewardResponse> receiveAllRewards(@AuthMember final Long memberId) {
         Integer reward = memberMissionsService.getAllClearMissionsRewards(memberId);
         return ResponseEntity.ok()
                 .body(new RewardResponse(reward));
@@ -59,15 +59,15 @@ public class MemberMissionsController {
                 .build();
     }
 
-    @GetMapping("/{missionId}")
-    public ResponseEntity<RewardResponse> getRewardByMissionId(@AuthMember final Long memberId,
-                                                               @PathVariable final Long missionId) {
+    @PostMapping("/{missionId}/reward")
+    public ResponseEntity<RewardResponse> receiveRewardByMissionId(@AuthMember final Long memberId,
+                                                                   @PathVariable final Long missionId) {
         Integer reward = memberMissionsService.getRewardByMissionId(memberId, missionId);
         return ResponseEntity.ok()
                 .body(new RewardResponse(reward));
     }
 
-    @PatchMapping("/{missionId}")
+    @PatchMapping("/{missionId}/clear")
     public ResponseEntity<Void> clearMission(@AuthMember final Long memberId, @PathVariable final Long missionId) {
         memberMissionsService.clearMemberMission(memberId, missionId);
         return ResponseEntity.ok()

@@ -93,7 +93,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .when()
-                .get(url)
+                .post(url)
                 .then().log().all()
                 .extract();
     }
@@ -150,7 +150,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .param("missionId", missionId)
-                .get(url + missionId)
+                .post(url + missionId + "/reward")
                 .then().log().all()
                 .extract();
     }

@@ -182,7 +182,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         when(memberMissionsService.getRewardByMissionId(any(), any())).thenReturn(rewardResponse.reward());
 
         // when & then
-        mockMvc.perform(get("/api/members/me/missions/{missionId}", missionId)
+        mockMvc.perform(post("/api/members/me/missions/{missionId}/reward", missionId)
                         .header(AUTHORIZATION, bearerToken))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -208,7 +208,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         when(memberMissionsService.getAllClearMissionsRewards(any())).thenReturn(rewardResponse.reward());
 
         // when & then
-        mockMvc.perform(get("/api/members/me/missions/all")
+        mockMvc.perform(post("/api/members/me/missions/reward")
                         .header(AUTHORIZATION, bearerToken))
                 .andExpect(status().isOk())
                 .andDo(print())

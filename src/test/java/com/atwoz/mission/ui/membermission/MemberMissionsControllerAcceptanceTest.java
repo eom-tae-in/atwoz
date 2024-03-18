@@ -16,7 +16,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     private static final String 회원_미션_등록_url = "/api/members/me/missions/";
     private static final String 회원_미션_클리어_url = "/api/members/me/missions/";
     private static final String 회원_완료_미션_보상_조회_url = "/api/members/me/missions/";
-    private static final String 회원_미션_완료_보상_총합_조회_url = "/api/members/me/missions/all";
+    private static final String 회원_완료_미션_보상_총합_조회_url = "/api/members/me/missions/reward";
 
     private Member 회원;
     private String 토큰;
@@ -57,7 +57,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
         회원_완료_미션_등록();
 
         // when
-        var 회원_완료_미션_보상_총합_조회_결과 = 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(토큰, 회원_미션_완료_보상_총합_조회_url);
+        var 회원_완료_미션_보상_총합_조회_결과 = 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(토큰, 회원_완료_미션_보상_총합_조회_url);
 
         // then
         회원의_완료된_미션_보상_총합_조회_결과_검증(회원_완료_미션_보상_총합_조회_결과);
@@ -107,7 +107,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
         @Test
         void 회원의_미션_목록이_없으면_보상_총합_조회를_할_수_없다() {
             // when
-            var 회원_완료_미션_보상_총합_조회_결과 = 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(토큰, 회원_미션_완료_보상_총합_조회_url);
+            var 회원_완료_미션_보상_총합_조회_결과 = 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(토큰, 회원_완료_미션_보상_총합_조회_url);
 
             // then
             회원의_완료된_미션_보상_총합_조회_결과_예외_검증(회원_완료_미션_보상_총합_조회_결과);
