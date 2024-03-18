@@ -173,13 +173,13 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
     }
 
     @Test
-    void 회원의_완료된_미션의_보상을_조회한다() throws Exception {
+    void 회원의_아직_수령하지_않은_완료된_미션의_보상을_수령한다() throws Exception {
         // given
         String bearerToken = "Bearer token";
         Long missionId = 1L;
         RewardResponse rewardResponse = 회원_보상_응답();
 
-        when(memberMissionsService.getRewardByMissionId(any(), any())).thenReturn(rewardResponse.reward());
+        when(memberMissionsService.receiveRewardByMissionId(any(), any())).thenReturn(rewardResponse.reward());
 
         // when & then
         mockMvc.perform(post("/api/members/me/missions/{missionId}/reward", missionId)
@@ -200,7 +200,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
     }
 
     @Test
-    void 회원의_완료된_미션_목록의_보상_총합을_조회한다() throws Exception {
+    void 회원의_아직_수령하지_않은_완료된_미션의_보상을_전부_수령한다() throws Exception {
         // given
         String bearerToken = "Bearer token";
         RewardResponse rewardResponse = 회원_보상_응답();

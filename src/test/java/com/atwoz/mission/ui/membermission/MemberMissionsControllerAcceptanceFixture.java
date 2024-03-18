@@ -89,7 +89,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         });
     }
 
-    protected  ExtractableResponse 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(final String token, final String url) {
+    protected  ExtractableResponse 회원의_아직_수령하지_않은_완료된_미션의_보상을_전부_수령한다(final String token, final String url) {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .when()
@@ -98,7 +98,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
                 .extract();
     }
 
-    protected void 회원의_완료된_미션_보상_총합_조회_결과_검증(final ExtractableResponse response) {
+    protected void 회원의_완료된_미션_보상_전체_수령_결과_검증(final ExtractableResponse response) {
         RewardResponse result = response.as(RewardResponse.class);
         assertSoftly(softly -> {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
@@ -106,16 +106,35 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         });
     }
 
-    protected void 회원의_완료된_미션_보상_총합_조회_결과_예외_검증(final ExtractableResponse response) {
+    protected void 회원의_완료된_미션_보상_전부_수령된_경우_결과_검증(final ExtractableResponse response) {
+        RewardResponse result = response.as(RewardResponse.class);
+        assertSoftly(softly -> {
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+            assertThat(result.reward()).isEqualTo(0);
+        });
+    }
+
+    protected void 회원의_완료된_미션_보상_전체_수령_결과_예외_검증(final ExtractableResponse response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
-    protected void 회원_완료_미션_등록() {
+    protected void 회원_완료_미션_등록_보상_미수령() {
         MemberMission memberMission = MemberMission.createDefault(미션_생성());
         MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
 
         memberMissions.addMission(memberMission);
         memberMissions.clearMission(memberMission.getMission().getId());
+
+        memberMissionsRepository.save(memberMissions);
+    }
+
+    protected void 회원_완료_미션_등록_보상_수령() {
+        MemberMission memberMission = MemberMission.createDefault(미션_생성());
+        MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
+
+        memberMissions.addMission(memberMission);
+        memberMissions.clearMission(memberMission.getMission().getId());
+        memberMissions.receiveRewardBy(memberMission.getMission().getId());
 
         memberMissionsRepository.save(memberMissions);
     }
@@ -146,7 +165,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
-    protected ExtractableResponse 회원의_완료된_특정_미션_보상을_조회한다(final String token, final Long missionId, final String url) {
+    protected ExtractableResponse 회원의_완료된_특정_미션_보상을_수령한다(final String token, final Long missionId, final String url) {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .param("missionId", missionId)
@@ -155,7 +174,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
                 .extract();
     }
 
-    protected void 회원의_완료된_특정_미션_보상_조회_결과_검증(final ExtractableResponse response) {
+    protected void 회원의_완료된_특정_미션_보상_수령_결과_검증(final ExtractableResponse response) {
         RewardResponse result = response.as(RewardResponse.class);
         assertSoftly(softly -> {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
@@ -163,16 +182,20 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         });
     }
 
-    protected void 회원의_완료된_특정_미션_보상_조회_회원_미션_없음_예외_검증(final ExtractableResponse response) {
+    protected void 회원의_완료된_특정_미션_보상_수령_회원_미션_없음_예외_검증(final ExtractableResponse response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
-    protected void 회원의_완료된_특정_미션_보상_조회_미완료_예외_검증(final ExtractableResponse response) {
+    protected void 회원의_완료된_특정_미션_보상_수령_미완료_예외_검증(final ExtractableResponse response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
-    protected void 회원의_완료된_특정_미션_보상_조회_미션_없음_예외_검증(final ExtractableResponse response) {
+    protected void 회원의_완료된_특정_미션_보상_수령_미션_없음_예외_검증(final ExtractableResponse response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    protected void 회원의_완료된_특정_미션_보상_수령_수령_완료_예외_검증(final ExtractableResponse response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     protected ExtractableResponse 회원의_미션을_클리어한다(final String token, final Long missionId, final String url) {

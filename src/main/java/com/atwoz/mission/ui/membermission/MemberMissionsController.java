@@ -62,7 +62,7 @@ public class MemberMissionsController {
     @PostMapping("/{missionId}/reward")
     public ResponseEntity<RewardResponse> receiveRewardByMissionId(@AuthMember final Long memberId,
                                                                    @PathVariable final Long missionId) {
-        Integer reward = memberMissionsService.getRewardByMissionId(memberId, missionId);
+        Integer reward = memberMissionsService.receiveRewardByMissionId(memberId, missionId);
         return ResponseEntity.ok()
                 .body(new RewardResponse(reward));
     }

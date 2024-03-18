@@ -15,8 +15,8 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     private static final String 회원_미션_클리어_조회_url = "/api/members/me/missions/clear?status=true";
     private static final String 회원_미션_등록_url = "/api/members/me/missions/";
     private static final String 회원_미션_클리어_url = "/api/members/me/missions/";
-    private static final String 회원_완료_미션_보상_조회_url = "/api/members/me/missions/";
-    private static final String 회원_완료_미션_보상_총합_조회_url = "/api/members/me/missions/reward";
+    private static final String 회원_완료_미션_보상_수령_url = "/api/members/me/missions/";
+    private static final String 회원_완료_미션_보상_전체_수령_url = "/api/members/me/missions/reward";
 
     private Member 회원;
     private String 토큰;
@@ -30,7 +30,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     @Test
     void 회원의_미션_목록을_페이징_조회한다() {
         // given
-        회원_완료_미션_등록();
+        회원_완료_미션_등록_보상_미수령();
 
         // when
         var 회원_미션_페이징_조회_결과 = 회원_미션을_페이징_조회한다(토큰, 회원_미션_페이징_url);
@@ -42,7 +42,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     @Test
     void 회원의_미션_목록을_클리어_여부로_페이징_조회한다() {
         // given
-        회원_완료_미션_등록();
+        회원_완료_미션_등록_보상_미수령();
 
         // when
         var 회원_미션_status_조회_결과 = 회원_미션을_클리어_여부로_조회한다(토큰, 회원_미션_클리어_조회_url);
@@ -52,15 +52,27 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     }
 
     @Test
-    void 회원의_완료된_미션의_보상_총합을_조회한다() {
+    void 회원의_아직_수령하지_않은_완료된_미션의_보상을_전부_수령한다() {
         // given
-        회원_완료_미션_등록();
+        회원_완료_미션_등록_보상_미수령();
 
         // when
-        var 회원_완료_미션_보상_총합_조회_결과 = 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(토큰, 회원_완료_미션_보상_총합_조회_url);
+        var 회원_완료_미션_보상_전체_수령_결과 = 회원의_아직_수령하지_않은_완료된_미션의_보상을_전부_수령한다(토큰, 회원_완료_미션_보상_전체_수령_url);
 
         // then
-        회원의_완료된_미션_보상_총합_조회_결과_검증(회원_완료_미션_보상_총합_조회_결과);
+        회원의_완료된_미션_보상_전체_수령_결과_검증(회원_완료_미션_보상_전체_수령_결과);
+    }
+
+    @Test
+    void 남은_보상_미수령_완료_미션이_없을_시_수령된_보상은_0이다() {
+        // given
+        회원_완료_미션_등록_보상_수령();
+
+        // when
+        var 회원_완료_미션_보상_쩐체_수령_결과 = 회원의_아직_수령하지_않은_완료된_미션의_보상을_전부_수령한다(토큰, 회원_완료_미션_보상_전체_수령_url);
+
+        // then
+        회원의_완료된_미션_보상_전부_수령된_경우_결과_검증(회원_완료_미션_보상_쩐체_수령_결과);
     }
 
     @Test
@@ -76,16 +88,16 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     }
 
     @Test
-    void 회원의_미션_목록에서_완료된_특정_미션의_보상을_조회한다() {
+    void 회원의_미션_목록에서_완료된_특정_미션의_보상을_수령한다() {
         // given
-        회원_완료_미션_등록();
+        회원_완료_미션_등록_보상_미수령();
         var 미션_id = 1L;
 
         // when
-        var 회원_완료_특정_미션_보상_조회_결과 = 회원의_완료된_특정_미션_보상을_조회한다(토큰, 미션_id, 회원_완료_미션_보상_조회_url);
+        var 회원_완료_특정_미션_보상_수령_결과 = 회원의_완료된_특정_미션_보상을_수령한다(토큰, 미션_id, 회원_완료_미션_보상_수령_url);
 
         // then
-        회원의_완료된_특정_미션_보상_조회_결과_검증(회원_완료_특정_미션_보상_조회_결과);
+        회원의_완료된_특정_미션_보상_수령_결과_검증(회원_완료_특정_미션_보상_수령_결과);
     }
 
     @Test
@@ -105,12 +117,12 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     class 회원_미션_예외 {
 
         @Test
-        void 회원의_미션_목록이_없으면_보상_총합_조회를_할_수_없다() {
+        void 회원의_미션_목록이_없으면_보상_전체_수령을_할_수_없다() {
             // when
-            var 회원_완료_미션_보상_총합_조회_결과 = 회원_미션_목록의_완료된_미션의_보상_총합을_조회한다(토큰, 회원_완료_미션_보상_총합_조회_url);
+            var 회원_완료_미션_보상_전체_수령_결과 = 회원의_아직_수령하지_않은_완료된_미션의_보상을_전부_수령한다(토큰, 회원_완료_미션_보상_전체_수령_url);
 
             // then
-            회원의_완료된_미션_보상_총합_조회_결과_예외_검증(회원_완료_미션_보상_총합_조회_결과);
+            회원의_완료된_미션_보상_전체_수령_결과_예외_검증(회원_완료_미션_보상_전체_수령_결과);
         }
 
         @Test
@@ -126,40 +138,53 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
         }
 
         @Test
-        void 아직_완료되지_않은_미션의_보상을_조회하면_예외가_발생한다() {
+        void 아직_완료되지_않은_미션의_보상을_수령하면_예외가_발생한다() {
             // given
             회원_미완료_미션_등록();
             var 미션_id = 1L;
 
             // when
-            var 회원_완료_특정_미션_보상_조회_결과 = 회원의_완료된_특정_미션_보상을_조회한다(토큰, 미션_id, 회원_완료_미션_보상_조회_url);
+            var 회원_완료_특정_미션_보상_수령_결과 = 회원의_완료된_특정_미션_보상을_수령한다(토큰, 미션_id, 회원_완료_미션_보상_수령_url);
 
             // then
-            회원의_완료된_특정_미션_보상_조회_미완료_예외_검증(회원_완료_특정_미션_보상_조회_결과);
+            회원의_완료된_특정_미션_보상_수령_미완료_예외_검증(회원_완료_특정_미션_보상_수령_결과);
         }
 
         @Test
-        void 회원의_미션_목록에_없는_미션의_보상을_조회하면_예외가_발생한다() {
+        void 회원의_미션_목록에_없는_미션의_보상을_수령하면_예외가_발생한다() {
             // given
             var 미션 = 미션_생성();
 
             // when
-            var 회원_완료_특정_미션_보상_조회_결과 = 회원의_완료된_특정_미션_보상을_조회한다(토큰, 미션.getId(), 회원_완료_미션_보상_조회_url);
+            var 회원_완료_특정_미션_보상_수령_결과 = 회원의_완료된_특정_미션_보상을_수령한다(토큰, 미션.getId(), 회원_완료_미션_보상_수령_url);
 
             // then
-            회원의_완료된_특정_미션_보상_조회_회원_미션_없음_예외_검증(회원_완료_특정_미션_보상_조회_결과);
+            회원의_완료된_특정_미션_보상_수령_회원_미션_없음_예외_검증(회원_완료_특정_미션_보상_수령_결과);
         }
 
         @Test
-        void 아예_없는_미션의_보상을_조회하면_예외가_발생한다() {
+        void 아예_없는_미션의_보상을_수령하면_예외가_발생한다() {
             // given
             var 미션_id = -1L;
 
             // when
-            var 회원_완료_특정_미션_보상_조회_결과 = 회원의_완료된_특정_미션_보상을_조회한다(토큰, 미션_id, 회원_완료_미션_보상_조회_url);
+            var 회원_완료_특정_미션_보상_수령_결과 = 회원의_완료된_특정_미션_보상을_수령한다(토큰, 미션_id, 회원_완료_미션_보상_수령_url);
 
             // then
-            회원의_완료된_특정_미션_보상_조회_미션_없음_예외_검증(회원_완료_특정_미션_보상_조회_결과);
+            회원의_완료된_특정_미션_보상_수령_미션_없음_예외_검증(회원_완료_특정_미션_보상_수령_결과);
+        }
+
+        @Test
+        void 이미_수령한_미션을_다시_수령하면_예외가_발생한다() {
+            // given
+            회원_완료_미션_등록_보상_수령();
+            var 미션_id = 1L;
+
+            // when
+            var 회원_완료_특정_미션_보상_수령_결과 = 회원의_완료된_특정_미션_보상을_수령한다(토큰, 미션_id, 회원_완료_미션_보상_수령_url);
+
+            // then
+            회원의_완료된_특정_미션_보상_수령_수령_완료_예외_검증(회원_완료_특정_미션_보상_수령_결과);
         }
 
         @Test

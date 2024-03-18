@@ -49,7 +49,7 @@ public class MemberMissionsService {
         return memberMissions;
     }
 
-    public Integer getRewardByMissionId(final Long memberId, final Long missionId) {
+    public Integer receiveRewardByMissionId(final Long memberId, final Long missionId) {
         MemberMissions memberMissions = findMemberMissionsByMemberId(memberId);
         return memberMissions.receiveRewardBy(missionId);
     }
