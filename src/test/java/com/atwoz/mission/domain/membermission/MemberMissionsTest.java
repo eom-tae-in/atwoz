@@ -1,7 +1,7 @@
 package com.atwoz.mission.domain.membermission;
 
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;
-import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
+import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -48,7 +48,7 @@ class MemberMissionsTest {
 
             // when & then
             assertThatThrownBy(() -> memberMissions.receiveRewardBy(-1L))
-                    .isInstanceOf(MissionNotFoundException.class);
+                    .isInstanceOf(MemberMissionNotFoundException.class);
         }
 
         @Test

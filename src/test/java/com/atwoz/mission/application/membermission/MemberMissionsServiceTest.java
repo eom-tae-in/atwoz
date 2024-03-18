@@ -166,7 +166,7 @@ class MemberMissionsServiceTest {
 
             // when & then
             assertThatThrownBy(() -> memberMissionsService.receiveRewardByMissionId(memberMissions.getMemberId(), mission.getId()))
-                    .isInstanceOf(MissionNotFoundException.class);
+                    .isInstanceOf(MemberMissionNotFoundException.class);
         }
 
         @Test
