@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthService {
 
+    private static final String DEFAULT_PHONE_NUMBER = "01011111111";
+
     private final TokenProvider tokenProvider;
     private final OAuthRequester oAuthRequester;
 
@@ -21,8 +23,12 @@ public class AuthService {
     public String login(final LoginRequest request, final OAuthProviderRequest provider) {
         String accessToken = oAuthRequester.getAccessToken(request.code(), provider);
         MemberInfoResponse memberInfoResponse = oAuthRequester.getMemberInfo(accessToken, provider);
-        Events.raise(new ValidatedLoginEvent(memberInfoResponse.email(), memberInfoResponse.name()));
 
-        return tokenProvider.createTokenWith(memberInfoResponse.email());
+        /**
+         * OAuth 인증방식과 PASS 인증 방식에 차이가 존재해서 회의 후 메서드 변경을 진행할 예정
+         */
+        Events.raise(new ValidatedLoginEvent(DEFAULT_PHONE_NUMBER));
+
+        return tokenProvider.createTokenWith(DEFAULT_PHONE_NUMBER);
     }
 }
