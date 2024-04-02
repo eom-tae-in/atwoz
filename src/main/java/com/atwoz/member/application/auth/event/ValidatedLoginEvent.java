@@ -8,6 +8,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ValidatedLoginEvent extends Event {
 
-    private final String email;
-    private final String nickname;
+    private final String phoneNumber;
 }
