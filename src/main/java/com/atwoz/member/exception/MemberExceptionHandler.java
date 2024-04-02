@@ -8,30 +8,26 @@ import com.atwoz.member.exception.exceptions.auth.SignatureInvalidException;
 import com.atwoz.member.exception.exceptions.auth.TokenFormInvalidException;
 import com.atwoz.member.exception.exceptions.auth.TokenInvalidException;
 import com.atwoz.member.exception.exceptions.auth.UnsupportedTokenException;
-import com.atwoz.member.exception.exceptions.info.InfoNotFoundException;
-import com.atwoz.member.exception.exceptions.info.hobby.HobbyDuplicateException;
-import com.atwoz.member.exception.exceptions.info.hobby.InvalidHobbyException;
-import com.atwoz.member.exception.exceptions.info.hobby.HobbySizeException;
-import com.atwoz.member.exception.exceptions.info.option.InvalidDrinkException;
-import com.atwoz.member.exception.exceptions.info.option.InvalidGraduateException;
-import com.atwoz.member.exception.exceptions.info.option.InvalidMbtiException;
-import com.atwoz.member.exception.exceptions.info.option.OptionNotFoundException;
-import com.atwoz.member.exception.exceptions.info.option.InvalidReligionException;
-import com.atwoz.member.exception.exceptions.info.option.InvalidSmokeException;
-import com.atwoz.member.exception.exceptions.info.profile.job.InvalidJobException;
-import com.atwoz.member.exception.exceptions.info.profile.ProfileNotFoundException;
-import com.atwoz.member.exception.exceptions.info.profile.body.AgeRangeException;
-import com.atwoz.member.exception.exceptions.info.profile.body.InvalidGenderException;
-import com.atwoz.member.exception.exceptions.info.profile.body.HeightRangeException;
-import com.atwoz.member.exception.exceptions.info.profile.position.LatitudeRangeException;
-import com.atwoz.member.exception.exceptions.info.profile.position.LongitudeRangeException;
-import com.atwoz.member.exception.exceptions.info.style.StyleDuplicateException;
-import com.atwoz.member.exception.exceptions.info.style.InvalidStyleException;
-import com.atwoz.member.exception.exceptions.info.style.StyleSizeException;
-import com.atwoz.member.exception.exceptions.member.MemberAlreadyExistedException;
+import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
-import com.atwoz.member.exception.exceptions.member.PasswordNotMatchedException;
 import com.atwoz.member.exception.exceptions.member.RoleNotFoundException;
+import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
+import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidDrinkException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidGenderException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidGraduateException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidJobException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidMbtiException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidReligionException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidSmokeException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
+import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;
+import com.atwoz.member.exception.exceptions.member.profile.StyleSizeException;
+import com.atwoz.member.exception.exceptions.member.profile.contact.LatitudeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.contact.LongitudeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical_profile.AgeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical_profile.HeightRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,14 +36,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class MemberExceptionHandler {
 
-    // member
     @ExceptionHandler(RoleNotFoundException.class)
     public ResponseEntity<String> handleRoleNotFoundException(final RoleNotFoundException e) {
         return getNotFoundResponse(e);
     }
 
-    @ExceptionHandler(MemberAlreadyExistedException.class)
-    public ResponseEntity<String> handleMemberAlreadyExistedException(final MemberAlreadyExistedException e) {
+    @ExceptionHandler(MemberNicknameAlreadyExistedException.class)
+    public ResponseEntity<String> handleMemberNicknameAlreadyExistedException(
+            final MemberNicknameAlreadyExistedException e) {
         return getConflicted(e);
     }
 
@@ -56,12 +52,6 @@ public class MemberExceptionHandler {
         return getNotFoundResponse(e);
     }
 
-    @ExceptionHandler(PasswordNotMatchedException.class)
-    public ResponseEntity<String> handlePasswordNotMatchedException(final PasswordNotMatchedException e) {
-        return getConflicted(e);
-    }
-
-    // auth
     @ExceptionHandler(SignatureInvalidException.class)
     public ResponseEntity<String> handleSignatureInvalidException(final SignatureInvalidException e) {
         return getUnauthorized(e);
@@ -102,7 +92,6 @@ public class MemberExceptionHandler {
         return getNotFoundResponse(e);
     }
 
-    // info - hobby
     @ExceptionHandler(InvalidHobbyException.class)
     public ResponseEntity<String> handleHobbyInvalidException(final InvalidHobbyException e) {
         return getBadRequest(e);
@@ -118,7 +107,6 @@ public class MemberExceptionHandler {
         return getBadRequest(e);
     }
 
-    // info - style
     @ExceptionHandler(InvalidStyleException.class)
     public ResponseEntity<String> handleStyleInvalidException(final InvalidStyleException e) {
         return getBadRequest(e);
@@ -132,12 +120,6 @@ public class MemberExceptionHandler {
     @ExceptionHandler(StyleDuplicateException.class)
     public ResponseEntity<String> handleStyleDuplicateException(final StyleDuplicateException e) {
         return getBadRequest(e);
-    }
-
-    // info - profile
-    @ExceptionHandler(ProfileNotFoundException.class)
-    public ResponseEntity<String> handleProfileNotFoundException(ProfileNotFoundException e) {
-        return getNotFoundResponse(e);
     }
 
     @ExceptionHandler(AgeRangeException.class)
@@ -170,12 +152,6 @@ public class MemberExceptionHandler {
         return getBadRequest(e);
     }
 
-    // info - option
-    @ExceptionHandler(OptionNotFoundException.class)
-    public ResponseEntity<String> handleOptionNotFoundException(final OptionNotFoundException e) {
-        return getNotFoundResponse(e);
-    }
-
     @ExceptionHandler(InvalidDrinkException.class)
     public ResponseEntity<String> handleDrinkNInvalidException(final InvalidDrinkException e) {
         return getBadRequest(e);
@@ -199,12 +175,6 @@ public class MemberExceptionHandler {
     @ExceptionHandler(InvalidReligionException.class)
     public ResponseEntity<String> handleReligionInvalidException(final InvalidReligionException e) {
         return getBadRequest(e);
-    }
-
-    // info
-    @ExceptionHandler(InfoNotFoundException.class)
-    public ResponseEntity<String> handleInfoNotFoundException(final InfoNotFoundException e) {
-        return getNotFoundResponse(e);
     }
 
     private ResponseEntity<String> getNotFoundResponse(final Exception e) {
