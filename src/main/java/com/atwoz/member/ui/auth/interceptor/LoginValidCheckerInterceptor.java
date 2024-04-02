@@ -27,10 +27,10 @@ public class LoginValidCheckerInterceptor implements HandlerInterceptor {
         String token = AuthenticationExtractor.extract(request)
                 .orElseThrow(LoginInvalidException::new);
 
-        String memberEmail = tokenProvider.extract(token);
-        Member findMember = memberRepository.findByEmail(memberEmail)
+        String memberPhoneNumber = tokenProvider.extract(token);
+        Member foundMember = memberRepository.findByPhoneNumber(memberPhoneNumber)
                 .orElseThrow(RuntimeException::new);
-        authenticationContext.setAuthentication(findMember.getId());
+        authenticationContext.setAuthentication(foundMember.getId());
 
         return true;
     }
