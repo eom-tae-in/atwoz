@@ -1,11 +1,7 @@
 package com.atwoz.helper;
 
 import com.atwoz.member.application.auth.AuthService;
-import com.atwoz.member.application.info.InfoService;
-import com.atwoz.member.application.info.hobby.MemberHobbyService;
-import com.atwoz.member.application.info.option.OptionService;
-import com.atwoz.member.application.info.profile.ProfileService;
-import com.atwoz.member.application.info.style.MemberStyleService;
+import com.atwoz.member.application.member.MemberService;
 import com.atwoz.member.domain.auth.TokenProvider;
 import com.atwoz.member.ui.auth.interceptor.LoginValidCheckerInterceptor;
 import com.atwoz.member.ui.auth.interceptor.ParseMemberIdFromTokenInterceptor;
@@ -31,21 +27,6 @@ public class MockBeanInjection {
     protected AuthService authService;
 
     @MockBean
-    protected InfoService infoService;
-
-    @MockBean
-    protected OptionService optionService;
-
-    @MockBean
-    protected ProfileService profileService;
-
-    @MockBean
-    protected MemberHobbyService memberHobbyService;
-
-    @MockBean
-    protected MemberStyleService memberStyleService;
-
-    @MockBean
     protected OAuthProperties oAuthProperties;
 
     @MockBean
@@ -65,4 +46,7 @@ public class MockBeanInjection {
 
     @MockBean
     protected MissionQueryService missionQueryService;
+
+    @MockBean
+    protected MemberService memberService;
 }
