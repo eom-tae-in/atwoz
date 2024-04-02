@@ -20,5 +20,4 @@ class NicknameGeneratorImplTest {
         // then
         assertThat(createdNickname).isNotBlank();
     }
-
 }
