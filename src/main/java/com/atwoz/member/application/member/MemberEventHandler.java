@@ -13,6 +13,7 @@ public class MemberEventHandler {
 
     @EventListener
     public void registerIfNotMemberExist(final ValidatedLoginEvent event) {
-        memberService.create(event.getEmail(), event.getNickname());
+        memberService.create(event.getPhoneNumber());
     }
 }
+
