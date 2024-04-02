@@ -14,13 +14,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
@@ -40,9 +40,9 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String createTokenWith(final String email) {
+    public String createTokenWith(final String phoneNumber) {
         Claims claims = Jwts.claims();
-        claims.put("email", email);
+        claims.put("phoneNumber", phoneNumber);
         return createToken(claims);
     }
 
@@ -77,7 +77,7 @@ public class JwtTokenProvider implements TokenProvider {
                     .setSigningKey(secret.getBytes())
                     .parseClaimsJws(token)
                     .getBody()
-                    .get("email", String.class);
+                    .get("phoneNumber", String.class);
         } catch (SecurityException e) {
             throw new SignatureInvalidException();
         } catch (MalformedJwtException e) {
