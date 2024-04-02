@@ -19,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import static com.atwoz.member.domain.member.MemberGrade.SILVER;
 import static com.atwoz.member.domain.member.MemberRole.MEMBER;
@@ -30,6 +31,7 @@ import static com.atwoz.member.domain.member.MemberStatus.ACTIVE;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE member SET deleted_at = current_timestamp WHERE id = ?")
+@SQLRestriction("deleted_at is null")
 @Entity
 public class Member extends SoftDeleteBaseEntity {
 
