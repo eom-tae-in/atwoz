@@ -1,15 +1,16 @@
 package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberJpaRepository extends JpaRepository<Member, Long> {
 
-    Optional<Member> findByEmail(final String email);
+    Optional<Member> findByPhoneNumber(final String phoneNumber);
 
-    Optional<Member> findByNickname(final String nickname);
+    boolean existsByPhoneNumber(final String email);
 
-    boolean existsByEmail(final String email);
+    boolean existsByNickname(String nickname);
+
 }
+
