@@ -1,15 +1,5 @@
 package com.atwoz.member.ui.auth;
 
-import static com.atwoz.helper.RestDocsHelper.customDocument;
-import static com.atwoz.member.fixture.infrastructure.auth.OAuthProviderFixture.인증_기관_생성;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.member.application.auth.dto.LoginRequest;
 import com.atwoz.member.infrastructure.auth.dto.OAuthProviderRequest;
@@ -22,6 +12,16 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static com.atwoz.helper.RestDocsHelper.customDocument;
+import static com.atwoz.member.fixture.infrastructure.auth.OAuthProviderFixture.인증_기관_생성;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -44,7 +44,7 @@ class AuthControllerWebMvcTest extends MockBeanInjection {
         when(authService.login(loginRequest, oAuthProviderRequest)).thenReturn(expectedToken);
 
         // when & then
-        mockMvc.perform(post("/api/login")
+        mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest))
                 ).andExpect(status().isOk())
