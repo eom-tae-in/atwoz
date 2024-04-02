@@ -2,7 +2,6 @@ package com.atwoz.mission.ui.membermission;
 
 import com.atwoz.member.ui.auth.support.auth.AuthMember;
 import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
-import com.atwoz.mission.application.membermission.MemberMissionsService;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionSimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 @RestController
 public class MemberMissionsController {
 
-    private final MemberMissionsService memberMissionsService;
     private final MemberMissionsQueryService memberMissionsQueryService;
 
     @GetMapping
