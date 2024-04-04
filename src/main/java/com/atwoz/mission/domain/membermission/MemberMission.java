@@ -3,7 +3,6 @@ package com.atwoz.mission.domain.membermission;
 import com.atwoz.global.domain.BaseEntity;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;
-import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotClearException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -35,13 +34,10 @@ public class MemberMission extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Mission mission;
 
-    private boolean isStatusClear;
-
     private boolean doesGetReward;
 
     private MemberMission(final Mission mission) {
         this.mission = mission;
-        this.isStatusClear = DEFAULT_STATUS;
         this.doesGetReward = DEFAULT_STATUS;
     }
 
@@ -49,8 +45,8 @@ public class MemberMission extends BaseEntity {
         return new MemberMission(mission);
     }
 
-    public void clearMission() {
-        this.isStatusClear = CLEAR_STATUS;
+    public boolean isChallengeMission() {
+        return this.mission.isChallengeMission();
     }
 
     public boolean isSameMission(final Long missionId) {
@@ -65,9 +61,6 @@ public class MemberMission extends BaseEntity {
     }
 
     private void validateCanReceiveReward() {
-        if (!isStatusClear) {
-            throw new MemberMissionNotClearException();
-        }
         if (doesGetReward) {
             throw new MemberMissionAlreadyRewardedException();
         }

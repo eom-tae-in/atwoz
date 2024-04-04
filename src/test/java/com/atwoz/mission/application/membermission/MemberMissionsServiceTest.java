@@ -1,14 +1,13 @@
 package com.atwoz.mission.application.membermission;
 
+import com.atwoz.member.domain.info.profile.body.Gender;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;
-import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotClearException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
-import com.atwoz.mission.exception.membermission.exceptions.MemberMissionsNotFoundException;
 import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
 import com.atwoz.mission.intrastructure.membermission.MemberMissionsFakeRepository;
 import com.atwoz.mission.intrastructure.mission.MissionFakeRepository;
@@ -20,7 +19,6 @@ import org.junit.jupiter.api.Test;
 
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_진행중;
 import static com.atwoz.mission.fixture.MemberMissionsFixture.멤버_미션들_생성;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,33 +46,15 @@ class MemberMissionsServiceTest {
         MemberMissions memberMissions = 멤버_미션들_생성();
         memberMissionsRepository.save(memberMissions);
 
+        Gender memberGender = Gender.MALE;
         Mission mission = 미션_생성_리워드_100_데일리_공개();
         Mission saveMission = missionRepository.save(mission);
 
         // when
-        memberMissionsService.addMemberMission(memberMissions.getMemberId(), saveMission.getId());
+        memberMissionsService.addClearedMemberMission(memberMissions.getMemberId(), memberGender, saveMission.getId());
 
         // then
         assertThat(memberMissions.getMemberMissions()).isNotEmpty();
-    }
-
-    @Test
-    void 회원의_미션_목록에서_특정_미션을_클리어한다() {
-        // given
-        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
-        MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
-        memberMissionsRepository.save(memberMissions);
-
-        Mission mission = memberMission.getMission();
-
-        // when
-        memberMissionsService.clearMemberMission(memberMissions.getMemberId(), mission.getId());
-
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(memberMission.isDoesGetReward()).isFalse();
-            softly.assertThat(memberMission.isStatusClear()).isTrue();
-        });
     }
 
     @Test
@@ -96,25 +76,6 @@ class MemberMissionsServiceTest {
         });
     }
 
-    @Test
-    void 회원의_미션_목록에서_아직_보상을_수령하지_않은_미션의_총_보상을_수령한다() {
-        // given
-        MemberMission notRewardedMemberMission = 멤버_미션_생성_완료_보상_수령_안함();
-        MemberMission rewardedMemberMission = 멤버_미션_생성_완료_보상_수령_완료();
-        MemberMissions memberMissions = 멤버_미션들_생성(notRewardedMemberMission, rewardedMemberMission);
-        memberMissionsRepository.save(memberMissions);
-        int expectedReward = 미션_생성_리워드_100_데일리_공개().getReward();
-
-        // when
-        Integer reward = memberMissionsService.receiveAllClearMissionsRewards(memberMissions.getMemberId());
-
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(reward).isEqualTo(expectedReward);
-            softly.assertThat(notRewardedMemberMission.isDoesGetReward()).isTrue();
-        });
-    }
-
     @Nested
     class 회원_미션_예외 {
 
@@ -123,36 +84,12 @@ class MemberMissionsServiceTest {
             // given
             MemberMissions memberMissions = 멤버_미션들_생성();
             memberMissionsRepository.save(memberMissions);
-
+            Gender memberGender = Gender.MALE;
             Long missionId = -1L;
 
             // when & then
-            assertThatThrownBy(() -> memberMissionsService.addMemberMission(memberMissions.getMemberId(), missionId))
+            assertThatThrownBy(() -> memberMissionsService.addClearedMemberMission(memberMissions.getMemberId(), memberGender, missionId))
                     .isInstanceOf(MissionNotFoundException.class);
-        }
-
-        @Test
-        void 회원의_미션_목록에서_없는_미션을_클리어하면_예외가_발생한다() {
-            // given
-            MemberMissions memberMissions = 멤버_미션들_생성();
-            memberMissionsRepository.save(memberMissions);
-
-            Long missionId = -1L;
-
-            // when & then
-            assertThatThrownBy(() -> memberMissionsService.clearMemberMission(memberMissions.getMemberId(), missionId))
-                    .isInstanceOf(MemberMissionNotFoundException.class);
-        }
-
-        @Test
-        void 회원의_미션_목록이_없을_때_미션을_클리어하면_예외가_발생한다() {
-            // given
-            Long memberId = -1L;
-            Mission mission = 미션_생성_리워드_100_데일리_공개();
-
-            // when & then
-            assertThatThrownBy(() -> memberMissionsService.clearMemberMission(memberId, mission.getId()))
-                    .isInstanceOf(MemberMissionsNotFoundException.class);
         }
 
         @Test
@@ -170,20 +107,6 @@ class MemberMissionsServiceTest {
         }
 
         @Test
-        void 회원의_미션_목록에서_완료되지_않은_미션의_보상을_수령하면_예외가_발생한다() {
-            // given
-            MemberMission memberMission = 멤버_미션_생성_진행중();
-            MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
-            memberMissionsRepository.save(memberMissions);
-
-            Mission mission = memberMission.getMission();
-
-            // when & then
-            assertThatThrownBy(() -> memberMissionsService.receiveRewardByMissionId(memberMissions.getMemberId(), mission.getId()))
-                    .isInstanceOf(MemberMissionNotClearException.class);
-        }
-
-        @Test
         void 이미_보상을_수령받은_미션을_다시_수령하면_예외가_발생한다() {
             // given
             MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_완료();
@@ -195,16 +118,6 @@ class MemberMissionsServiceTest {
             // when & then
             assertThatThrownBy(() -> memberMissionsService.receiveRewardByMissionId(memberMissions.getMemberId(), mission.getId()))
                     .isInstanceOf(MemberMissionAlreadyRewardedException.class);
-        }
-
-        @Test
-        void 회원의_미션_목록이_없을_때_완료된_미션의_총_보상을_수령하면_예외가_발생한다() {
-            // given
-            Long memberId = -1L;
-
-            // when & then
-            assertThatThrownBy(() -> memberMissionsService.receiveAllClearMissionsRewards(memberId))
-                    .isInstanceOf(MemberMissionsNotFoundException.class);
         }
     }
 }

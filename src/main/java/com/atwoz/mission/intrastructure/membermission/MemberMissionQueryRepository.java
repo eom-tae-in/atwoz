@@ -25,7 +25,6 @@ public class MemberMissionQueryRepository {
                         constructor(MemberMissionSimpleResponse.class,
                                 memberMission.mission.id,
                                 memberMission.doesGetReward,
-                                memberMission.isStatusClear,
                                 memberMission.mission.reward)
                 ).from(memberMission)
                 .innerJoin(memberMissions1)
@@ -44,12 +43,11 @@ public class MemberMissionQueryRepository {
                         constructor(MemberMissionSimpleResponse.class,
                                 memberMission.mission.id,
                                 memberMission.doesGetReward,
-                                memberMission.isStatusClear,
                                 memberMission.mission.reward)
                 ).from(memberMission)
                 .innerJoin(memberMissions1)
                 .on(memberMissions1.memberMissions.contains(memberMission))
-                .where(memberMissions1.memberId.eq(memberId), memberMission.isStatusClear.eq(isStatusClear))
+                .where(memberMissions1.memberId.eq(memberId))
                 .orderBy(memberMission.id.desc())
                 .fetch();
     }

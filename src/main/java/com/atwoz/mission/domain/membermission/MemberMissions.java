@@ -1,6 +1,10 @@
 package com.atwoz.mission.domain.membermission;
 
 import com.atwoz.global.domain.BaseEntity;
+import com.atwoz.member.domain.info.profile.body.Gender;
+import com.atwoz.mission.domain.mission.Mission;
+import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
+import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,8 +21,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import static com.atwoz.member.domain.info.profile.body.Gender.FEMALE;
+import static com.atwoz.member.domain.info.profile.body.Gender.MALE;
 
 @Getter
 @EqualsAndHashCode(of = "id", callSuper = false)
@@ -27,6 +34,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class MemberMissions extends BaseEntity {
+
+    private static final int MAN_DAILY_LIMIT = 2;
+    private static final int WOMAN_DAILY_LIMIT = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,17 +55,45 @@ public class MemberMissions extends BaseEntity {
                 .build();
     }
 
-    public void addMission(final MemberMission memberMission) {
+    public void addClearedMission(final Gender memberGender, final MemberMission memberMission) {
+        validateIsCanAddMission(memberGender, memberMission.getMission());
         this.memberMissions.add(memberMission);
     }
 
-    public void clearMission(final Long missionId) {
-        MemberMission targetMemberMission = this.memberMissions.stream()
-                .filter(memberMission -> memberMission.isSameMission(missionId))
-                .findAny()
-                .orElseThrow(MemberMissionNotFoundException::new);
+    private void validateIsCanAddMission(final Gender memberGender, final Mission mission) {
+        validateChallengeMission(mission);
+        validateDailyMission(memberGender, mission);
+    }
 
-        targetMemberMission.clearMission();
+    private void validateChallengeMission(final Mission mission) {
+        List<MemberMission> existedMission = extractChallengeMission(mission);
+
+        if (!existedMission.isEmpty()) {
+            throw new AlreadyChallengeMissionExistedException();
+        }
+    }
+
+    private List<MemberMission> extractChallengeMission(final Mission mission) {
+        return this.memberMissions.stream()
+                .filter(MemberMission::isChallengeMission)
+                .filter(memberMission -> memberMission.isSameMission(mission.getId()))
+                .toList();
+    }
+
+    private void validateDailyMission(final Gender memberGender, final Mission mission) {
+        List<MemberMission> existedMission = extractTodayDailyMissions(mission);
+
+        if ((memberGender == FEMALE && existedMission.size() >= WOMAN_DAILY_LIMIT) || (memberGender == MALE && existedMission.size() >= MAN_DAILY_LIMIT)) {
+            throw new AlreadyDailyMissionExistedLimitException();
+        }
+    }
+
+    private List<MemberMission> extractTodayDailyMissions(final Mission mission) {
+        return this.memberMissions.stream()
+                .filter(memberMission -> !memberMission.isChallengeMission())
+                .filter(memberMission -> memberMission.isSameMission(mission.getId()))
+                .filter(memberMission -> memberMission.getCreatedAt().isEqual(LocalDateTime.now()))
+                .toList();
     }
 
     public Integer receiveRewardBy(final Long missionId) {
@@ -64,13 +102,5 @@ public class MemberMissions extends BaseEntity {
                 .findAny()
                 .orElseThrow(MemberMissionNotFoundException::new)
                 .receiveReward();
-    }
-
-    public Integer receiveTotalClearedReward() {
-        return this.memberMissions.stream()
-                .filter(MemberMission::isStatusClear)
-                .filter(memberMission -> !memberMission.isDoesGetReward())
-                .mapToInt(MemberMission::receiveReward)
-                .sum();
     }
 }

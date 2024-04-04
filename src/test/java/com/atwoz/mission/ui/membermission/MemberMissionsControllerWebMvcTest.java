@@ -49,7 +49,6 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
                 mission.getId(),
                 memberMission.isDoesGetReward(),
-                memberMission.isStatusClear(),
                 mission.getReward());
         List<MemberMissionSimpleResponse> details = List.of(detail);
 
@@ -75,7 +74,6 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("memberMissions").description("회원 미션 목록"),
                                 fieldWithPath("memberMissions[].missionId").description("미션 id"),
                                 fieldWithPath("memberMissions[].doesGetReward").description("보상 가능 여부"),
-                                fieldWithPath("memberMissions[].isStatusClear").description("미션 클리어 여부"),
                                 fieldWithPath("memberMissions[].reward").description("미션 보상으로 받는 하트 개수"),
                                 fieldWithPath("nextPage").description("다음 페이지가 존재하면 1, 없다면 -1")
                         )
@@ -91,7 +89,6 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
                 mission.getId(),
                 memberMission.isDoesGetReward(),
-                memberMission.isStatusClear(),
                 mission.getReward());
         List<MemberMissionSimpleResponse> details = List.of(detail);
 
@@ -113,7 +110,6 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
                         responseFields(
                                 fieldWithPath("[].missionId").description("미션 id"),
                                 fieldWithPath("[].doesGetReward").description("보상 받음 여부"),
-                                fieldWithPath("[].isStatusClear").description("미션 클리어 여부"),
                                 fieldWithPath("[].reward").description("미션 보상으로 받는 하트 개수")
                         )
                 ));

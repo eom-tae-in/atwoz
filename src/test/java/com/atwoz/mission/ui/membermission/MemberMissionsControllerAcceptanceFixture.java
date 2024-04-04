@@ -1,6 +1,7 @@
 package com.atwoz.mission.ui.membermission;
 
 import com.atwoz.helper.IntegrationHelper;
+import com.atwoz.member.domain.info.profile.body.Gender;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
@@ -87,11 +88,12 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected void 회원_완료_미션_등록_보상_미수령() {
-        MemberMission memberMission = MemberMission.createDefault(미션_생성());
+        Mission mission = 미션_생성();
+
         MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
 
-        memberMissions.addMission(memberMission);
-        memberMissions.clearMission(memberMission.getMission().getId());
+        Gender memberGender = Gender.MALE;
+        memberMissions.addClearedMission(memberGender, MemberMission.createDefault(mission));
 
         memberMissionsRepository.save(memberMissions);
     }

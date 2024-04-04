@@ -66,4 +66,8 @@ public class Mission extends BaseEntity {
     public boolean isSameMission(final Long missionId) {
         return this.id.equals(missionId);
     }
+
+    public boolean isChallengeMission() {
+        return missionType == MissionType.CHALLENGE;
+    }
 }

@@ -1,6 +1,7 @@
 package com.atwoz.mission.intrastructure.membermission;
 
 import com.atwoz.helper.IntegrationHelper;
+import com.atwoz.member.domain.info.profile.body.Gender;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
@@ -38,19 +39,20 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
     void 회원_미션_목록_페이징_조회() {
         // given
         Long memberId = 1L;
+        Gender memberGender = Gender.FEMALE;
         List<MemberMission> memberMissionList = new ArrayList<>();
         MemberMissions memberMissions = MemberMissions.createWithMemberId(memberId);
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 3; i++) {
             Mission mission = 미션_생성_리워드_100_데일리_공개_id없음();
             missionRepository.save(mission);
             MemberMission memberMission = MemberMission.createDefault(mission);
-            memberMissions.addMission(memberMission);
+            memberMissions.addClearedMission(memberGender, memberMission);
             memberMissionList.add(memberMission);
         }
         memberMissionsRepository.save(memberMissions);
 
-        PageRequest pageRequest = PageRequest.of(0, 10);
+        PageRequest pageRequest = PageRequest.of(0, 3);
 
         // when
         Page<MemberMissionSimpleResponse> found = memberMissionQueryRepository.findMemberMissionsWithPaging(memberId, pageRequest);
@@ -58,18 +60,17 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
         // then
         List<MemberMissionSimpleResponse> expected = memberMissionList.stream()
                 .sorted(Comparator.comparing(MemberMission::getId).reversed())
-                .limit(10)
+                .limit(3)
                 .map(memberMission -> new MemberMissionSimpleResponse(
                         memberMission.getMission().getId(),
                         memberMission.isDoesGetReward(),
-                        memberMission.isStatusClear(),
                         memberMission.getMission().getReward()
                 ))
                 .toList();
 
         assertSoftly(softly -> {
-            softly.assertThat(found).hasSize(10);
-            softly.assertThat(found.hasNext()).isTrue();
+            softly.assertThat(found).hasSize(3);
+            softly.assertThat(found.hasNext()).isFalse();
             softly.assertThat(found.getContent())
                     .usingRecursiveComparison()
                     .ignoringFieldsOfTypes(LocalDateTime.class)
@@ -82,20 +83,16 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
         // given
         Long memberId = 1L;
         Boolean isClear = true;
-        Boolean doesGetReward = false;
+        Gender memberGender = Gender.FEMALE;
         List<MemberMission> memberMissionList = new ArrayList<>();
         MemberMissions memberMissions = MemberMissions.createWithMemberId(memberId);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             Mission mission = 미션_생성_리워드_100_데일리_공개_id없음();
             missionRepository.save(mission);
             MemberMission memberMission = MemberMission.createDefault(mission);
-            memberMissions.addMission(memberMission);
+            memberMissions.addClearedMission(memberGender, memberMission);
             memberMissionList.add(memberMission);
-        }
-
-        for (int i = 1; i <= 5; i++) {
-            memberMissions.clearMission((long) i);
         }
 
         memberMissionsRepository.save(memberMissions);
@@ -104,21 +101,19 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
         // when
         List<MemberMissionSimpleResponse> found = memberMissionQueryRepository.findMemberMissionsByStatus(memberId, isClear);
 
+
         // then
         List<MemberMissionSimpleResponse> expected = memberMissionList.stream()
                 .sorted(Comparator.comparing(MemberMission::getId).reversed())
-                .filter(memberMission -> isClear.equals(memberMission.isStatusClear()))
-                .filter(memberMission -> doesGetReward.equals(memberMission.isDoesGetReward()))
                 .map(memberMission -> new MemberMissionSimpleResponse(
                         memberMission.getMission().getId(),
                         memberMission.isDoesGetReward(),
-                        memberMission.isStatusClear(),
                         memberMission.getMission().getReward()
                 ))
                 .toList();
 
         assertSoftly(softly -> {
-            softly.assertThat(found).hasSize(5);
+            softly.assertThat(found).hasSize(3);
             softly.assertThat(found)
                     .usingRecursiveComparison()
                     .ignoringFieldsOfTypes(LocalDateTime.class)

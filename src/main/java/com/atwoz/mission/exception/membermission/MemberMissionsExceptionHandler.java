@@ -1,7 +1,8 @@
 package com.atwoz.mission.exception.membermission;
 
+import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
+import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;
-import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotClearException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionsNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,13 +23,18 @@ public class MemberMissionsExceptionHandler {
         return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MemberMissionNotClearException.class)
-    public ResponseEntity<String> handleMissionNotClearException(final MemberMissionNotClearException exception) {
+    @ExceptionHandler(MemberMissionAlreadyRewardedException.class)
+    public ResponseEntity<String> handleMemberMissionAlreadyRewardedException(final MemberMissionAlreadyRewardedException exception) {
         return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(MemberMissionAlreadyRewardedException.class)
-    public ResponseEntity<String> handleMemberMissionAlreadyRewardedException(final MemberMissionAlreadyRewardedException exception) {
+    @ExceptionHandler(AlreadyChallengeMissionExistedException.class)
+    public ResponseEntity<String> handleAlreadyChallengeMissionExistedException(final AlreadyChallengeMissionExistedException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AlreadyDailyMissionExistedLimitException.class)
+    public ResponseEntity<String> handleAlreadyDailyMissionExistedLimitException(final AlreadyDailyMissionExistedLimitException exception) {
         return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
