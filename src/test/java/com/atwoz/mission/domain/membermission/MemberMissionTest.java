@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료_데일리;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -21,7 +21,7 @@ class MemberMissionTest {
         @Test
         void 보상을_정상적으로_받는다() {
             // given
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
 
             // when
             Integer reward = memberMission.receiveReward();
@@ -36,7 +36,7 @@ class MemberMissionTest {
         @Test
         void 이미_보상을_받은_미션은_다시_보상받을_수_없다() {
             // given
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_완료();
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_완료_데일리();
 
             // when & then
             assertThatThrownBy(memberMission::receiveReward)

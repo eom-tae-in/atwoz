@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.when;
@@ -44,7 +44,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
     void 회원의_모든_미션_목록을_조회한다() throws Exception {
         // given
         String bearerToken = "Bearer token";
-        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
+        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
         Mission mission = memberMission.getMission();
         MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
                 mission.getId(),
@@ -84,7 +84,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
     void 회원의_클리어_여부에_따른_미션들을_조회한다() throws Exception {
         // given
         String bearerToken = "Bearer token";
-        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
+        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
         Mission mission = memberMission.getMission();
         MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
                 mission.getId(),

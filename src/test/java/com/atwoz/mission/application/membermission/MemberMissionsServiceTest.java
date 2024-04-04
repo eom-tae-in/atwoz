@@ -17,8 +17,8 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료_데일리;
 import static com.atwoz.mission.fixture.MemberMissionsFixture.멤버_미션들_생성;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +60,7 @@ class MemberMissionsServiceTest {
     @Test
     void 회원의_미션_목록에서_아직_보상을_수령하지_않은_특정_완료_미션의_보상을_수령한다() {
         // given
-        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
+        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
         MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
         memberMissionsRepository.save(memberMissions);
 
@@ -98,7 +98,7 @@ class MemberMissionsServiceTest {
             MemberMissions memberMissions = 멤버_미션들_생성();
             memberMissionsRepository.save(memberMissions);
 
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함();
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
             Mission mission = memberMission.getMission();
 
             // when & then
@@ -109,7 +109,7 @@ class MemberMissionsServiceTest {
         @Test
         void 이미_보상을_수령받은_미션을_다시_수령하면_예외가_발생한다() {
             // given
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_완료();
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_완료_데일리();
             MemberMissions memberMissions = 멤버_미션들_생성(memberMission);
             memberMissionsRepository.save(memberMissions);
 
