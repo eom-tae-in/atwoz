@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import static com.atwoz.member.domain.info.profile.body.Gender.FEMALE;
 import static com.atwoz.member.domain.info.profile.body.Gender.MALE;
 
@@ -37,6 +38,10 @@ public class MemberMissions extends BaseEntity {
 
     private static final int MAN_DAILY_LIMIT = 2;
     private static final int WOMAN_DAILY_LIMIT = 3;
+    private static final Map<Gender, Integer> GENDER_DAILY_LIMIT = Map.of(
+            MALE, MAN_DAILY_LIMIT,
+            FEMALE, WOMAN_DAILY_LIMIT
+    );
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +67,7 @@ public class MemberMissions extends BaseEntity {
 
     private void validateIsCanAddMission(final Gender memberGender, final Mission mission) {
         validateChallengeMission(mission);
-        validateDailyMission(memberGender, mission);
+        validateDailyMissionWithGender(memberGender, mission);
     }
 
     private void validateChallengeMission(final Mission mission) {
@@ -80,10 +85,10 @@ public class MemberMissions extends BaseEntity {
                 .toList();
     }
 
-    private void validateDailyMission(final Gender memberGender, final Mission mission) {
+    private void validateDailyMissionWithGender(final Gender memberGender, final Mission mission) {
         List<MemberMission> existedMission = extractTodayDailyMissions(mission);
 
-        if ((memberGender == FEMALE && existedMission.size() >= WOMAN_DAILY_LIMIT) || (memberGender == MALE && existedMission.size() >= MAN_DAILY_LIMIT)) {
+        if (existedMission.size() >= GENDER_DAILY_LIMIT.get(memberGender)) {
             throw new AlreadyDailyMissionExistedLimitException();
         }
     }
