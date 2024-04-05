@@ -10,8 +10,11 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_챌린지;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료_데일리;
@@ -85,6 +88,28 @@ class MemberMissionsTest {
         assertThat(memberMissions.getMemberMissions().size()).isEqualTo(beforeSize + 1);
     }
 
+    @ParameterizedTest(name = "성별이 [{0}]일 때 같은 날 데일리 미션을 {1}개 등록할 경우")
+    @MethodSource(value = "genderAndLimitData")
+    void 회원은_성별에_따라_같은날_같은_데일리_미션을_진행할_수_있는_최대_횟수가_다르다(final Gender gender, final Long max) {
+        // given
+        MemberMissions memberMissions = 멤버_미션들_생성();
+        for (long id = 1; id <= max; id++) {
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(id);
+            memberMissions.addClearedMission(gender, memberMission);
+        }
+
+        // when & then
+        assertThatThrownBy(() -> memberMissions.addClearedMission(gender, 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(max + 1)))
+                .isInstanceOf(AlreadyDailyMissionExistedLimitException.class);
+    }
+
+    static Stream<Arguments> genderAndLimitData() {
+        return Stream.of(
+                Arguments.of(Gender.MALE, 2L),
+                Arguments.of(Gender.FEMALE, 3L)
+        );
+    }
+
     @ParameterizedTest(name = "성별이 [{0}]인 경우")
     @EnumSource(value = Gender.class)
     void 챌린지_미션을_추가한다(final Gender gender) {
@@ -110,33 +135,5 @@ class MemberMissionsTest {
         // when & then
         assertThatThrownBy(() -> memberMissions.addClearedMission(gender, memberMission))
                 .isInstanceOf(AlreadyChallengeMissionExistedException.class);
-    }
-
-    @Test
-    void 남성_회원은_두번까지만_같은_날_데일리_미션을_진행할_수_있다() {
-        // given
-        MemberMissions memberMissions = 멤버_미션들_생성();
-        for (int id = 1; id <= 2; id++) {
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(id);
-            memberMissions.addClearedMission(Gender.MALE, memberMission);
-        }
-
-        // when & then
-        assertThatThrownBy(() -> memberMissions.addClearedMission(Gender.MALE, 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(3L)))
-                .isInstanceOf(AlreadyDailyMissionExistedLimitException.class);
-    }
-
-    @Test
-    void 여성_회원은_세번까지만_같은_날_데일리_미션을_진행할_수_있다() {
-        // given
-        MemberMissions memberMissions = 멤버_미션들_생성();
-        for (int id = 1; id <= 3; id++) {
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(id);
-            memberMissions.addClearedMission(Gender.FEMALE, memberMission);
-        }
-
-        // when & then
-        assertThatThrownBy(() -> memberMissions.addClearedMission(Gender.FEMALE, 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(4L)))
-                .isInstanceOf(AlreadyDailyMissionExistedLimitException.class);
     }
 }
