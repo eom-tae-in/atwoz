@@ -17,14 +17,3 @@ include::{snippets}/member-missions-controller-web-mvc-test/회원_미션_페이
 ==== 응답
 include::{snippets}/member-missions-controller-web-mvc-test/회원_미션_페이징조회/response-body.adoc[]
 include::{snippets}/member-missions-controller-web-mvc-test/회원_미션_페이징조회/response-fields.adoc[]
-
-=== 회원의 클리어 여부에 따른 미션 조회 (GET /api/members/me/missions/clear)
-
-==== 요청
-include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/http-request.adoc[]
-include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/request-headers.adoc[]
-include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/request-parts.adoc[]
-
-==== 응답
-include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/response-body.adoc[]
-include::{snippets}/member-missions-controller-web-mvc-test/회원_클리어_여부_미션_조회/response-fields.adoc[]
