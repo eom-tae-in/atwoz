@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 
 import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개_id없음;
+import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_200_챌린지_id없음;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -51,6 +52,10 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return missionRepository.save(미션_생성_리워드_100_데일리_공개_id없음());
     }
 
+    protected Mission 챌린지_미션_생성() {
+        return missionRepository.save(미션_생성_리워드_200_챌린지_id없음());
+    }
+
     protected ExtractableResponse 회원_미션을_페이징_조회한다(final String token, final String url) {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
@@ -70,6 +75,17 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
 
     protected void 회원_완료_미션_등록_보상_미수령() {
         Mission mission = 데일리_미션_생성();
+
+        MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
+
+        Gender memberGender = Gender.MALE;
+        memberMissions.addClearedMission(memberGender, MemberMission.createDefault(mission));
+
+        memberMissionsRepository.save(memberMissions);
+    }
+
+    protected void 회원_완료_미션_등록_보상_미수령_챌린지() {
+        Mission mission = 챌린지_미션_생성();
 
         MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
 

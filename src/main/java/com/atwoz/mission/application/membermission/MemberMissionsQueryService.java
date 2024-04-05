@@ -14,10 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberMissionsQueryService {
 
+    private static final int NEXT_PAGE_INDEX = 1;
+    private static final int NO_MORE_PAGE = -1;
+
     private final MemberMissionRepository memberMissionRepository;
 
     public MemberMissionPagingResponse findMemberMissionsWithPaging(final Long memberId, final Pageable pageable) {
         Page<MemberMissionSimpleResponse> response = memberMissionRepository.findMemberMissionsWithPaging(memberId, pageable);
-        return MemberMissionPagingResponse.of(response, pageable);
+        int nextPage = getNextPage(pageable.getPageNumber(), response);
+        return MemberMissionPagingResponse.of(response, nextPage);
+    }
+
+    private static int getNextPage(final int pageNumber, final Page<MemberMissionSimpleResponse> memberMissions) {
+        if (memberMissions.hasNext()) {
+            return pageNumber + NEXT_PAGE_INDEX;
+        }
+
+        return NO_MORE_PAGE;
     }
 }

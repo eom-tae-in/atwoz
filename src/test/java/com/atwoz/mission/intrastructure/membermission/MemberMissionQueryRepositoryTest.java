@@ -64,7 +64,9 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
                 .map(memberMission -> new MemberMissionSimpleResponse(
                         memberMission.getMission().getId(),
                         memberMission.isDoesGetReward(),
-                        memberMission.getMission().getReward()
+                        memberMission.getMission().getReward(),
+                        memberMission.getMission().getMissionType(),
+                        memberMission.getCreatedAt()
                 ))
                 .toList();
 

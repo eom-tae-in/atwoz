@@ -48,7 +48,9 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
                 mission.getId(),
                 memberMission.isDoesGetReward(),
-                mission.getReward());
+                mission.getReward(),
+                mission.getMissionType(),
+                memberMission.getCreatedAt());
         List<MemberMissionSimpleResponse> details = List.of(detail);
 
         when(memberMissionsQueryService.findMemberMissionsWithPaging(any(), any(Pageable.class)))
@@ -57,7 +59,7 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
         // when & then
         mockMvc.perform(get("/api/members/me/missions")
                 .param("page", "0")
-                .param("size", "10")
+                .param("size", "2")
                 .header(AUTHORIZATION, bearerToken))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -74,6 +76,8 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("memberMissions[].missionId").description("미션 id"),
                                 fieldWithPath("memberMissions[].doesGetReward").description("보상 가능 여부"),
                                 fieldWithPath("memberMissions[].reward").description("미션 보상으로 받는 하트 개수"),
+                                fieldWithPath("memberMissions[].missionType").description("미션 타입 (챌린지, 데일리)"),
+                                fieldWithPath("memberMissions[].createdAt").description("회원 미션 완료 날짜"),
                                 fieldWithPath("nextPage").description("다음 페이지가 존재하면 1, 없다면 -1")
                         )
                 ));

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcceptanceFixture {
 
-    private static final String 회원_미션_페이징_url = "/api/members/me/missions?page=0&size=10";
+    private static final String 회원_미션_페이징_url = "/api/members/me/missions?page=0&size=2";
 
     private Member 회원;
     private String 토큰;
@@ -27,6 +27,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
         for (int i = 0; i < 2; i++) {
             회원_완료_미션_등록_보상_미수령();
         }
+        회원_완료_미션_등록_보상_미수령_챌린지();
 
         // when
         var 회원_미션_페이징_조회_결과 = 회원_미션을_페이징_조회한다(토큰, 회원_미션_페이징_url);

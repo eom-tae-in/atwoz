@@ -24,7 +24,9 @@ public class MemberMissionQueryRepository {
                         constructor(MemberMissionSimpleResponse.class,
                                 memberMission.mission.id,
                                 memberMission.doesGetReward,
-                                memberMission.mission.reward)
+                                memberMission.mission.reward,
+                                memberMission.mission.missionType,
+                                memberMission.createdAt)
                 ).from(memberMission)
                 .innerJoin(memberMissions1)
                 .on(memberMissions1.memberMissions.contains(memberMission))
