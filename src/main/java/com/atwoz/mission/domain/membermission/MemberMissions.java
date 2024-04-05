@@ -71,6 +71,10 @@ public class MemberMissions extends BaseEntity {
     }
 
     private void validateChallengeMission(final Mission mission) {
+        if (!mission.isChallengeMission()) {
+            return;
+        }
+
         List<MemberMission> existedMission = extractChallengeMission(mission);
 
         if (!existedMission.isEmpty()) {
@@ -86,6 +90,10 @@ public class MemberMissions extends BaseEntity {
     }
 
     private void validateDailyMissionWithGender(final Gender memberGender, final Mission mission) {
+        if (mission.isChallengeMission()) {
+            return;
+        }
+
         List<MemberMission> existedMission = extractTodayDailyMissions(mission);
 
         if (existedMission.size() >= GENDER_DAILY_LIMIT.get(memberGender)) {
