@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_미션_시간있음;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개_id없음;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_200_챌린지_id없음;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -74,23 +75,17 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected void 회원_완료_미션_등록_보상_미수령() {
-        Mission mission = 데일리_미션_생성();
-
         MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
 
         Gender memberGender = Gender.MALE;
-        memberMissions.addClearedMission(memberGender, MemberMission.createDefault(mission));
+        Mission dailyMission = 데일리_미션_생성();
+        Mission challengeMission = 챌린지_미션_생성();
 
-        memberMissionsRepository.save(memberMissions);
-    }
-
-    protected void 회원_완료_미션_등록_보상_미수령_챌린지() {
-        Mission mission = 챌린지_미션_생성();
-
-        MemberMissions memberMissions = MemberMissions.createWithMemberId(1L);
-
-        Gender memberGender = Gender.MALE;
-        memberMissions.addClearedMission(memberGender, MemberMission.createDefault(mission));
+        for (int i = 0; i < 2; i++) {
+            MemberMission dailyMemberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리_미션_시간있음(dailyMission);
+            memberMissions.addClearedMission(memberGender, dailyMemberMission);
+        }
+        memberMissions.addClearedMission(memberGender, MemberMission.createDefault(challengeMission));
 
         memberMissionsRepository.save(memberMissions);
     }

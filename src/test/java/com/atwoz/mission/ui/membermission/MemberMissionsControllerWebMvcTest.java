@@ -14,9 +14,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.List;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -43,15 +44,18 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
     void 회원의_모든_미션_목록을_조회한다() throws Exception {
         // given
         String bearerToken = "Bearer token";
-        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
-        Mission mission = memberMission.getMission();
-        MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
-                mission.getId(),
-                memberMission.isDoesGetReward(),
-                mission.getReward(),
-                mission.getMissionType(),
-                memberMission.getCreatedAt());
-        List<MemberMissionSimpleResponse> details = List.of(detail);
+        List<MemberMissionSimpleResponse> details = new ArrayList<>();
+        for (long id = 1; id <= 2; id++) {
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음(id);
+            Mission mission = memberMission.getMission();
+            MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
+                    mission.getId(),
+                    memberMission.isDoesGetReward(),
+                    mission.getReward(),
+                    mission.getMissionType(),
+                    memberMission.getCreatedAt());
+            details.add(detail);
+        }
 
         when(memberMissionsQueryService.findMemberMissionsWithPaging(any(), any(Pageable.class)))
                 .thenReturn(new MemberMissionPagingResponse(details, 1));
