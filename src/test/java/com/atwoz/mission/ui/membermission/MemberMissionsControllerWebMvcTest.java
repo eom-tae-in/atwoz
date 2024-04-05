@@ -18,7 +18,6 @@ import java.util.List;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -76,41 +75,6 @@ class MemberMissionsControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("memberMissions[].doesGetReward").description("보상 가능 여부"),
                                 fieldWithPath("memberMissions[].reward").description("미션 보상으로 받는 하트 개수"),
                                 fieldWithPath("nextPage").description("다음 페이지가 존재하면 1, 없다면 -1")
-                        )
-                ));
-    }
-
-    @Test
-    void 회원의_클리어_여부에_따른_미션들을_조회한다() throws Exception {
-        // given
-        String bearerToken = "Bearer token";
-        MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리();
-        Mission mission = memberMission.getMission();
-        MemberMissionSimpleResponse detail = new MemberMissionSimpleResponse(
-                mission.getId(),
-                memberMission.isDoesGetReward(),
-                mission.getReward());
-        List<MemberMissionSimpleResponse> details = List.of(detail);
-
-        when(memberMissionsQueryService.findMemberMissionsByStatus(any(), anyBoolean())).thenReturn(details);
-
-        // when & then
-        mockMvc.perform(get("/api/members/me/missions/clear")
-                .param("status", "true")
-                .header(AUTHORIZATION, bearerToken))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(customDocument("회원_클리어_여부_미션_조회",
-                        requestHeaders(
-                                headerWithName(AUTHORIZATION).description("유저 토큰 정보")
-                        ),
-                        requestParts(
-                                partWithName("status").description("클리어 여부 (default: false)").optional()
-                        ),
-                        responseFields(
-                                fieldWithPath("[].missionId").description("미션 id"),
-                                fieldWithPath("[].doesGetReward").description("보상 받음 여부"),
-                                fieldWithPath("[].reward").description("미션 보상으로 받는 하트 개수")
                         )
                 ));
     }

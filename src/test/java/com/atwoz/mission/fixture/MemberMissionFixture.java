@@ -40,13 +40,4 @@ public class MemberMissionFixture {
                 .mission(미션_생성_리워드_200_챌린지_공개())
                 .build();
     }
-
-    public static MemberMission 멤버_미션_생성_완료_보상_수령_완료_챌린지() {
-        return MemberMission.builder()
-                .id(1L)
-                .doesGetReward(true)
-                .mission(미션_생성_리워드_200_챌린지_공개())
-                .build();
-    }
-
 }

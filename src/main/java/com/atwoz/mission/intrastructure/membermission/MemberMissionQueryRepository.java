@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import static com.atwoz.mission.domain.membermission.QMemberMission.memberMission;
 import static com.atwoz.mission.domain.membermission.QMemberMissions.memberMissions1;
 import static com.querydsl.core.types.Projections.constructor;
@@ -36,19 +35,5 @@ public class MemberMissionQueryRepository {
                 .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
-    }
-
-    public List<MemberMissionSimpleResponse> findMemberMissionsByStatus(final Long memberId, final boolean isStatusClear) {
-        return jpaQueryFactory.select(
-                        constructor(MemberMissionSimpleResponse.class,
-                                memberMission.mission.id,
-                                memberMission.doesGetReward,
-                                memberMission.mission.reward)
-                ).from(memberMission)
-                .innerJoin(memberMissions1)
-                .on(memberMissions1.memberMissions.contains(memberMission))
-                .where(memberMissions1.memberId.eq(memberId))
-                .orderBy(memberMission.id.desc())
-                .fetch();
     }
 }

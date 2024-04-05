@@ -77,47 +77,4 @@ class MemberMissionQueryRepositoryTest extends IntegrationHelper {
                     .isEqualTo(expected);
         });
     }
-
-    @Test
-    void 회원_미션_목록_클리어_여부_조회() {
-        // given
-        Long memberId = 1L;
-        Boolean isClear = true;
-        Gender memberGender = Gender.FEMALE;
-        List<MemberMission> memberMissionList = new ArrayList<>();
-        MemberMissions memberMissions = MemberMissions.createWithMemberId(memberId);
-
-        for (int i = 0; i < 3; i++) {
-            Mission mission = 미션_생성_리워드_100_데일리_공개_id없음();
-            missionRepository.save(mission);
-            MemberMission memberMission = MemberMission.createDefault(mission);
-            memberMissions.addClearedMission(memberGender, memberMission);
-            memberMissionList.add(memberMission);
-        }
-
-        memberMissionsRepository.save(memberMissions);
-
-
-        // when
-        List<MemberMissionSimpleResponse> found = memberMissionQueryRepository.findMemberMissionsByStatus(memberId, isClear);
-
-
-        // then
-        List<MemberMissionSimpleResponse> expected = memberMissionList.stream()
-                .sorted(Comparator.comparing(MemberMission::getId).reversed())
-                .map(memberMission -> new MemberMissionSimpleResponse(
-                        memberMission.getMission().getId(),
-                        memberMission.isDoesGetReward(),
-                        memberMission.getMission().getReward()
-                ))
-                .toList();
-
-        assertSoftly(softly -> {
-            softly.assertThat(found).hasSize(3);
-            softly.assertThat(found)
-                    .usingRecursiveComparison()
-                    .ignoringFieldsOfTypes(LocalDateTime.class)
-                    .isEqualTo(expected);
-        });
-    }
 }
