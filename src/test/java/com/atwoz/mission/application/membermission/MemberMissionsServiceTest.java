@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료_데일리;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_안함_데일리_id_시간있음;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음;
 import static com.atwoz.mission.fixture.MemberMissionsFixture.멤버_미션들_생성;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개_id없음;
@@ -136,14 +136,14 @@ class MemberMissionsServiceTest {
             // given
             MemberMissions memberMissions = 멤버_미션들_생성();
             memberMissionsRepository.save(memberMissions);
-            missionRepository.save(미션_생성_리워드_100_데일리_공개());
+            Mission savedMission = missionRepository.save(미션_생성_리워드_100_데일리_공개());
 
             for (long id = 1; id <= max; id++) {
-                memberMissions.addClearedMission(gender, 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(id));
+                memberMissions.addClearedMission(gender, 멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음(id));
             }
 
             // when & then
-            assertThatThrownBy(() -> memberMissionsService.addClearedMemberMission(memberMissions.getMemberId(), gender, max + 1))
+            assertThatThrownBy(() -> memberMissionsService.addClearedMemberMission(memberMissions.getMemberId(), gender, savedMission.getId()))
                     .isInstanceOf(AlreadyDailyMissionExistedLimitException.class);
         }
 
