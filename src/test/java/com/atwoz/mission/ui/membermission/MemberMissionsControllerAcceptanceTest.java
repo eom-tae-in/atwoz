@@ -24,7 +24,9 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     @Test
     void 회원의_미션_목록을_페이징_조회한다() {
         // given
-        회원_완료_미션_등록_보상_미수령();
+        for (int i = 0; i < 2; i++) {
+            회원_완료_미션_등록_보상_미수령();
+        }
 
         // when
         var 회원_미션_페이징_조회_결과 = 회원_미션을_페이징_조회한다(토큰, 회원_미션_페이징_url);
