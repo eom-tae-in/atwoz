@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_챌린지;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_완료_데일리;
-import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_안함_데일리_id_시간있음;
+import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음;
 import static com.atwoz.mission.fixture.MemberMissionsFixture.멤버_미션들_생성;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -94,12 +94,12 @@ class MemberMissionsTest {
         // given
         MemberMissions memberMissions = 멤버_미션들_생성();
         for (long id = 1; id <= max; id++) {
-            MemberMission memberMission = 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(id);
+            MemberMission memberMission = 멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음(id);
             memberMissions.addClearedMission(gender, memberMission);
         }
 
         // when & then
-        assertThatThrownBy(() -> memberMissions.addClearedMission(gender, 멤버_미션_생성_완료_보상_안함_데일리_id_시간있음(max + 1)))
+        assertThatThrownBy(() -> memberMissions.addClearedMission(gender, 멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음(max + 1)))
                 .isInstanceOf(AlreadyDailyMissionExistedLimitException.class);
     }
 
