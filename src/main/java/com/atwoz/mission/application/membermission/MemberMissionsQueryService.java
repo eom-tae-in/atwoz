@@ -25,7 +25,7 @@ public class MemberMissionsQueryService {
         return MemberMissionPagingResponse.of(response, nextPage);
     }
 
-    private static int getNextPage(final int pageNumber, final Page<MemberMissionSimpleResponse> memberMissions) {
+    private int getNextPage(final int pageNumber, final Page<MemberMissionSimpleResponse> memberMissions) {
         if (memberMissions.hasNext()) {
             return pageNumber + NEXT_PAGE_INDEX;
         }
