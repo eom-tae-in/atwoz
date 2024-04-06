@@ -75,18 +75,13 @@ public class MemberMissions extends BaseEntity {
             return;
         }
 
-        List<MemberMission> existedMission = extractChallengeMission(mission);
-
-        if (!existedMission.isEmpty()) {
-            throw new AlreadyChallengeMissionExistedException();
-        }
-    }
-
-    private List<MemberMission> extractChallengeMission(final Mission mission) {
-        return this.memberMissions.stream()
+        this.memberMissions.stream()
                 .filter(MemberMission::isChallengeMission)
                 .filter(memberMission -> memberMission.isSameMission(mission.getId()))
-                .toList();
+                .findAny()
+                .ifPresent(memberMission -> {
+                    throw new AlreadyChallengeMissionExistedException();
+                });
     }
 
     private void validateDailyMissionWithGender(final Gender memberGender, final Mission mission) {
@@ -94,19 +89,19 @@ public class MemberMissions extends BaseEntity {
             return;
         }
 
-        List<MemberMission> existedMission = extractTodayDailyMissions(mission);
-
-        if (existedMission.size() >= GENDER_DAILY_LIMIT.get(memberGender)) {
+        int existedMissionsSize = extractTodayDailyMissionsSize(mission);
+        if (existedMissionsSize >= GENDER_DAILY_LIMIT.get(memberGender)) {
             throw new AlreadyDailyMissionExistedLimitException();
         }
     }
 
-    private List<MemberMission> extractTodayDailyMissions(final Mission mission) {
+    private int extractTodayDailyMissionsSize(final Mission mission) {
         return this.memberMissions.stream()
                 .filter(memberMission -> !memberMission.isChallengeMission())
                 .filter(memberMission -> memberMission.isSameMission(mission.getId()))
                 .filter(memberMission -> memberMission.isSameDayCreated(LocalDateTime.now()))
-                .toList();
+                .toList()
+                .size();
     }
 
     public Integer receiveRewardBy(final Long missionId) {
