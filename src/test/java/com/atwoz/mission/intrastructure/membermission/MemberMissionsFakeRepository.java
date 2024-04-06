@@ -11,18 +11,17 @@ public class MemberMissionsFakeRepository implements MemberMissionsRepository {
 
     private final Map<Long, MemberMissions> map = new HashMap<>();
 
-    private Long id = 0L;
+    private Long id = 1L;
 
     @Override
     public MemberMissions save(final MemberMissions memberMissions) {
-        id++;
         MemberMissions newMemberMissions = MemberMissions.builder()
                 .id(id)
                 .memberId(memberMissions.getMemberId())
                 .memberMissions(memberMissions.getMemberMissions())
                 .build();
         map.put(id, newMemberMissions);
-
+        id++;
         return newMemberMissions;
     }
 
