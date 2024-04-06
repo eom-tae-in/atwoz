@@ -61,11 +61,11 @@ public class MemberMissions extends BaseEntity {
     }
 
     public void addClearedMission(final Gender memberGender, final MemberMission memberMission) {
-        validateIsCanAddMission(memberGender, memberMission.getMission());
+        validateCanAddMission(memberGender, memberMission.getMission());
         this.memberMissions.add(memberMission);
     }
 
-    private void validateIsCanAddMission(final Gender memberGender, final Mission mission) {
+    private void validateCanAddMission(final Gender memberGender, final Mission mission) {
         validateChallengeMission(mission);
         validateDailyMissionWithGender(memberGender, mission);
     }
