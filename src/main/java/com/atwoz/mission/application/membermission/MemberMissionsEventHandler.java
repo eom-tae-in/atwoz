@@ -12,7 +12,7 @@ public class MemberMissionsEventHandler {
     private final MemberMissionsService memberMissionsService;
 
     @EventListener
-    public void addClearedMemberMission(final MemberMissionClearedEvent event) {
+    public void addedClearedMemberMission(final MemberMissionClearedEvent event) {
         memberMissionsService.addClearedMemberMission(event.memberId(), event.memberGender(), event.missionId());
     }
 }
