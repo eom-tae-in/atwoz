@@ -105,7 +105,7 @@ public class MemberMissions extends BaseEntity {
         return this.memberMissions.stream()
                 .filter(memberMission -> !memberMission.isChallengeMission())
                 .filter(memberMission -> memberMission.isSameMission(mission.getId()))
-                .filter(memberMission -> memberMission.getCreatedAt().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
+                .filter(memberMission -> memberMission.isSameDayCreated(LocalDateTime.now()))
                 .toList();
     }
 

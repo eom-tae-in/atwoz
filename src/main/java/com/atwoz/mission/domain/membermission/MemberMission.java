@@ -16,6 +16,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @EqualsAndHashCode(of = "id", callSuper = false)
 @SuperBuilder
@@ -64,5 +67,10 @@ public class MemberMission extends BaseEntity {
         if (doesGetReward) {
             throw new MemberMissionAlreadyRewardedException();
         }
+    }
+
+    public boolean isSameDayCreated(final LocalDateTime localDateTime) {
+        LocalDate createdDate = getCreatedAt().toLocalDate();
+        return createdDate.equals(localDateTime.toLocalDate());
     }
 }
