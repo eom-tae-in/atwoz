@@ -1,6 +1,6 @@
 package com.atwoz.mission.application.membermission;
 
-import com.atwoz.mission.domain.membermission.MemberMissionRepository;
+import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionSimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,10 @@ public class MemberMissionsQueryService {
     private static final int NEXT_PAGE_INDEX = 1;
     private static final int NO_MORE_PAGE = -1;
 
-    private final MemberMissionRepository memberMissionRepository;
+    private final MemberMissionsRepository memberMissionsRepository;
 
     public MemberMissionPagingResponse findMemberMissionsWithPaging(final Long memberId, final Pageable pageable) {
-        Page<MemberMissionSimpleResponse> response = memberMissionRepository.findMemberMissionsWithPaging(memberId, pageable);
+        Page<MemberMissionSimpleResponse> response = memberMissionsRepository.findMemberMissionsWithPaging(memberId, pageable);
         int nextPage = getNextPage(pageable.getPageNumber(), response);
         return MemberMissionPagingResponse.of(response, nextPage);
     }

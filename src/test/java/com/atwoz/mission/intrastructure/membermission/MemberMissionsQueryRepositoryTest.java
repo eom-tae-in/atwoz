@@ -24,10 +24,10 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class MemberMissionQueryRepositoryTest extends IntegrationHelper {
+class MemberMissionsQueryRepositoryTest extends IntegrationHelper {
 
     @Autowired
-    private MemberMissionQueryRepository memberMissionQueryRepository;
+    private MemberMissionsQueryRepository memberMissionQueryRepository;
 
     @Autowired
     private MemberMissionsRepository memberMissionsRepository;

@@ -15,7 +15,7 @@ import static com.querydsl.core.types.Projections.constructor;
 
 @RequiredArgsConstructor
 @Repository
-public class MemberMissionQueryRepository {
+public class MemberMissionsQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
@@ -27,8 +27,8 @@ public class MemberMissionQueryRepository {
                                 memberMission.mission.reward,
                                 memberMission.mission.missionType,
                                 memberMission.createdAt)
-                ).from(memberMission)
-                .innerJoin(memberMissions1)
+                ).from(memberMissions1)
+                .innerJoin(memberMission)
                 .on(memberMissions1.memberMissions.contains(memberMission))
                 .where(memberMissions1.memberId.eq(memberId))
                 .orderBy(memberMission.id.desc())
