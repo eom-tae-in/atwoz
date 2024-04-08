@@ -23,10 +23,10 @@ import com.atwoz.member.exception.exceptions.member.profile.InvalidProfileAccess
 import com.atwoz.member.exception.exceptions.member.profile.InvalidReligionException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidSmokeException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
+import com.atwoz.member.exception.exceptions.member.profile.LatitudeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.LongitudeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleSizeException;
-import com.atwoz.member.exception.exceptions.member.profile.contact.LatitudeRangeException;
-import com.atwoz.member.exception.exceptions.member.profile.contact.LongitudeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
 import org.springframework.http.HttpStatus;

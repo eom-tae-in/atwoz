@@ -1,4 +1,4 @@
-package com.atwoz.member.exception.exceptions.member.profile.contact;
+package com.atwoz.member.exception.exceptions.member.profile;
 
 public class LongitudeRangeException extends RuntimeException {
 

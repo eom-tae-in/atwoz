@@ -1,8 +1,8 @@
 package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Position;
-import com.atwoz.member.exception.exceptions.member.profile.contact.LatitudeRangeException;
-import com.atwoz.member.exception.exceptions.member.profile.contact.LongitudeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.LatitudeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.LongitudeRangeException;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
