@@ -1,6 +1,6 @@
 package com.atwoz.member.infrastructure.member.physical_profile;
 
-import com.atwoz.member.domain.member.profile.physical_profile.YearManager;
+import com.atwoz.member.domain.member.profile.physical.YearManager;
 
 public class FakeYearManager implements YearManager {
 

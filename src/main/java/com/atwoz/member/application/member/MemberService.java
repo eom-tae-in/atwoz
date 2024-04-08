@@ -6,7 +6,7 @@ import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.domain.member.dto.MemberProfileInfo;
-import com.atwoz.member.domain.member.profile.physical_profile.YearManager;
+import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;

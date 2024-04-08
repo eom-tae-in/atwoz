@@ -1,7 +1,7 @@
 package com.atwoz.mission.domain.membermission;
 
 import com.atwoz.global.domain.BaseEntity;
-import com.atwoz.member.domain.member.profile.physical_profile.Gender;
+import com.atwoz.member.domain.member.profile.physical.Gender;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
@@ -25,8 +25,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static com.atwoz.member.domain.member.profile.physical_profile.Gender.FEMALE;
-import static com.atwoz.member.domain.member.profile.physical_profile.Gender.MALE;
+import static com.atwoz.member.domain.member.profile.physical.Gender.FEMALE;
+import static com.atwoz.member.domain.member.profile.physical.Gender.MALE;
 
 @Getter
 @EqualsAndHashCode(of = "id", callSuper = false)

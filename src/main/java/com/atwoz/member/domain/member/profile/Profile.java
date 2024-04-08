@@ -1,7 +1,7 @@
 package com.atwoz.member.domain.member.profile;
 
 import com.atwoz.member.domain.member.dto.MemberProfileInfo;
-import com.atwoz.member.domain.member.profile.physical_profile.PhysicalProfile;
+import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

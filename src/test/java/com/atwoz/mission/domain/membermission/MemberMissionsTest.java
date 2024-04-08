@@ -1,6 +1,6 @@
 package com.atwoz.mission.domain.membermission;
 
-import com.atwoz.member.domain.info.profile.body.Gender;
+import com.atwoz.member.domain.member.profile.physical.Gender;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;

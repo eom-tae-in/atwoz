@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.member.profile.physical_profile;
+package com.atwoz.member.domain.member.profile.physical;
 
 import com.atwoz.member.domain.member.dto.PhysicalProfileInfo;
 import com.atwoz.member.exception.exceptions.member.profile.physical_profile.AgeRangeException;

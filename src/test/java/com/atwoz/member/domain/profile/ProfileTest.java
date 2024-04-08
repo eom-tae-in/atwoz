@@ -5,7 +5,7 @@ import com.atwoz.member.domain.member.dto.MemberProfileInfo;
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.Profile;
 import com.atwoz.member.domain.member.profile.Style;
-import com.atwoz.member.domain.member.profile.physical_profile.YearManager;
+import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;

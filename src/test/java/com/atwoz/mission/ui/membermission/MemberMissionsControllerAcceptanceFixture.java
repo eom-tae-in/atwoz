@@ -1,9 +1,9 @@
 package com.atwoz.mission.ui.membermission;
 
 import com.atwoz.helper.IntegrationHelper;
-import com.atwoz.member.domain.info.profile.body.Gender;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.domain.member.profile.physical.Gender;
 import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
@@ -45,8 +45,8 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return memberRepository.save(일반_유저_생성());
     }
 
-    protected String 토큰_생성(final String email) {
-        return jwtTokenProvider.createTokenWith(email);
+    protected String 토큰_생성(final String phoneNumber) {
+        return jwtTokenProvider.createTokenWith(phoneNumber);
     }
 
     protected Mission 데일리_미션_생성() {

@@ -1,6 +1,6 @@
 package com.atwoz.member.infrastructure.member;
 
-import com.atwoz.member.domain.member.profile.physical_profile.YearManager;
+import com.atwoz.member.domain.member.profile.physical.YearManager;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 

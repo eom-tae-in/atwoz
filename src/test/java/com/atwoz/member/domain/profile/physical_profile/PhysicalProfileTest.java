@@ -1,8 +1,8 @@
 package com.atwoz.member.domain.profile.physical_profile;
 
 import com.atwoz.member.domain.member.dto.PhysicalProfileInfo;
-import com.atwoz.member.domain.member.profile.physical_profile.PhysicalProfile;
-import com.atwoz.member.domain.member.profile.physical_profile.YearManager;
+import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
+import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.exception.exceptions.member.profile.physical_profile.AgeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.physical_profile.HeightRangeException;
 import com.atwoz.member.infrastructure.member.physical_profile.FakeYearManager;

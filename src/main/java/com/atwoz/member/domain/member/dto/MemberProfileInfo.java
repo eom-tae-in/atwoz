@@ -2,7 +2,7 @@ package com.atwoz.member.domain.member.dto;
 
 import com.atwoz.member.application.member.dto.ProfileInitializeRequest;
 import com.atwoz.member.application.member.dto.ProfileUpdateRequest;
-import com.atwoz.member.domain.member.profile.physical_profile.YearManager;
+import com.atwoz.member.domain.member.profile.physical.YearManager;
 import java.util.List;
 import lombok.Builder;
 

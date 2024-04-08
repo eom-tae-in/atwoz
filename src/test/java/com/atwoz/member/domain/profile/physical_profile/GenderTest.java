@@ -1,6 +1,6 @@
 package com.atwoz.member.domain.profile.physical_profile;
 
-import com.atwoz.member.domain.member.profile.physical_profile.Gender;
+import com.atwoz.member.domain.member.profile.physical.Gender;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidGenderException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
