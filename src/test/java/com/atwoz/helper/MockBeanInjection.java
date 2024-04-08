@@ -13,6 +13,8 @@ import com.atwoz.member.ui.auth.support.auth.AuthenticationContext;
 import com.atwoz.member.ui.auth.support.auth.OAuthProperties;
 import com.atwoz.member.ui.auth.support.resolver.AuthArgumentResolver;
 import com.atwoz.member.ui.auth.support.resolver.OAuthArgumentResolver;
+import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
+import com.atwoz.mission.application.membermission.MemberMissionsService;
 import com.atwoz.mission.application.mission.MissionQueryService;
 import com.atwoz.mission.application.mission.MissionService;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -65,4 +67,10 @@ public class MockBeanInjection {
 
     @MockBean
     protected MissionQueryService missionQueryService;
+
+    @MockBean
+    protected MemberMissionsService memberMissionsService;
+
+    @MockBean
+    protected MemberMissionsQueryService memberMissionsQueryService;
 }

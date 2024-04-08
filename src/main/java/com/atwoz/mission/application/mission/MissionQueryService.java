@@ -4,7 +4,7 @@ import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
 import com.atwoz.mission.domain.mission.dto.MissionPagingResponse;
 import com.atwoz.mission.domain.mission.dto.MissionSimpleResponse;
-import com.atwoz.mission.exception.MissionNotFoundException;
+import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

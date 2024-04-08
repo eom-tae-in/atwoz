@@ -1,9 +1,8 @@
 package com.atwoz.mission.domain.mission;
 
-import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.vo.MissionType;
 import com.atwoz.mission.domain.mission.vo.PublicOption;
-import com.atwoz.mission.exception.RewardValueInvalidException;
+import com.atwoz.mission.exception.mission.exceptions.RewardValueInvalidException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

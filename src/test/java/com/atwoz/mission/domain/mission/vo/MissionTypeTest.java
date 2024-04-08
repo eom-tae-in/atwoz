@@ -1,6 +1,6 @@
 package com.atwoz.mission.domain.mission.vo;
 
-import com.atwoz.mission.exception.MissionTypeInvalidException;
+import com.atwoz.mission.exception.mission.exceptions.MissionTypeInvalidException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

@@ -24,4 +24,23 @@ public class MissionFixture {
                 .publicOption(PublicOption.PUBLIC)
                 .build();
     }
+
+    public static Mission 미션_생성_리워드_200_챌린지_공개() {
+        return Mission.builder()
+                .id(1L)
+                .title("challenge")
+                .reward(200)
+                .missionType(MissionType.CHALLENGE)
+                .publicOption(PublicOption.PUBLIC)
+                .build();
+    }
+
+    public static Mission 미션_생성_리워드_200_챌린지_id없음() {
+        return Mission.builder()
+                .title("challenge")
+                .reward(200)
+                .missionType(MissionType.CHALLENGE)
+                .publicOption(PublicOption.PUBLIC)
+                .build();
+    }
 }

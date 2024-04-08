@@ -2,7 +2,7 @@ package com.atwoz.mission.application.mission;
 
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
-import com.atwoz.mission.exception.MissionNotFoundException;
+import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
 import com.atwoz.mission.intrastructure.mission.MissionFakeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;

@@ -1,7 +1,11 @@
 package com.atwoz.mission.application.membermission;
 
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
+import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
+import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionSimpleResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,21 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberMissionsQueryService {
 
-    // TODO : MemberMissionsQueryService 완성하기
+    private static final int NEXT_PAGE_INDEX = 1;
+    private static final int NO_MORE_PAGE = -1;
 
     private final MemberMissionsRepository memberMissionsRepository;
 
-    public void findMemberMissionsWithPaging() {
-
+    public MemberMissionPagingResponse findMemberMissionsWithPaging(final Long memberId, final Pageable pageable) {
+        Page<MemberMissionSimpleResponse> response = memberMissionsRepository.findMemberMissionsWithPaging(memberId, pageable);
+        int nextPage = getNextPage(pageable.getPageNumber(), response);
+        return MemberMissionPagingResponse.of(response, nextPage);
     }
 
-    public void findMissionsByStatus(final boolean isStatusClear) {
-        if (isStatusClear) {
-            // TODO
-            return;
+    private int getNextPage(final int pageNumber, final Page<MemberMissionSimpleResponse> memberMissions) {
+        if (memberMissions.hasNext()) {
+            return pageNumber + NEXT_PAGE_INDEX;
         }
 
-        // TODO
-        return;
+        return NO_MORE_PAGE;
     }
 }

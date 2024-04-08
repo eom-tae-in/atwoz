@@ -12,8 +12,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
-
-import static com.atwoz.member.ui.auth.interceptor.HttpMethod.ANY;
 import static com.atwoz.member.ui.auth.interceptor.HttpMethod.DELETE;
 import static com.atwoz.member.ui.auth.interceptor.HttpMethod.GET;
 import static com.atwoz.member.ui.auth.interceptor.HttpMethod.OPTIONS;
@@ -37,7 +35,8 @@ public class AuthConfig implements WebMvcConfigurer {
     private HandlerInterceptor parseMemberIdFromTokenInterceptor() {
         return new PathMatcherInterceptor(parseMemberIdFromTokenInterceptor)
                 .excludePathPattern("/**", OPTIONS)
-                .addPathPatterns("/api/info/**", ANY);
+                .addPathPatterns("/api/info/**", GET, POST, PATCH)
+                .addPathPatterns("/api/members/me/missions/**", GET, POST, PATCH);
     }
 
     /**

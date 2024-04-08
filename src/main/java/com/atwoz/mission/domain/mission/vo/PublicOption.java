@@ -1,6 +1,6 @@
 package com.atwoz.mission.domain.mission.vo;
 
-import com.atwoz.mission.exception.PublicOptionInvalidException;
+import com.atwoz.mission.exception.mission.exceptions.PublicOptionInvalidException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
