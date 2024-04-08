@@ -1,4 +1,4 @@
-package com.atwoz.member.infrastructure.member.physical_profile;
+package com.atwoz.member.infrastructure.member.physical;
 
 import com.atwoz.member.domain.member.profile.physical.YearManager;
 

@@ -12,7 +12,7 @@ import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyExceptio
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleSizeException;
-import com.atwoz.member.infrastructure.member.physical_profile.FakeYearManager;
+import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;

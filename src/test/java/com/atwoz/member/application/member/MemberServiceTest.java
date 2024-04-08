@@ -9,7 +9,7 @@ import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExisted
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
 import com.atwoz.member.fixture.MemberRequestFixture;
 import com.atwoz.member.infrastructure.member.MemberFakeRepository;
-import com.atwoz.member.infrastructure.member.physical_profile.FakeYearManager;
+import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.atwoz.member.fixture.MemberFixture.PASS_인증만_완료한_유저_생성;
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_수정_요청서_요청;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.PASS_인증만_완료한_유저_생성;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;

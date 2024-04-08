@@ -11,13 +11,13 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
+import static com.atwoz.member.fixture.MemberFixture.OAuth_인증만_완료한_유저_생성;
+import static com.atwoz.member.fixture.MemberFixture.PASS_인증만_완료한_유저_생성;
+import static com.atwoz.member.fixture.MemberFixture.어드민_유저_생성;
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.MemberProfileInfoFixture.회원_프로필_정보_생성;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_수정_요청서_요청;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.OAuth_인증만_완료한_유저_생성;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.PASS_인증만_완료한_유저_생성;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.어드민_유저_생성;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
-import static com.atwoz.member.fixture.domain.member.MemberProfileInfoFixture.회원_프로필_정보_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 

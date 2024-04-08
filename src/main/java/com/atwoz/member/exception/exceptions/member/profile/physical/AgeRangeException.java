@@ -1,4 +1,4 @@
-package com.atwoz.member.exception.exceptions.member.profile.physical_profile;
+package com.atwoz.member.exception.exceptions.member.profile.physical;
 
 public class AgeRangeException extends RuntimeException {
 

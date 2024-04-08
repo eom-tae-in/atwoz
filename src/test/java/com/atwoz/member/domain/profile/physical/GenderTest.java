@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.profile.physical_profile;
+package com.atwoz.member.domain.profile.physical;
 
 import com.atwoz.member.domain.member.profile.physical.Gender;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidGenderException;

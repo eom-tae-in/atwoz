@@ -1,11 +1,11 @@
-package com.atwoz.member.domain.profile.physical_profile;
+package com.atwoz.member.domain.profile.physical;
 
 import com.atwoz.member.domain.member.dto.PhysicalProfileInfo;
 import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
-import com.atwoz.member.exception.exceptions.member.profile.physical_profile.AgeRangeException;
-import com.atwoz.member.exception.exceptions.member.profile.physical_profile.HeightRangeException;
-import com.atwoz.member.infrastructure.member.physical_profile.FakeYearManager;
+import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
+import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

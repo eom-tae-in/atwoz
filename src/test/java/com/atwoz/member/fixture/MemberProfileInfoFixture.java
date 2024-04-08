@@ -1,9 +1,9 @@
-package com.atwoz.member.fixture.domain.member;
+package com.atwoz.member.fixture;
 
 import com.atwoz.member.application.member.dto.ProfileInitializeRequest;
 import com.atwoz.member.application.member.dto.ProfileUpdateRequest;
 import com.atwoz.member.domain.member.dto.MemberProfileInfo;
-import com.atwoz.member.infrastructure.member.physical_profile.FakeYearManager;
+import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 
 public class MemberProfileInfoFixture {
 

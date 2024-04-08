@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_미션_시간있음;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개_id없음;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_200_챌린지_id없음;

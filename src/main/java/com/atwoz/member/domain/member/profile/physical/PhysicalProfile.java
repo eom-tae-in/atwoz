@@ -1,8 +1,8 @@
 package com.atwoz.member.domain.member.profile.physical;
 
 import com.atwoz.member.domain.member.dto.PhysicalProfileInfo;
-import com.atwoz.member.exception.exceptions.member.profile.physical_profile.AgeRangeException;
-import com.atwoz.member.exception.exceptions.member.profile.physical_profile.HeightRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

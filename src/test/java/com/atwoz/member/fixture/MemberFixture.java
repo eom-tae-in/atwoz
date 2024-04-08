@@ -1,4 +1,4 @@
-package com.atwoz.member.fixture.domain.member;
+package com.atwoz.member.fixture;
 
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberGrade;

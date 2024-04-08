@@ -27,8 +27,8 @@ import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateExcept
 import com.atwoz.member.exception.exceptions.member.profile.StyleSizeException;
 import com.atwoz.member.exception.exceptions.member.profile.contact.LatitudeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.contact.LongitudeRangeException;
-import com.atwoz.member.exception.exceptions.member.profile.physical_profile.AgeRangeException;
-import com.atwoz.member.exception.exceptions.member.profile.physical_profile.HeightRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
+import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

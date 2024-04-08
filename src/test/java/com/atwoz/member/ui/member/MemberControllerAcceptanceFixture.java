@@ -17,8 +17,8 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
-import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
