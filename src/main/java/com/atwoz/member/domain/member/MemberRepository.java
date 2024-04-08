@@ -4,17 +4,17 @@ import java.util.Optional;
 
 public interface MemberRepository {
 
-    Optional<Member> findById(final Long id);
+    Optional<Member> findById(Long id);
 
-    Optional<Member> findByPhoneNumber(final String phoneNumber);
+    Optional<Member> findByPhoneNumber(String phoneNumber);
 
-    Member save(final Member member);
+    Member save(Member member);
 
-    boolean existsByPhoneNumber(final String phoneNumber);
+    boolean existsByPhoneNumber(String phoneNumber);
 
-    boolean existsByNickname(final String nickname);
+    boolean existsByNickname(String nickname);
 
-    boolean existsById(final Long id);
+    boolean existsById(Long id);
 
-    void deleteById(final Long id);
+    void deleteById(Long id);
 }
