@@ -1,4 +1,4 @@
-package com.atwoz.mission.exception;
+package com.atwoz.mission.exception.mission.exceptions;
 
 public class MissionNotFoundException extends RuntimeException {
 

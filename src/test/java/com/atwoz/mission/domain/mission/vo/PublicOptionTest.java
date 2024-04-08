@@ -1,6 +1,6 @@
 package com.atwoz.mission.domain.mission.vo;
 
-import com.atwoz.mission.exception.PublicOptionInvalidException;
+import com.atwoz.mission.exception.mission.exceptions.PublicOptionInvalidException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

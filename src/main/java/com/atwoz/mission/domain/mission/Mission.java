@@ -3,7 +3,7 @@ package com.atwoz.mission.domain.mission;
 import com.atwoz.global.domain.BaseEntity;
 import com.atwoz.mission.domain.mission.vo.MissionType;
 import com.atwoz.mission.domain.mission.vo.PublicOption;
-import com.atwoz.mission.exception.RewardValueInvalidException;
+import com.atwoz.mission.exception.mission.exceptions.RewardValueInvalidException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -65,5 +65,9 @@ public class Mission extends BaseEntity {
 
     public boolean isSameMission(final Long missionId) {
         return this.id.equals(missionId);
+    }
+
+    public boolean isChallengeMission() {
+        return missionType == MissionType.CHALLENGE;
     }
 }
