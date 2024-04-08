@@ -49,4 +49,8 @@ public class MemberProfile {
     public void change(final MemberProfileInfo memberProfileInfo) {
         profile.change(memberProfileInfo);
     }
+
+    public void changeProfileAccessStatus(final String status) {
+        this.profileAccessStatus = ProfileAccessStatus.findBy(status);
+    }
 }

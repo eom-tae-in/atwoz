@@ -19,6 +19,7 @@ import com.atwoz.member.exception.exceptions.member.profile.InvalidGraduateExcep
 import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidJobException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidMbtiException;
+import com.atwoz.member.exception.exceptions.member.profile.InvalidProfileAccessStatusException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidReligionException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidSmokeException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
@@ -174,6 +175,11 @@ public class MemberExceptionHandler {
 
     @ExceptionHandler(InvalidReligionException.class)
     public ResponseEntity<String> handleReligionInvalidException(final InvalidReligionException e) {
+        return getBadRequest(e);
+    }
+
+    @ExceptionHandler(InvalidProfileAccessStatusException.class)
+    public ResponseEntity<String> handleProfileInvalidException(final InvalidProfileAccessStatusException e) {
         return getBadRequest(e);
     }
 
