@@ -67,7 +67,7 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     void 회원_정보를_수정한다() throws Exception {
         // given
         Long memberId = 1L;
-        String bearerToken = "Beare token";
+        String bearerToken = "Bearer token";
         MemberUpdateRequest memberUpdateRequest = MemberRequestFixture.회원_정보_수정_요청서_요청();
 
         // when & then
