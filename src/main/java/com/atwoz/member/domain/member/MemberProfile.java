@@ -35,7 +35,6 @@ public class MemberProfile {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true)
     private Profile profile;
 
-
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private ProfileAccessStatus profileAccessStatus;
