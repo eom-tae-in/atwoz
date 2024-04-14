@@ -39,9 +39,9 @@ public class Member extends SoftDeleteBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nickname;
+    private Long recommenderId;
 
-    private String recommender;
+    private String nickname;
 
     @Column(nullable = false, unique = true)
     private String phoneNumber;
@@ -88,17 +88,11 @@ public class Member extends SoftDeleteBaseEntity {
                 .build();
     }
 
-    public void initializeWith(final String nickname, final String recommender,
+    public void initializeWith(final String nickname, final Long recommenderId,
                                final MemberProfileInfo memberProfileInfo) {
         this.nickname = nickname;
-        initializeRecommender(recommender);
+        this.recommenderId = recommenderId;
         memberProfile.change(memberProfileInfo);
-    }
-
-    private void initializeRecommender(final String recommender) {
-        if (recommender != null && !recommender.isBlank()) {
-            this.recommender = recommender;
-        }
     }
 
     public void updateWith(final String nickname, final MemberProfileInfo memberProfileInfo) {
