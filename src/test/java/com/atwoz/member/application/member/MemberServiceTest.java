@@ -5,6 +5,7 @@ import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.exception.exceptions.member.MemberAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
 import com.atwoz.member.fixture.MemberRequestFixture;
@@ -43,21 +44,35 @@ class MemberServiceTest {
         memberService = new MemberService(memberRepository, new FakeYearManager());
     }
 
-    @Test
-    void 인증_완료된_유저의_전화번호와_일치하는_회원이_없으면_저장한다() {
-        // given
-        String uniquePhoneNumber = "01012345678";
+    @Nested
+    class 회원_생성{
 
-        // when
-        memberService.create(uniquePhoneNumber);
+        @Test
+        void 인증_완료된_유저의_전화번호와_일치하는_회원이_없으면_저장한다() {
+            // given
+            String uniquePhoneNumber = "01012345678";
 
-        // then
-        Optional<Member> member = memberRepository.findByPhoneNumber(uniquePhoneNumber);
-        assertSoftly(softly -> {
-            softly.assertThat(member).isPresent();
-            Member foundMember = member.get();
-            softly.assertThat(foundMember.getPhoneNumber()).isEqualTo(uniquePhoneNumber);
-        });
+            // when
+            memberService.create(uniquePhoneNumber);
+
+            // then
+            Optional<Member> member = memberRepository.findByPhoneNumber(uniquePhoneNumber);
+            assertSoftly(softly -> {
+                softly.assertThat(member).isPresent();
+                Member foundMember = member.get();
+                softly.assertThat(foundMember.getPhoneNumber()).isEqualTo(uniquePhoneNumber);
+            });
+        }
+
+        @Test
+        void 이미_가입된_회원이_다시_가입_요청을_하면_예외가_발생한다() {
+            // given
+            Member member = memberRepository.save(일반_유저_생성());
+
+            // when & then
+            assertThatThrownBy(() -> memberService.create(member.getPhoneNumber()))
+                    .isInstanceOf(MemberAlreadyExistedException.class);
+        }
     }
 
     @Nested
