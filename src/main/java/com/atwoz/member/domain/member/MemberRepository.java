@@ -8,6 +8,8 @@ public interface MemberRepository {
 
     Optional<Member> findByPhoneNumber(String phoneNumber);
 
+    Optional<Member> findByNickname(String nickname);
+
     Member save(Member member);
 
     boolean existsByPhoneNumber(String phoneNumber);

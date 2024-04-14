@@ -43,9 +43,8 @@ public class MemberService {
         MemberProfileInfo memberProfileInfo = MemberProfileInfo.createWith(
                 memberInitializeRequest.profileInitializeRequest(), yearManager);
         validateNicknameIsUnique(memberInitializeRequest.nickname());
-        validateRecommenderNickname(memberInitializeRequest.recommender());
-        foundMember.initializeWith(memberInitializeRequest.nickname(), memberInitializeRequest.recommender(),
-                memberProfileInfo);
+        Member foundRecommender = findMemberByNickname(memberInitializeRequest.recommender());
+        foundMember.initializeWith(memberInitializeRequest.nickname(), foundRecommender.getId(), memberProfileInfo);
     }
 
     private Member findMemberById(final Long memberId) {
@@ -53,16 +52,9 @@ public class MemberService {
                 .orElseThrow(MemberNotFoundException::new);
     }
 
-    private void validateRecommenderNickname(final String recommender) {
-        if (recommender != null && !recommender.isBlank()) {
-            validateNicknameExists(recommender);
-        }
-    }
-
-    private void validateNicknameExists(final String nickname) {
-        if (!memberRepository.existsByNickname(nickname)) {
-            throw new MemberNotFoundException();
-        }
+    private Member findMemberByNickname(final String nickname) {
+        return memberRepository.findByNickname(nickname)
+                .orElseThrow(MemberNotFoundException::new);
     }
 
     public void updateMember(final Long memberId, final MemberUpdateRequest memberUpdateRequest) {
