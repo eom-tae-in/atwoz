@@ -7,6 +7,7 @@ import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.domain.member.dto.MemberProfileDto;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
+import com.atwoz.member.exception.exceptions.member.MemberAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,11 @@ public class MemberService {
     private final YearManager yearManager;
 
     public void create(final String phoneNumber) {
-        if (!memberRepository.existsByPhoneNumber(phoneNumber)) {
-            memberRepository.save(Member.createWithOAuth(phoneNumber));
+        if (memberRepository.existsByPhoneNumber(phoneNumber)) {
+            throw new MemberAlreadyExistedException();
         }
+        
+        memberRepository.save(Member.createWithOAuth(phoneNumber));
     }
 
     @Transactional(readOnly = true)

@@ -9,6 +9,7 @@ import com.atwoz.member.exception.exceptions.auth.SignatureInvalidException;
 import com.atwoz.member.exception.exceptions.auth.TokenFormInvalidException;
 import com.atwoz.member.exception.exceptions.auth.TokenInvalidException;
 import com.atwoz.member.exception.exceptions.auth.UnsupportedTokenException;
+import com.atwoz.member.exception.exceptions.member.MemberAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
 import com.atwoz.member.exception.exceptions.member.RoleNotFoundException;
@@ -46,6 +47,11 @@ public class MemberExceptionHandler {
     @ExceptionHandler(MemberNicknameAlreadyExistedException.class)
     public ResponseEntity<String> handleMemberNicknameAlreadyExistedException(
             final MemberNicknameAlreadyExistedException e) {
+        return getConflicted(e);
+    }
+
+    @ExceptionHandler(MemberAlreadyExistedException.class)
+    public ResponseEntity<String> handleMemberAlreadyExistedException(final MemberAlreadyExistedException e) {
         return getConflicted(e);
     }
 
