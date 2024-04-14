@@ -113,11 +113,11 @@ class MemberServiceTest {
         @Test
         void 추천인_닉네임이_존재하지_않는_닉네임이면_예외가_발생한다() {
             // given
-            Long memberId = 1L;
-            MemberInitializeRequest memberInitializeRequest = 회원_정보_초기화_요청서_요청();
+            Member member = memberRepository.save(PASS_인증만_완료한_유저_생성());
+            MemberInitializeRequest memberInitializeRequest = 회원_정보_초기화_요청서_요청("nickname", "recommender");
 
             // when & then
-            assertThatThrownBy(() -> memberService.initializeMember(memberId, memberInitializeRequest))
+            assertThatThrownBy(() -> memberService.initializeMember(member.getId(), memberInitializeRequest))
                     .isInstanceOf(MemberNotFoundException.class);
         }
     }

@@ -12,6 +12,7 @@ import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -45,8 +46,8 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return memberRepository.save(일반_유저_생성());
     }
 
-    protected String 토큰_생성(final String phoneNumber) {
-        return jwtTokenProvider.createTokenWithPhoneNumber(phoneNumber);
+    protected String 토큰_생성(final Member member) {
+        return jwtTokenProvider.createTokenWithId(member.getId());
     }
 
     protected Mission 데일리_미션_생성() {
@@ -60,12 +61,14 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     protected ExtractableResponse 회원_미션을_페이징_조회한다(final String token, final String url) {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(ContentType.JSON)
                 .get(url)
                 .then().log().all()
                 .extract();
     }
 
     protected void 회원_미션_페이징_조회_결과_검증(final ExtractableResponse response) {
+        System.out.println("hihihii" + response.asPrettyString());
         MemberMissionPagingResponse result = response.as(MemberMissionPagingResponse.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());

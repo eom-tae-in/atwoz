@@ -9,7 +9,7 @@ import java.util.Optional;
 public class MemberFakeRepository implements MemberRepository {
 
     private final Map<Long, Member> map = new HashMap<>();
-    private Long id = 0L;
+    private Long id = 1L;
 
     @Override
     public Optional<Member> findById(final Long id) {
