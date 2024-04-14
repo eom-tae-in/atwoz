@@ -91,8 +91,14 @@ public class Member extends SoftDeleteBaseEntity {
     public void initializeWith(final String nickname, final Long recommenderId,
                                final MemberProfileInfo memberProfileInfo) {
         this.nickname = nickname;
-        this.recommenderId = recommenderId;
+        initializeRecommenderId(recommenderId);
         memberProfile.change(memberProfileInfo);
+    }
+
+    private void initializeRecommenderId(final Long recommenderId) {
+        if (recommenderId != null) {
+            this.recommenderId = recommenderId;
+        }
     }
 
     public void updateWith(final String nickname, final MemberProfileInfo memberProfileInfo) {
