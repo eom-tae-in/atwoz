@@ -53,9 +53,13 @@ public class MemberService {
     }
 
     private Long findRecommenderIdByNicknameOrNull(final String nickname) {
+        if (nickname == null || nickname.isBlank()) {
+            return null;
+        }
+
         return memberRepository.findByNickname(nickname)
-                .map(Member::getId)
-                .orElse(null);
+                .orElseThrow(MemberNotFoundException::new)
+                .getId();
     }
 
     public void updateMember(final Long memberId, final MemberUpdateRequest memberUpdateRequest) {
