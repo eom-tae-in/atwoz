@@ -7,10 +7,10 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record MemberProfileInfo(
-        PhysicalProfileInfo physicalProfileInfo,
-        HobbiesInfo hobbiesInfo,
-        StylesInfo stylesInfo,
+public record MemberProfileDto(
+        PhysicalProfileDto physicalProfileDto,
+        HobbiesDto hobbiesdto,
+        StylesDto stylesDto,
         String job,
         String graduate,
         String smoke,
@@ -21,14 +21,13 @@ public record MemberProfileInfo(
         String sector
 ) {
 
-    public static MemberProfileInfo createWith(final ProfileInitializeRequest profileInitializeRequest,
-                                               final YearManager yearManager) {
-
-        return MemberProfileInfo.builder()
-                .physicalProfileInfo(new PhysicalProfileInfo(profileInitializeRequest.birthYear(),
+    public static MemberProfileDto createWith(final ProfileInitializeRequest profileInitializeRequest,
+                                              final YearManager yearManager) {
+        return MemberProfileDto.builder()
+                .physicalProfileDto(new PhysicalProfileDto(profileInitializeRequest.birthYear(),
                         profileInitializeRequest.height(), yearManager))
-                .hobbiesInfo(new HobbiesInfo(profileInitializeRequest.hobbiesRequest().hobbies()))
-                .stylesInfo(new StylesInfo(profileInitializeRequest.stylesRequest().styles()))
+                .hobbiesdto(new HobbiesDto(profileInitializeRequest.hobbiesRequest().hobbies()))
+                .stylesDto(new StylesDto(profileInitializeRequest.stylesRequest().styles()))
                 .city(profileInitializeRequest.city())
                 .sector(profileInitializeRequest.sector())
                 .job(profileInitializeRequest.job())
@@ -40,14 +39,13 @@ public record MemberProfileInfo(
                 .build();
     }
 
-    public static MemberProfileInfo createWith(final ProfileUpdateRequest profileUpdateRequest,
-                                               final YearManager yearManager) {
-
-        return MemberProfileInfo.builder()
-                .physicalProfileInfo(new PhysicalProfileInfo(profileUpdateRequest.birthYear(),
+    public static MemberProfileDto createWith(final ProfileUpdateRequest profileUpdateRequest,
+                                              final YearManager yearManager) {
+        return MemberProfileDto.builder()
+                .physicalProfileDto(new PhysicalProfileDto(profileUpdateRequest.birthYear(),
                         profileUpdateRequest.height(), yearManager))
-                .hobbiesInfo(new HobbiesInfo(profileUpdateRequest.hobbiesRequest().hobbies()))
-                .stylesInfo(new StylesInfo(profileUpdateRequest.stylesRequest().styles()))
+                .hobbiesdto(new HobbiesDto(profileUpdateRequest.hobbiesRequest().hobbies()))
+                .stylesDto(new StylesDto(profileUpdateRequest.stylesRequest().styles()))
                 .city(profileUpdateRequest.city())
                 .sector(profileUpdateRequest.sector())
                 .job(profileUpdateRequest.job())
@@ -60,10 +58,10 @@ public record MemberProfileInfo(
     }
 
     public List<String> getHobbies() {
-        return hobbiesInfo.hobbies();
+        return hobbiesdto.hobbies();
     }
 
     public List<String> getStyles() {
-        return stylesInfo.styles();
+        return stylesDto.styles();
     }
 }
