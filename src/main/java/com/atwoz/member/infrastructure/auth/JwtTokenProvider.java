@@ -40,7 +40,14 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String createTokenWith(final String phoneNumber) {
+    public String createTokenWithId(final Long id) {
+        Claims claims = Jwts.claims();
+        claims.put("id", id);
+        return createToken(claims);
+    }
+
+    @Override
+    public String createTokenWithPhoneNumber(final String phoneNumber) {
         Claims claims = Jwts.claims();
         claims.put("phoneNumber", phoneNumber);
         return createToken(claims);
@@ -71,13 +78,14 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String extract(final String token) {
+    public <T> T extract(final String token, final String claimName, final Class<T> classType) {
         try {
-            return Jwts.parser()
+            return Jwts.parserBuilder()
                     .setSigningKey(secret.getBytes())
+                    .build()
                     .parseClaimsJws(token)
                     .getBody()
-                    .get("phoneNumber", String.class);
+                    .get(claimName, classType);
         } catch (SecurityException e) {
             throw new SignatureInvalidException();
         } catch (MalformedJwtException e) {

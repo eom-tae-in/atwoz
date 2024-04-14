@@ -9,4 +9,6 @@ public interface JsonMapper {
 
     MemberInfoResponse extractMemberInfoFrom(String memberInfoResponse,
                                              MemberInfoKeyWordRequest memberInfoKeyWordRequest);
+
+    byte[] convertObjectToJsonByteArray(Object object);
 }

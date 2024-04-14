@@ -29,6 +29,6 @@ public class AuthService {
          */
         Events.raise(new ValidatedLoginEvent(DEFAULT_PHONE_NUMBER));
 
-        return tokenProvider.createTokenWith(DEFAULT_PHONE_NUMBER);
+        return tokenProvider.createTokenWithPhoneNumber(DEFAULT_PHONE_NUMBER);
     }
 }
