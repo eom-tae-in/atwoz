@@ -1,6 +1,7 @@
 package com.atwoz.member.exception;
 
 import com.atwoz.member.exception.exceptions.auth.ExpiredTokenException;
+import com.atwoz.member.exception.exceptions.auth.InvalidJsonKeyException;
 import com.atwoz.member.exception.exceptions.auth.JsonDataInvalidException;
 import com.atwoz.member.exception.exceptions.auth.LoginInvalidException;
 import com.atwoz.member.exception.exceptions.auth.OAuthPlatformNotFountException;
@@ -180,6 +181,11 @@ public class MemberExceptionHandler {
 
     @ExceptionHandler(InvalidProfileAccessStatusException.class)
     public ResponseEntity<String> handleProfileInvalidException(final InvalidProfileAccessStatusException e) {
+        return getBadRequest(e);
+    }
+
+    @ExceptionHandler(InvalidJsonKeyException.class)
+    public ResponseEntity<String> handleJsonKeyInvalidException(final InvalidJsonKeyException e) {
         return getBadRequest(e);
     }
 
