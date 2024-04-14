@@ -113,8 +113,8 @@ class MemberJpaRepositoryTest {
         // when
         memberRepository.deleteById(memberId);
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        // then
 
+        // then
         assertThat(optionalMember).isNotPresent();
     }
 }
