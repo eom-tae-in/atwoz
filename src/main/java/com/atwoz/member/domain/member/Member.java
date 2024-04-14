@@ -69,7 +69,6 @@ public class Member extends SoftDeleteBaseEntity {
     }
 
     public static Member createWithOAuth(final String phoneNumber) {
-
         return Member.builder()
                 .phoneNumber(phoneNumber)
                 .memberProfile(MemberProfile.createWith("남성"))
@@ -81,7 +80,6 @@ public class Member extends SoftDeleteBaseEntity {
 
     public static Member createWithPass(final String gender,
                                         final String phoneNumber) {
-
         return Member.builder()
                 .phoneNumber(phoneNumber)
                 .memberProfile(MemberProfile.createWith(gender))
