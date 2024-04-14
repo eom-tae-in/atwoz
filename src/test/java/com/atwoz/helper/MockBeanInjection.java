@@ -5,6 +5,7 @@ import com.atwoz.member.application.member.MemberService;
 import com.atwoz.member.domain.auth.TokenProvider;
 import com.atwoz.member.ui.auth.interceptor.LoginValidCheckerInterceptor;
 import com.atwoz.member.ui.auth.interceptor.ParseMemberIdFromTokenInterceptor;
+import com.atwoz.member.ui.auth.interceptor.TokenRegenerateInterceptor;
 import com.atwoz.member.ui.auth.support.auth.AuthenticationContext;
 import com.atwoz.member.ui.auth.support.auth.OAuthProperties;
 import com.atwoz.member.ui.auth.support.resolver.AuthArgumentResolver;
@@ -42,6 +43,9 @@ public class MockBeanInjection {
 
     @MockBean
     protected LoginValidCheckerInterceptor loginValidCheckerInterceptor;
+
+    @MockBean
+    protected TokenRegenerateInterceptor tokenRegenerateInterceptor;
 
     @MockBean
     protected MissionService missionService;

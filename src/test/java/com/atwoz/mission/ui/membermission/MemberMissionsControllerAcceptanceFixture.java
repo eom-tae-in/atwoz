@@ -46,7 +46,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected String 토큰_생성(final String phoneNumber) {
-        return jwtTokenProvider.createTokenWith(phoneNumber);
+        return jwtTokenProvider.createTokenWithPhoneNumber(phoneNumber);
     }
 
     protected Mission 데일리_미션_생성() {

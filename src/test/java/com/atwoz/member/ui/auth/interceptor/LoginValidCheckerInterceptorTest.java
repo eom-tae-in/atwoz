@@ -1,9 +1,9 @@
 package com.atwoz.member.ui.auth.interceptor;
 
+import com.atwoz.member.domain.auth.TokenProvider;
 import com.atwoz.member.exception.exceptions.auth.LoginInvalidException;
-import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
-import com.atwoz.member.infrastructure.member.MemberFakeRepository;
 import com.atwoz.member.ui.auth.support.auth.AuthenticationContext;
+import com.atwoz.member.ui.auth.support.auth.AuthenticationExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -20,19 +20,22 @@ class LoginValidCheckerInterceptorTest {
 
     private final HttpServletRequest req = mock(HttpServletRequest.class);
     private final HttpServletResponse res = mock(HttpServletResponse.class);
+    private final TokenProvider tokenProvider = mock(TokenProvider.class);
+    private final AuthenticationContext authenticationContext = mock(AuthenticationContext.class);
+    private final AuthenticationExtractor authenticationExtractor = mock(AuthenticationExtractor.class);
 
     @Test
     void token이_없다면_예외를_발생한다() {
         // given
         LoginValidCheckerInterceptor loginValidCheckerInterceptor = new LoginValidCheckerInterceptor(
-                new JwtTokenProvider(),
-                new AuthenticationContext(),
-                new MemberFakeRepository()
+                tokenProvider,
+                authenticationContext,
+                authenticationExtractor
         );
 
         when(req.getHeader("any")).thenReturn(null);
 
-        // when
+        // when & then
         assertThatThrownBy(() -> loginValidCheckerInterceptor.preHandle(req, res, new Object()))
                 .isInstanceOf(LoginInvalidException.class);
     }

@@ -37,7 +37,7 @@ class AuthServiceTest {
         LoginRequest loginRequest = new LoginRequest("kakao", "code");
         OAuthProviderRequest oAuthProviderRequest = 인증_기관_생성();
         String expectedToken = "token";
-        when(tokenProvider.createTokenWith(anyString())).thenReturn(expectedToken);
+        when(tokenProvider.createTokenWithPhoneNumber(anyString())).thenReturn(expectedToken);
 
         // when
         String token = authService.login(loginRequest, oAuthProviderRequest);

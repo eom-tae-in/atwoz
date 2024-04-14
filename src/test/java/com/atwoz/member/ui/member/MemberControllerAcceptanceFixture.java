@@ -46,7 +46,7 @@ public class MemberControllerAcceptanceFixture extends IntegrationHelper {
 
     protected String 토큰_생성(final Member member) {
         String phoneNumber = member.getPhoneNumber();
-        return tokenProvider.createTokenWith(phoneNumber);
+        return tokenProvider.createTokenWithPhoneNumber(phoneNumber);
     }
 
     protected MemberNicknameRequest 회원_닉네임_중복_확인서를_요청한다() {
