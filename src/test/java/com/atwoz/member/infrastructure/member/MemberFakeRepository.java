@@ -24,6 +24,13 @@ public class MemberFakeRepository implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findByNickname(final String nickname) {
+        return map.values().stream()
+                .filter(member -> nickname.equals(member.getNickname()))
+                .findAny();
+    }
+
+    @Override
     public Member save(final Member member) {
         Member saved = Member.builder()
                 .id(id)
