@@ -3,6 +3,7 @@ package com.atwoz.member.config;
 import com.atwoz.member.ui.auth.interceptor.LoginValidCheckerInterceptor;
 import com.atwoz.member.ui.auth.interceptor.ParseMemberIdFromTokenInterceptor;
 import com.atwoz.member.ui.auth.interceptor.PathMatcherInterceptor;
+import com.atwoz.member.ui.auth.interceptor.TokenRegenerateInterceptor;
 import com.atwoz.member.ui.auth.support.resolver.AuthArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +26,13 @@ public class AuthConfig implements WebMvcConfigurer {
     private final AuthArgumentResolver authArgumentResolver;
     private final ParseMemberIdFromTokenInterceptor parseMemberIdFromTokenInterceptor;
     private final LoginValidCheckerInterceptor loginValidCheckerInterceptor;
+    private final TokenRegenerateInterceptor tokenRegenerateInterceptor;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(parseMemberIdFromTokenInterceptor());
         registry.addInterceptor(loginValidCheckerInterceptor());
+        registry.addInterceptor(tokenRegenerateInterceptor());
     }
 
     private HandlerInterceptor parseMemberIdFromTokenInterceptor() {
@@ -47,6 +50,12 @@ public class AuthConfig implements WebMvcConfigurer {
                 .excludePathPattern("/**", OPTIONS)
                 .excludePathPattern("/api/missions/**", GET, POST, PATCH, DELETE)
                 .addPathPatterns("/api/members/**", GET, POST, PATCH, DELETE);
+    }
+
+    private HandlerInterceptor tokenRegenerateInterceptor() {
+        return new PathMatcherInterceptor(tokenRegenerateInterceptor)
+                .excludePathPattern("/**", OPTIONS)
+                .addPathPatterns("/api/auth/login", POST);
     }
 
     @Override
