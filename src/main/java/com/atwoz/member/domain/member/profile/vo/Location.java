@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.member.profile;
+package com.atwoz.member.domain.member.profile.vo;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;

@@ -1,10 +1,10 @@
 package com.atwoz.member.fixture;
 
 import com.atwoz.member.domain.member.Member;
-import com.atwoz.member.domain.member.MemberGrade;
 import com.atwoz.member.domain.member.MemberProfile;
-import com.atwoz.member.domain.member.MemberRole;
-import com.atwoz.member.domain.member.MemberStatus;
+import com.atwoz.member.domain.member.vo.MemberGrade;
+import com.atwoz.member.domain.member.vo.MemberRole;
+import com.atwoz.member.domain.member.vo.MemberStatus;
 
 public class MemberFixture {
 

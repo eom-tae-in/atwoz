@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.member.profile;
+package com.atwoz.member.domain.member.profile.vo;
 
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;
@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Embeddable
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class MemberStyles {
 
     private static final int MIN_STYLE_SIZE = 1;

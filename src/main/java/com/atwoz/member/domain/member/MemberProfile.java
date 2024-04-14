@@ -1,8 +1,8 @@
 package com.atwoz.member.domain.member;
 
-import com.atwoz.member.domain.member.dto.MemberProfileInfo;
+import com.atwoz.member.domain.member.dto.MemberProfileDto;
 import com.atwoz.member.domain.member.profile.Profile;
-import com.atwoz.member.domain.member.profile.ProfileAccessStatus;
+import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,8 +46,8 @@ public class MemberProfile {
                 .build();
     }
 
-    public void change(final MemberProfileInfo memberProfileInfo) {
-        profile.change(memberProfileInfo);
+    public void change(final MemberProfileDto memberProfileDto) {
+        profile.change(memberProfileDto);
     }
 
     public void changeProfileAccessStatus(final String status) {

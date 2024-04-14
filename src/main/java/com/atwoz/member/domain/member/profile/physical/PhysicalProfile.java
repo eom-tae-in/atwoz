@@ -1,6 +1,7 @@
 package com.atwoz.member.domain.member.profile.physical;
 
-import com.atwoz.member.domain.member.dto.PhysicalProfileInfo;
+import com.atwoz.member.domain.member.dto.PhysicalProfileDto;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
 import jakarta.persistence.Column;
@@ -48,9 +49,9 @@ public class PhysicalProfile {
                 .build();
     }
 
-    public void change(final PhysicalProfileInfo physicalProfileInfo) {
-        changeAge(physicalProfileInfo.birthYear(), physicalProfileInfo.yearManager());
-        changeHeight(physicalProfileInfo.height());
+    public void change(final PhysicalProfileDto physicalProfileDto) {
+        changeAge(physicalProfileDto.birthYear(), physicalProfileDto.yearManager());
+        changeHeight(physicalProfileDto.height());
     }
 
     private void changeAge(final int birthYear, final YearManager yearManager) {

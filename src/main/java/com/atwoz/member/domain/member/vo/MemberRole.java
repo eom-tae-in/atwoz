@@ -1,9 +1,8 @@
-package com.atwoz.member.domain.member;
+package com.atwoz.member.domain.member.vo;
 
 import com.atwoz.member.exception.exceptions.member.RoleNotFoundException;
-import lombok.Getter;
-
 import java.util.Arrays;
+import lombok.Getter;
 
 @Getter
 public enum MemberRole {

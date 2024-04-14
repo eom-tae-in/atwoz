@@ -1,7 +1,10 @@
 package com.atwoz.member.domain.member;
 
 import com.atwoz.global.domain.SoftDeleteBaseEntity;
-import com.atwoz.member.domain.member.dto.MemberProfileInfo;
+import com.atwoz.member.domain.member.dto.MemberProfileDto;
+import com.atwoz.member.domain.member.vo.MemberGrade;
+import com.atwoz.member.domain.member.vo.MemberRole;
+import com.atwoz.member.domain.member.vo.MemberStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,9 +24,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import static com.atwoz.member.domain.member.MemberGrade.SILVER;
-import static com.atwoz.member.domain.member.MemberRole.MEMBER;
-import static com.atwoz.member.domain.member.MemberStatus.ACTIVE;
+import static com.atwoz.member.domain.member.vo.MemberGrade.SILVER;
+import static com.atwoz.member.domain.member.vo.MemberRole.MEMBER;
+import static com.atwoz.member.domain.member.vo.MemberStatus.ACTIVE;
 
 @Getter
 @Builder
@@ -89,10 +92,10 @@ public class Member extends SoftDeleteBaseEntity {
     }
 
     public void initializeWith(final String nickname, final Long recommenderId,
-                               final MemberProfileInfo memberProfileInfo) {
+                               final MemberProfileDto memberProfileDto) {
         this.nickname = nickname;
         initializeRecommenderId(recommenderId);
-        memberProfile.change(memberProfileInfo);
+        memberProfile.change(memberProfileDto);
     }
 
     private void initializeRecommenderId(final Long recommenderId) {
@@ -101,8 +104,8 @@ public class Member extends SoftDeleteBaseEntity {
         }
     }
 
-    public void updateWith(final String nickname, final MemberProfileInfo memberProfileInfo) {
+    public void updateWith(final String nickname, final MemberProfileDto memberProfileDto) {
         this.nickname = nickname;
-        memberProfile.change(memberProfileInfo);
+        memberProfile.change(memberProfileDto);
     }
 }

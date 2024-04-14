@@ -5,7 +5,7 @@ import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.domain.member.dto.MemberProfileInfo;
+import com.atwoz.member.domain.member.dto.MemberProfileDto;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
@@ -40,11 +40,11 @@ public class MemberService {
 
     public void initializeMember(final Long memberId, final MemberInitializeRequest memberInitializeRequest) {
         Member foundMember = findMemberById(memberId);
-        MemberProfileInfo memberProfileInfo = MemberProfileInfo.createWith(
+        MemberProfileDto memberProfileDto = MemberProfileDto.createWith(
                 memberInitializeRequest.profileInitializeRequest(), yearManager);
         validateNicknameIsUnique(memberInitializeRequest.nickname());
         Long foundRecommenderId = findRecommenderIdByNicknameOrNull(memberInitializeRequest.recommender());
-        foundMember.initializeWith(memberInitializeRequest.nickname(), foundRecommenderId, memberProfileInfo);
+        foundMember.initializeWith(memberInitializeRequest.nickname(), foundRecommenderId, memberProfileDto);
     }
 
     private Member findMemberById(final Long memberId) {
@@ -60,10 +60,10 @@ public class MemberService {
 
     public void updateMember(final Long memberId, final MemberUpdateRequest memberUpdateRequest) {
         Member foundMember = findMemberById(memberId);
-        MemberProfileInfo memberProfileInfo = MemberProfileInfo.createWith(memberUpdateRequest.profileUpdateRequest(),
+        MemberProfileDto memberProfileDto = MemberProfileDto.createWith(memberUpdateRequest.profileUpdateRequest(),
                 yearManager);
         validateUpdateNickname(memberUpdateRequest.nickname(), foundMember);
-        foundMember.updateWith(memberUpdateRequest.nickname(), memberProfileInfo);
+        foundMember.updateWith(memberUpdateRequest.nickname(), memberProfileDto);
     }
 
     private void validateUpdateNickname(final String nickname, final Member foundMember) {

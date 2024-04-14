@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.member;
+package com.atwoz.member.domain.member.vo;
 
 public enum MemberGrade {
     DIAMOND("다이아"),

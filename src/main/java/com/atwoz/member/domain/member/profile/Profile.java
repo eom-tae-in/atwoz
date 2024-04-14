@@ -1,7 +1,16 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.dto.MemberProfileInfo;
+import com.atwoz.member.domain.member.dto.MemberProfileDto;
 import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
+import com.atwoz.member.domain.member.profile.vo.Drink;
+import com.atwoz.member.domain.member.profile.vo.Graduate;
+import com.atwoz.member.domain.member.profile.vo.Job;
+import com.atwoz.member.domain.member.profile.vo.Location;
+import com.atwoz.member.domain.member.profile.vo.Mbti;
+import com.atwoz.member.domain.member.profile.vo.MemberHobbies;
+import com.atwoz.member.domain.member.profile.vo.MemberStyles;
+import com.atwoz.member.domain.member.profile.vo.Religion;
+import com.atwoz.member.domain.member.profile.vo.Smoke;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -70,16 +79,16 @@ public class Profile {
                 .build();
     }
 
-    public void change(final MemberProfileInfo memberProfileInfo) {
-        this.job = Job.findByCode(memberProfileInfo.job());
-        this.graduate = Graduate.findByName(memberProfileInfo.graduate());
-        this.smoke = Smoke.findByName(memberProfileInfo.smoke());
-        this.drink = Drink.findByName(memberProfileInfo.drink());
-        this.religion = Religion.findByName(memberProfileInfo.religion());
-        this.mbti = Mbti.findByName(memberProfileInfo.mbti());
-        physicalProfile.change(memberProfileInfo.physicalProfileInfo());
-        this.location = new Location(memberProfileInfo.city(), memberProfileInfo.sector());
-        this.memberHobbies = memberHobbies.changeWith(memberProfileInfo.getHobbies());
-        this.memberStyles = memberStyles.changeWith(memberProfileInfo.getStyles());
+    public void change(final MemberProfileDto memberProfileDto) {
+        this.job = Job.findByCode(memberProfileDto.job());
+        this.graduate = Graduate.findByName(memberProfileDto.graduate());
+        this.smoke = Smoke.findByName(memberProfileDto.smoke());
+        this.drink = Drink.findByName(memberProfileDto.drink());
+        this.religion = Religion.findByName(memberProfileDto.religion());
+        this.mbti = Mbti.findByName(memberProfileDto.mbti());
+        physicalProfile.change(memberProfileDto.physicalProfileDto());
+        this.location = new Location(memberProfileDto.city(), memberProfileDto.sector());
+        this.memberHobbies = memberHobbies.changeWith(memberProfileDto.getHobbies());
+        this.memberStyles = memberStyles.changeWith(memberProfileDto.getStyles());
     }
 }

@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.member.profile;
+package com.atwoz.member.domain.member.profile.vo;
 
 import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class MemberHobbies {
 
     private static final int MIN_HOBBY_SIZE = 1;
