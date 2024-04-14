@@ -1,6 +1,6 @@
 package com.atwoz.member.domain.profile;
 
-import com.atwoz.member.domain.member.profile.Mbti;
+import com.atwoz.member.domain.member.profile.vo.Mbti;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidMbtiException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

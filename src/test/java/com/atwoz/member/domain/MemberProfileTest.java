@@ -1,7 +1,7 @@
 package com.atwoz.member.domain;
 
 import com.atwoz.member.domain.member.MemberProfile;
-import com.atwoz.member.domain.member.profile.ProfileAccessStatus;
+import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidProfileAccessStatusException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

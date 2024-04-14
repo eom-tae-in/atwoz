@@ -1,7 +1,7 @@
 package com.atwoz.mission.intrastructure.membermission;
 
 import com.atwoz.helper.IntegrationHelper;
-import com.atwoz.member.domain.member.profile.physical.Gender;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;

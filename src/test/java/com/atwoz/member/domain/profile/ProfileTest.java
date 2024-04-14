@@ -1,11 +1,11 @@
 package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
-import com.atwoz.member.domain.member.dto.MemberProfileInfo;
-import com.atwoz.member.domain.member.profile.Hobby;
+import com.atwoz.member.domain.member.dto.MemberProfileDto;
 import com.atwoz.member.domain.member.profile.Profile;
-import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
+import com.atwoz.member.domain.member.profile.vo.Hobby;
+import com.atwoz.member.domain.member.profile.vo.Style;
 import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
@@ -48,23 +48,23 @@ class ProfileTest {
         void 프로필_정보가_유효하면_값이_변경된다() {
             // given
             MemberUpdateRequest memberUpdateRequest = 회원_정보_수정_요청서_요청();
-            MemberProfileInfo memberProfileInfo = MemberProfileInfo.createWith(
+            MemberProfileDto memberProfileDto = MemberProfileDto.createWith(
                     memberUpdateRequest.profileUpdateRequest(), yearManager);
 
             // when
-            profile.change(memberProfileInfo);
+            profile.change(memberProfileDto);
 
             // then
             assertSoftly(softly -> {
-                softly.assertThat(profile.getJob().getCode()).isEqualTo(memberProfileInfo.job());
-                softly.assertThat(profile.getGraduate().getName()).isEqualTo(memberProfileInfo.graduate());
-                softly.assertThat(profile.getSmoke().getName()).isEqualTo(memberProfileInfo.smoke());
-                softly.assertThat(profile.getDrink().getName()).isEqualTo(memberProfileInfo.drink());
-                softly.assertThat(profile.getReligion().getName()).isEqualTo(memberProfileInfo.religion());
-                softly.assertThat(profile.getMbti().name()).isEqualTo(memberProfileInfo.mbti());
+                softly.assertThat(profile.getJob().getCode()).isEqualTo(memberProfileDto.job());
+                softly.assertThat(profile.getGraduate().getName()).isEqualTo(memberProfileDto.graduate());
+                softly.assertThat(profile.getSmoke().getName()).isEqualTo(memberProfileDto.smoke());
+                softly.assertThat(profile.getDrink().getName()).isEqualTo(memberProfileDto.drink());
+                softly.assertThat(profile.getReligion().getName()).isEqualTo(memberProfileDto.religion());
+                softly.assertThat(profile.getMbti().name()).isEqualTo(memberProfileDto.mbti());
                 softly.assertThat(profile.getPhysicalProfile()).isNotNull();
-                softly.assertThat(profile.getLocation().getCity()).isEqualTo(memberProfileInfo.city());
-                softly.assertThat(profile.getLocation().getSector()).isEqualTo(memberProfileInfo.sector());
+                softly.assertThat(profile.getLocation().getCity()).isEqualTo(memberProfileDto.city());
+                softly.assertThat(profile.getLocation().getSector()).isEqualTo(memberProfileDto.sector());
 
                 List<String> hobbyCodes = profile.getMemberHobbies().getHobbies().stream()
                         .map(Hobby::getCode)
@@ -72,8 +72,8 @@ class ProfileTest {
                 List<String> styleCodes = profile.getMemberStyles().getStyles().stream()
                         .map(Style::getCode)
                         .toList();
-                softly.assertThat(hobbyCodes).containsExactlyInAnyOrderElementsOf(memberProfileInfo.getHobbies());
-                softly.assertThat(styleCodes).containsExactlyInAnyOrderElementsOf(memberProfileInfo.getStyles());
+                softly.assertThat(hobbyCodes).containsExactlyInAnyOrderElementsOf(memberProfileDto.getHobbies());
+                softly.assertThat(styleCodes).containsExactlyInAnyOrderElementsOf(memberProfileDto.getStyles());
             });
         }
 
@@ -85,11 +85,11 @@ class ProfileTest {
                                                                         final Class<RuntimeException> exceptionClass) {
             // given
             MemberUpdateRequest memberUpdateRequest = 회원_정보_수정_요청서_요청(hobbyCodes, styleCodes);
-            MemberProfileInfo memberProfileInfo = MemberProfileInfo.createWith(
+            MemberProfileDto memberProfileDto = MemberProfileDto.createWith(
                     memberUpdateRequest.profileUpdateRequest(), yearManager);
 
             // when & then
-            assertThatThrownBy(() -> profile.change(memberProfileInfo))
+            assertThatThrownBy(() -> profile.change(memberProfileDto))
                     .isInstanceOf(exceptionClass);
         }
 

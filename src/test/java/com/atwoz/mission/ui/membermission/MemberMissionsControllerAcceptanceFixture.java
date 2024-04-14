@@ -3,7 +3,7 @@ package com.atwoz.mission.ui.membermission;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.domain.member.profile.physical.Gender;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;

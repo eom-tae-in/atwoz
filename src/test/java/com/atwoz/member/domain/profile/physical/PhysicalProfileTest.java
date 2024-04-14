@@ -1,6 +1,6 @@
 package com.atwoz.member.domain.profile.physical;
 
-import com.atwoz.member.domain.member.dto.PhysicalProfileInfo;
+import com.atwoz.member.domain.member.dto.PhysicalProfileDto;
 import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
@@ -38,10 +38,10 @@ class PhysicalProfileTest {
             // given
             int birthYear = 2000;
             int height = 170;
-            PhysicalProfileInfo physicalProfileInfo = new PhysicalProfileInfo(birthYear, height, yearManager);
+            PhysicalProfileDto physicalProfileDto = new PhysicalProfileDto(birthYear, height, yearManager);
 
             // when
-            physicalProfile.change(physicalProfileInfo);
+            physicalProfile.change(physicalProfileDto);
 
             // then
             assertSoftly(softly -> {
@@ -55,10 +55,10 @@ class PhysicalProfileTest {
         void 생년월일_값이_유효하지_않으면_예외가_발생한다(final int invalidBirthYear) {
             // given
             int height = 170;
-            PhysicalProfileInfo physicalProfileInfo = new PhysicalProfileInfo(invalidBirthYear, height, yearManager);
+            PhysicalProfileDto physicalProfileDto = new PhysicalProfileDto(invalidBirthYear, height, yearManager);
 
             // when & then
-            assertThatThrownBy(() -> physicalProfile.change(physicalProfileInfo))
+            assertThatThrownBy(() -> physicalProfile.change(physicalProfileDto))
                     .isInstanceOf(AgeRangeException.class);
         }
 
@@ -67,10 +67,10 @@ class PhysicalProfileTest {
         void 키_값이_유효하지_않으면_예외가_발생한다(final int invalidHeight) {
             // given
             int birthYear = 2000;
-            PhysicalProfileInfo physicalProfileInfo = new PhysicalProfileInfo(birthYear, invalidHeight, yearManager);
+            PhysicalProfileDto physicalProfileDto = new PhysicalProfileDto(birthYear, invalidHeight, yearManager);
 
             // when & then
-            assertThatThrownBy(() -> physicalProfile.change(physicalProfileInfo))
+            assertThatThrownBy(() -> physicalProfile.change(physicalProfileDto))
                     .isInstanceOf(HeightRangeException.class);
         }
     }

@@ -1,6 +1,6 @@
 package com.atwoz.member.domain;
 
-import com.atwoz.member.domain.member.MemberRole;
+import com.atwoz.member.domain.member.vo.MemberRole;
 import com.atwoz.member.exception.exceptions.member.RoleNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

@@ -1,6 +1,6 @@
 package com.atwoz.member.domain.profile;
 
-import com.atwoz.member.domain.member.profile.Drink;
+import com.atwoz.member.domain.member.profile.vo.Drink;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidDrinkException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
