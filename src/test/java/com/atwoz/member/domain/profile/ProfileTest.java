@@ -16,7 +16,6 @@ import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -42,9 +41,8 @@ class ProfileTest {
         yearManager = new FakeYearManager();
     }
 
-    @DisplayName("프로필_정보를_변경한다")
     @Nested
-    class ProfileModification {
+    class Profile_변경 {
 
         @Test
         void 프로필_정보가_유효하면_값이_변경된다() {

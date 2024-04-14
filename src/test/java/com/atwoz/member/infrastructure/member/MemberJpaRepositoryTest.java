@@ -3,7 +3,6 @@ package com.atwoz.member.infrastructure.member;
 import com.atwoz.member.domain.member.Member;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -31,9 +30,8 @@ class MemberJpaRepositoryTest {
         memberRepository.save(member);
     }
 
-    @DisplayName("회원를 찾는다")
     @Nested
-    class MemberSearch {
+    class 회원_조회 {
 
         @Test
         void 아이디_값으로_멤버를_찾는다() {
@@ -66,9 +64,8 @@ class MemberJpaRepositoryTest {
         }
     }
 
-    @DisplayName("회원이 존재하는지 확인한다")
     @Nested
-    class MemberExistence {
+    class 회원_존재_확인 {
 
         @Test
         void 아이디_값으로_회원의_존재를_확인한다() {

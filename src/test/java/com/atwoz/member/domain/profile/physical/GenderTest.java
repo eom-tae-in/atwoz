@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile.physical;
 
 import com.atwoz.member.domain.member.profile.physical.Gender;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidGenderException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,10 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class GenderTest {
 
-
-    @DisplayName("성별_값으로_Gender를_찾는다")
     @Nested
-    class GenderSearch {
+    class Gender_조회 {
 
         @Test
         void 성별_값이_유효하면_Gender를_찾아_반환한다() {

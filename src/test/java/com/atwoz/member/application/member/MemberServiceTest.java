@@ -12,7 +12,6 @@ import com.atwoz.member.infrastructure.member.MemberFakeRepository;
 import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -55,15 +54,14 @@ class MemberServiceTest {
         // then
         Optional<Member> member = memberRepository.findByPhoneNumber(uniquePhoneNumber);
         assertSoftly(softly -> {
-            softly.assertThat(member.isPresent()).isTrue();
+            softly.assertThat(member).isPresent();
             Member foundMember = member.get();
             softly.assertThat(foundMember.getPhoneNumber()).isEqualTo(uniquePhoneNumber);
         });
     }
 
-    @DisplayName("중복된_닉네임이_존재하는지_확인한다")
     @Nested
-    class MemberNicknameValidation {
+    class 닉네임_중복_확인 {
 
         @Test
         void 중복된_닉네임이_존재하는지_않으면_예외가_발생하지_않는다() {
@@ -86,9 +84,8 @@ class MemberServiceTest {
         }
     }
 
-    @DisplayName("회원 정보를 초기화한다")
     @Nested
-    class MemberInitialization {
+    class 회원_정보_초기화 {
 
         @Test
         void 회원_정보_초기화_요청을_보낸_대상이_존재하지_않으면_예외가_발생한다() {
@@ -125,9 +122,8 @@ class MemberServiceTest {
         }
     }
 
-    @DisplayName("회원 정보를 수정한다")
     @Nested
-    class MemberModification {
+    class 회원_정보_수정 {
 
         @Test
         void 회원_정보_수정_요청을_보낸_대상이_존재하지_않으면_예외가_발생한다() {
@@ -154,9 +150,8 @@ class MemberServiceTest {
         }
     }
 
-    @DisplayName("회원을 삭제한다")
     @Nested
-    class MemberDeletion {
+    class 회원_삭제 {
 
         @Test
         void 회원_삭제_요청을_보낸_대상이_존재하지_않으면_예외가_발생한다() {

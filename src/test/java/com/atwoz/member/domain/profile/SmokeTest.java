@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Smoke;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidSmokeException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,9 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class SmokeTest {
 
-    @DisplayName("흡연_정보로_Smoke를_찾는다")
     @Nested
-    class SmokeSearch {
+    class Smoke_조회 {
 
         @Test
         void 흡연_정보가_유효하면_Smoke를_찾아_반환한다() {

@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Drink;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidDrinkException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,10 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class DrinkTest {
 
-
-    @DisplayName("음주_정보_값으로_Drink를_찾는다")
     @Nested
-    class DrinkSearch {
+    class Drink_조회 {
 
         @Test
         void 음주_정보가_유효하면_음주_정보_값으로_Drink를_찾아_반환한다() {

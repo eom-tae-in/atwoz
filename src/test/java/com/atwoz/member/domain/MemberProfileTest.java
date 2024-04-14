@@ -3,7 +3,6 @@ package com.atwoz.member.domain;
 import com.atwoz.member.domain.member.MemberProfile;
 import com.atwoz.member.domain.member.profile.ProfileAccessStatus;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidProfileAccessStatusException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -26,15 +25,14 @@ class MemberProfileTest {
         MemberProfile memberProfile = MemberProfile.createWith(gender);
 
         // then
-        assertSoftly(softly ->  {
+        assertSoftly(softly -> {
             softly.assertThat(memberProfile.getProfileAccessStatus()).isEqualTo(ProfileAccessStatus.WAITING);
             softly.assertThat(memberProfile.getProfile()).isNotNull();
         });
     }
 
-    @DisplayName("회원_프로필_접근_상태를_변경한다")
     @Nested
-    class ProfileAccessStatusModification{
+    class 프로필_접근_상태_변경 {
 
         private final MemberProfile memberProfile = MemberProfile.createWith("남성");
 

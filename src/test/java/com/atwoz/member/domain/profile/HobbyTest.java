@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,10 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class HobbyTest {
 
-
-    @DisplayName("취미_코드_값으로_Hobby를_찾는다")
     @Nested
-    class HobbySearch {
+    class Hobby_조회 {
 
         @Test
         void 취미_코드_값이_유효하면_코드_값으로_Hobby를_찾는다() {
@@ -43,9 +40,8 @@ class HobbyTest {
         }
     }
 
-    @DisplayName("취미_코드가_유효하면_true_유효하지_않으면_false를_반환한다")
     @Nested
-    class HobbyCodeValidation {
+    class Hobby_코드_검증 {
 
         @Test
         void 코드가_유효한_값이면_true를_반환한다() {

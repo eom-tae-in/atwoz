@@ -70,6 +70,10 @@ public class MemberControllerAcceptanceFixture extends IntegrationHelper {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
+    protected MemberInitializeRequest 회원_초기_정보를_요청한다(final String nickname) {
+        return 회원_정보_초기화_요청서_요청(nickname);
+    }
+
     protected MemberInitializeRequest 회원_초기_정보를_요청한다() {
         return 회원_정보_초기화_요청서_요청();
     }

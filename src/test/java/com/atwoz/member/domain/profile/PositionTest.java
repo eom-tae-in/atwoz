@@ -4,7 +4,6 @@ import com.atwoz.member.domain.member.profile.Position;
 import com.atwoz.member.exception.exceptions.member.profile.LatitudeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.LongitudeRangeException;
 import java.math.BigDecimal;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -17,9 +16,8 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 @SuppressWarnings("NonAsciiCharacters")
 class PositionTest {
 
-    @DisplayName("위도_경도_값으로_Position을_생성한다")
     @Nested
-    class PositionCreation {
+    class Position_생성 {
 
         @Test
         void 위도_경도_값이_유효하면_Position을_생성한다() {

@@ -78,15 +78,16 @@ class MemberTest {
         // given
         Member member = PASS_인증만_완료한_유저_생성();
         MemberInitializeRequest memberInitializeRequest = 회원_정보_초기화_요청서_요청();
+        Long recommenderId = 2L;
 
         // when
-        member.initializeWith(memberInitializeRequest.nickname(), memberInitializeRequest.recommender(),
+        member.initializeWith(memberInitializeRequest.nickname(), recommenderId,
                 회원_프로필_정보_생성(memberInitializeRequest.profileInitializeRequest()));
 
         // then
         assertSoftly(softly -> {
             softly.assertThat(member.getNickname()).isEqualTo(memberInitializeRequest.nickname());
-            softly.assertThat(member.getRecommender()).isEqualTo(memberInitializeRequest.recommender());
+            softly.assertThat(member.getRecommenderId()).isEqualTo(recommenderId);
             softly.assertThat(member.getPhoneNumber()).isNotEmpty();
             softly.assertThat(member.getMemberProfile()).isNotNull();
             softly.assertThat(member.getMemberStatus()).isEqualTo(MemberStatus.ACTIVE);

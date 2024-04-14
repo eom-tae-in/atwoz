@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Graduate;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidGraduateException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,9 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class GraduateTest {
 
-    @DisplayName("학위_정보로_Graduate를_찾는다")
     @Nested
-    class GraduateSearch {
+    class Graduate_조회 {
 
         @Test
         void 학위_정보가_유효하면_정보_값으로_Graduate를_찾는다() {

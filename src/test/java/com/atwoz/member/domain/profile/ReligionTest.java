@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Religion;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidReligionException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,9 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class ReligionTest {
 
-    @DisplayName("종교_정보로_Religion을_찾는다")
     @Nested
-    class ReligionSearch {
+    class Religion_조회 {
 
         @Test
         void 종교_정보가_유효하면_Religion을_찾아_반환한다() {

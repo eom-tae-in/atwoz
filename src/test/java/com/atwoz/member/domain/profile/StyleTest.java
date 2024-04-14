@@ -2,7 +2,6 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,9 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class StyleTest {
 
-    @DisplayName("스타일_코드_값으로_Style을_찾는다")
     @Nested
-    class StyleSearch {
+    class Style_조회 {
 
         @Test
         void 스타일_코드_값이_유효하면_Style을_찾아_반환한다() {
@@ -42,9 +40,8 @@ class StyleTest {
         }
     }
 
-    @DisplayName("스타일_코드가_유효하면_true_유효하지_않으면_false를_반환한다")
     @Nested
-    class StyleCodeValidation {
+    class Style_코드_검증 {
 
         @Test
         void 코드가_유효한_값이면_true를_반환한다() {

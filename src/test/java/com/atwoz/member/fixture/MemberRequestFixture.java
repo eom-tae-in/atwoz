@@ -11,12 +11,16 @@ import java.util.List;
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberRequestFixture {
 
+    public static MemberInitializeRequest 회원_정보_초기화_요청서_요청(final String nickname) {
+        ProfileInitializeRequest profileInitializeRequest = 회원_프로필_정보_초기화_요청서_요청();
+
+        return new MemberInitializeRequest(profileInitializeRequest, nickname, null);
+    }
+
     public static MemberInitializeRequest 회원_정보_초기화_요청서_요청() {
         ProfileInitializeRequest profileInitializeRequest = 회원_프로필_정보_초기화_요청서_요청();
-        String nickname = "nickname";
-        String recommender = null;
 
-        return new MemberInitializeRequest(profileInitializeRequest, nickname, recommender);
+        return new MemberInitializeRequest(profileInitializeRequest, "nickname", null);
     }
 
     private static ProfileInitializeRequest 회원_프로필_정보_초기화_요청서_요청() {

@@ -2,7 +2,6 @@ package com.atwoz.member.domain;
 
 import com.atwoz.member.domain.member.MemberRole;
 import com.atwoz.member.exception.exceptions.member.RoleNotFoundException;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -15,9 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SuppressWarnings("NonAsciiCharacters")
 class MemberRoleTest {
 
-    @DisplayName("권한_정보로_MemberRole을_찾는다")
     @Nested
-    class MemberRoleSearch {
+    class MemberRole_조회 {
 
         @Test
         void 권한_정보가_유효하면_MemberRole을_찾아_반환한다() {

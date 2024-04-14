@@ -7,7 +7,6 @@ import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeExc
 import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
 import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
@@ -31,9 +30,8 @@ class PhysicalProfileTest {
         yearManager = new FakeYearManager();
     }
 
-    @DisplayName("신체 프로필 정보를 변경한다")
     @Nested
-    class PhysicalProfileModification {
+    class 신체_프로필_정보_변경 {
 
         @Test
         void 신체_프로필_정보가_유효하면_값이_변경된다() {
