@@ -34,7 +34,7 @@ class MemberJpaRepositoryTest {
     class 회원_조회 {
 
         @Test
-        void 아이디_값으로_회원를_찾는다() {
+        void 아이디_값으로_회원을_찾는다() {
             // given
             Long memberId = member.getId();
 
@@ -49,7 +49,7 @@ class MemberJpaRepositoryTest {
         }
 
         @Test
-        void 전화번호_값으로_회원를_찾는다() {
+        void 전화번호_값으로_회원을_찾는다() {
             // given
             String phoneNumber = member.getPhoneNumber();
 
