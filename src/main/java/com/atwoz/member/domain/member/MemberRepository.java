@@ -4,13 +4,19 @@ import java.util.Optional;
 
 public interface MemberRepository {
 
-    Optional<Member> findById(final Long id);
+    Optional<Member> findById(Long id);
 
-    Optional<Member> findByNickname(final String nickname);
+    Optional<Member> findByPhoneNumber(String phoneNumber);
 
-    Optional<Member> findByEmail(final String email);
+    Optional<Member> findByNickname(String nickname);
 
-    Member save(final Member member);
+    Member save(Member member);
 
-    boolean existsByEmail(final String email);
+    boolean existsByPhoneNumber(String phoneNumber);
+
+    boolean existsByNickname(String nickname);
+
+    boolean existsById(Long id);
+
+    void deleteById(Long id);
 }

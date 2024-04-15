@@ -1,7 +1,7 @@
 package com.atwoz.mission.domain.membermission;
 
 import com.atwoz.global.domain.BaseEntity;
-import com.atwoz.member.domain.info.profile.body.Gender;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
@@ -14,6 +14,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,12 +25,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import static com.atwoz.member.domain.info.profile.body.Gender.FEMALE;
-import static com.atwoz.member.domain.info.profile.body.Gender.MALE;
+import static com.atwoz.member.domain.member.profile.physical.vo.Gender.FEMALE;
+import static com.atwoz.member.domain.member.profile.physical.vo.Gender.MALE;
 
 @Getter
 @EqualsAndHashCode(of = "id", callSuper = false)

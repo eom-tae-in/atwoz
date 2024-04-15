@@ -18,7 +18,7 @@ class MemberMissionsControllerAcceptanceTest extends MemberMissionsControllerAcc
     @BeforeEach
     void setup() {
         회원 = 회원_생성();
-        토큰 = 토큰_생성(회원.getEmail());
+        토큰 = 토큰_생성(회원);
     }
 
     @Test

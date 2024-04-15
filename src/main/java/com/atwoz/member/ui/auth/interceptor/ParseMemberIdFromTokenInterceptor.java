@@ -14,12 +14,13 @@ public class ParseMemberIdFromTokenInterceptor implements HandlerInterceptor {
 
     private final LoginValidCheckerInterceptor loginValidCheckerInterceptor;
     private final AuthenticationContext authenticationContext;
+    private final AuthenticationExtractor authenticationExtractor;
 
     @Override
     public boolean preHandle(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Object handler) throws Exception {
-        if (AuthenticationExtractor.extract(request).isEmpty()) {
+        if (authenticationExtractor.extractFromRequest(request).isEmpty()) {
             authenticationContext.setAnonymous();
             return true;
         }

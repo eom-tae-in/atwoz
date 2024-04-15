@@ -5,6 +5,8 @@ import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionSimpleResponse;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.List;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_id_시간있음;
 import static org.mockito.ArgumentMatchers.any;

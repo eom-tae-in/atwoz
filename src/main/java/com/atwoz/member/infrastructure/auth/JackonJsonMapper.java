@@ -1,6 +1,7 @@
 package com.atwoz.member.infrastructure.auth;
 
 import com.atwoz.member.domain.auth.JsonMapper;
+import com.atwoz.member.exception.exceptions.auth.InvalidJsonKeyException;
 import com.atwoz.member.exception.exceptions.auth.JsonDataInvalidException;
 import com.atwoz.member.infrastructure.auth.dto.MemberInfoKeyWordRequest;
 import com.atwoz.member.infrastructure.auth.dto.MemberInfoResponse;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,18 +22,19 @@ public class JackonJsonMapper implements JsonMapper {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            JsonNode jsonNode = objectMapper.readTree(json);
-            return jsonNode.get(key)
-                    .asText();
+            JsonNode jsonNode = objectMapper.readTree(json)
+                    .get(key);
+            return Optional.ofNullable(jsonNode.asText())
+                    .orElseThrow(InvalidJsonKeyException::new);
+
         } catch (JsonProcessingException exception) {
             throw new JsonDataInvalidException();
         }
     }
 
-
     @Override
     public MemberInfoResponse extractMemberInfoFrom(final String memberInfoResponse,
-                                            final MemberInfoKeyWordRequest memberInfoKeyWordRequest) {
+                                                    final MemberInfoKeyWordRequest memberInfoKeyWordRequest) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -46,9 +49,20 @@ public class JackonJsonMapper implements JsonMapper {
     }
 
     private String getValue(final String keyWord, final JsonNode jsonNode) {
-
         return Arrays.stream(keyWord.split(DELIMITER))
                 .reduce(jsonNode, JsonNode::get, (parentPath, childPath) -> childPath)
                 .asText();
+    }
+
+    @Override
+    public byte[] convertObjectToJsonByteArray(final Object object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            return objectMapper.writeValueAsBytes(object);
+
+        } catch (JsonProcessingException exception) {
+            throw new JsonDataInvalidException();
+        }
     }
 }

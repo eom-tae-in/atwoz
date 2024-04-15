@@ -2,10 +2,9 @@ package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -14,8 +13,18 @@ public class MemberRepositoryImpl implements MemberRepository {
     private final MemberJpaRepository memberJpaRepository;
 
     @Override
+    public Member save(final Member member) {
+        return memberJpaRepository.save(member);
+    }
+
+    @Override
     public Optional<Member> findById(final Long id) {
         return memberJpaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Member> findByPhoneNumber(final String phoneNumber) {
+        return memberJpaRepository.findByPhoneNumber(phoneNumber);
     }
 
     @Override
@@ -24,17 +33,22 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findByEmail(final String email) {
-        return memberJpaRepository.findByEmail(email);
+    public boolean existsById(final Long id) {
+        return memberJpaRepository.existsById(id);
     }
 
     @Override
-    public Member save(final Member member) {
-        return memberJpaRepository.save(member);
+    public boolean existsByPhoneNumber(final String phoneNumber) {
+        return memberJpaRepository.existsByPhoneNumber(phoneNumber);
     }
 
     @Override
-    public boolean existsByEmail(final String email) {
-        return memberJpaRepository.existsByEmail(email);
+    public boolean existsByNickname(final String nickname) {
+        return memberJpaRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public void deleteById(final Long id) {
+        memberJpaRepository.deleteById(id);
     }
 }

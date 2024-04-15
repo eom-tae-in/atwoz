@@ -1,8 +1,8 @@
 package com.atwoz.mission.intrastructure.membermission;
 
 import com.atwoz.mission.domain.membermission.MemberMissions;
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberMissionsJpaRepository extends JpaRepository<MemberMissions, Long> {
 

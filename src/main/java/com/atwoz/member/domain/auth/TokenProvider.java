@@ -2,7 +2,9 @@ package com.atwoz.member.domain.auth;
 
 public interface TokenProvider {
 
-    String createTokenWith(final String email);
+    String createTokenWithId(Long id);
 
-    String extract(final String token);
+    String createTokenWithPhoneNumber(String phoneNumber);
+
+    <T> T extract(String token, String claimName, Class<T> classType);
 }

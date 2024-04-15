@@ -14,13 +14,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
@@ -40,9 +40,16 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String createTokenWith(final String email) {
+    public String createTokenWithId(final Long id) {
         Claims claims = Jwts.claims();
-        claims.put("email", email);
+        claims.put("id", id);
+        return createToken(claims);
+    }
+
+    @Override
+    public String createTokenWithPhoneNumber(final String phoneNumber) {
+        Claims claims = Jwts.claims();
+        claims.put("phoneNumber", phoneNumber);
         return createToken(claims);
     }
 
@@ -71,13 +78,14 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String extract(final String token) {
+    public <T> T extract(final String token, final String claimName, final Class<T> classType) {
         try {
-            return Jwts.parser()
+            return Jwts.parserBuilder()
                     .setSigningKey(secret.getBytes())
+                    .build()
                     .parseClaimsJws(token)
                     .getBody()
-                    .get("email", String.class);
+                    .get(claimName, classType);
         } catch (SecurityException e) {
             throw new SignatureInvalidException();
         } catch (MalformedJwtException e) {

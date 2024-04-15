@@ -4,7 +4,7 @@ import com.atwoz.member.infrastructure.auth.dto.OAuthProviderRequest;
 
 public interface OAuthConnectionManager {
 
-    String getAccessTokenResponse (final OAuthProviderRequest oAuthProviderRequest, final String code);
+    String getAccessTokenResponse (OAuthProviderRequest oAuthProviderRequest, String code);
 
-    String getMemberInfoResponse(final String accessToken, final String userInfoUrl);
+    String getMemberInfoResponse(String accessToken, String userInfoUrl);
 }

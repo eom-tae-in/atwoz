@@ -1,9 +1,9 @@
 package com.atwoz.mission.ui.membermission;
 
 import com.atwoz.helper.IntegrationHelper;
-import com.atwoz.member.domain.info.profile.body.Gender;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
@@ -12,6 +12,7 @@ import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -19,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import static com.atwoz.member.fixture.domain.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_미션_시간있음;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_100_데일리_공개_id없음;
 import static com.atwoz.mission.fixture.MissionFixture.미션_생성_리워드_200_챌린지_id없음;
@@ -45,8 +46,8 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
         return memberRepository.save(일반_유저_생성());
     }
 
-    protected String 토큰_생성(final String email) {
-        return jwtTokenProvider.createTokenWith(email);
+    protected String 토큰_생성(final Member member) {
+        return jwtTokenProvider.createTokenWithId(member.getId());
     }
 
     protected Mission 데일리_미션_생성() {
@@ -60,12 +61,14 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     protected ExtractableResponse 회원_미션을_페이징_조회한다(final String token, final String url) {
         return RestAssured.given().log().all()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .contentType(ContentType.JSON)
                 .get(url)
                 .then().log().all()
                 .extract();
     }
 
     protected void 회원_미션_페이징_조회_결과_검증(final ExtractableResponse response) {
+        System.out.println("hihihii" + response.asPrettyString());
         MemberMissionPagingResponse result = response.as(MemberMissionPagingResponse.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());

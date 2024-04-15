@@ -2,7 +2,9 @@ package com.atwoz.member.ui.auth.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 public class PathMatcherInterceptor implements HandlerInterceptor {
 
@@ -22,6 +24,17 @@ public class PathMatcherInterceptor implements HandlerInterceptor {
             return true;
         }
         return handlerInterceptor.preHandle(request, response, handler);
+    }
+
+    @Override
+    public void postHandle(final HttpServletRequest request,
+                           final HttpServletResponse response,
+                           final Object handler,
+                           final @Nullable ModelAndView modelAndView) throws Exception {
+
+        if (!pathContainer.isNotIncludedPath(request.getServletPath(), request.getMethod())) {
+            handlerInterceptor.postHandle(request, response, handler, modelAndView);
+        }
     }
 
     public PathMatcherInterceptor addPathPatterns(final String pathPattern, final HttpMethod... httpMethod) {

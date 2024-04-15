@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.atwoz.member.fixture.infrastructure.auth.OAuthProviderFixture.인증_기관_생성;
+import static com.atwoz.member.fixture.OAuthProviderFixture.인증_기관_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
@@ -37,7 +37,7 @@ class AuthServiceTest {
         LoginRequest loginRequest = new LoginRequest("kakao", "code");
         OAuthProviderRequest oAuthProviderRequest = 인증_기관_생성();
         String expectedToken = "token";
-        when(tokenProvider.createTokenWith(anyString())).thenReturn(expectedToken);
+        when(tokenProvider.createTokenWithPhoneNumber(anyString())).thenReturn(expectedToken);
 
         // when
         String token = authService.login(loginRequest, oAuthProviderRequest);

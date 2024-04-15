@@ -1,7 +1,6 @@
 package com.atwoz.mission.intrastructure.membermission.dto;
 
 import com.atwoz.mission.domain.mission.vo.MissionType;
-
 import java.time.LocalDateTime;
 
 public record MemberMissionSimpleResponse(
