@@ -1,0 +1,25 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Member
+
+=== 로그인
+
+==== 요청 (POST api/auth/login)
+
+include::{snippets}/auth-controller-web-mvc-test/do_signup/http-request.adoc[]
+include::{snippets}/auth-controller-web-mvc-test/do_signup/request-fields.adoc[]
+
+
+==== 응답
+include::{snippets}/auth-controller-web-mvc-test/do_signup/http-response.adoc[]
+include::{snippets}/auth-controller-web-mvc-test/do_signup/request-fields.adoc[]
+
+
+
+
+
