@@ -1,5 +1,6 @@
 package com.atwoz.member.domain.member;
 
+import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import java.util.Optional;
 
 public interface MemberRepository {
@@ -9,6 +10,8 @@ public interface MemberRepository {
     Optional<Member> findByPhoneNumber(String phoneNumber);
 
     Optional<Member> findByNickname(String nickname);
+
+    MemberResponse findMemberWithProfile(Long id);
 
     Member save(Member member);
 

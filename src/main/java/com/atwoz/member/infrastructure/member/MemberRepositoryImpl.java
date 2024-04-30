@@ -2,6 +2,7 @@ package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 public class MemberRepositoryImpl implements MemberRepository {
 
     private final MemberJpaRepository memberJpaRepository;
+    private final MemberQueryRepository memberQueryRepository;
 
     @Override
     public Member save(final Member member) {
@@ -30,6 +32,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Optional<Member> findByNickname(final String nickname) {
         return memberJpaRepository.findByNickname(nickname);
+    }
+
+    @Override
+    public MemberResponse findMemberWithProfile(final Long id) {
+        return memberQueryRepository.findMemberWithProfile(id);
     }
 
     @Override
