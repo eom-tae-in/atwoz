@@ -1,46 +1,47 @@
 package com.atwoz.member.domain.member.profile.vo;
 
+import com.atwoz.member.domain.member.profile.MemberStyle;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleSizeException;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Embeddable
+@EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Entity
 public class MemberStyles {
 
     private static final int MIN_STYLE_SIZE = 1;
     private static final int MAX_STYLE_SIZE = 3;
 
-    @ElementCollection
-    @CollectionTable(name = "STYLES", joinColumns = @JoinColumn(name = "profile_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Style> styles = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public MemberStyles changeWith(final List<String> styleCodes) {
+    @JoinColumn(name = "member_styles_id")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<MemberStyle> styles = new HashSet<>();
+
+    public void change(final List<String> styleCodes) {
         validateStyleCodes(styleCodes);
-        Set<Style> uniqueStyles = convertToUniqueStyles(styleCodes);
-
-        if (isSameAsCurrentValue(uniqueStyles)) {
-            return new MemberStyles(this.styles);
-        }
-
-        return new MemberStyles(uniqueStyles);
+        changeStyles(styleCodes);
     }
 
     private void validateStyleCodes(final List<String> styleCodes) {
@@ -76,13 +77,16 @@ public class MemberStyles {
                 .anyMatch(styleCode -> !Style.isValidCode(styleCode));
     }
 
-    private Set<Style> convertToUniqueStyles(final List<String> styleCodes) {
-        return styleCodes.stream()
-                .map(Style::findByCode)
-                .collect(Collectors.toSet());
+    private void changeStyles(final List<String> styleCodes) {
+        styles.removeIf(memberStyle -> !memberStyle.hasMatchingStyleCodeOf(styleCodes));
+        styleCodes.stream()
+                .map(MemberStyle::createWith)
+                .filter(memberStyle -> !isAlreadyExist(memberStyle))
+                .forEach(memberStyle -> styles.add(memberStyle));
     }
 
-    private boolean isSameAsCurrentValue(final Set<Style> uniqueStyles) {
-        return uniqueStyles.equals(this.styles);
+    private boolean isAlreadyExist(final MemberStyle memberStyle) {
+        return styles.stream()
+                .anyMatch(memberStyle::isSame);
     }
 }
