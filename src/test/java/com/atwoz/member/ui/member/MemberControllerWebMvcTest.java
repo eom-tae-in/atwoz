@@ -5,6 +5,7 @@ import com.atwoz.member.application.member.dto.MemberInitializeRequest;
 import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.fixture.MemberRequestFixture;
+import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -15,7 +16,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.atwoz.helper.RestDocsHelper.customDocument;
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
+import static com.atwoz.member.fixture.MemberResponseFixture.회원_정보_응답서_요청;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -26,8 +31,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -35,6 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs
 @WebMvcTest(MemberController.class)
 class MemberControllerWebMvcTest extends MockBeanInjection {
+
+    private static final String bearerToken = "Bearer token";
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +51,6 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 닉네임이_중복되는지_확인한다() throws Exception {
         // given
-        String bearerToken = "Bearer token";
         MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("nickname");
 
         // when & then
@@ -67,12 +72,10 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 회원_정보를_초기화한다() throws Exception {
         // given
-        Long memberId = 1L;
-        String bearerToken = "Bearer token";
         MemberInitializeRequest memberInitializeRequest = 회원_정보_초기화_요청서_요청();
 
         // when & then
-        mockMvc.perform(post("/api/members/{memberId}", memberId)
+        mockMvc.perform(post("/api/members")
                         .header(AUTHORIZATION, bearerToken)
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(memberInitializeRequest)))
@@ -80,9 +83,6 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
                 .andDo(customDocument("회원_정보_초기화",
                         requestHeaders(
                                 headerWithName(AUTHORIZATION).description("유저 토큰 정보")
-                        ),
-                        pathParameters(
-                                parameterWithName("memberId").description("회원 id")
                         ),
                         requestFields(
                                 fieldWithPath("profileInitializeRequest.birthYear").description("출생년도"),
@@ -105,14 +105,46 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     }
 
     @Test
+    void 회원_정보를_조회한다() throws Exception {
+        // given
+        MemberResponse memberResponse = 회원_정보_응답서_요청(일반_유저_생성());
+        given(memberQueryService.findMember(any())).willReturn(memberResponse);
+
+        // when & then
+        mockMvc.perform(get("/api/members")
+                        .header(AUTHORIZATION, bearerToken))
+                .andExpect(status().isOk())
+                .andDo(customDocument("회원_정보_조회",
+                        requestHeaders(
+                                headerWithName(AUTHORIZATION).description("유저 토큰 정보")
+                        ),
+                        responseFields(
+                                fieldWithPath("memberProfileResponse.nickname").description("회원 닉네임"),
+                                fieldWithPath("memberProfileResponse.phoneNumber").description("회원 전화번호"),
+                                fieldWithPath("memberProfileResponse.job").description("회원 직업"),
+                                fieldWithPath("memberProfileResponse.city").description("회원이 거주하는 광역시/도"),
+                                fieldWithPath("memberProfileResponse.sector").description("회원이 거주하는 시/군/자치구"),
+                                fieldWithPath("memberProfileResponse.graduate").description("회원 학위 정보"),
+                                fieldWithPath("memberProfileResponse.smoke").description("회원 흡연 정보"),
+                                fieldWithPath("memberProfileResponse.drink").description("회원 음주 정보"),
+                                fieldWithPath("memberProfileResponse.religion").description("회원 종교 정보"),
+                                fieldWithPath("memberProfileResponse.mbti").description("회원 MBTI 정보"),
+                                fieldWithPath("memberProfileResponse.age").description("회원 나이"),
+                                fieldWithPath("memberProfileResponse.height").description("회원 키"),
+                                fieldWithPath("memberProfileResponse.gender").description("회원 성별"),
+                                fieldWithPath("hobbiesResponse.hobbies").description("회원 취미"),
+                                fieldWithPath("stylesResponse.styles").description("회원 스타일")
+                        )
+                ));
+    }
+
+    @Test
     void 회원_정보를_수정한다() throws Exception {
         // given
-        Long memberId = 1L;
-        String bearerToken = "Bearer token";
         MemberUpdateRequest memberUpdateRequest = MemberRequestFixture.회원_정보_수정_요청서_요청();
 
         // when & then
-        mockMvc.perform(patch("/api/members/{memberId}", memberId)
+        mockMvc.perform(patch("/api/members")
                         .header(AUTHORIZATION, bearerToken)
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(memberUpdateRequest)))
@@ -120,9 +152,6 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
                 .andDo(customDocument("회원_정보_수정",
                         requestHeaders(
                                 headerWithName(AUTHORIZATION).description("인증 토큰 정보")
-                        ),
-                        pathParameters(
-                                parameterWithName("memberId").description("회원 id")
                         ),
                         requestFields(
                                 fieldWithPath("profileUpdateRequest").description("회원 프로필 수정 요청 정보"),
@@ -147,20 +176,13 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
 
     @Test
     void 회원을_삭제한다() throws Exception {
-        // given
-        Long memberId = 1L;
-        String bearerToken = "Bearer token";
-
         // when & then
-        mockMvc.perform(delete("/api/members/{memberId}", memberId)
+        mockMvc.perform(delete("/api/members")
                         .header(AUTHORIZATION, bearerToken))
                 .andExpect(status().isNoContent())
                 .andDo(customDocument("회원_삭제",
                         requestHeaders(
                                 headerWithName(AUTHORIZATION).description("인증 토큰 정보")
-                        ),
-                        pathParameters(
-                                parameterWithName("memberId").description("회원 id")
                         )
                 ));
     }

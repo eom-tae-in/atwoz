@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class MemberControllerAcceptanceTest extends MemberControllerAcceptanceFixture {
 
     private static final String 회원_닉네임_중복_확인_uri = "/api/members/nickname/existence";
-    private static final String 회원_정보_관리_uri = "/api/members/1";
+    private static final String 회원_정보_관리_uri = "/api/members";
 
     private String 토큰;
 

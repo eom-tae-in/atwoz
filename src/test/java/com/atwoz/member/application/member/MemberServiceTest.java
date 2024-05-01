@@ -1,7 +1,6 @@
 package com.atwoz.member.application.member;
 
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
-import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
@@ -27,7 +26,6 @@ import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -72,30 +70,6 @@ class MemberServiceTest {
             // when & then
             assertThatThrownBy(() -> memberService.create(member.getPhoneNumber()))
                     .isInstanceOf(MemberAlreadyExistedException.class);
-        }
-    }
-
-    @Nested
-    class 닉네임_중복_확인 {
-
-        @Test
-        void 중복된_닉네임이_존재하는지_않으면_예외가_발생하지_않는다() {
-            // given
-            MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("uniqueNickname");
-
-            // when & then
-            assertDoesNotThrow(() -> memberService.checkMemberExists(memberNicknameRequest));
-        }
-
-        @Test
-        void 중복된_닉네임이_존재하면_예외가_발생한다() {
-            // given
-            memberRepository.save(일반_유저_생성());
-            MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("nickname");
-
-            // when & then
-            assertThatThrownBy(() -> memberService.checkMemberExists(memberNicknameRequest))
-                    .isInstanceOf(MemberNicknameAlreadyExistedException.class);
         }
     }
 
