@@ -7,8 +7,6 @@ import com.atwoz.member.domain.member.profile.vo.Graduate;
 import com.atwoz.member.domain.member.profile.vo.Job;
 import com.atwoz.member.domain.member.profile.vo.Location;
 import com.atwoz.member.domain.member.profile.vo.Mbti;
-import com.atwoz.member.domain.member.profile.vo.MemberHobbies;
-import com.atwoz.member.domain.member.profile.vo.MemberStyles;
 import com.atwoz.member.domain.member.profile.vo.Religion;
 import com.atwoz.member.domain.member.profile.vo.Smoke;
 import jakarta.persistence.CascadeType;

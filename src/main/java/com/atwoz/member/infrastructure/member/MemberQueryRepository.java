@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 
 import static com.atwoz.member.domain.member.QMember.member;
 import static com.atwoz.member.domain.member.QMemberProfile.memberProfile;
+import static com.atwoz.member.domain.member.profile.QMemberHobbies.memberHobbies;
 import static com.atwoz.member.domain.member.profile.QMemberHobby.memberHobby;
 import static com.atwoz.member.domain.member.profile.QMemberStyle.memberStyle;
+import static com.atwoz.member.domain.member.profile.QMemberStyles.memberStyles;
 import static com.atwoz.member.domain.member.profile.QProfile.profile;
 import static com.atwoz.member.domain.member.profile.physical.QPhysicalProfile.physicalProfile;
-import static com.atwoz.member.domain.member.profile.vo.QMemberHobbies.memberHobbies;
-import static com.atwoz.member.domain.member.profile.vo.QMemberStyles.memberStyles;
 
 @RequiredArgsConstructor
 @Repository

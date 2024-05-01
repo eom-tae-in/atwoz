@@ -1,6 +1,6 @@
-package com.atwoz.member.domain.member.profile.vo;
+package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.profile.MemberHobby;
+import com.atwoz.member.domain.member.profile.vo.Hobby;
 import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
