@@ -29,9 +29,8 @@ public class MemberController {
     private final MemberQueryService memberQueryService;
 
     @GetMapping("/nickname/existence")
-    public ResponseEntity<Void> checkMemberExists(
-            @Valid @RequestBody final MemberNicknameRequest memberNicknameRequest) {
-        memberService.checkMemberExists(memberNicknameRequest);
+    public ResponseEntity<Void> checkMemberExists(@Valid @RequestBody final MemberNicknameRequest memberNicknameRequest) {
+        memberQueryService.checkMemberExists(memberNicknameRequest);
         return ResponseEntity.ok()
                 .build();
     }
