@@ -19,7 +19,6 @@ import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
 import static com.atwoz.member.fixture.MemberResponseFixture.회원_정보_응답서_요청;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -107,11 +106,13 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 회원_정보를_조회한다() throws Exception {
         // given
+        Long memberId = 1L;
         MemberResponse memberResponse = 회원_정보_응답서_요청(일반_유저_생성());
-        given(memberQueryService.findMember(any())).willReturn(memberResponse);
+        given(memberQueryService.findMember(memberId)).willReturn(memberResponse);
 
         // when & then
         mockMvc.perform(get("/api/members")
+                        .param("memberId", String.valueOf(memberId))
                         .header(AUTHORIZATION, bearerToken))
                 .andExpect(status().isOk())
                 .andDo(customDocument("회원_정보_조회",
