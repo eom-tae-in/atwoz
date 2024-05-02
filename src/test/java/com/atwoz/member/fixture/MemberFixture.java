@@ -6,7 +6,7 @@ import com.atwoz.member.domain.member.vo.MemberGrade;
 import com.atwoz.member.domain.member.vo.MemberRole;
 import com.atwoz.member.domain.member.vo.MemberStatus;
 
-import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로핑_DTO_요청;
+import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberFixture {
@@ -21,7 +21,7 @@ public class MemberFixture {
                 .memberProfile(MemberProfile.createWith("남성"))
                 .build();
 
-        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로핑_DTO_요청());
+        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
         return member;
     }
 
@@ -35,7 +35,7 @@ public class MemberFixture {
                 .memberProfile(MemberProfile.createWith("남성"))
                 .build();
 
-        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로핑_DTO_요청());
+        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
         return member;
     }
 

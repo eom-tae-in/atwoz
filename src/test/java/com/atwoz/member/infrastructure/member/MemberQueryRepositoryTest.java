@@ -25,7 +25,6 @@ class MemberQueryRepositoryTest extends IntegrationHelper {
     @Autowired
     private MemberQueryRepository memberQueryRepository;
 
-
     @Test
     void 회원_조회() {
         // given

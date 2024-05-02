@@ -9,19 +9,22 @@ import com.atwoz.member.infrastructure.member.dto.MemberProfileResponse;
 public class MemberProfileResponseFixture {
 
     public static MemberProfileResponse 회원_프로필_응답서_요청(final Member member) {
+        Profile profile = getProfile(member);
+        PhysicalProfile physicalProfile = getPhysicalProfile(member);
+
         return MemberProfileResponse.createWith(
                 member.getNickname(),
                 member.getPhoneNumber(),
-                getProfile(member).getJob(),
-                getProfile(member).getLocation(),
-                getProfile(member).getGraduate(),
-                getProfile(member).getSmoke(),
-                getProfile(member).getDrink(),
-                getProfile(member).getReligion(),
-                getProfile(member).getMbti(),
-                getPhysicalProfile(member).getAge(),
-                getPhysicalProfile(member).getHeight(),
-                getPhysicalProfile(member).getGender()
+                profile.getJob(),
+                profile.getLocation(),
+                profile.getGraduate(),
+                profile.getSmoke(),
+                profile.getDrink(),
+                profile.getReligion(),
+                profile.getMbti(),
+                physicalProfile.getAge(),
+                physicalProfile.getHeight(),
+                physicalProfile.getGender()
         );
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberProfileDtoFixture {
 
-    public static MemberProfileDto 회원_프로핑_DTO_요청() {
+    public static MemberProfileDto 회원_프로필_DTO_요청() {
         return MemberProfileDto.builder()
                 .physicalProfileDto(new PhysicalProfileDto(2000, 170, new FakeYearManager()))
                 .hobbiesdto(new HobbiesDto(List.of("B001", "B002")))

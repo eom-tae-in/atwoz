@@ -37,7 +37,7 @@ class MemberQueryServiceTest {
     class 닉네임_중복_확인 {
 
         @Test
-        void 중복된_닉네임이_존재하는지_않으면_예외가_발생하지_않는다() {
+        void 중복된_닉네임이_존재하지_않으면_예외가_발생하지_않는다() {
             // given
             MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("uniqueNickname");
 
