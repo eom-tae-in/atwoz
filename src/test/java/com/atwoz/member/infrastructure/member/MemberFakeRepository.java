@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로핑_DTO_요청;
+import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
 import static com.atwoz.member.fixture.MemberResponseFixture.회원_정보_응답서_요청;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -38,7 +38,7 @@ public class MemberFakeRepository implements MemberRepository {
     }
 
     @Override
-    public MemberResponse findMemberWithProfile(final Long id) {
+    public MemberResponse findMemberWithId(final Long id) {
         Member member = map.get(id);
 
         return 회원_정보_응답서_요청(member);
@@ -54,7 +54,7 @@ public class MemberFakeRepository implements MemberRepository {
                 .memberProfile(MemberProfile.createWith(Gender.MALE.getName()))
                 .build();
 
-        savedMember.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로핑_DTO_요청());
+        savedMember.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
         map.put(id++, savedMember);
 
         return savedMember;

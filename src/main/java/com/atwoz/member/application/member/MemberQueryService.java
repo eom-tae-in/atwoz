@@ -26,6 +26,6 @@ public class MemberQueryService {
     }
 
     public MemberResponse findMember(final Long memberId) {
-        return memberRepository.findMemberWithProfile(memberId);
+        return memberRepository.findMemberWithId(memberId);
     }
 }

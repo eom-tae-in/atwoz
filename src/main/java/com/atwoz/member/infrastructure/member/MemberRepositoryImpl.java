@@ -35,7 +35,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public MemberResponse findMemberWithProfile(final Long id) {
+    public MemberResponse findMemberWithId(final Long id) {
         return memberQueryRepository.findMemberWithProfile(id);
     }
 
