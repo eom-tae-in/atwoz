@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @EqualsAndHashCode(of = "id")
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 public class MemberHobbies {
