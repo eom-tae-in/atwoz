@@ -2,7 +2,6 @@ package com.atwoz.member.ui.member;
 
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
-import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.fixture.MemberRequestFixture;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
@@ -19,6 +18,7 @@ import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
 import static com.atwoz.member.fixture.MemberResponseFixture.회원_정보_응답서_요청;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -31,6 +31,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -39,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(MemberController.class)
 class MemberControllerWebMvcTest extends MockBeanInjection {
 
-    private static final String bearerToken = "Bearer token";
+    private static final String BEARER_TOKEN = "Bearer token";
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,20 +52,18 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 닉네임이_중복되는지_확인한다() throws Exception {
         // given
-        MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("nickname");
+        String nickname = "nickname";
 
         // when & then
-        mockMvc.perform(get("/api/members/nickname/existence")
-                        .header(AUTHORIZATION, bearerToken)
-                        .contentType(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(memberNicknameRequest)))
+        mockMvc.perform(get("/api/members/{nickname}/existence", nickname)
+                        .header(AUTHORIZATION, BEARER_TOKEN))
                 .andExpect(status().isOk())
                 .andDo(customDocument("닉네임_중복_확인",
                         requestHeaders(
                                 headerWithName(AUTHORIZATION).description("유저 토큰 정보")
                         ),
-                        requestFields(
-                                fieldWithPath("nickname").description("중복을 확인할 닉네임")
+                        pathParameters(
+                                parameterWithName("nickname").description("중복을 확인할 닉네임")
                         )
                 ));
     }
@@ -74,8 +74,8 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
         MemberInitializeRequest memberInitializeRequest = 회원_정보_초기화_요청서_요청();
 
         // when & then
-        mockMvc.perform(post("/api/members")
-                        .header(AUTHORIZATION, bearerToken)
+        mockMvc.perform(post("/api/members/me")
+                        .header(AUTHORIZATION, BEARER_TOKEN)
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(memberInitializeRequest)))
                 .andExpect(status().isCreated())
@@ -108,16 +108,18 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
         // given
         Long memberId = 1L;
         MemberResponse memberResponse = 회원_정보_응답서_요청(일반_유저_생성());
-        given(memberQueryService.findMember(memberId)).willReturn(memberResponse);
+        given(memberQueryService.findMember(any())).willReturn(memberResponse);
 
         // when & then
-        mockMvc.perform(get("/api/members")
-                        .param("memberId", String.valueOf(memberId))
-                        .header(AUTHORIZATION, bearerToken))
+        mockMvc.perform(get("/api/members/{memberId}", memberId)
+                        .header(AUTHORIZATION, BEARER_TOKEN))
                 .andExpect(status().isOk())
                 .andDo(customDocument("회원_정보_조회",
                         requestHeaders(
                                 headerWithName(AUTHORIZATION).description("유저 토큰 정보")
+                        ),
+                        pathParameters(
+                                parameterWithName("memberId").description("회원 Id")
                         ),
                         responseFields(
                                 fieldWithPath("memberProfileResponse.nickname").description("회원 닉네임"),
@@ -145,8 +147,8 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
         MemberUpdateRequest memberUpdateRequest = MemberRequestFixture.회원_정보_수정_요청서_요청();
 
         // when & then
-        mockMvc.perform(patch("/api/members")
-                        .header(AUTHORIZATION, bearerToken)
+        mockMvc.perform(patch("/api/members/me")
+                        .header(AUTHORIZATION, BEARER_TOKEN)
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(memberUpdateRequest)))
                 .andExpect(status().isOk())
@@ -178,8 +180,8 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 회원을_삭제한다() throws Exception {
         // when & then
-        mockMvc.perform(delete("/api/members")
-                        .header(AUTHORIZATION, bearerToken))
+        mockMvc.perform(delete("/api/members/me")
+                        .header(AUTHORIZATION, BEARER_TOKEN))
                 .andExpect(status().isNoContent())
                 .andDo(customDocument("회원_삭제",
                         requestHeaders(

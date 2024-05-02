@@ -1,6 +1,5 @@
 package com.atwoz.member.application.member;
 
-import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
@@ -39,20 +38,20 @@ class MemberQueryServiceTest {
         @Test
         void 중복된_닉네임이_존재하지_않으면_예외가_발생하지_않는다() {
             // given
-            MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("uniqueNickname");
+            String uniqueNickname = "uniqueNickname";
 
             // when & then
-            assertDoesNotThrow(() -> memberQueryService.checkMemberExists(memberNicknameRequest));
+            assertDoesNotThrow(() -> memberQueryService.checkMemberExists(uniqueNickname));
         }
 
         @Test
         void 중복된_닉네임이_존재하면_예외가_발생한다() {
             // given
             memberRepository.save(일반_유저_생성());
-            MemberNicknameRequest memberNicknameRequest = new MemberNicknameRequest("nickname");
+            String nickname = "nickname";
 
             // when & then
-            assertThatThrownBy(() -> memberQueryService.checkMemberExists(memberNicknameRequest))
+            assertThatThrownBy(() -> memberQueryService.checkMemberExists(nickname))
                     .isInstanceOf(MemberNicknameAlreadyExistedException.class);
         }
     }
