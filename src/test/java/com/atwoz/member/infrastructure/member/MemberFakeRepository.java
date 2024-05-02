@@ -1,11 +1,18 @@
 package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
+import com.atwoz.member.domain.member.MemberProfile;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
+import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+import static com.atwoz.member.fixture.MemberResponseFixture.회원_정보_응답서_요청;
+
+@SuppressWarnings("NonAsciiCharacters")
 public class MemberFakeRepository implements MemberRepository {
 
     private final Map<Long, Member> map = new HashMap<>();
@@ -31,17 +38,26 @@ public class MemberFakeRepository implements MemberRepository {
     }
 
     @Override
+    public MemberResponse findMemberWithId(final Long id) {
+        Member member = map.get(id);
+
+        return 회원_정보_응답서_요청(member);
+    }
+
+    @Override
     public Member save(final Member member) {
-        Member saved = Member.builder()
+        Member savedMember = Member.builder()
                 .id(id)
                 .nickname(member.getNickname())
                 .phoneNumber(member.getPhoneNumber())
                 .memberRole(member.getMemberRole())
+                .memberProfile(MemberProfile.createWith(Gender.MALE.getName()))
                 .build();
 
-        map.put(id++, member);
+        savedMember.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
+        map.put(id++, savedMember);
 
-        return saved;
+        return savedMember;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.atwoz.member.fixture;
 import com.atwoz.member.infrastructure.auth.dto.MemberInfoKeyWordRequest;
 import com.atwoz.member.infrastructure.auth.dto.OAuthProviderRequest;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class OAuthProviderFixture {
 
     public static OAuthProviderRequest 인증_기관_생성() {

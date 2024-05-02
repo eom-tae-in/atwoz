@@ -1,7 +1,6 @@
 package com.atwoz.member.application.member;
 
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
-import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
@@ -30,17 +29,6 @@ public class MemberService {
         memberRepository.save(Member.createWithOAuth(phoneNumber));
     }
 
-    @Transactional(readOnly = true)
-    public void checkMemberExists(final MemberNicknameRequest memberNicknameRequest) {
-        validateNicknameIsUnique(memberNicknameRequest.nickname());
-    }
-
-    private void validateNicknameIsUnique(final String nickname) {
-        if (memberRepository.existsByNickname(nickname)) {
-            throw new MemberNicknameAlreadyExistedException();
-        }
-    }
-
     public void initializeMember(final Long memberId, final MemberInitializeRequest memberInitializeRequest) {
         Member foundMember = findMemberById(memberId);
         MemberProfileDto memberProfileDto = MemberProfileDto.createWith(
@@ -48,6 +36,12 @@ public class MemberService {
         validateNicknameIsUnique(memberInitializeRequest.nickname());
         Long foundRecommenderId = findRecommenderIdByNicknameOrNull(memberInitializeRequest.recommender());
         foundMember.initializeWith(memberInitializeRequest.nickname(), foundRecommenderId, memberProfileDto);
+    }
+
+    private void validateNicknameIsUnique(final String nickname) {
+        if (memberRepository.existsByNickname(nickname)) {
+            throw new MemberNicknameAlreadyExistedException();
+        }
     }
 
     private Member findMemberById(final Long memberId) {

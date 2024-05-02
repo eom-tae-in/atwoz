@@ -1,4 +1,4 @@
-package com.atwoz.member.domain.profile;
+package com.atwoz.member.domain.profile.vo;
 
 import com.atwoz.member.domain.member.profile.vo.Position;
 import com.atwoz.member.exception.exceptions.member.profile.LatitudeRangeException;

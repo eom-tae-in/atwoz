@@ -6,10 +6,13 @@ import com.atwoz.member.domain.member.vo.MemberGrade;
 import com.atwoz.member.domain.member.vo.MemberRole;
 import com.atwoz.member.domain.member.vo.MemberStatus;
 
+import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+
+@SuppressWarnings("NonAsciiCharacters")
 public class MemberFixture {
 
     public static Member 일반_유저_생성() {
-        return Member.builder()
+        Member member = Member.builder()
                 .nickname("nickname")
                 .phoneNumber("01011111111")
                 .memberStatus(MemberStatus.ACTIVE)
@@ -17,10 +20,13 @@ public class MemberFixture {
                 .memberRole(MemberRole.MEMBER)
                 .memberProfile(MemberProfile.createWith("남성"))
                 .build();
+
+        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
+        return member;
     }
 
     public static Member 일반_유저_생성(final String nickname, final String phoneNumber) {
-        return Member.builder()
+        Member member = Member.builder()
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .memberStatus(MemberStatus.ACTIVE)
@@ -28,6 +34,9 @@ public class MemberFixture {
                 .memberRole(MemberRole.MEMBER)
                 .memberProfile(MemberProfile.createWith("남성"))
                 .build();
+
+        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
+        return member;
     }
 
     public static Member OAuth_인증만_완료한_유저_생성() {
