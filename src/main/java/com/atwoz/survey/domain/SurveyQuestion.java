@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class SurveyQuestion {
     private Survey survey;
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    private List<SurveyAnswer> answers;
+    private List<SurveyAnswer> answers = new ArrayList<>();
 
     private SurveyQuestion(final Survey survey, final String description) {
         this.survey = survey;
