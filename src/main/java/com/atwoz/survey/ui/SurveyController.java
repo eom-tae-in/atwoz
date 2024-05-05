@@ -2,7 +2,6 @@ package com.atwoz.survey.ui;
 
 import com.atwoz.survey.application.SurveyService;
 import com.atwoz.survey.application.dto.SurveyCreateRequest;
-import com.atwoz.survey.ui.dto.SurveyResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class SurveyController {
     private final SurveyService surveyService;
 
     @PostMapping
-    public ResponseEntity<SurveyResponse> addSurvey(@RequestBody @Valid final SurveyCreateRequest request) {
+    public ResponseEntity<Void> addSurvey(@RequestBody @Valid final SurveyCreateRequest request) {
         Long id = surveyService.addSurvey(request);
         return ResponseEntity.created(URI.create("/api/surveys/" + id))
                 .build();
