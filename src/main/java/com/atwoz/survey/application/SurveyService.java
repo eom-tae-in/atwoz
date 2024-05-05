@@ -18,7 +18,7 @@ public class SurveyService {
     public Long addSurvey(final SurveyCreateRequest request) {
         validateIsAlreadyUsedName(request.name());
 
-        Survey survey = Survey.createWith(request);
+        Survey survey = surveyRepository.save(Survey.createWith(request));
         return survey.getId();
     }
 
