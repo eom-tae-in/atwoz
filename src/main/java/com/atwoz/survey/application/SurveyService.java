@@ -15,11 +15,11 @@ public class SurveyService {
 
     private final SurveyRepository surveyRepository;
 
-    public Survey addSurvey(final SurveyCreateRequest request) {
-        validateIsAlreadyUsedName(request.surveyName());
+    public Long addSurvey(final SurveyCreateRequest request) {
+        validateIsAlreadyUsedName(request.name());
 
         Survey survey = Survey.createWith(request);
-        return surveyRepository.save(survey);
+        return survey.getId();
     }
 
     private void validateIsAlreadyUsedName(final String name) {
