@@ -1,15 +1,12 @@
 package com.atwoz.survey.application;
 
 import com.atwoz.survey.application.dto.SurveyCreateRequest;
-import com.atwoz.survey.application.dto.SurveyQuestionCreateRequest;
 import com.atwoz.survey.domain.Survey;
 import com.atwoz.survey.domain.SurveyRepository;
 import com.atwoz.survey.exception.exceptions.SurveyNameAlreadyExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -21,13 +18,7 @@ public class SurveyService {
     public Survey addSurvey(final SurveyCreateRequest request) {
         validateIsAlreadyUsedName(request.surveyName());
 
-        Survey survey = Survey.createWith(request.surveyName(), request.required());
-        List<String> questionDescriptions = request.questions()
-                .stream()
-                .map(SurveyQuestionCreateRequest::description)
-                .toList();
-        survey.addSurveyQuestions(questionDescriptions);
-
+        Survey survey = Survey.createWith(request);
         return surveyRepository.save(survey);
     }
 

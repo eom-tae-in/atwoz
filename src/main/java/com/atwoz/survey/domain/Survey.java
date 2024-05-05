@@ -1,6 +1,8 @@
 package com.atwoz.survey.domain;
 
-import com.atwoz.survey.exception.exceptions.QuestionDescriptionDuplicatedException;
+import com.atwoz.survey.application.dto.SurveyCreateRequest;
+import com.atwoz.survey.application.dto.SurveyQuestionCreateRequest;
+import com.atwoz.survey.exception.exceptions.SurveyQuestionDuplicatedException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,8 +42,31 @@ public class Survey {
         this.required = required;
     }
 
-    public static Survey createWith(final String name, final Boolean required) {
-        return new Survey(name, required);
+    public static Survey createWith(final SurveyCreateRequest request) {
+        validateQuestionsIsNotDuplicated(request.questions());
+
+        Survey survey = new Survey(request.surveyName(), request.required());
+        survey.addSurveyQuestions(request.questions());
+
+        return survey;
+    }
+
+    private static void validateQuestionsIsNotDuplicated(final List<SurveyQuestionCreateRequest> requests) {
+        List<String> questions = requests.stream()
+                .map(SurveyQuestionCreateRequest::description)
+                .toList();
+
+        Set<String> questionsSet = new HashSet<>(questions);
+        if (questionsSet.size() != questions.size()) {
+            throw new SurveyQuestionDuplicatedException();
+        }
+    }
+
+    private void addSurveyQuestions(final List<SurveyQuestionCreateRequest> questionRequests) {
+        List<SurveyQuestion> questions = questionRequests.stream()
+                .map(request -> SurveyQuestion.of(this, request.description(), request.answers()))
+                .toList();
+        this.questions.addAll(questions);
     }
 
     public void updateName(final String name) {
@@ -50,21 +75,5 @@ public class Survey {
 
     public void updateRequired(final Boolean required) {
         this.required = required;
-    }
-
-    public void addSurveyQuestions(final List<String> descriptions) {
-        validateDoesNotHaveDuplicateQuestion(descriptions);
-
-        List<SurveyQuestion> questions = descriptions.stream()
-                .map(description -> SurveyQuestion.of(this, description))
-                .toList();
-        this.questions.addAll(questions);
-    }
-
-    private void validateDoesNotHaveDuplicateQuestion(final List<String> questionDescriptions) {
-        Set<String> questionSet = new HashSet<>(questionDescriptions);
-        if (questionSet.size() != questionDescriptions.size()) {
-            throw new QuestionDescriptionDuplicatedException();
-        }
     }
 }
