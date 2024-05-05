@@ -49,7 +49,7 @@ public class Survey {
     public static Survey createWith(final SurveyCreateRequest request) {
         validateQuestionsIsNotDuplicated(request.questions());
 
-        Survey survey = new Survey(request.surveyName(), request.required());
+        Survey survey = new Survey(request.name(), request.required());
         survey.addSurveyQuestions(request.questions());
 
         return survey;
