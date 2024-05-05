@@ -14,6 +14,7 @@ import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
 import com.atwoz.mission.application.membermission.MemberMissionsService;
 import com.atwoz.mission.application.mission.MissionQueryService;
 import com.atwoz.mission.application.mission.MissionService;
+import com.atwoz.survey.application.SurveyService;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 
@@ -61,4 +62,7 @@ public class MockBeanInjection {
 
     @MockBean
     protected MemberService memberService;
+
+    @MockBean
+    protected SurveyService surveyService;
 }

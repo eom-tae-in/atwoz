@@ -1,0 +1,67 @@
+package com.atwoz.survey.ui;
+
+import com.atwoz.helper.MockBeanInjection;
+import com.atwoz.survey.application.SurveyService;
+import com.atwoz.survey.application.dto.SurveyCreateRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpHeaders;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static com.atwoz.helper.RestDocsHelper.customDocument;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
+@AutoConfigureRestDocs
+@WebMvcTest(SurveyController.class)
+class SurveyControllerWebMvcTest extends MockBeanInjection {
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private SurveyService surveyService;
+
+    @Test
+    void 설문_과목을_생성한다() throws Exception {
+        // given
+        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩();
+        when(surveyService.addSurvey(request)).thenReturn(1L);
+
+        // when
+        mockMvc.perform(post("/api/surveys")
+                        .header(HttpHeaders.AUTHORIZATION, "bearer tokenInfo...")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(request)))
+                        .andExpect(status().isCreated())
+                .andDo(print())
+                .andDo(customDocument("연애_모의고사_설문_생성",
+                        requestFields(
+                                fieldWithPath("name").description("설문 제목"),
+                                fieldWithPath("required").description("필수 여부"),
+                                fieldWithPath("questions").description("질문 목록"),
+                                fieldWithPath("questions[].description").description("질문 내용"),
+                                fieldWithPath("questions[].answers").description("질문 내용 답변들")
+                        ),
+                        responseHeaders(
+                                headerWithName("location").description("생성된 설문 과목 경로")
+                        )
+                ));
+    }
+}
