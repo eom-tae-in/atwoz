@@ -7,7 +7,7 @@ import static com.atwoz.survey.fixture.SurveyAnswerFixture.설문_답변_id있�
 
 public class SurveyQuestionFixture {
 
-    public static SurveyQuestion 설문_질문_답변_한개() {
+    public static SurveyQuestion 설문_질문_답변_한개_id있음() {
         return SurveyQuestion.builder()
                 .id(1L)
                 .description("질문 1")

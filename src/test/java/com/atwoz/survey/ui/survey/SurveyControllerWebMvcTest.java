@@ -14,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.atwoz.helper.RestDocsHelper.customDocument;
-import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩_생성_요청;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -41,7 +41,7 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 설문_과목을_생성한다() throws Exception {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩();
+        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
         when(surveyService.addSurvey(request)).thenReturn(1L);
 
         // when

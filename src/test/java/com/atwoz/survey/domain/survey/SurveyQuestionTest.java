@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import static com.atwoz.survey.fixture.SurveyQuestionFixture.설문_질문_답변_한개;
+import static com.atwoz.survey.fixture.SurveyQuestionFixture.설문_질문_답변_한개_id있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -44,7 +44,7 @@ class SurveyQuestionTest {
     @Test
     void 연애고사_질문_응시() {
         // given
-        SurveyQuestion surveyQuestion = 설문_질문_답변_한개();
+        SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
         List<SurveyQuestionComparisonRequest> requests = List.of(
                 new SurveyQuestionComparisonRequest(1L, 1L)
         );
@@ -56,7 +56,7 @@ class SurveyQuestionTest {
     @Test
     void 동등성_비교() {
         // given
-        SurveyQuestion surveyQuestion = 설문_질문_답변_한개();
+        SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
         SurveyQuestion anotherSurveyQuestion = SurveyQuestion.of("질문 1", List.of("답변 1"));
 
         // when
@@ -83,7 +83,7 @@ class SurveyQuestionTest {
         @Test
         void 연애고사_질문을_응시할_때는_관련_질문이_있어야_한다() {
             // given
-            SurveyQuestion surveyQuestion = 설문_질문_답변_한개();
+            SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
             List<SurveyQuestionComparisonRequest> requests = List.of(
                     new SurveyQuestionComparisonRequest(2L, 1L),
                     new SurveyQuestionComparisonRequest(3L, 1L)
@@ -97,7 +97,7 @@ class SurveyQuestionTest {
         @Test
         void 연애고사_질문을_응시할_때는_있는_답변으로만_작성해야_한다() {
             // given
-            SurveyQuestion surveyQuestion = 설문_질문_답변_한개();
+            SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
             List<SurveyQuestionComparisonRequest> requests = List.of(
                     new SurveyQuestionComparisonRequest(1L, 5L)
             );
