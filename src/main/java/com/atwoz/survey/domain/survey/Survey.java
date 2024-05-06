@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,8 @@ public class Survey {
     @Column(nullable = false)
     private Boolean required;
 
-    @OneToMany(mappedBy = "survey", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "survey_id")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<SurveyQuestion> questions = new ArrayList<>();
 
     private Survey(final String name, final Boolean required) {
@@ -70,7 +72,7 @@ public class Survey {
 
     private void addSurveyQuestions(final List<SurveyQuestionCreateRequest> questionRequests) {
         List<SurveyQuestion> questions = questionRequests.stream()
-                .map(request -> SurveyQuestion.of(this, request.description(), request.answers()))
+                .map(request -> SurveyQuestion.of(request.description(), request.answers()))
                 .toList();
         this.questions.addAll(questions);
     }

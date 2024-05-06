@@ -7,11 +7,10 @@ import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedExcept
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,23 +33,20 @@ public class SurveyQuestion {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Survey survey;
-
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "survey_question_id")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private List<SurveyAnswer> answers = new ArrayList<>();
 
-    private SurveyQuestion(final Survey survey, final String description) {
-        this.survey = survey;
+    private SurveyQuestion(final String description) {
         this.description = description;
     }
 
-    public static SurveyQuestion of(final Survey survey, final String description, final List<String> answers) {
+    public static SurveyQuestion of(final String description, final List<String> answers) {
         validateAnswersIsNotDuplicated(answers);
 
-        SurveyQuestion surveyQuestion = new SurveyQuestion(survey, description);
+        SurveyQuestion surveyQuestion = new SurveyQuestion(description);
         List<SurveyAnswer> surveyAnswers = answers.stream()
-                .map(answer -> SurveyAnswer.of(surveyQuestion, answer))
+                .map(SurveyAnswer::from)
                 .toList();
         surveyQuestion.addSurveyAnswers(surveyAnswers);
 
