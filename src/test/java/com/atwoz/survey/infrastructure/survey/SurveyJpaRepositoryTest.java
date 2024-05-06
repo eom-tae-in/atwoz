@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static com.atwoz.survey.fixture.SurveyFixture.설문_필수_질문_과목_두개씩;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -21,7 +22,7 @@ public class SurveyJpaRepositoryTest {
     @Test
     void 설문_과목_등록() {
         // given
-        Survey survey = SurveyFixture.설문_필수_질문_과목_두개씩();
+        Survey survey = 설문_필수_질문_과목_두개씩();
 
         // when
         Survey saveSurvey = surveyJpaRepository.save(survey);
