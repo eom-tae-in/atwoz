@@ -1,4 +1,4 @@
-package com.atwoz.survey.application.dto;
+package com.atwoz.survey.application.survey.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

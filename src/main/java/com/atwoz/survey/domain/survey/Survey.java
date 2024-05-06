@@ -1,8 +1,10 @@
-package com.atwoz.survey.domain;
+package com.atwoz.survey.domain.survey;
 
-import com.atwoz.survey.application.dto.SurveyCreateRequest;
-import com.atwoz.survey.application.dto.SurveyQuestionCreateRequest;
-import com.atwoz.survey.exception.exceptions.SurveyQuestionDuplicatedException;
+import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
+import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
+import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
+import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitSizeNotMatchException;
+import com.atwoz.survey.exception.survey.exceptions.SurveyQuestionDuplicatedException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -83,5 +85,16 @@ public class Survey {
 
     public boolean isSameName(final String name) {
         return name.equals(this.name);
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    public void validateIsAllContainsSubmitQuestions(final SurveyComparisonRequest request) {
+        if (request.questions().size() != questions.size()) {
+            throw new SurveyQuestionSubmitSizeNotMatchException();
+        }
+        questions.forEach(question -> question.validateIsValidSubmitAnswer(request.questions()));
     }
 }

@@ -1,7 +1,7 @@
 package com.atwoz.survey.fixture;
 
-import com.atwoz.survey.application.dto.SurveyCreateRequest;
-import com.atwoz.survey.application.dto.SurveyQuestionCreateRequest;
+import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
+import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.atwoz.survey.exception.exceptions;
+package com.atwoz.survey.exception.survey.exceptions;
 
 public class SurveyNameAlreadyExistException extends RuntimeException {
 

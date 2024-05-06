@@ -1,6 +1,9 @@
-package com.atwoz.survey.domain;
+package com.atwoz.survey.domain.survey;
 
-import com.atwoz.survey.exception.exceptions.SurveyAnswerDuplicatedException;
+import com.atwoz.survey.domain.survey.dto.SurveyQuestionComparisonRequest;
+import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
+import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
+import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,5 +66,25 @@ public class SurveyQuestion {
 
     private void addSurveyAnswers(final List<SurveyAnswer> answers) {
         this.answers.addAll(answers);
+    }
+
+    public void validateIsValidSubmitAnswer(final List<SurveyQuestionComparisonRequest> requests) {
+        SurveyQuestionComparisonRequest questionRequest = findSurveyQuestionById(requests);
+        if (!isContainsSameAnswer(questionRequest.answerId())) {
+            throw new SurveyAnswerInvalidSubmitException();
+        }
+    }
+
+    private SurveyQuestionComparisonRequest findSurveyQuestionById(final List<SurveyQuestionComparisonRequest> requests) {
+        return requests
+                .stream()
+                .filter(question -> id.equals(question.questionId()))
+                .findAny()
+                .orElseThrow(SurveyQuestionNotSubmittedException::new);
+    }
+
+    private boolean isContainsSameAnswer(final Long answerId) {
+        return answers.stream()
+                .anyMatch(answer -> answer.isSame(answerId));
     }
 }

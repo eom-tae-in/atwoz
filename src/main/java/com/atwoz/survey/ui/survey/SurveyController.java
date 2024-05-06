@@ -1,7 +1,7 @@
-package com.atwoz.survey.ui;
+package com.atwoz.survey.ui.survey;
 
-import com.atwoz.survey.application.SurveyService;
-import com.atwoz.survey.application.dto.SurveyCreateRequest;
+import com.atwoz.survey.application.survey.SurveyService;
+import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

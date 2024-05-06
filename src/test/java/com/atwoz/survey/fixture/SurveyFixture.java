@@ -1,6 +1,6 @@
 package com.atwoz.survey.fixture;
 
-import com.atwoz.survey.domain.Survey;
+import com.atwoz.survey.domain.survey.Survey;
 
 public class SurveyFixture {
 

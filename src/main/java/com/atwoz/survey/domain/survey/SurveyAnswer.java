@@ -1,4 +1,4 @@
-package com.atwoz.survey.domain;
+package com.atwoz.survey.domain.survey;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,5 +31,9 @@ public class SurveyAnswer {
 
     public static SurveyAnswer of(final SurveyQuestion question, final String description) {
         return new SurveyAnswer(question, description);
+    }
+
+    public boolean isSame(final Long id) {
+        return id.equals(this.id);
     }
 }

@@ -1,10 +1,12 @@
 package com.atwoz.survey.infrastructure;
 
-import com.atwoz.survey.domain.Survey;
-import com.atwoz.survey.domain.SurveyRepository;
+import com.atwoz.survey.domain.survey.Survey;
+import com.atwoz.survey.domain.survey.SurveyRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class SurveyFakeRepository implements SurveyRepository {
 
@@ -30,5 +32,18 @@ public class SurveyFakeRepository implements SurveyRepository {
         return map.values()
                 .stream()
                 .anyMatch(survey -> survey.isSameName(name));
+    }
+
+    @Override
+    public Optional<Survey> findById(final Long id) {
+        return Optional.of(map.get(id));
+    }
+
+    @Override
+    public List<Survey> findAllRequiredSurveys() {
+        return map.values()
+                .stream()
+                .filter(Survey::isRequired)
+                .toList();
     }
 }
