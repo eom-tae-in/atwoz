@@ -1,8 +1,7 @@
-package com.atwoz.survey.domain;
+package com.atwoz.survey.domain.survey;
 
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
-import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyQuestionDuplicatedException;
 import org.junit.jupiter.api.DisplayNameGeneration;

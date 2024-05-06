@@ -1,10 +1,9 @@
-package com.atwoz.survey.application;
+package com.atwoz.survey.application.survey;
 
-import com.atwoz.survey.application.survey.SurveyService;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.exception.survey.exceptions.SurveyNameAlreadyExistException;
-import com.atwoz.survey.infrastructure.SurveyFakeRepository;
+import com.atwoz.survey.infrastructure.survey.SurveyFakeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

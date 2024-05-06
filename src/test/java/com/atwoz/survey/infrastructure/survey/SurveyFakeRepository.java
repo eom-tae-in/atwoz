@@ -1,4 +1,4 @@
-package com.atwoz.survey.infrastructure;
+package com.atwoz.survey.infrastructure.survey;
 
 import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.domain.survey.SurveyRepository;

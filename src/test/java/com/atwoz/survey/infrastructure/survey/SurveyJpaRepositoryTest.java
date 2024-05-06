@@ -1,8 +1,7 @@
-package com.atwoz.survey.infrastructure;
+package com.atwoz.survey.infrastructure.survey;
 
 import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.fixture.SurveyFixture;
-import com.atwoz.survey.infrastructure.survey.SurveyJpaRepository;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

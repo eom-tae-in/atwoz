@@ -1,9 +1,8 @@
-package com.atwoz.survey.ui;
+package com.atwoz.survey.ui.survey;
 
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.survey.application.survey.SurveyService;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
-import com.atwoz.survey.ui.survey.SurveyController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.DisplayNameGeneration;
