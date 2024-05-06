@@ -31,11 +31,7 @@ public class SurveyService {
     }
 
     public void submitSurvey(final Long memberId, final Long surveyId, final SurveySubmitRequest request) {
-        Survey survey = findSurveyById(surveyId);
-        // request
-            // List<SurveyQuestionSubmitRequest>
-                // Long questionId
-                // Long answerId
+
     }
 
     private Survey findSurveyById(final Long surveyId) {

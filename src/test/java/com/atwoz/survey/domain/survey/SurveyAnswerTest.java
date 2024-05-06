@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.atwoz.survey.fixture.SurveyAnswerFixture.설문_답변_id있음;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -14,13 +15,17 @@ class SurveyAnswerTest {
     @Test
     void 설문_답변_생성() {
         // given
+        Integer number = 1;
         String description = "답변";
 
         // when
-        SurveyAnswer answer = SurveyAnswer.from(description);
+        SurveyAnswer answer = SurveyAnswer.of(number, description);
 
         // then
-        assertThat(answer.getDescription()).isEqualTo(description);
+        assertSoftly(softly -> {
+            softly.assertThat(answer.getNumber()).isEqualTo(number);
+            softly.assertThat(answer.getDescription()).isEqualTo(description);
+        });
     }
 
     @Test
@@ -29,7 +34,7 @@ class SurveyAnswerTest {
         SurveyAnswer surveyAnswer = 설문_답변_id있음();
 
         // when
-        boolean isSame = surveyAnswer.isSame(1L);
+        boolean isSame = surveyAnswer.isSame(1);
 
         // then
         assertThat(isSame).isTrue();
@@ -39,7 +44,7 @@ class SurveyAnswerTest {
     void 동등성_비교() {
         // given
         SurveyAnswer surveyAnswer1 = 설문_답변_id있음();
-        SurveyAnswer surveyAnswer2 = SurveyAnswer.from("답변 1");
+        SurveyAnswer surveyAnswer2 = SurveyAnswer.of(1, "답변 1");
 
         // when
         boolean equals = surveyAnswer1.equals(surveyAnswer2);

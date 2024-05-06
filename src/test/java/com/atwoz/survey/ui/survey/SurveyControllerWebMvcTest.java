@@ -57,7 +57,9 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("required").description("필수 여부"),
                                 fieldWithPath("questions").description("질문 목록"),
                                 fieldWithPath("questions[].description").description("질문 내용"),
-                                fieldWithPath("questions[].answers").description("질문 내용 답변들")
+                                fieldWithPath("questions[].answers").description("답변 목록"),
+                                fieldWithPath("questions[].answers[].number").description("답변 번호"),
+                                fieldWithPath("questions[].answers[].answer").description("답변 내용")
                         ),
                         responseHeaders(
                                 headerWithName("location").description("생성된 설문 과목 경로")

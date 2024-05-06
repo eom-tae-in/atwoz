@@ -1,5 +1,6 @@
 package com.atwoz.survey.domain.survey;
 
+import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
 import com.atwoz.survey.domain.survey.dto.SurveyQuestionComparisonRequest;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
@@ -47,20 +48,23 @@ public class SurveyQuestion {
         this.description = description;
     }
 
-    public static SurveyQuestion of(final String description, final List<String> answers) {
+    public static SurveyQuestion of(final String description, final List<SurveyAnswerCreateRequest> answers) {
         validateAnswersIsNotDuplicated(answers);
 
         SurveyQuestion surveyQuestion = new SurveyQuestion(description);
         List<SurveyAnswer> surveyAnswers = answers.stream()
-                .map(SurveyAnswer::from)
+                .map(answer -> SurveyAnswer.of(answer.number(), answer.answer()))
                 .toList();
         surveyQuestion.addSurveyAnswers(surveyAnswers);
 
         return surveyQuestion;
     }
 
-    private static void validateAnswersIsNotDuplicated(final List<String> answers) {
-        Set<String> answersSet = new HashSet<>(answers);
+    private static void validateAnswersIsNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+        List<Integer> answerNumbers = answers.stream()
+                .map(SurveyAnswerCreateRequest::number)
+                .toList();
+        Set<Integer> answersSet = new HashSet<>(answerNumbers);
         if (answersSet.size() != answers.size()) {
             throw new SurveyAnswerDuplicatedException();
         }
@@ -72,7 +76,7 @@ public class SurveyQuestion {
 
     public void validateIsValidSubmitAnswer(final List<SurveyQuestionComparisonRequest> requests) {
         SurveyQuestionComparisonRequest questionRequest = findSurveyQuestionById(requests);
-        if (!isContainsSameAnswer(questionRequest.answerId())) {
+        if (!isContainsSameAnswer(questionRequest.answerNumber())) {
             throw new SurveyAnswerInvalidSubmitException();
         }
     }
@@ -85,8 +89,8 @@ public class SurveyQuestion {
                 .orElseThrow(SurveyQuestionNotSubmittedException::new);
     }
 
-    private boolean isContainsSameAnswer(final Long answerId) {
+    private boolean isContainsSameAnswer(final Integer answerNumber) {
         return answers.stream()
-                .anyMatch(answer -> answer.isSame(answerId));
+                .anyMatch(answer -> answer.isSame(answerNumber));
     }
 }

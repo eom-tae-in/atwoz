@@ -70,7 +70,7 @@ public class MemberSurveyService {
     private void saveQuestionAnswer(final Long memberId, final SurveySubmitRequest request, final SurveyQuestion question) {
         validateIsAlreadySubmittedQuestion(memberId, question.getId());
         SurveyQuestionSubmitRequest questionRequest = findQuestionSubmitRequest(question.getId(), request);
-        MemberSurvey memberSurvey = MemberSurvey.of(memberId, question.getId(), questionRequest.answerId());
+        MemberSurvey memberSurvey = MemberSurvey.of(memberId, question.getId(), questionRequest.answerNumber());
         memberSurveyRepository.save(memberSurvey);
     }
 

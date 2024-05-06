@@ -25,15 +25,15 @@ public class MemberSurvey {
     private Long questionId;
 
     @Column(nullable = false)
-    private Long answerId;
+    private Integer answerNumber;
 
-    private MemberSurvey(final Long memberId, final Long questionId, final Long answerId) {
+    private MemberSurvey(final Long memberId, final Long questionId, final Integer answerNumber) {
         this.memberId = memberId;
         this.questionId = questionId;
-        this.answerId = answerId;
+        this.answerNumber = answerNumber;
     }
 
-    public static MemberSurvey of(final Long memberId, final Long questionId, final Long answerId) {
-        return new MemberSurvey(memberId, questionId, answerId);
+    public static MemberSurvey of(final Long memberId, final Long questionId, final Integer answerNumber) {
+        return new MemberSurvey(memberId, questionId, answerNumber);
     }
 }

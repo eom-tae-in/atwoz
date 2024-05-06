@@ -2,6 +2,7 @@ package com.atwoz.survey.domain.survey;
 
 import com.atwoz.survey.application.membersurvey.dto.SurveyQuestionSubmitRequest;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
+import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
 import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
@@ -31,8 +32,14 @@ class SurveyTest {
         // given
         SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
         List<SurveyQuestion> questions = List.of(
-                SurveyQuestion.of("질문 내용1", List.of("답변1", "답변2")),
-                SurveyQuestion.of("질문 내용2", List.of("답변1", "답변2"))
+                SurveyQuestion.of("질문 내용1", List.of(
+                        SurveyAnswerCreateRequest.of(1, "답변1"),
+                        SurveyAnswerCreateRequest.of(2, "답변2"))
+                ),
+                SurveyQuestion.of("질문 내용2", List.of(
+                        SurveyAnswerCreateRequest.of(1, "답변1"),
+                        SurveyAnswerCreateRequest.of(2, "답변2"))
+                )
         );
 
         // when
@@ -78,7 +85,7 @@ class SurveyTest {
         Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
         SurveyComparisonRequest request = SurveyComparisonRequest.from(
                 new SurveySubmitRequest(1L, List.of(
-                        new SurveyQuestionSubmitRequest(1L, 1L)
+                        new SurveyQuestionSubmitRequest(1L, 1)
                 ))
         );
 
@@ -93,8 +100,14 @@ class SurveyTest {
         void 설문_질문이_중복되면_안_된다() {
             // given
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
-                    new SurveyQuestionCreateRequest("질문1", List.of("답1", "답2")),
-                    new SurveyQuestionCreateRequest("질문1", List.of("답1", "답2"))
+                    new SurveyQuestionCreateRequest("질문1", List.of(
+                            SurveyAnswerCreateRequest.of(1, "답1"),
+                            SurveyAnswerCreateRequest.of(2, "답2")
+                    )),
+                    new SurveyQuestionCreateRequest("질문1", List.of(
+                            SurveyAnswerCreateRequest.of(1, "답1"),
+                            SurveyAnswerCreateRequest.of(2, "답2")
+                    ))
             ));
 
             // when & then
@@ -104,9 +117,11 @@ class SurveyTest {
 
         @Test
         void 설문_답변이_중복되면_안_된다() {
-            // given
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
-                    new SurveyQuestionCreateRequest("질문1", List.of("답1", "답1"))
+                    new SurveyQuestionCreateRequest("질문1", List.of(
+                            SurveyAnswerCreateRequest.of(1, "답1"),
+                            SurveyAnswerCreateRequest.of(1, "답1")
+                    ))
             ));
 
             // when & then
@@ -120,8 +135,8 @@ class SurveyTest {
             Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
             SurveyComparisonRequest request = SurveyComparisonRequest.from(
                     new SurveySubmitRequest(1L, List.of(
-                            new SurveyQuestionSubmitRequest(1L, 1L),
-                            new SurveyQuestionSubmitRequest(2L, 1L)
+                            new SurveyQuestionSubmitRequest(1L, 1),
+                            new SurveyQuestionSubmitRequest(2L, 1)
                     ))
             );
 
@@ -136,7 +151,7 @@ class SurveyTest {
             Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
             SurveyComparisonRequest request = SurveyComparisonRequest.from(
                     new SurveySubmitRequest(1L, List.of(
-                            new SurveyQuestionSubmitRequest(1L, 5L)
+                            new SurveyQuestionSubmitRequest(1L, 5)
                     ))
             );
 

@@ -1,5 +1,6 @@
 package com.atwoz.survey.domain.survey;
 
+import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
 import com.atwoz.survey.domain.survey.dto.SurveyQuestionComparisonRequest;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
@@ -24,20 +25,24 @@ class SurveyQuestionTest {
     void 연애고사_질문_생성() {
         // given
         String description = "질문";
-        List<String> answers = List.of("답변1", "답변2", "답변3");
-        List<SurveyAnswer> surveyAnswers = List.of(
-                SurveyAnswer.from("답변1"),
-                SurveyAnswer.from("답변2"),
-                SurveyAnswer.from("답변3")
+        List<SurveyAnswerCreateRequest> surveyAnswers = List.of(
+                SurveyAnswerCreateRequest.of(1, "답변1"),
+                SurveyAnswerCreateRequest.of(2, "답변2"),
+                SurveyAnswerCreateRequest.of(3, "답변3")
+        );
+        List<SurveyAnswer> answers = List.of(
+                SurveyAnswer.of(1, "답변1"),
+                SurveyAnswer.of(2, "답변2"),
+                SurveyAnswer.of(3, "답변3")
         );
 
         // when
-        SurveyQuestion surveyQuestion = SurveyQuestion.of(description, answers);
+        SurveyQuestion surveyQuestion = SurveyQuestion.of(description, surveyAnswers);
 
         // then
         assertSoftly(softly -> {
             softly.assertThat(surveyQuestion.getDescription()).isEqualTo(description);
-            softly.assertThat(surveyQuestion.getAnswers()).isEqualTo(surveyAnswers);
+            softly.assertThat(surveyQuestion.getAnswers()).isEqualTo(answers);
         });
     }
 
@@ -46,7 +51,7 @@ class SurveyQuestionTest {
         // given
         SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
         List<SurveyQuestionComparisonRequest> requests = List.of(
-                new SurveyQuestionComparisonRequest(1L, 1L)
+                new SurveyQuestionComparisonRequest(1L, 1)
         );
 
         // when & then
@@ -57,7 +62,9 @@ class SurveyQuestionTest {
     void 동등성_비교() {
         // given
         SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
-        SurveyQuestion anotherSurveyQuestion = SurveyQuestion.of("질문 1", List.of("답변 1"));
+        SurveyQuestion anotherSurveyQuestion = SurveyQuestion.of("질문 1", List.of(
+                new SurveyAnswerCreateRequest(1, "답변 1"))
+        );
 
         // when
         boolean isSame = surveyQuestion.equals(anotherSurveyQuestion);
@@ -73,7 +80,11 @@ class SurveyQuestionTest {
         void 중복된_답변은_작성할_수_없다() {
             // given
             String description = "질문";
-            List<String> answers = List.of("답변1", "답변1", "답변3");
+            List<SurveyAnswerCreateRequest> answers = List.of(
+                    new SurveyAnswerCreateRequest(1, "답변 1"),
+                    new SurveyAnswerCreateRequest(1, "답변 1"),
+                    new SurveyAnswerCreateRequest(3, "답변 3")
+            );
 
             // when & then
             assertThatThrownBy(() -> SurveyQuestion.of(description, answers))
@@ -85,8 +96,8 @@ class SurveyQuestionTest {
             // given
             SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
             List<SurveyQuestionComparisonRequest> requests = List.of(
-                    new SurveyQuestionComparisonRequest(2L, 1L),
-                    new SurveyQuestionComparisonRequest(3L, 1L)
+                    new SurveyQuestionComparisonRequest(2L, 1),
+                    new SurveyQuestionComparisonRequest(3L, 1)
             );
 
             // when & then
@@ -99,7 +110,7 @@ class SurveyQuestionTest {
             // given
             SurveyQuestion surveyQuestion = 설문_질문_답변_한개_id있음();
             List<SurveyQuestionComparisonRequest> requests = List.of(
-                    new SurveyQuestionComparisonRequest(1L, 5L)
+                    new SurveyQuestionComparisonRequest(1L, 5)
             );
 
             // when & then

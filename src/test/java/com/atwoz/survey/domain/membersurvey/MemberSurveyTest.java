@@ -15,16 +15,16 @@ class MemberSurveyTest {
         // given
         Long memberId = 1L;
         Long questionId = 1L;
-        Long answerId = 1L;
+        Integer answerNumber = 1;
 
         // when
-        MemberSurvey memberSurvey = MemberSurvey.of(memberId, questionId, answerId);
+        MemberSurvey memberSurvey = MemberSurvey.of(memberId, questionId, answerNumber);
 
         // then
         assertSoftly(softly -> {
             softly.assertThat(memberSurvey.getMemberId()).isEqualTo(memberId);
             softly.assertThat(memberSurvey.getQuestionId()).isEqualTo(questionId);
-            softly.assertThat(memberSurvey.getAnswerId()).isEqualTo(answerId);
+            softly.assertThat(memberSurvey.getAnswerNumber()).isEqualTo(answerNumber);
         });
     }
 }
