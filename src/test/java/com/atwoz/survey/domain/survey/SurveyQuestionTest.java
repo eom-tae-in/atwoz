@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import static com.atwoz.survey.fixture.SurveyQuestionFixture.설문_질문_답변_한개;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -50,6 +51,19 @@ class SurveyQuestionTest {
 
         // when & then
         assertDoesNotThrow(() -> surveyQuestion.validateIsValidSubmitAnswer(requests));
+    }
+
+    @Test
+    void 동등성_비교() {
+        // given
+        SurveyQuestion surveyQuestion = 설문_질문_답변_한개();
+        SurveyQuestion anotherSurveyQuestion = SurveyQuestion.of("질문 1", List.of("답변 1"));
+
+        // when
+        boolean isSame = surveyQuestion.equals(anotherSurveyQuestion);
+
+        // then
+        assertThat(isSame).isTrue();
     }
 
     @Nested

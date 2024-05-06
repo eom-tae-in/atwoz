@@ -23,6 +23,10 @@ class SurveyTest {
     void 설문_과목_정상_생성() {
         // given
         SurveyCreateRequest request = 설문_필수_질문_과목_두개씩();
+        List<SurveyQuestion> questions = List.of(
+                SurveyQuestion.of("질문 내용1", List.of("답변1", "답변2")),
+                SurveyQuestion.of("질문 내용2", List.of("답변1", "답변2"))
+        );
 
         // when
         Survey survey = Survey.createWith(request);
@@ -31,7 +35,7 @@ class SurveyTest {
         assertSoftly(softly -> {
             softly.assertThat(survey.getName()).isEqualTo("설문 제목");
             softly.assertThat(survey.getRequired()).isTrue();
-            softly.assertThat(survey.getQuestions()).hasSize(2);
+            softly.assertThat(survey.getQuestions()).isEqualTo(questions);
         });
     }
 
