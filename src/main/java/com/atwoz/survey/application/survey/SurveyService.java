@@ -1,11 +1,9 @@
 package com.atwoz.survey.application.survey;
 
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
-import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.exception.survey.exceptions.SurveyNameAlreadyExistException;
-import com.atwoz.survey.exception.survey.exceptions.SurveyNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,14 +26,5 @@ public class SurveyService {
         if (surveyRepository.isExistedByName(name)) {
             throw new SurveyNameAlreadyExistException();
         }
-    }
-
-    public void submitSurvey(final Long memberId, final Long surveyId, final SurveySubmitRequest request) {
-
-    }
-
-    private Survey findSurveyById(final Long surveyId) {
-        return surveyRepository.findById(surveyId)
-                .orElseThrow(SurveyNotFoundException::new);
     }
 }
