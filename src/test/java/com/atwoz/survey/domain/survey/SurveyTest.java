@@ -143,20 +143,28 @@ class SurveyTest {
             );
         }
 
-        @Test
-        void 설문_응시_질문_id_갯수가_다르면_예외가_발생한다() {
+        @MethodSource(value = "invalidSurveyQuestionRequests")
+        @ParameterizedTest
+        void 설문_응시_질문_id_갯수가_다르거나_id가_중복되면_예외가_발생한다(final Long questionId1, final Long questionId2) {
             // given
             Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
             SurveyComparisonRequest request = SurveyComparisonRequest.from(
                     new SurveySubmitRequest(1L, List.of(
-                            new SurveyQuestionSubmitRequest(1L, 1),
-                            new SurveyQuestionSubmitRequest(2L, 1)
+                            new SurveyQuestionSubmitRequest(questionId1, 1),
+                            new SurveyQuestionSubmitRequest(questionId2, 1)
                     ))
             );
 
             // when & then
             assertThatThrownBy(() -> survey.validateIsValidSubmitSurveyRequest(request))
                     .isInstanceOf(SurveyQuestionSubmitSizeNotMatchException.class);
+        }
+
+        static Stream<Arguments> invalidSurveyQuestionRequests() {
+            return Stream.of(
+                    Arguments.arguments(1L, 1L),
+                    Arguments.arguments(1L, 2L)
+            );
         }
 
         @Test
