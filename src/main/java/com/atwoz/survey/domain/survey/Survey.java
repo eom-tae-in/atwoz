@@ -59,8 +59,8 @@ public class Survey {
         return survey;
     }
 
-    private static void validateQuestionsIsNotDuplicated(final List<SurveyQuestionCreateRequest> requests) {
-        List<String> questions = requests.stream()
+    private static void validateQuestionsIsNotDuplicated(final List<SurveyQuestionCreateRequest> questionRequests) {
+        List<String> questions = questionRequests.stream()
                 .map(SurveyQuestionCreateRequest::description)
                 .toList();
 
@@ -77,6 +77,13 @@ public class Survey {
         this.questions.addAll(questions);
     }
 
+    public void validateIsAllContainsSubmitQuestions(final SurveyComparisonRequest request) {
+        if (request.questions().size() != questions.size()) {
+            throw new SurveyQuestionSubmitSizeNotMatchException();
+        }
+        questions.forEach(question -> question.validateIsValidSubmitAnswer(request.questions()));
+    }
+
     public void updateName(final String name) {
         this.name = name;
     }
@@ -91,12 +98,5 @@ public class Survey {
 
     public boolean isRequired() {
         return required;
-    }
-
-    public void validateIsAllContainsSubmitQuestions(final SurveyComparisonRequest request) {
-        if (request.questions().size() != questions.size()) {
-            throw new SurveyQuestionSubmitSizeNotMatchException();
-        }
-        questions.forEach(question -> question.validateIsValidSubmitAnswer(request.questions()));
     }
 }
