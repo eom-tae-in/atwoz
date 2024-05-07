@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩_생성_요청;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_질문_과목_두개씩_생성_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -27,9 +27,9 @@ class SurveyServiceTest {
     }
 
     @Test
-    void 설문_등록() {
+    void 연애고사_과목_등록() {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
 
         // when
         Long id = surveyService.addSurvey(request);
@@ -39,10 +39,10 @@ class SurveyServiceTest {
     }
 
     @Test
-    void 같은_이름의_설문을_등록할_수_없다() {
+    void 같은_이름의_과목을_등록할_수_없다() {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
-        SurveyCreateRequest request2 = 설문_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request2 = 연애고사_필수_질문_과목_두개씩_생성_요청();
         surveyService.addSurvey(request);
 
         // when & then

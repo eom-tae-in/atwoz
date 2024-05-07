@@ -14,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.atwoz.helper.RestDocsHelper.customDocument;
-import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩_생성_요청;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_질문_과목_두개씩_생성_요청;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -39,9 +39,9 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
     private SurveyService surveyService;
 
     @Test
-    void 설문_과목을_생성한다() throws Exception {
+    void 연애고사_과목을_생성한다() throws Exception {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
         when(surveyService.addSurvey(request)).thenReturn(1L);
 
         // when
@@ -51,9 +51,9 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
                         .content(objectMapper.writeValueAsString(request)))
                         .andExpect(status().isCreated())
                 .andDo(print())
-                .andDo(customDocument("연애_모의고사_설문_생성",
+                .andDo(customDocument("연애_모의고사_과목_생성",
                         requestFields(
-                                fieldWithPath("name").description("설문 제목"),
+                                fieldWithPath("name").description("과목 제목"),
                                 fieldWithPath("required").description("필수 여부"),
                                 fieldWithPath("questions").description("질문 목록"),
                                 fieldWithPath("questions[].description").description("질문 내용"),
@@ -62,7 +62,7 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("questions[].answers[].answer").description("답변 내용")
                         ),
                         responseHeaders(
-                                headerWithName("location").description("생성된 설문 과목 경로")
+                                headerWithName("location").description("생성된 과목 경로")
                         )
                 ));
     }

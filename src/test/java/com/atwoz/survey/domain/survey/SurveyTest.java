@@ -22,8 +22,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
-import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩_생성_요청;
-import static com.atwoz.survey.fixture.SurveyFixture.설문_필수_질문_과목_한개씩_전부_id_있음;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_질문_과목_두개씩_생성_요청;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_한개씩_전부_id_있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -34,9 +34,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class SurveyTest {
 
     @Test
-    void 설문_과목_정상_생성() {
+    void 연애고사_과목_정상_생성() {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
         List<SurveyQuestion> questions = List.of(
                 SurveyQuestion.of("질문 내용1", List.of(
                         SurveyAnswerCreateRequest.of(1, "답변1"),
@@ -53,16 +53,16 @@ class SurveyTest {
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(survey.isSameName("설문 제목")).isTrue();
+            softly.assertThat(survey.isSameName("과목 제목")).isTrue();
             softly.assertThat(survey.isRequired()).isTrue();
             softly.assertThat(survey.getQuestions()).isEqualTo(questions);
         });
     }
 
     @Test
-    void 과목_이름_수정() {
+    void 연애고사_과목_이름_수정() {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
         Survey survey = Survey.from(request);
 
         // when
@@ -73,9 +73,9 @@ class SurveyTest {
     }
 
     @Test
-    void 과목_필수_여부_수정() {
+    void 연애고사_과목_필수_여부_수정() {
         // given
-        SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
         Survey survey = Survey.from(request);
 
         // when
@@ -88,7 +88,7 @@ class SurveyTest {
     @Test
     void 설문_응시_조건_검사_통과() {
         // given
-        Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
+        Survey survey = 연애고사_필수_질문_과목_한개씩_전부_id_있음();
         SurveyComparisonRequest request = SurveyComparisonRequest.from(
                 new SurveySubmitRequest(1L, List.of(
                         new SurveyQuestionSubmitRequest(1L, 1)
@@ -100,10 +100,10 @@ class SurveyTest {
     }
 
     @Nested
-    class 설문_예외 {
+    class 연애고사_예외 {
 
         @Test
-        void 설문_질문이_중복되면_안_된다() {
+        void 연애고사_질문이_중복되면_안_된다() {
             // given
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
                     new SurveyQuestionCreateRequest("질문1", List.of(
@@ -123,7 +123,7 @@ class SurveyTest {
 
         @MethodSource(value = "invalidSurveyAnswerRequests")
         @ParameterizedTest
-        void 설문_답변_번호나_답변이_중복되면_안_된다(final int answerNumber1, final String answer1, final int answerNumber2, final String answer2) {
+        void 연애고사_답변_번호나_답변이_중복되면_안_된다(final int answerNumber1, final String answer1, final int answerNumber2, final String answer2) {
             // given
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
                     new SurveyQuestionCreateRequest("질문1", List.of(
@@ -146,7 +146,7 @@ class SurveyTest {
         }
 
         @Test
-        void 설문_답변_번호는_자연수여야_한다() {
+        void 연애고사_답변_번호는_자연수여야_한다() {
             // given
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
                     new SurveyQuestionCreateRequest("질문1", List.of(
@@ -161,9 +161,9 @@ class SurveyTest {
 
         @MethodSource(value = "invalidSurveyQuestionRequests")
         @ParameterizedTest
-        void 설문_응시_질문_id_갯수가_다르거나_id가_중복되면_예외가_발생한다(final Long questionId1, final Long questionId2) {
+        void 연애고사_응시_질문_id_갯수가_다르거나_id가_중복되면_예외가_발생한다(final Long questionId1, final Long questionId2) {
             // given
-            Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
+            Survey survey = 연애고사_필수_질문_과목_한개씩_전부_id_있음();
             SurveyComparisonRequest request = SurveyComparisonRequest.from(
                     new SurveySubmitRequest(1L, List.of(
                             new SurveyQuestionSubmitRequest(questionId1, 1),
@@ -184,9 +184,9 @@ class SurveyTest {
         }
 
         @Test
-        void 설문_응시_질문_id가_없으면_예외가_발생한다() {
+        void 연애고사_응시_질문_id가_없으면_예외가_발생한다() {
             // given
-            Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
+            Survey survey = 연애고사_필수_질문_과목_한개씩_전부_id_있음();
             SurveyComparisonRequest request = SurveyComparisonRequest.from(
                     new SurveySubmitRequest(1L, List.of(
                             new SurveyQuestionSubmitRequest(5L, 1)
@@ -199,9 +199,9 @@ class SurveyTest {
         }
 
         @Test
-        void 설문에_있는_질문의_답변이_아닌_답변을_내면_예외가_발생한다() {
+        void 연애고사에_있는_질문의_답변이_아닌_답변을_내면_예외가_발생한다() {
             // given
-            Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
+            Survey survey = 연애고사_필수_질문_과목_한개씩_전부_id_있음();
             SurveyComparisonRequest request = SurveyComparisonRequest.from(
                     new SurveySubmitRequest(1L, List.of(
                             new SurveyQuestionSubmitRequest(1L, 5)

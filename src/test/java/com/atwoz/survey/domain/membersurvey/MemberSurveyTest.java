@@ -11,7 +11,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class MemberSurveyTest {
 
     @Test
-    void 회원_설문_생성() {
+    void 회원_연애고사_생성() {
         // given
         Long memberId = 1L;
         Long questionId = 1L;

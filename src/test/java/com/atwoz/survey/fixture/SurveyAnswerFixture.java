@@ -4,7 +4,7 @@ import com.atwoz.survey.domain.survey.SurveyAnswer;
 
 public class SurveyAnswerFixture {
 
-    public static SurveyAnswer 설문_답변_id있음() {
+    public static SurveyAnswer 연애고사_답변_id있음() {
         return SurveyAnswer.builder()
                 .id(1L)
                 .number(1)
