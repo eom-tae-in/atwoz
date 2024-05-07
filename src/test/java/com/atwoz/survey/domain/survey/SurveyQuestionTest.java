@@ -9,8 +9,12 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 import static com.atwoz.survey.fixture.SurveyQuestionFixture.설문_질문_답변_한개_id있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -76,19 +80,28 @@ class SurveyQuestionTest {
     @Nested
     class 설문_질문_예외 {
 
-        @Test
-        void 중복된_답변은_작성할_수_없다() {
+        @MethodSource(value = "invalidSurveyAnswerRequests")
+        @ParameterizedTest
+        void 번호나_내용이_같은_답변은_생성할_수_없다(final int answerNumber1, final String answer1, final int answerNumber2, final String answer2) {
             // given
             String description = "질문";
             List<SurveyAnswerCreateRequest> answers = List.of(
-                    new SurveyAnswerCreateRequest(1, "답변 1"),
-                    new SurveyAnswerCreateRequest(1, "답변 1"),
+                    new SurveyAnswerCreateRequest(answerNumber1, answer1),
+                    new SurveyAnswerCreateRequest(answerNumber2, answer2),
                     new SurveyAnswerCreateRequest(3, "답변 3")
             );
 
             // when & then
             assertThatThrownBy(() -> SurveyQuestion.of(description, answers))
                     .isInstanceOf(SurveyAnswerDuplicatedException.class);
+        }
+
+        static Stream<Arguments> invalidSurveyAnswerRequests() {
+            return Stream.of(
+                    Arguments.arguments(1, "답1", 1, "답2"),
+                    Arguments.arguments(1, "답1", 2, "답1"),
+                    Arguments.arguments(1, "답1", 1, "답1")
+            );
         }
 
         @Test
