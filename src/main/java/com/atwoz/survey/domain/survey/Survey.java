@@ -77,7 +77,7 @@ public class Survey {
         this.questions.addAll(questions);
     }
 
-    public void validateIsAllContainsSubmitQuestions(final SurveyComparisonRequest request) {
+    public void validateIsValidSubmitSurveyRequest(final SurveyComparisonRequest request) {
         if (request.questions().size() != questions.size()) {
             throw new SurveyQuestionSubmitSizeNotMatchException();
         }

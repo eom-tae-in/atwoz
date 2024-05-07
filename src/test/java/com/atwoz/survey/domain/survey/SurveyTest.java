@@ -7,6 +7,7 @@ import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
 import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
+import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitSizeNotMatchException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyQuestionDuplicatedException;
@@ -94,11 +95,11 @@ class SurveyTest {
         );
 
         // when & then
-        assertDoesNotThrow(() -> survey.validateIsAllContainsSubmitQuestions(request));
+        assertDoesNotThrow(() -> survey.validateIsValidSubmitSurveyRequest(request));
     }
 
     @Nested
-    class 설문_생성_예외 {
+    class 설문_예외 {
 
         @Test
         void 설문_질문이_중복되면_안_된다() {
@@ -154,8 +155,23 @@ class SurveyTest {
             );
 
             // when & then
-            assertThatThrownBy(() -> survey.validateIsAllContainsSubmitQuestions(request))
+            assertThatThrownBy(() -> survey.validateIsValidSubmitSurveyRequest(request))
                     .isInstanceOf(SurveyQuestionSubmitSizeNotMatchException.class);
+        }
+
+        @Test
+        void 설문_응시_질문_id가_없으면_예외가_발생한다() {
+            // given
+            Survey survey = 설문_필수_질문_과목_한개씩_전부_id_있음();
+            SurveyComparisonRequest request = SurveyComparisonRequest.from(
+                    new SurveySubmitRequest(1L, List.of(
+                            new SurveyQuestionSubmitRequest(5L, 1)
+                    ))
+            );
+
+            // when & then
+            assertThatThrownBy(() -> survey.validateIsValidSubmitSurveyRequest(request))
+                    .isInstanceOf(SurveyQuestionNotSubmittedException.class);
         }
 
         @Test
@@ -169,7 +185,7 @@ class SurveyTest {
             );
 
             // when & then
-            assertThatThrownBy(() -> survey.validateIsAllContainsSubmitQuestions(request))
+            assertThatThrownBy(() -> survey.validateIsValidSubmitSurveyRequest(request))
                     .isInstanceOf(SurveyAnswerInvalidSubmitException.class);
         }
     }

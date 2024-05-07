@@ -56,7 +56,7 @@ public class MemberSurveyService {
 
     private void submitEachSurvey(final Long memberId, final SurveySubmitRequest request) {
         Survey survey = findSurveyById(request.surveyId());
-        survey.validateIsAllContainsSubmitQuestions(SurveyComparisonRequest.from(request));
+        survey.validateIsValidSubmitSurveyRequest(SurveyComparisonRequest.from(request));
 
         survey.getQuestions()
                 .forEach(question -> saveQuestionAnswer(memberId, request, question));
