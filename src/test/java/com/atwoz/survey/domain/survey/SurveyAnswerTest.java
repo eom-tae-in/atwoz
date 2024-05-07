@@ -1,11 +1,13 @@
 package com.atwoz.survey.domain.survey;
 
+import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerNumberRangeException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static com.atwoz.survey.fixture.SurveyAnswerFixture.설문_답변_id있음;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -51,5 +53,16 @@ class SurveyAnswerTest {
 
         // then
         assertThat(equals).isTrue();
+    }
+
+    @Test
+    void 답변_번호는_자연수여야_한다() {
+        // given
+        int number = -1;
+        String answer = "답변 1";
+
+        // when & then
+        assertThatThrownBy(() -> SurveyAnswer.of(number, answer))
+                .isInstanceOf(SurveyAnswerNumberRangeException.class);
     }
 }

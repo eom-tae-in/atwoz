@@ -1,5 +1,6 @@
 package com.atwoz.survey.domain.survey;
 
+import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerNumberRangeException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +21,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class SurveyAnswer {
 
+    private static final int MINIMUM_ANSWER_NUMBER = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +39,14 @@ public class SurveyAnswer {
     }
 
     public static SurveyAnswer of(final Integer number, final String description) {
+        validateNumberRange(number);
         return new SurveyAnswer(number, description);
+    }
+
+    private static void validateNumberRange(final int number) {
+        if (number < MINIMUM_ANSWER_NUMBER) {
+            throw new SurveyAnswerNumberRangeException();
+        }
     }
 
     public boolean isSame(final Integer number) {

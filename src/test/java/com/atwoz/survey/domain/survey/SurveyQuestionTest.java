@@ -5,6 +5,7 @@ import com.atwoz.survey.domain.survey.dto.SurveyQuestionComparisonRequest;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedException;
+import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerNumberRangeException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -102,6 +103,19 @@ class SurveyQuestionTest {
                     Arguments.arguments(1, "답1", 2, "답1"),
                     Arguments.arguments(1, "답1", 1, "답1")
             );
+        }
+
+        @Test
+        void 답변_번호가_자연수가_아니면_예외가_발생한다() {
+            // given
+            String description = "질문";
+            List<SurveyAnswerCreateRequest> answers = List.of(
+                    new SurveyAnswerCreateRequest(-1, "답변 1")
+            );
+
+            // when & then
+            assertThatThrownBy(() -> SurveyQuestion.of(description, answers))
+                    .isInstanceOf(SurveyAnswerNumberRangeException.class);
         }
 
         @Test

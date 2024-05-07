@@ -10,6 +10,7 @@ import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSub
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitSizeNotMatchException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedException;
+import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerNumberRangeException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyQuestionDuplicatedException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -123,6 +124,7 @@ class SurveyTest {
         @MethodSource(value = "invalidSurveyAnswerRequests")
         @ParameterizedTest
         void 설문_답변_번호나_답변이_중복되면_안_된다(final int answerNumber1, final String answer1, final int answerNumber2, final String answer2) {
+            // given
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
                     new SurveyQuestionCreateRequest("질문1", List.of(
                             SurveyAnswerCreateRequest.of(answerNumber1, answer1),
@@ -141,6 +143,20 @@ class SurveyTest {
                     Arguments.arguments(1, "답1", 2, "답1"),
                     Arguments.arguments(1, "답1", 1, "답1")
             );
+        }
+
+        @Test
+        void 설문_답변_번호는_자연수여야_한다() {
+            // given
+            SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
+                    new SurveyQuestionCreateRequest("질문1", List.of(
+                            SurveyAnswerCreateRequest.of(-1, "답변 1")
+                    ))
+            ));
+
+            // when & then
+            assertThatThrownBy(() -> Survey.createWith(request))
+                    .isInstanceOf(SurveyAnswerNumberRangeException.class);
         }
 
         @MethodSource(value = "invalidSurveyQuestionRequests")
