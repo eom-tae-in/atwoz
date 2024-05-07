@@ -50,7 +50,7 @@ public class Survey {
         this.required = required;
     }
 
-    public static Survey createWith(final SurveyCreateRequest request) {
+    public static Survey from(final SurveyCreateRequest request) {
         validateQuestionsIsNotDuplicated(request.questions());
 
         Survey survey = new Survey(request.name(), request.required());

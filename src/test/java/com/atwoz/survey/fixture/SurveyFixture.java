@@ -9,7 +9,7 @@ import static com.atwoz.survey.fixture.SurveyQuestionFixture.설문_질문_답�
 public class SurveyFixture {
 
     public static Survey 설문_필수_질문_과목_두개씩() {
-        return Survey.createWith(설문_필수_질문_과목_두개씩_생성_요청());
+        return Survey.from(설문_필수_질문_과목_두개씩_생성_요청());
     }
 
     public static Survey 설문_필수_질문_과목_한개씩_전부_id_있음() {

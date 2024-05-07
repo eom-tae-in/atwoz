@@ -49,7 +49,7 @@ class SurveyTest {
         );
 
         // when
-        Survey survey = Survey.createWith(request);
+        Survey survey = Survey.from(request);
 
         // then
         assertSoftly(softly -> {
@@ -63,7 +63,7 @@ class SurveyTest {
     void 과목_이름_수정() {
         // given
         SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
-        Survey survey = Survey.createWith(request);
+        Survey survey = Survey.from(request);
 
         // when
         survey.updateName("설문 제목 수정");
@@ -76,7 +76,7 @@ class SurveyTest {
     void 과목_필수_여부_수정() {
         // given
         SurveyCreateRequest request = 설문_필수_질문_과목_두개씩_생성_요청();
-        Survey survey = Survey.createWith(request);
+        Survey survey = Survey.from(request);
 
         // when
         survey.updateRequired(false);
@@ -117,7 +117,7 @@ class SurveyTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> Survey.createWith(request))
+            assertThatThrownBy(() -> Survey.from(request))
                     .isInstanceOf(SurveyQuestionDuplicatedException.class);
         }
 
@@ -133,7 +133,7 @@ class SurveyTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> Survey.createWith(request))
+            assertThatThrownBy(() -> Survey.from(request))
                     .isInstanceOf(SurveyAnswerDuplicatedException.class);
         }
 
@@ -155,7 +155,7 @@ class SurveyTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> Survey.createWith(request))
+            assertThatThrownBy(() -> Survey.from(request))
                     .isInstanceOf(SurveyAnswerNumberRangeException.class);
         }
 
