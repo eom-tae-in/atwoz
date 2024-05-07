@@ -52,10 +52,7 @@ public class SurveyQuestion {
         validateAnswersIsNotDuplicated(answers);
 
         SurveyQuestion surveyQuestion = new SurveyQuestion(description);
-        List<SurveyAnswer> surveyAnswers = answers.stream()
-                .map(answer -> SurveyAnswer.of(answer.number(), answer.answer()))
-                .toList();
-        surveyQuestion.addSurveyAnswers(surveyAnswers);
+        surveyQuestion.addSurveyAnswers(answers);
 
         return surveyQuestion;
     }
@@ -70,8 +67,11 @@ public class SurveyQuestion {
         }
     }
 
-    private void addSurveyAnswers(final List<SurveyAnswer> answers) {
-        this.answers.addAll(answers);
+    private void addSurveyAnswers(final List<SurveyAnswerCreateRequest> answers) {
+        List<SurveyAnswer> surveyAnswers = answers.stream()
+                .map(answer -> SurveyAnswer.of(answer.number(), answer.answer()))
+                .toList();
+        this.answers.addAll(surveyAnswers);
     }
 
     public void validateIsValidSubmitAnswer(final List<SurveyQuestionComparisonRequest> requests) {
