@@ -22,7 +22,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
-import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_질문_과목_두개씩_생성_요청;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_중복;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_두개씩_생성_요청;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_번호_음수;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_한개씩_전부_id_있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,7 +38,7 @@ class SurveyTest {
     @Test
     void 연애고사_과목_정상_생성() {
         // given
-        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
         List<SurveyQuestion> questions = List.of(
                 SurveyQuestion.of("질문 내용1", List.of(
                         SurveyAnswerCreateRequest.of(1, "답변1"),
@@ -62,7 +64,7 @@ class SurveyTest {
     @Test
     void 연애고사_과목_이름_수정() {
         // given
-        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
         Survey survey = Survey.from(request);
 
         // when
@@ -75,7 +77,7 @@ class SurveyTest {
     @Test
     void 연애고사_과목_필수_여부_수정() {
         // given
-        SurveyCreateRequest request = 연애고사_필수_질문_과목_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
         Survey survey = Survey.from(request);
 
         // when
@@ -105,16 +107,7 @@ class SurveyTest {
         @Test
         void 연애고사_질문이_중복되면_안_된다() {
             // given
-            SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
-                    new SurveyQuestionCreateRequest("질문1", List.of(
-                            SurveyAnswerCreateRequest.of(1, "답1"),
-                            SurveyAnswerCreateRequest.of(2, "답2")
-                    )),
-                    new SurveyQuestionCreateRequest("질문1", List.of(
-                            SurveyAnswerCreateRequest.of(1, "답1"),
-                            SurveyAnswerCreateRequest.of(2, "답2")
-                    ))
-            ));
+            SurveyCreateRequest request = 연애고사_필수_과목_질문_중복();
 
             // when & then
             assertThatThrownBy(() -> Survey.from(request))
@@ -148,11 +141,7 @@ class SurveyTest {
         @Test
         void 연애고사_답변_번호는_자연수여야_한다() {
             // given
-            SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
-                    new SurveyQuestionCreateRequest("질문1", List.of(
-                            SurveyAnswerCreateRequest.of(-1, "답변 1")
-                    ))
-            ));
+            SurveyCreateRequest request = 연애고사_필수_과목_질문_번호_음수();
 
             // when & then
             assertThatThrownBy(() -> Survey.from(request))
