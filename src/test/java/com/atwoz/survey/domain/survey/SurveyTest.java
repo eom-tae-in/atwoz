@@ -14,8 +14,12 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.설문_필수_질문_과목_두개씩_생성_요청;
 import static com.atwoz.survey.fixture.SurveyFixture.설문_필수_질문_과목_한개씩_전부_id_있음;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -115,18 +119,27 @@ class SurveyTest {
                     .isInstanceOf(SurveyQuestionDuplicatedException.class);
         }
 
-        @Test
-        void 설문_답변이_중복되면_안_된다() {
+        @MethodSource(value = "invalidSurveyAnswerRequests")
+        @ParameterizedTest
+        void 설문_답변_번호나_답변이_중복되면_안_된다(final int answerNumber1, final String answer1, final int answerNumber2, final String answer2) {
             SurveyCreateRequest request = new SurveyCreateRequest("설문 제목", true, List.of(
                     new SurveyQuestionCreateRequest("질문1", List.of(
-                            SurveyAnswerCreateRequest.of(1, "답1"),
-                            SurveyAnswerCreateRequest.of(1, "답1")
+                            SurveyAnswerCreateRequest.of(answerNumber1, answer1),
+                            SurveyAnswerCreateRequest.of(answerNumber2, answer2)
                     ))
             ));
 
             // when & then
             assertThatThrownBy(() -> Survey.createWith(request))
                     .isInstanceOf(SurveyAnswerDuplicatedException.class);
+        }
+
+        static Stream<Arguments> invalidSurveyAnswerRequests() {
+            return Stream.of(
+                    Arguments.arguments(1, "답1", 1, "답2"),
+                    Arguments.arguments(1, "답1", 2, "답1"),
+                    Arguments.arguments(1, "답1", 1, "답1")
+            );
         }
 
         @Test
