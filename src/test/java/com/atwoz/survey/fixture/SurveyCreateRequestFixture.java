@@ -48,9 +48,17 @@ public class SurveyCreateRequestFixture {
     }
 
     public static SurveyCreateRequest 연애고사_필수_과목_질문_번호_음수() {
-        return new SurveyCreateRequest("설문 제목", true, List.of(
+        return new SurveyCreateRequest("과목 제목", true, List.of(
                 new SurveyQuestionCreateRequest("질문1", List.of(
                         SurveyAnswerCreateRequest.of(-1, "답변 1")
+                ))
+        ));
+    }
+
+    public static SurveyCreateRequest 연애고사_필수_과목_하나_생성() {
+        return new SurveyCreateRequest("과목 1", true, List.of(
+                new SurveyQuestionCreateRequest("질문 1", List.of(
+                        SurveyAnswerCreateRequest.of(1, "답변 1")
                 ))
         ));
     }

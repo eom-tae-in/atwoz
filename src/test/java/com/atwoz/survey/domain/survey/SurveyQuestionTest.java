@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
-import static com.atwoz.survey.fixture.SurveyQuestionFixture.연애고사_질문_답변_한개_id있음;
+import static com.atwoz.survey.fixture.SurveyQuestionFixture.연애고사_질문_답변_한개_id_있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -54,7 +54,7 @@ class SurveyQuestionTest {
     @Test
     void 연애고사_질문_응시() {
         // given
-        SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id있음();
+        SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id_있음();
         List<SurveyQuestionComparisonRequest> requests = List.of(
                 new SurveyQuestionComparisonRequest(1L, 1)
         );
@@ -66,7 +66,7 @@ class SurveyQuestionTest {
     @Test
     void 동등성_비교() {
         // given
-        SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id있음();
+        SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id_있음();
         SurveyQuestion anotherSurveyQuestion = SurveyQuestion.of("질문 1", List.of(
                 new SurveyAnswerCreateRequest(1, "답변 1"))
         );
@@ -121,7 +121,7 @@ class SurveyQuestionTest {
         @Test
         void 연애고사_질문을_응시할_때는_관련_질문이_있어야_한다() {
             // given
-            SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id있음();
+            SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id_있음();
             List<SurveyQuestionComparisonRequest> requests = List.of(
                     new SurveyQuestionComparisonRequest(2L, 1),
                     new SurveyQuestionComparisonRequest(3L, 1)
@@ -135,7 +135,7 @@ class SurveyQuestionTest {
         @Test
         void 연애고사_질문을_응시할_때는_있는_답변으로만_작성해야_한다() {
             // given
-            SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id있음();
+            SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id_있음();
             List<SurveyQuestionComparisonRequest> requests = List.of(
                     new SurveyQuestionComparisonRequest(1L, 5)
             );

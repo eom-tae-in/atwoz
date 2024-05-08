@@ -3,6 +3,7 @@ package com.atwoz.survey.ui.survey;
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.survey.application.survey.SurveyService;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
+import com.atwoz.survey.domain.survey.Survey;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -15,12 +16,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_두개씩_생성_요청;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_두개씩_전부_id_있음;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,7 +45,8 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
     void 연애고사_과목을_생성한다() throws Exception {
         // given
         SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
-        when(surveyService.addSurvey(request)).thenReturn(1L);
+        Survey survey = 연애고사_필수_질문_과목_두개씩_전부_id_있음();
+        when(surveyService.addSurvey(request)).thenReturn(survey);
 
         // when
         mockMvc.perform(post("/api/surveys")
@@ -63,6 +67,12 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
                         ),
                         responseHeaders(
                                 headerWithName("location").description("생성된 과목 경로")
+                        ),
+                        responseFields(
+                                fieldWithPath("surveyId").description("연애고사 과목 id"),
+                                fieldWithPath("questions").description("연애고사 과목의 질문"),
+                                fieldWithPath("questions[].questionId").description("연애고사 질문의 id"),
+                                fieldWithPath("questions[].answerNumbers").description("연애고사 질문에서 가능한 답변 선택지 번호")
                         )
                 ));
     }

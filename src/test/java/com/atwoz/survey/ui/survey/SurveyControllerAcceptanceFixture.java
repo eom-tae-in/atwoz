@@ -6,6 +6,7 @@ import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.domain.survey.SurveyRepository;
+import com.atwoz.survey.ui.survey.dto.SurveyCreateResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -16,7 +17,7 @@ import org.springframework.http.HttpStatus;
 
 import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static io.restassured.http.ContentType.JSON;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -52,6 +53,11 @@ class SurveyControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected void 연애고사_과목_생성_검증(final ExtractableResponse<Response> response) {
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        SurveyCreateResponse result = response.as(SurveyCreateResponse.class);
+
+        assertSoftly(softly -> {
+            softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+            softly.assertThat(result.questions()).isNotEmpty();
+        });
     }
 }

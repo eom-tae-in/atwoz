@@ -3,6 +3,7 @@ package com.atwoz.survey.application.survey;
 import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
+import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerDuplicatedException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyAnswerNumberRangeException;
@@ -23,6 +24,8 @@ import java.util.stream.Stream;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_두개씩_생성_요청;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_번호_음수;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_중복;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_하나_생성;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_한개씩_전부_id_있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -42,13 +45,15 @@ class SurveyServiceTest {
     @Test
     void 연애고사_과목_등록() {
         // given
-        SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
+        SurveyCreateRequest request = 연애고사_필수_과목_하나_생성();
+        Survey expectedSurvey = 연애고사_필수_질문_과목_한개씩_전부_id_있음();
 
         // when
-        Long id = surveyService.addSurvey(request);
+        Survey survey = surveyService.addSurvey(request);
 
         // then
-        assertThat(id).isEqualTo(1L);
+        assertThat(survey).usingRecursiveComparison()
+                .isEqualTo(expectedSurvey);
     }
 
     @Nested
