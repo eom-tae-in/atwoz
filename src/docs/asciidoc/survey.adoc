@@ -10,9 +10,9 @@
 === 설문 생성 (POST /api/surveys)
 
 ==== 요청
-include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_설문_생성/request-fields.adoc[]
-include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_설문_생성/http-request.adoc[]
+include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_과목_생성/request-fields.adoc[]
+include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_과목_생성/http-request.adoc[]
 
 ==== 응답
-include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_설문_생성/response-headers.adoc[]
-include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_설문_생성/http-response.adoc[]
+include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_과목_생성/response-headers.adoc[]
+include::{snippets}/survey-controller-web-mvc-test/연애_모의고사_과목_생성/http-response.adoc[]
