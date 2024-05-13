@@ -46,7 +46,6 @@ public class MemberSurveys {
     }
 
     public void submitSurveys(final List<SurveySubmitRequest> requests) {
-        // 각 request에는 id와 questions이 있다.
         List<MemberSurvey> memberSurveys = new ArrayList<>();
         requests.forEach(request -> {
                     List<MemberSurvey> convertedMemberSurveys = convertMemberSurveys(request.surveyId(), request.questions());
