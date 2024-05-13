@@ -10,3 +10,4 @@
 * link:mission.adoc[미션 API]
 * link:membermissions.adoc[회원 미션 API]
 * link:survey.adoc[연애고사 API]
+* link:membersurveys.adoc[회원 연애고사 API]

@@ -1,0 +1,17 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== MemberSurveys
+
+=== 연애고사 응시 (POST /api/members/me/surveys/submit)
+
+==== 요청
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/request-fields.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/http-response.adoc[]
