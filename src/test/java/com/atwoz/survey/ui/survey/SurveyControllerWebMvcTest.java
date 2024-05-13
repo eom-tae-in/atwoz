@@ -49,7 +49,7 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
         Survey survey = 연애고사_필수_과목_질문_두개씩_전부_id_있음();
         when(surveyService.addSurvey(request)).thenReturn(survey);
 
-        // when
+        // when & then
         mockMvc.perform(post("/api/surveys")
                         .header(HttpHeaders.AUTHORIZATION, "bearer tokenInfo...")
                         .contentType("application/json")
