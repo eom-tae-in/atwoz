@@ -67,14 +67,15 @@ public class SurveyFakeRepository implements SurveyRepository {
 
     @Override
     public Optional<Survey> findById(final Long id) {
-        return Optional.of(map.get(id));
+        return Optional.ofNullable(map.get(id));
     }
 
     @Override
-    public List<Survey> findAllRequiredSurveys() {
+    public List<Long> findAllRequiredSurveyIds() {
         return map.values()
                 .stream()
                 .filter(Survey::isRequired)
+                .map(Survey::getId)
                 .toList();
     }
 }

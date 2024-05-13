@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
-import static com.atwoz.survey.fixture.SurveyFixture.연애고사_선택_질문_과목_두개씩;
-import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_두개씩;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_선택_과목_질문_두개씩;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_두개씩;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -25,7 +25,7 @@ public class SurveyJpaRepositoryTest {
     @Test
     void 연애고사_과목_등록() {
         // given
-        Survey survey = 연애고사_필수_질문_과목_두개씩();
+        Survey survey = 연애고사_필수_과목_질문_두개씩();
 
         // when
         Survey saveSurvey = surveyJpaRepository.save(survey);
@@ -39,7 +39,7 @@ public class SurveyJpaRepositoryTest {
     @Test
     void 연애고사_과목_존재여부_검사() {
         // given
-        Survey survey = 연애고사_필수_질문_과목_두개씩();
+        Survey survey = 연애고사_필수_과목_질문_두개씩();
         surveyJpaRepository.save(survey);
 
         // when
@@ -52,7 +52,7 @@ public class SurveyJpaRepositoryTest {
     @Test
     void 연애고사_id로_과목_조회() {
         // given
-        Survey survey = 연애고사_필수_질문_과목_두개씩();
+        Survey survey = 연애고사_필수_과목_질문_두개씩();
         Survey savedSurvey = surveyJpaRepository.save(survey);
 
         // when
@@ -68,19 +68,18 @@ public class SurveyJpaRepositoryTest {
     @Test
     void 필수_연애고사_조회() {
         // given
-        Survey survey = 연애고사_필수_질문_과목_두개씩();
-        Survey notRequiredSurvey = 연애고사_선택_질문_과목_두개씩();
-        surveyJpaRepository.save(survey);
-        surveyJpaRepository.save(notRequiredSurvey);
+        Survey survey = 연애고사_필수_과목_질문_두개씩();
+        Survey notRequiredSurvey = 연애고사_선택_과목_질문_두개씩();
+        Survey savedRequiredSurvey = surveyJpaRepository.save(survey);
+        Survey savedNotRequiredSurvey = surveyJpaRepository.save(notRequiredSurvey);
 
         // when
-        List<Survey> requiredSurveys = surveyJpaRepository.findAllRequiredSurveys();
+        List<Long> requiredSurveyIds = surveyJpaRepository.findAllRequiredSurveyIds();
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(requiredSurveys.size()).isEqualTo(1);
-            softly.assertThat(requiredSurveys.contains(survey)).isTrue();
-            softly.assertThat(requiredSurveys.contains(notRequiredSurvey)).isFalse();
+            softly.assertThat(requiredSurveyIds.contains(savedRequiredSurvey.getId())).isTrue();
+            softly.assertThat(requiredSurveyIds.contains(savedNotRequiredSurvey.getId())).isFalse();
         });
     }
 }

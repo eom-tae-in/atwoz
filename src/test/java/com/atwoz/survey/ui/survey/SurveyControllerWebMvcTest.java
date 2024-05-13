@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_두개씩_생성_요청;
-import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_두개씩_전부_id_있음;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_두개씩_전부_id_있음;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -38,6 +38,7 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
 
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private SurveyService surveyService;
 
@@ -45,7 +46,7 @@ class SurveyControllerWebMvcTest extends MockBeanInjection {
     void 연애고사_과목을_생성한다() throws Exception {
         // given
         SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
-        Survey survey = 연애고사_필수_질문_과목_두개씩_전부_id_있음();
+        Survey survey = 연애고사_필수_과목_질문_두개씩_전부_id_있음();
         when(surveyService.addSurvey(request)).thenReturn(survey);
 
         // when

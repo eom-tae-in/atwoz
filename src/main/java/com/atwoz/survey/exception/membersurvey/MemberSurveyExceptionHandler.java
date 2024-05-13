@@ -3,7 +3,7 @@ package com.atwoz.survey.exception.membersurvey;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAlreadySubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
-import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitDuplicateException;
+import com.atwoz.survey.exception.membersurvey.exceptions.SurveySubmitDuplicateException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitSizeNotMatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +28,8 @@ public class MemberSurveyExceptionHandler {
         return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(SurveyQuestionSubmitDuplicateException.class)
-    public ResponseEntity<String> handleSurveyQuestionSubmitDuplicateException(final SurveyQuestionSubmitDuplicateException exception) {
+    @ExceptionHandler(SurveySubmitDuplicateException.class)
+    public ResponseEntity<String> handleSurveyQuestionSubmitDuplicateException(final SurveySubmitDuplicateException exception) {
         return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
     }
 

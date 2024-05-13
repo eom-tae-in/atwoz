@@ -8,5 +8,5 @@ public interface SurveyRepository {
     Survey save(Survey survey);
     boolean isExistedByName(String name);
     Optional<Survey> findById(Long id);
-    List<Survey> findAllRequiredSurveys();
+    List<Long> findAllRequiredSurveyIds();
 }

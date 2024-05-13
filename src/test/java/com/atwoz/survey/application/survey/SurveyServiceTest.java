@@ -25,7 +25,7 @@ import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_�
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_번호_음수;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_중복;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_하나_생성;
-import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_질문_과목_한개씩_전부_id_있음;
+import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_한개씩_전부_id_있음;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -46,7 +46,7 @@ class SurveyServiceTest {
     void 연애고사_과목_등록() {
         // given
         SurveyCreateRequest request = 연애고사_필수_과목_하나_생성();
-        Survey expectedSurvey = 연애고사_필수_질문_과목_한개씩_전부_id_있음();
+        Survey expectedSurvey = 연애고사_필수_과목_질문_한개씩_전부_id_있음();
 
         // when
         Survey survey = surveyService.addSurvey(request);

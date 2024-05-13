@@ -62,4 +62,12 @@ public class SurveyCreateRequestFixture {
                 ))
         ));
     }
+
+    public static SurveyCreateRequest 연애고사_선택_과목_질문_하나_생성_요청() {
+        return new SurveyCreateRequest("과목 1", false, List.of(
+                new SurveyQuestionCreateRequest("질문 1", List.of(
+                        SurveyAnswerCreateRequest.of(1, "답변 1")
+                ))
+        ));
+    }
 }

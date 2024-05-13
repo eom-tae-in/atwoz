@@ -30,7 +30,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     }
 
     @Override
-    public List<Survey> findAllRequiredSurveys() {
-        return surveyJpaRepository.findAllRequiredSurveys();
+    public List<Long> findAllRequiredSurveyIds() {
+        return surveyJpaRepository.findAllRequiredSurveyIds();
     }
 }

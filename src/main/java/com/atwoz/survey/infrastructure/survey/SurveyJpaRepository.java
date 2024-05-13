@@ -13,6 +13,6 @@ public interface SurveyJpaRepository extends JpaRepository<Survey, Long> {
     boolean existsByName(String name);
     Optional<Survey> findById(Long id);
 
-    @Query("SELECT s FROM Survey s WHERE s.required = true")
-    List<Survey> findAllRequiredSurveys();
+    @Query("SELECT s.id FROM Survey s WHERE s.required = true")
+    List<Long> findAllRequiredSurveyIds();
 }

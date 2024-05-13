@@ -8,9 +8,10 @@ import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.domain.survey.SurveyQuestion;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
+import com.atwoz.survey.exception.membersurvey.exceptions.RequiredSurveyNotSubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAlreadySubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
-import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitDuplicateException;
+import com.atwoz.survey.exception.membersurvey.exceptions.SurveySubmitDuplicateException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,23 +35,27 @@ public class MemberSurveyService {
     }
 
     private void validateIsContainsAllRequiredSurveys(final List<SurveySubmitRequest> requests) {
-        List<Long> requiredSurveyIds = surveyRepository.findAllRequiredSurveys()
-                .stream()
-                .map(Survey::getId)
-                .toList();
+        List<Long> requiredSurveyIds = surveyRepository.findAllRequiredSurveyIds();
+        Set<Long> submittedSurveyIds = extractSubmittedSurveyIds(requests);
+
+        if (!submittedSurveyIds.containsAll(requiredSurveyIds)) {
+            throw new RequiredSurveyNotSubmittedException();
+        }
+    }
+
+    private Set<Long> extractSubmittedSurveyIds(final List<SurveySubmitRequest> requests) {
         List<Long> submittedSurveyIds = requests.stream()
                 .map(SurveySubmitRequest::surveyId)
                 .toList();
         validateIsNotDuplicateSurveyIds(submittedSurveyIds);
-        if (!submittedSurveyIds.containsAll(requiredSurveyIds)) {
-            throw new SurveyNotFoundException();
-        }
+
+        return new HashSet<>(submittedSurveyIds);
     }
 
     private void validateIsNotDuplicateSurveyIds(final List<Long> surveyIds) {
         Set<Long> set = new HashSet<>(surveyIds);
         if (surveyIds.size() != set.size()) {
-            throw new SurveyQuestionSubmitDuplicateException();
+            throw new SurveySubmitDuplicateException();
         }
     }
 
