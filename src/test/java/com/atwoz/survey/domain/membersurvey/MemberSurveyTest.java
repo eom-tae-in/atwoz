@@ -13,16 +13,16 @@ class MemberSurveyTest {
     @Test
     void 회원_연애고사_생성() {
         // given
-        Long memberId = 1L;
+        Long surveyId = 1L;
         Long questionId = 1L;
         Integer answerNumber = 1;
 
         // when
-        MemberSurvey memberSurvey = MemberSurvey.of(memberId, questionId, answerNumber);
+        MemberSurvey memberSurvey = MemberSurvey.of(surveyId, questionId, answerNumber);
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(memberSurvey.getMemberId()).isEqualTo(memberId);
+            softly.assertThat(memberSurvey.getSurveyId()).isEqualTo(surveyId);
             softly.assertThat(memberSurvey.getQuestionId()).isEqualTo(questionId);
             softly.assertThat(memberSurvey.getAnswerNumber()).isEqualTo(answerNumber);
         });

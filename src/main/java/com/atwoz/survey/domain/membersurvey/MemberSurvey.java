@@ -23,7 +23,7 @@ public class MemberSurvey {
     private Long id;
 
     @Column(nullable = false)
-    private Long memberId;
+    private Long surveyId;
 
     @Column(nullable = false)
     private Long questionId;
@@ -31,13 +31,13 @@ public class MemberSurvey {
     @Column(nullable = false)
     private Integer answerNumber;
 
-    private MemberSurvey(final Long memberId, final Long questionId, final Integer answerNumber) {
-        this.memberId = memberId;
+    private MemberSurvey(final Long surveyId, final Long questionId, final Integer answerNumber) {
+        this.surveyId = surveyId;
         this.questionId = questionId;
         this.answerNumber = answerNumber;
     }
 
-    public static MemberSurvey of(final Long memberId, final Long questionId, final Integer answerNumber) {
-        return new MemberSurvey(memberId, questionId, answerNumber);
+    public static MemberSurvey of(final Long surveyId, final Long questionId, final Integer answerNumber) {
+        return new MemberSurvey(surveyId, questionId, answerNumber);
     }
 }
