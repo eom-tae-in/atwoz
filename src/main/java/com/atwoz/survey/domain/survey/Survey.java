@@ -51,7 +51,7 @@ public class Survey {
     }
 
     public static Survey from(final SurveyCreateRequest request) {
-        validateQuestionsIsNotDuplicated(request.questions());
+        validateIsQuestionsNotDuplicated(request.questions());
 
         Survey survey = new Survey(request.name(), request.required());
         survey.addSurveyQuestions(request.questions());
@@ -59,7 +59,7 @@ public class Survey {
         return survey;
     }
 
-    private static void validateQuestionsIsNotDuplicated(final List<SurveyQuestionCreateRequest> questionRequests) {
+    private static void validateIsQuestionsNotDuplicated(final List<SurveyQuestionCreateRequest> questionRequests) {
         List<String> questions = questionRequests.stream()
                 .map(SurveyQuestionCreateRequest::description)
                 .toList();

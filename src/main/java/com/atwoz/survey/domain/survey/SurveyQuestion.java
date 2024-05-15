@@ -49,7 +49,7 @@ public class SurveyQuestion {
     }
 
     public static SurveyQuestion of(final String description, final List<SurveyAnswerCreateRequest> answers) {
-        validateAnswersAreNotDuplicated(answers);
+        validateIsAnswersNotDuplicated(answers);
 
         SurveyQuestion surveyQuestion = new SurveyQuestion(description);
         surveyQuestion.addSurveyAnswers(answers);
@@ -57,12 +57,12 @@ public class SurveyQuestion {
         return surveyQuestion;
     }
 
-    private static void validateAnswersAreNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
-        validateAnswerNumbersAreNotDuplicated(answers);
-        validateAnswerDescriptionsAreNotDuplicated(answers);
+    private static void validateIsAnswersNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+        validateIsAnswerNumbersNotDuplicated(answers);
+        validateIsAnswerDescriptionsNotDuplicated(answers);
     }
 
-    private static void validateAnswerNumbersAreNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+    private static void validateIsAnswerNumbersNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
         List<Integer> answerNumbers = answers.stream()
                 .map(SurveyAnswerCreateRequest::number)
                 .toList();
@@ -72,7 +72,7 @@ public class SurveyQuestion {
         }
     }
 
-    private static void validateAnswerDescriptionsAreNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+    private static void validateIsAnswerDescriptionsNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
         List<String> answerDescriptions = answers.stream()
                 .map(SurveyAnswerCreateRequest::answer)
                 .toList();
