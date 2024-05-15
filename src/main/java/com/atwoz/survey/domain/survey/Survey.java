@@ -84,14 +84,6 @@ public class Survey {
         questions.forEach(question -> question.validateIsValidSubmitAnswer(request.questions()));
     }
 
-    public void updateName(final String name) {
-        this.name = name;
-    }
-
-    public void updateRequired(final Boolean required) {
-        this.required = required;
-    }
-
     public boolean isSameName(final String name) {
         return name.equals(this.name);
     }

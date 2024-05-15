@@ -22,11 +22,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.stream.Stream;
-import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_중복;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_두개씩_생성_요청;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_번호_음수;
+import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_중복;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_한개씩_전부_id_있음;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -59,32 +58,6 @@ class SurveyTest {
             softly.assertThat(survey.isRequired()).isTrue();
             softly.assertThat(survey.getQuestions()).isEqualTo(questions);
         });
-    }
-
-    @Test
-    void 연애고사_과목_이름_수정() {
-        // given
-        SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
-        Survey survey = Survey.from(request);
-
-        // when
-        survey.updateName("설문 제목 수정");
-
-        // then
-        assertThat(survey.getName()).isEqualTo("설문 제목 수정");
-    }
-
-    @Test
-    void 연애고사_과목_필수_여부_수정() {
-        // given
-        SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
-        Survey survey = Survey.from(request);
-
-        // when
-        survey.updateRequired(false);
-
-        // then
-        assertThat(survey.getRequired()).isEqualTo(false);
     }
 
     @Test
