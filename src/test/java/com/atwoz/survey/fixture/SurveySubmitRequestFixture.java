@@ -3,6 +3,7 @@ package com.atwoz.survey.fixture;
 import com.atwoz.survey.application.membersurvey.dto.SurveyQuestionSubmitRequest;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SurveySubmitRequestFixture {
@@ -20,6 +21,24 @@ public class SurveySubmitRequestFixture {
                         new SurveyQuestionSubmitRequest(questionTwoId, answerTwoNumber)
                 ))
         );
+    }
+
+    public static List<SurveySubmitRequest> 필수_과목_질문_30개_제출_요청_전부_1번() {
+        Long surveyId = 1L;
+        List<SurveyQuestionSubmitRequest> questions = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            questions.add(new SurveyQuestionSubmitRequest((long) i, 1));
+        }
+        return List.of(new SurveySubmitRequest(surveyId, questions));
+    }
+
+    public static List<SurveySubmitRequest> 필수_과목_질문_30개_제출_요청_전부_2번() {
+        Long surveyId = 1L;
+        List<SurveyQuestionSubmitRequest> questions = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            questions.add(new SurveyQuestionSubmitRequest((long) i, 2));
+        }
+        return List.of(new SurveySubmitRequest(surveyId, questions));
     }
 
     public static List<SurveySubmitRequest> 선택_과목_질문_두개_제출_요청() {

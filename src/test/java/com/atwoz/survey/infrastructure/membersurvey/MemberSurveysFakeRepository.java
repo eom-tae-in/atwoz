@@ -4,6 +4,7 @@ import com.atwoz.survey.domain.membersurvey.MemberSurveys;
 import com.atwoz.survey.domain.membersurvey.MemberSurveysRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,5 +30,10 @@ public class MemberSurveysFakeRepository implements MemberSurveysRepository {
     @Override
     public Optional<MemberSurveys> findByMemberId(final Long memberId) {
         return Optional.ofNullable(map.get(memberId));
+    }
+
+    @Override
+    public List<Long> findMatchMembers(final Long memberId) {
+        return List.of();
     }
 }
