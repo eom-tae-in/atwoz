@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -71,7 +72,7 @@ public class MemberSurveysJdbcRepository {
                 member.answerNumber().equals(other.answerNumber());
     }
 
-    public MemberSurveyResponse findMemberSurvey(final Long memberId, final Long surveyId) {
+    public Optional<MemberSurveyResponse> findMemberSurvey(final Long memberId, final Long surveyId) {
         String sql = "SELECT ms.survey_id, ms.question_id, ms.answer_number FROM member_surveys mss " +
                 "INNER JOIN member_survey ms " +
                 "ON mss.id = ms.member_surveys_id " +
@@ -85,6 +86,6 @@ public class MemberSurveysJdbcRepository {
                 )
         );
 
-        return new MemberSurveyResponse(surveyId, questions);
+        return Optional.of(new MemberSurveyResponse(surveyId, questions));
     }
 }

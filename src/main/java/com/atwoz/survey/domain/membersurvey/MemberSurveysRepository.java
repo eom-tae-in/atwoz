@@ -10,5 +10,5 @@ public interface MemberSurveysRepository {
     MemberSurveys save(MemberSurveys memberSurveys);
     Optional<MemberSurveys> findByMemberId(Long memberId);
     List<Long> findMatchMembers(Long memberId);
-    MemberSurveyResponse findMemberSurvey(Long memberId, Long surveyId);
+    Optional<MemberSurveyResponse> findMemberSurvey(Long memberId, Long surveyId);
 }

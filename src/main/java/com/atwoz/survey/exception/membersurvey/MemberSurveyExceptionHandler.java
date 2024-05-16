@@ -1,5 +1,6 @@
 package com.atwoz.survey.exception.membersurvey;
 
+import com.atwoz.survey.exception.membersurvey.exceptions.MemberSurveysNotFoundException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAlreadySubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
@@ -36,6 +37,11 @@ public class MemberSurveyExceptionHandler {
     @ExceptionHandler(SurveyQuestionSubmitSizeNotMatchException.class)
     public ResponseEntity<String> handleSurveyQuestionSubmitSizeNotMatchException(final SurveyQuestionSubmitSizeNotMatchException exception) {
         return getExceptionWithStatus(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MemberSurveysNotFoundException.class)
+    public ResponseEntity<String> handleMemberSurveysNotFoundException(final MemberSurveysNotFoundException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
     }
 
     private ResponseEntity<String> getExceptionWithStatus(final Exception exception, final HttpStatus status) {

@@ -32,7 +32,7 @@ public class MemberSurveysRepositoryImpl implements MemberSurveysRepository {
     }
 
     @Override
-    public MemberSurveyResponse findMemberSurvey(final Long memberId, final Long surveyId) {
+    public Optional<MemberSurveyResponse> findMemberSurvey(final Long memberId, final Long surveyId) {
         return memberSurveysJdbcRepository.findMemberSurvey(memberId, surveyId);
     }
 }
