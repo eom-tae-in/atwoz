@@ -102,4 +102,29 @@ class MemberSurveysControllerWebMvcTest extends MockBeanInjection {
                         )
                 ));
     }
+
+    @Test
+    void 회원과_답변이_30개_이상_같은_다른_회원을_조회한다() throws Exception {
+        // given
+        String bearerToken = "Bearer token";
+
+        when(memberSurveysQueryService.findMatchMembers(any()))
+                .thenReturn(List.of(2L));
+
+        // when & then
+        mockMvc.perform(get("/api/members/me/surveys/match")
+                        .contentType("application/json")
+                        .header(AUTHORIZATION, bearerToken))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(customDocument("회원_연애고사_매칭_조회",
+                        requestHeaders(
+                                headerWithName(AUTHORIZATION)
+                                        .description("유저 토큰 정보")
+                        ),
+                        responseFields(
+                                fieldWithPath("members").description("매칭된 회원들의 id")
+                        )
+                ));
+    }
 }

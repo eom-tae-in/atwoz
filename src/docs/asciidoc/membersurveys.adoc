@@ -19,10 +19,20 @@ include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_�
 
 === 연애고사 조회 (GET /api/members/me/surveys/{surveyId})
 
-=== 요청
+==== 요청
 include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/request-headers.adoc[]
 include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/http-request.adoc[]
 
-=== 응답
+==== 응답
 include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/response-fields.adoc[]
 include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/http-response.adoc[]
+
+=== 연애고사 매칭 조회 (GET /api/members/me/surveys/match)
+
+==== 요청
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/request-headers.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/response-fields.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/http-response.adoc[]
