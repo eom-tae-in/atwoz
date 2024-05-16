@@ -42,7 +42,7 @@ class MemberSurveysControllerWebMvcTest extends MockBeanInjection {
         List<SurveySubmitRequest> requests = 필수_과목_질문_두개_제출_요청();
 
         // when & then
-        mockMvc.perform(post("/api/members/me/surveys/submit")
+        mockMvc.perform(post("/api/members/me/surveys")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(requests))
                         .header(AUTHORIZATION, bearerToken))

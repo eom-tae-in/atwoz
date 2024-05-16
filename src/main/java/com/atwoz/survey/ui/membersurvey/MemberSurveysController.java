@@ -25,7 +25,7 @@ public class MemberSurveysController {
     private final MemberSurveysService memberSurveysService;
     private final MemberSurveysQueryService memberSurveysQueryService;
 
-    @PostMapping("/submit")
+    @PostMapping
     public ResponseEntity<Void> submitSurveys(@AuthMember final Long memberId,
                                               @RequestBody @Valid final List<SurveySubmitRequest> requests) {
         memberSurveysService.submitSurvey(memberId, requests);

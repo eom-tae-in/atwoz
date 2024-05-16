@@ -14,7 +14,7 @@ import static com.atwoz.survey.fixture.SurveySubmitRequestFixture.필수_과목_
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberSurveysControllerAcceptanceTest extends MemberSurveysControllerAcceptanceFixture {
 
-    private static final String 연애고사_응시_url = "/api/members/me/surveys/submit";
+    private static final String 연애고사_응시_url = "/api/members/me/surveys";
     private static final String 연애고사_매칭_url = "/api/members/me/surveys/match";
 
     private Member 회원;
