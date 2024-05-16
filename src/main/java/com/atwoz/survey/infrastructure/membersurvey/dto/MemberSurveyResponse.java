@@ -1,8 +1,9 @@
 package com.atwoz.survey.infrastructure.membersurvey.dto;
 
+import java.util.List;
+
 public record MemberSurveyResponse(
-        Long memberId,
         Long surveyId,
-        Long questionId,
-        Integer answerNumber) {
+        List<MemberSurveyQuestionResponse> questions
+) {
 }

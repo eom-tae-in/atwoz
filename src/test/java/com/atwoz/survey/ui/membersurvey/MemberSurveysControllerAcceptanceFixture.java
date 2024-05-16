@@ -6,6 +6,7 @@ import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.survey.SurveyRepository;
+import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
 import com.atwoz.survey.ui.membersurvey.dto.MatchMemberSearchResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -70,6 +71,25 @@ class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
 
     protected void 연애고사_응시_검증(final ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    protected ExtractableResponse<Response> 연애고사_응시_조회(final String url, final String token, final Long surveyId) {
+        return RestAssured.given().log().all()
+                .header(AUTHORIZATION, "Bearer " + token)
+                .contentType(JSON)
+                .when()
+                .get(url + "/" + surveyId)
+                .then()
+                .extract();
+    }
+
+    protected void 연애고사_조회_검증(final ExtractableResponse<Response> response) {
+        MemberSurveyResponse surveyResponse = response.as(MemberSurveyResponse.class);
+        assertSoftly(softly -> {
+            softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+            softly.assertThat(surveyResponse.surveyId()).isEqualTo(1L);
+            softly.assertThat(surveyResponse.questions().size()).isEqualTo(2);
+        });
     }
 
     protected ExtractableResponse 연애고사_매칭(final String url, final String token) {

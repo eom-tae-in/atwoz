@@ -15,6 +15,7 @@ import static com.atwoz.survey.fixture.SurveySubmitRequestFixture.필수_과목_
 public class MemberSurveysControllerAcceptanceTest extends MemberSurveysControllerAcceptanceFixture {
 
     private static final String 연애고사_응시_url = "/api/members/me/surveys";
+    private static final String 연애고사_응시_조회_url = "/api/members/me/surveys";
     private static final String 연애고사_매칭_url = "/api/members/me/surveys/match";
 
     private Member 회원;
@@ -36,6 +37,20 @@ public class MemberSurveysControllerAcceptanceTest extends MemberSurveysControll
 
         // then
         연애고사_응시_검증(연애고사_응시_결과);
+    }
+
+    @Test
+    void 응시한_연애고사를_과목별로_조회한다() {
+        // given
+        var 연애고사_과목_id = 1L;
+        연애고사_필수_과목_질문_두개씩_생성();
+        연애고사_응시_요청(연애고사_응시_url, 토큰, 필수_과목_질문_두개_제출_요청());
+
+        // when
+        var 연애고사_조회_결과 = 연애고사_응시_조회(연애고사_응시_조회_url, 토큰, 연애고사_과목_id);
+
+        // then
+        연애고사_조회_검증(연애고사_조회_결과);
     }
 
     @Test

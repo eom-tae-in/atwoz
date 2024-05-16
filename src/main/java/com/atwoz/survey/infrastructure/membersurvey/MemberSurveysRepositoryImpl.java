@@ -2,6 +2,7 @@ package com.atwoz.survey.infrastructure.membersurvey;
 
 import com.atwoz.survey.domain.membersurvey.MemberSurveys;
 import com.atwoz.survey.domain.membersurvey.MemberSurveysRepository;
+import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +29,10 @@ public class MemberSurveysRepositoryImpl implements MemberSurveysRepository {
     @Override
     public List<Long> findMatchMembers(final Long memberId) {
         return memberSurveysJdbcRepository.findMatchMembers(memberId);
+    }
+
+    @Override
+    public MemberSurveyResponse findMemberSurvey(final Long memberId, final Long surveyId) {
+        return memberSurveysJdbcRepository.findMemberSurvey(memberId, surveyId);
     }
 }
