@@ -10,19 +10,19 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
-public class MemberSurveysQueryRepository {
+public class MemberSurveysJdbcRepository {
 
     private static final int MINIMUM_MATCH_SIZE = 30;
 
     private final JdbcTemplate jdbcTemplate;
 
     public List<Long> findMatchMembers(final Long memberId) {
-        List<MemberSurveyResponse> memberSurveyResponses = convertMemberSurveyResponses(memberId);
+        List<MemberSurveyResponse> memberSurveyResponses = convertMemberSurveys(memberId);
         List<Long> result = new ArrayList<>();
 
         List<Long> otherMembers = collectMembersExceptCurrentMember(memberId);
         otherMembers.forEach(id -> {
-            List<MemberSurveyResponse> otherMemberSurveyResponses = convertMemberSurveyResponses(id);
+            List<MemberSurveyResponse> otherMemberSurveyResponses = convertMemberSurveys(id);
             if (isMatched(memberSurveyResponses, otherMemberSurveyResponses)) {
                 result.add(id);
             }
@@ -30,7 +30,7 @@ public class MemberSurveysQueryRepository {
         return result;
     }
 
-    private List<MemberSurveyResponse> convertMemberSurveyResponses(final Long memberId) {
+    private List<MemberSurveyResponse> convertMemberSurveys(final Long memberId) {
         String sql = "SELECT mss.member_id, ms.survey_id, ms.question_id, ms.answer_number " +
                 "FROM member_surveys mss " +
                 "INNER JOIN member_survey ms " +

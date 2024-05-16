@@ -13,7 +13,7 @@ import java.util.Optional;
 public class MemberSurveysRepositoryImpl implements MemberSurveysRepository {
 
     private final MemberSurveysJpaRepository memberSurveysJpaRepository;
-    private final MemberSurveysQueryRepository memberSurveysQueryRepository;
+    private final MemberSurveysJdbcRepository memberSurveysJdbcRepository;
 
     @Override
     public MemberSurveys save(final MemberSurveys memberSurveys) {
@@ -27,6 +27,6 @@ public class MemberSurveysRepositoryImpl implements MemberSurveysRepository {
 
     @Override
     public List<Long> findMatchMembers(final Long memberId) {
-        return memberSurveysQueryRepository.findMatchMembers(memberId);
+        return memberSurveysJdbcRepository.findMatchMembers(memberId);
     }
 }
