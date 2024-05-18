@@ -58,8 +58,7 @@ public class MemberSurveysService {
 
     private MemberSurveys createNewMemberSurveysWithMemberId(final Long memberId) {
         MemberSurveys memberSurveys = MemberSurveys.createWithMemberId(memberId);
-        memberSurveysRepository.save(memberSurveys);
-        return memberSurveys;
+        return memberSurveysRepository.save(memberSurveys);
     }
 
     private void validateEachSurveyRequestIsValid(final List<SurveySubmitRequest> requests) {
