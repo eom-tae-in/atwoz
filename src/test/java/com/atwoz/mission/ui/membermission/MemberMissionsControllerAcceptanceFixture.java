@@ -68,7 +68,6 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected void 회원_미션_페이징_조회_결과_검증(final ExtractableResponse response) {
-        System.out.println("hihihii" + response.asPrettyString());
         MemberMissionPagingResponse result = response.as(MemberMissionPagingResponse.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());

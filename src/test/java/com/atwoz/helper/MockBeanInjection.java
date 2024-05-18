@@ -1,6 +1,7 @@
 package com.atwoz.helper;
 
 import com.atwoz.member.application.auth.AuthService;
+import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
 import com.atwoz.member.domain.auth.TokenProvider;
 import com.atwoz.member.ui.auth.interceptor.LoginValidCheckerInterceptor;
@@ -73,4 +74,7 @@ public class MockBeanInjection {
 
     @MockBean
     protected MemberSurveysQueryService memberSurveysQueryService;
+
+    @MockBean
+    protected MemberQueryService memberQueryService;
 }

@@ -5,7 +5,7 @@
 :sectlinks:
 :sectnums:
 
-== Member
+== Auth
 
 === 로그인
 

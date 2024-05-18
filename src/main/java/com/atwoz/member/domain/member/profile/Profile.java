@@ -7,8 +7,6 @@ import com.atwoz.member.domain.member.profile.vo.Graduate;
 import com.atwoz.member.domain.member.profile.vo.Job;
 import com.atwoz.member.domain.member.profile.vo.Location;
 import com.atwoz.member.domain.member.profile.vo.Mbti;
-import com.atwoz.member.domain.member.profile.vo.MemberHobbies;
-import com.atwoz.member.domain.member.profile.vo.MemberStyles;
 import com.atwoz.member.domain.member.profile.vo.Religion;
 import com.atwoz.member.domain.member.profile.vo.Smoke;
 import jakarta.persistence.CascadeType;
@@ -50,6 +48,7 @@ public class Profile {
     private Smoke smoke;
 
     @Enumerated(value = EnumType.STRING)
+
     private Drink drink;
 
     @Enumerated(value = EnumType.STRING)
@@ -62,14 +61,14 @@ public class Profile {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, orphanRemoval = true)
     private PhysicalProfile physicalProfile;
 
-    @Embedded
-    private Location location;
-
-    @Embedded
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true)
     private MemberHobbies memberHobbies;
 
-    @Embedded
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true)
     private MemberStyles memberStyles;
+
+    @Embedded
+    private Location location;
 
     public static Profile createWith(final String gender) {
         return Profile.builder()
@@ -86,9 +85,9 @@ public class Profile {
         this.drink = Drink.findByName(memberProfileDto.drink());
         this.religion = Religion.findByName(memberProfileDto.religion());
         this.mbti = Mbti.findByName(memberProfileDto.mbti());
-        physicalProfile.change(memberProfileDto.physicalProfileDto());
+        this.physicalProfile.change(memberProfileDto.physicalProfileDto());
         this.location = new Location(memberProfileDto.city(), memberProfileDto.sector());
-        this.memberHobbies = memberHobbies.changeWith(memberProfileDto.getHobbies());
-        this.memberStyles = memberStyles.changeWith(memberProfileDto.getStyles());
+        this.memberHobbies.change(memberProfileDto.getHobbies());
+        this.memberStyles.change(memberProfileDto.getStyles());
     }
 }

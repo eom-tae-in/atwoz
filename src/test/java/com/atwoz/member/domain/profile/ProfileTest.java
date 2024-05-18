@@ -2,6 +2,8 @@ package com.atwoz.member.domain.profile;
 
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.dto.MemberProfileDto;
+import com.atwoz.member.domain.member.profile.MemberHobby;
+import com.atwoz.member.domain.member.profile.MemberStyle;
 import com.atwoz.member.domain.member.profile.Profile;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.domain.member.profile.vo.Hobby;
@@ -66,12 +68,20 @@ class ProfileTest {
                 softly.assertThat(profile.getLocation().getCity()).isEqualTo(memberProfileDto.city());
                 softly.assertThat(profile.getLocation().getSector()).isEqualTo(memberProfileDto.sector());
 
-                List<String> hobbyCodes = profile.getMemberHobbies().getHobbies().stream()
+                List<String> hobbyCodes = profile.getMemberHobbies()
+                        .getHobbies()
+                        .stream()
+                        .map(MemberHobby::getHobby)
                         .map(Hobby::getCode)
                         .toList();
-                List<String> styleCodes = profile.getMemberStyles().getStyles().stream()
+
+                List<String> styleCodes = profile.getMemberStyles()
+                        .getStyles()
+                        .stream()
+                        .map(MemberStyle::getStyle)
                         .map(Style::getCode)
                         .toList();
+
                 softly.assertThat(hobbyCodes).containsExactlyInAnyOrderElementsOf(memberProfileDto.getHobbies());
                 softly.assertThat(styleCodes).containsExactlyInAnyOrderElementsOf(memberProfileDto.getStyles());
             });
