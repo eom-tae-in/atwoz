@@ -91,7 +91,7 @@ public class SurveyQuestion {
 
     public void validateIsValidSubmitAnswer(final List<SurveyQuestionComparisonRequest> requests) {
         SurveyQuestionComparisonRequest questionRequest = findSurveyQuestionById(requests);
-        if (!isContainsSameAnswer(questionRequest.answerNumber())) {
+        if (!hasSameAnswer(questionRequest.answerNumber())) {
             throw new SurveyAnswerInvalidSubmitException();
         }
     }
@@ -104,7 +104,7 @@ public class SurveyQuestion {
                 .orElseThrow(SurveyQuestionNotSubmittedException::new);
     }
 
-    private boolean isContainsSameAnswer(final Integer answerNumber) {
+    private boolean hasSameAnswer(final Integer answerNumber) {
         return answers.stream()
                 .anyMatch(answer -> answer.isSame(answerNumber));
     }
