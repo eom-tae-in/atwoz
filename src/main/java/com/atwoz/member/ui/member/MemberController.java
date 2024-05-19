@@ -1,9 +1,11 @@
 package com.atwoz.member.ui.member;
 
+import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
-import com.atwoz.member.application.member.dto.MemberNicknameRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
+import com.atwoz.member.infrastructure.member.dto.MemberResponse;
+import com.atwoz.member.ui.auth.support.auth.AuthMember;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,32 +26,38 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberQueryService memberQueryService;
 
-    @GetMapping("/nickname/existence")
-    public ResponseEntity<Void> checkMemberExists(@Valid @RequestBody final MemberNicknameRequest memberNicknameRequest) {
-        memberService.checkMemberExists(memberNicknameRequest);
+    @GetMapping("/{nickname}/existence")
+    public ResponseEntity<Void> checkMemberExists(@PathVariable final String nickname) {
+        memberQueryService.checkMemberExists(nickname);
         return ResponseEntity.ok()
                 .build();
     }
 
-    @PostMapping("/{memberId}")
-    public ResponseEntity<Void> initializeMember(@PathVariable final Long memberId,
+    @PostMapping("/me")
+    public ResponseEntity<Void> initializeMember(@AuthMember final Long memberId,
                                                  @Valid @RequestBody final MemberInitializeRequest memberInitializeRequest) {
         memberService.initializeMember(memberId, memberInitializeRequest);
         return ResponseEntity.status(CREATED)
                 .build();
     }
 
-    @PatchMapping("/{memberId}")
-    public ResponseEntity<Void> updateMember(@PathVariable final Long memberId,
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberResponse> findMember(@PathVariable final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findMember(memberId));
+    }
+
+    @PatchMapping("/me")
+    public ResponseEntity<Void> updateMember(@AuthMember final Long memberId,
                                              @Valid @RequestBody final MemberUpdateRequest memberUpdateRequest) {
         memberService.updateMember(memberId, memberUpdateRequest);
         return ResponseEntity.ok()
                 .build();
     }
 
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable final Long memberId) {
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteMember(@AuthMember final Long memberId) {
         memberService.deleteMember(memberId);
         return ResponseEntity.noContent()
                 .build();

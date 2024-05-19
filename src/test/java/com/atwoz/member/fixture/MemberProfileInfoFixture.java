@@ -5,6 +5,7 @@ import com.atwoz.member.application.member.dto.ProfileUpdateRequest;
 import com.atwoz.member.domain.member.dto.MemberProfileDto;
 import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class MemberProfileInfoFixture {
 
     public static MemberProfileDto 회원_프로필_정보_생성(final ProfileInitializeRequest profileInitializeRequest) {

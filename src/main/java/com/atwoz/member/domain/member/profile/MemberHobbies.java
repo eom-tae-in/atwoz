@@ -1,46 +1,47 @@
-package com.atwoz.member.domain.member.profile.vo;
+package com.atwoz.member.domain.member.profile;
 
+import com.atwoz.member.domain.member.profile.vo.Hobby;
 import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
 import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Embeddable
+@EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Entity
 public class MemberHobbies {
 
     private static final int MIN_HOBBY_SIZE = 1;
     private static final int MAX_HOBBY_SIZE = 3;
 
-    @ElementCollection
-    @CollectionTable(name = "HOBBIES", joinColumns = @JoinColumn(name = "profile_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Hobby> hobbies = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public MemberHobbies changeWith(final List<String> hobbyCodes) {
+    @JoinColumn(name = "member_hobbies_id")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<MemberHobby> hobbies = new HashSet<>();
+
+    public void change(final List<String> hobbyCodes) {
         validateHobbyCodes(hobbyCodes);
-        Set<Hobby> uniqueHobbies = convertToUniqueHobbies(hobbyCodes);
-
-        if (isSameAsCurrentValue(uniqueHobbies)) {
-            return new MemberHobbies(this.hobbies);
-        }
-
-        return new MemberHobbies(uniqueHobbies);
+        changeHobbies(hobbyCodes);
     }
 
     private void validateHobbyCodes(final List<String> hobbyCodes) {
@@ -76,13 +77,16 @@ public class MemberHobbies {
                 .anyMatch(hobbyCode -> !Hobby.isValidCode(hobbyCode));
     }
 
-    private Set<Hobby> convertToUniqueHobbies(final List<String> hobbyCodes) {
-        return hobbyCodes.stream()
-                .map(Hobby::findByCode)
-                .collect(Collectors.toSet());
+    private void changeHobbies(final List<String> hobbyCodes) {
+        hobbies.removeIf(memberHobby -> !memberHobby.hasMatchingHobbyCodeOf(hobbyCodes));
+        hobbyCodes.stream()
+                .map(MemberHobby::createWith)
+                .filter(memberHobby -> !isAlreadyExist(memberHobby))
+                .forEach(memberHobby -> hobbies.add(memberHobby));
     }
 
-    private boolean isSameAsCurrentValue(final Set<Hobby> uniqueHobbies) {
-        return uniqueHobbies.equals(this.hobbies);
+    private boolean isAlreadyExist(final MemberHobby memberHobby) {
+        return hobbies.stream()
+                .anyMatch(memberHobby::isSame);
     }
 }
