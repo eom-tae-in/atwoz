@@ -81,7 +81,7 @@ public class Survey {
         if (request.questions().size() != questions.size()) {
             throw new SurveyQuestionSubmitSizeNotMatchException();
         }
-        questions.forEach(question -> question.validateIsValidSubmitAnswer(request.questions()));
+        questions.forEach(question -> question.validateSubmitAnswer(request.questions()));
     }
 
     public boolean isSameName(final String name) {

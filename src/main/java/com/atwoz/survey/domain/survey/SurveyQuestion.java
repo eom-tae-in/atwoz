@@ -58,11 +58,11 @@ public class SurveyQuestion {
     }
 
     private static void validateIsAnswersNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
-        validateIsAnswerNumbersNotDuplicated(answers);
-        validateIsAnswerDescriptionsNotDuplicated(answers);
+        validateAnswerNumbersNotDuplicated(answers);
+        validateAnswerDescriptionsNotDuplicated(answers);
     }
 
-    private static void validateIsAnswerNumbersNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
+    private static void validateAnswerNumbersNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
         List<Integer> answerNumbers = answers.stream()
                 .map(SurveyAnswerCreateDto::number)
                 .toList();
@@ -72,7 +72,7 @@ public class SurveyQuestion {
         }
     }
 
-    private static void validateIsAnswerDescriptionsNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
+    private static void validateAnswerDescriptionsNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
         List<String> answerDescriptions = answers.stream()
                 .map(SurveyAnswerCreateDto::answer)
                 .toList();
@@ -89,7 +89,7 @@ public class SurveyQuestion {
         this.answers.addAll(surveyAnswers);
     }
 
-    public void validateIsValidSubmitAnswer(final List<SurveyQuestionComparisonRequest> requests) {
+    public void validateSubmitAnswer(final List<SurveyQuestionComparisonRequest> requests) {
         SurveyQuestionComparisonRequest questionRequest = findSurveyQuestionById(requests);
         if (!hasSameAnswer(questionRequest.answerNumber())) {
             throw new SurveyAnswerInvalidSubmitException();

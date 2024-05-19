@@ -61,7 +61,7 @@ class SurveyQuestionTest {
         );
 
         // when & then
-        assertDoesNotThrow(() -> surveyQuestion.validateIsValidSubmitAnswer(requests));
+        assertDoesNotThrow(() -> surveyQuestion.validateSubmitAnswer(requests));
     }
 
     @Test
@@ -129,7 +129,7 @@ class SurveyQuestionTest {
             );
 
             // when & then
-            assertThatThrownBy(() -> surveyQuestion.validateIsValidSubmitAnswer(requests))
+            assertThatThrownBy(() -> surveyQuestion.validateSubmitAnswer(requests))
                     .isInstanceOf(SurveyQuestionNotSubmittedException.class);
         }
 
@@ -142,7 +142,7 @@ class SurveyQuestionTest {
             );
 
             // when & then
-            assertThatThrownBy(() -> surveyQuestion.validateIsValidSubmitAnswer(requests))
+            assertThatThrownBy(() -> surveyQuestion.validateSubmitAnswer(requests))
                     .isInstanceOf(SurveyAnswerInvalidSubmitException.class);
         }
     }
