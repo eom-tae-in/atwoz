@@ -1,7 +1,7 @@
 package com.atwoz.survey.domain.membersurvey;
 
-import com.atwoz.survey.application.membersurvey.dto.SurveyQuestionSubmitRequest;
-import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
+import com.atwoz.survey.domain.membersurvey.dto.SurveyQuestionSubmitCreateDto;
+import com.atwoz.survey.domain.membersurvey.dto.SurveySubmitCreateDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +45,7 @@ public class MemberSurveys {
                 .build();
     }
 
-    public void submitSurveys(final List<SurveySubmitRequest> requests) {
+    public void submitSurveys(final List<SurveySubmitCreateDto> requests) {
         List<MemberSurvey> memberSurveys = new ArrayList<>();
         requests.forEach(request -> {
                     List<MemberSurvey> convertedMemberSurveys = convertMemberSurveys(request.surveyId(), request.questions());
@@ -54,7 +54,7 @@ public class MemberSurveys {
         this.memberSurveys.addAll(memberSurveys);
     }
 
-    private List<MemberSurvey> convertMemberSurveys(final Long surveyId, final List<SurveyQuestionSubmitRequest> questions) {
+    private List<MemberSurvey> convertMemberSurveys(final Long surveyId, final List<SurveyQuestionSubmitCreateDto> questions) {
         return questions.stream()
                 .map(question -> MemberSurvey.of(surveyId, question.questionId(), question.answerNumber()))
                 .toList();

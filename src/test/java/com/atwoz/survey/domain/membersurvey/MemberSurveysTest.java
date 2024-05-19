@@ -1,13 +1,13 @@
 package com.atwoz.survey.domain.membersurvey;
 
-import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
+import com.atwoz.survey.domain.membersurvey.dto.SurveySubmitCreateDto;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import static com.atwoz.survey.fixture.MemberSurveyFixture.회원_연애고사_응시_필수_과목_두개;
-import static com.atwoz.survey.fixture.SurveySubmitRequestFixture.필수_과목_질문_두개_제출_요청;
+import static com.atwoz.survey.fixture.SurveySubmitCreateDtoFixture.필수_과목_질문_두개_제출_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -34,7 +34,7 @@ class MemberSurveysTest {
     void 회원_연애고사_응시() {
         // given
         Long memberId = 1L;
-        List<SurveySubmitRequest> requests = 필수_과목_질문_두개_제출_요청();
+        List<SurveySubmitCreateDto> requests = 필수_과목_질문_두개_제출_요청();
         MemberSurveys memberSurveys = MemberSurveys.createWithMemberId(memberId);
         List<MemberSurvey> expectMemberSurveys = 회원_연애고사_응시_필수_과목_두개();
 

@@ -1,7 +1,7 @@
 package com.atwoz.survey.infrastructure.membersurvey;
 
-import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.membersurvey.MemberSurveys;
+import com.atwoz.survey.domain.membersurvey.dto.SurveySubmitCreateDto;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
-import static com.atwoz.survey.fixture.SurveySubmitRequestFixture.필수_과목_질문_두개_제출_요청;
+import static com.atwoz.survey.fixture.SurveySubmitCreateDtoFixture.필수_과목_질문_두개_제출_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -27,7 +27,7 @@ class MemberSurveysJpaRepositoryTest {
         // given
         Long memberId = 1L;
         MemberSurveys memberSurveys = MemberSurveys.createWithMemberId(memberId);
-        List<SurveySubmitRequest> requests = 필수_과목_질문_두개_제출_요청();
+        List<SurveySubmitCreateDto> requests = 필수_과목_질문_두개_제출_요청();
         memberSurveys.submitSurveys(requests);
 
         // when

@@ -3,6 +3,7 @@ package com.atwoz.survey.application.membersurvey;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.membersurvey.MemberSurveys;
 import com.atwoz.survey.domain.membersurvey.MemberSurveysRepository;
+import com.atwoz.survey.domain.membersurvey.dto.SurveySubmitCreateDto;
 import com.atwoz.survey.domain.survey.Survey;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
@@ -31,7 +32,7 @@ public class MemberSurveysService {
         MemberSurveys memberSurveys = memberSurveysRepository.findByMemberId(memberId)
                 .orElseGet(() -> createNewMemberSurveysWithMemberId(memberId));
         validateEachSurveyRequestIsValid(requests);
-        memberSurveys.submitSurveys(requests);
+        memberSurveys.submitSurveys(convertSurveySubmits(requests));
     }
 
     private void validateIsAllSubmittedRequiredSurveys(final List<SurveySubmitRequest> requests) {
@@ -68,5 +69,11 @@ public class MemberSurveysService {
                     SurveyComparisonRequest comparisonRequest = SurveyComparisonRequest.from(request);
                     survey.validateIsValidSubmitSurveyRequest(comparisonRequest);
                 });
+    }
+
+    private List<SurveySubmitCreateDto> convertSurveySubmits(final List<SurveySubmitRequest> requests) {
+        return requests.stream()
+                .map(SurveySubmitCreateDto::from)
+                .toList();
     }
 }
