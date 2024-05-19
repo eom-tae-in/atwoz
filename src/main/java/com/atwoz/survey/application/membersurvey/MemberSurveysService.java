@@ -50,11 +50,15 @@ public class MemberSurveysService {
                 .toList();
         HashSet<Long> surveyIds = new HashSet<>(submittedSurveyIds);
 
+        validateSurveyIdNotDuplicated(surveyIds, submittedSurveyIds);
+
+        return surveyIds;
+    }
+
+    private void validateSurveyIdNotDuplicated(final HashSet<Long> surveyIds, final List<Long> submittedSurveyIds) {
         if (surveyIds.size() != submittedSurveyIds.size()) {
             throw new SurveySubmitDuplicateException();
         }
-
-        return surveyIds;
     }
 
     private MemberSurveys createNewMemberSurveysWithMemberId(final Long memberId) {
