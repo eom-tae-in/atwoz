@@ -1,6 +1,6 @@
 package com.atwoz.survey.domain.survey;
 
-import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
+import com.atwoz.survey.domain.survey.dto.SurveyAnswerCreateDto;
 import com.atwoz.survey.domain.survey.dto.SurveyQuestionComparisonRequest;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
@@ -48,7 +48,7 @@ public class SurveyQuestion {
         this.description = description;
     }
 
-    public static SurveyQuestion of(final String description, final List<SurveyAnswerCreateRequest> answers) {
+    public static SurveyQuestion of(final String description, final List<SurveyAnswerCreateDto> answers) {
         validateIsAnswersNotDuplicated(answers);
 
         SurveyQuestion surveyQuestion = new SurveyQuestion(description);
@@ -57,14 +57,14 @@ public class SurveyQuestion {
         return surveyQuestion;
     }
 
-    private static void validateIsAnswersNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+    private static void validateIsAnswersNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
         validateIsAnswerNumbersNotDuplicated(answers);
         validateIsAnswerDescriptionsNotDuplicated(answers);
     }
 
-    private static void validateIsAnswerNumbersNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+    private static void validateIsAnswerNumbersNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
         List<Integer> answerNumbers = answers.stream()
-                .map(SurveyAnswerCreateRequest::number)
+                .map(SurveyAnswerCreateDto::number)
                 .toList();
         Set<Integer> answersSet = new HashSet<>(answerNumbers);
         if (answersSet.size() != answers.size()) {
@@ -72,9 +72,9 @@ public class SurveyQuestion {
         }
     }
 
-    private static void validateIsAnswerDescriptionsNotDuplicated(final List<SurveyAnswerCreateRequest> answers) {
+    private static void validateIsAnswerDescriptionsNotDuplicated(final List<SurveyAnswerCreateDto> answers) {
         List<String> answerDescriptions = answers.stream()
-                .map(SurveyAnswerCreateRequest::answer)
+                .map(SurveyAnswerCreateDto::answer)
                 .toList();
         Set<String> answersSet = new HashSet<>(answerDescriptions);
         if (answersSet.size() != answers.size()) {
@@ -82,7 +82,7 @@ public class SurveyQuestion {
         }
     }
 
-    private void addSurveyAnswers(final List<SurveyAnswerCreateRequest> answers) {
+    private void addSurveyAnswers(final List<SurveyAnswerCreateDto> answers) {
         List<SurveyAnswer> surveyAnswers = answers.stream()
                 .map(answer -> SurveyAnswer.of(answer.number(), answer.answer()))
                 .toList();

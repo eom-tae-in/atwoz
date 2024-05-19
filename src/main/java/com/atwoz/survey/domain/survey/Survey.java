@@ -1,8 +1,8 @@
 package com.atwoz.survey.domain.survey;
 
-import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
-import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
 import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
+import com.atwoz.survey.domain.survey.dto.SurveyCreateDto;
+import com.atwoz.survey.domain.survey.dto.SurveyQuestionCreateDto;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitSizeNotMatchException;
 import com.atwoz.survey.exception.survey.exceptions.SurveyQuestionDuplicatedException;
 import jakarta.persistence.CascadeType;
@@ -50,7 +50,7 @@ public class Survey {
         this.required = required;
     }
 
-    public static Survey from(final SurveyCreateRequest request) {
+    public static Survey from(final SurveyCreateDto request) {
         validateIsQuestionsNotDuplicated(request.questions());
 
         Survey survey = new Survey(request.name(), request.required());
@@ -59,9 +59,9 @@ public class Survey {
         return survey;
     }
 
-    private static void validateIsQuestionsNotDuplicated(final List<SurveyQuestionCreateRequest> questionRequests) {
+    private static void validateIsQuestionsNotDuplicated(final List<SurveyQuestionCreateDto> questionRequests) {
         List<String> questions = questionRequests.stream()
-                .map(SurveyQuestionCreateRequest::description)
+                .map(SurveyQuestionCreateDto::description)
                 .toList();
 
         Set<String> questionsSet = new HashSet<>(questions);
@@ -70,7 +70,7 @@ public class Survey {
         }
     }
 
-    private void addSurveyQuestions(final List<SurveyQuestionCreateRequest> questionRequests) {
+    private void addSurveyQuestions(final List<SurveyQuestionCreateDto> questionRequests) {
         List<SurveyQuestion> questions = questionRequests.stream()
                 .map(request -> SurveyQuestion.of(request.description(), request.answers()))
                 .toList();

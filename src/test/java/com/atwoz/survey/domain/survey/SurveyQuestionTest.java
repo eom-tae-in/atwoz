@@ -1,6 +1,7 @@
 package com.atwoz.survey.domain.survey;
 
 import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
+import com.atwoz.survey.domain.survey.dto.SurveyAnswerCreateDto;
 import com.atwoz.survey.domain.survey.dto.SurveyQuestionComparisonRequest;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
@@ -30,10 +31,10 @@ class SurveyQuestionTest {
     void 연애고사_질문_생성() {
         // given
         String description = "질문";
-        List<SurveyAnswerCreateRequest> surveyAnswers = List.of(
-                SurveyAnswerCreateRequest.of(1, "답변1"),
-                SurveyAnswerCreateRequest.of(2, "답변2"),
-                SurveyAnswerCreateRequest.of(3, "답변3")
+        List<SurveyAnswerCreateDto> surveyAnswers = List.of(
+                SurveyAnswerCreateDto.from(new SurveyAnswerCreateRequest(1, "답변1")),
+                SurveyAnswerCreateDto.from(new SurveyAnswerCreateRequest(2, "답변2")),
+                SurveyAnswerCreateDto.from(new SurveyAnswerCreateRequest(3, "답변3"))
         );
         List<SurveyAnswer> answers = List.of(
                 SurveyAnswer.of(1, "답변1"),
@@ -68,7 +69,7 @@ class SurveyQuestionTest {
         // given
         SurveyQuestion surveyQuestion = 연애고사_질문_답변_한개_id_있음();
         SurveyQuestion anotherSurveyQuestion = SurveyQuestion.of("질문 1", List.of(
-                new SurveyAnswerCreateRequest(1, "답변 1"))
+                new SurveyAnswerCreateDto(1, "답변 1"))
         );
 
         // when
@@ -86,10 +87,10 @@ class SurveyQuestionTest {
         void 번호나_내용이_같은_답변은_생성할_수_없다(final int answerNumber1, final String answer1, final int answerNumber2, final String answer2) {
             // given
             String description = "질문";
-            List<SurveyAnswerCreateRequest> answers = List.of(
-                    new SurveyAnswerCreateRequest(answerNumber1, answer1),
-                    new SurveyAnswerCreateRequest(answerNumber2, answer2),
-                    new SurveyAnswerCreateRequest(3, "답변 3")
+            List<SurveyAnswerCreateDto> answers = List.of(
+                    new SurveyAnswerCreateDto(answerNumber1, answer1),
+                    new SurveyAnswerCreateDto(answerNumber2, answer2),
+                    new SurveyAnswerCreateDto(3, "답변 3")
             );
 
             // when & then
@@ -109,8 +110,8 @@ class SurveyQuestionTest {
         void 답변_번호가_자연수가_아니면_예외가_발생한다() {
             // given
             String description = "질문";
-            List<SurveyAnswerCreateRequest> answers = List.of(
-                    new SurveyAnswerCreateRequest(-1, "답변 1")
+            List<SurveyAnswerCreateDto> answers = List.of(
+                    new SurveyAnswerCreateDto(-1, "답변 1")
             );
 
             // when & then

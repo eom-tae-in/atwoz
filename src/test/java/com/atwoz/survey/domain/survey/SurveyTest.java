@@ -5,7 +5,9 @@ import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.application.survey.dto.SurveyAnswerCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.application.survey.dto.SurveyQuestionCreateRequest;
+import com.atwoz.survey.domain.survey.dto.SurveyAnswerCreateDto;
 import com.atwoz.survey.domain.survey.dto.SurveyComparisonRequest;
+import com.atwoz.survey.domain.survey.dto.SurveyCreateDto;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyAnswerInvalidSubmitException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionNotSubmittedException;
 import com.atwoz.survey.exception.membersurvey.exceptions.SurveyQuestionSubmitSizeNotMatchException;
@@ -40,17 +42,17 @@ class SurveyTest {
         SurveyCreateRequest request = 연애고사_필수_과목_질문_두개씩_생성_요청();
         List<SurveyQuestion> questions = List.of(
                 SurveyQuestion.of("질문 내용1", List.of(
-                        SurveyAnswerCreateRequest.of(1, "답변1"),
-                        SurveyAnswerCreateRequest.of(2, "답변2"))
+                        new SurveyAnswerCreateDto(1, "답변1"),
+                        new SurveyAnswerCreateDto(2, "답변2"))
                 ),
                 SurveyQuestion.of("질문 내용2", List.of(
-                        SurveyAnswerCreateRequest.of(1, "답변1"),
-                        SurveyAnswerCreateRequest.of(2, "답변2"))
+                        new SurveyAnswerCreateDto(1, "답변1"),
+                        new SurveyAnswerCreateDto(2, "답변2"))
                 )
         );
 
         // when
-        Survey survey = Survey.from(request);
+        Survey survey = Survey.from(SurveyCreateDto.from(request));
 
         // then
         assertSoftly(softly -> {
@@ -83,7 +85,7 @@ class SurveyTest {
             SurveyCreateRequest request = 연애고사_필수_과목_질문_중복();
 
             // when & then
-            assertThatThrownBy(() -> Survey.from(request))
+            assertThatThrownBy(() -> Survey.from(SurveyCreateDto.from(request)))
                     .isInstanceOf(SurveyQuestionDuplicatedException.class);
         }
 
@@ -99,7 +101,7 @@ class SurveyTest {
             ));
 
             // when & then
-            assertThatThrownBy(() -> Survey.from(request))
+            assertThatThrownBy(() -> Survey.from(SurveyCreateDto.from(request)))
                     .isInstanceOf(SurveyAnswerDuplicatedException.class);
         }
 
@@ -114,7 +116,7 @@ class SurveyTest {
         @Test
         void 연애고사_답변_번호는_자연수여야_한다() {
             // given
-            SurveyCreateRequest request = 연애고사_필수_과목_질문_번호_음수();
+            SurveyCreateDto request = SurveyCreateDto.from(연애고사_필수_과목_질문_번호_음수());
 
             // when & then
             assertThatThrownBy(() -> Survey.from(request))
