@@ -1,0 +1,38 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== MemberSurveys
+
+=== 연애고사 응시 (POST /api/members/me/surveys)
+
+==== 요청
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/request-headers.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/request-fields.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_응시/http-response.adoc[]
+
+=== 연애고사 조회 (GET /api/members/me/surveys/{surveyId})
+
+==== 요청
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/request-headers.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/response-fields.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_조회/http-response.adoc[]
+
+=== 연애고사 매칭 조회 (GET /api/members/me/surveys/match)
+
+==== 요청
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/request-headers.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/response-fields.adoc[]
+include::{snippets}/member-surveys-controller-web-mvc-test/회원_연애고사_매칭_조회/http-response.adoc[]
