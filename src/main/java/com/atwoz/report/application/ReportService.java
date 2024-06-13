@@ -33,7 +33,7 @@ public class ReportService {
                 .orElseThrow(ReportNotFoundException::new);
     }
 
-    @Scheduled(cron = "0 31 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void deleteReport() {
         reportRepository.deleteProcessedOldReports();
     }
