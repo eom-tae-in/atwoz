@@ -38,7 +38,7 @@ public class ReportControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected ReportCreateRequest 신고_요청서_요청() {
-        return new ReportCreateRequest(1L, FAKE_PROFILE.getCode(), "사진 도용했어요");
+        return new ReportCreateRequest(2L, FAKE_PROFILE.getCode(), "사진 도용했어요");
     }
 
     protected ExtractableResponse<Response> 신고_생성_요청(final String uri, final String token,
