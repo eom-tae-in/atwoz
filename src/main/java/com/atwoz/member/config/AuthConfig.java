@@ -5,6 +5,7 @@ import com.atwoz.member.ui.auth.interceptor.ParseMemberIdFromTokenInterceptor;
 import com.atwoz.member.ui.auth.interceptor.PathMatcherInterceptor;
 import com.atwoz.member.ui.auth.interceptor.TokenRegenerateInterceptor;
 import com.atwoz.member.ui.auth.support.resolver.AuthArgumentResolver;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -12,7 +13,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
 import static com.atwoz.member.ui.auth.interceptor.HttpMethod.DELETE;
 import static com.atwoz.member.ui.auth.interceptor.HttpMethod.GET;
 import static com.atwoz.member.ui.auth.interceptor.HttpMethod.OPTIONS;
@@ -52,7 +52,8 @@ public class AuthConfig implements WebMvcConfigurer {
                 .excludePathPattern("/**", OPTIONS)
                 .excludePathPattern("/api/missions/**", GET, POST, PATCH, DELETE)
                 .excludePathPattern("/api/surveys/**", GET, POST)
-                .addPathPatterns("/api/members/**", GET, POST, PATCH, DELETE);
+                .addPathPatterns("/api/members/**", GET, POST, PATCH, DELETE)
+                .addPathPatterns("/api/reports/**", POST);
     }
 
     private HandlerInterceptor tokenRegenerateInterceptor() {
