@@ -15,6 +15,7 @@ import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
 import com.atwoz.mission.application.membermission.MemberMissionsService;
 import com.atwoz.mission.application.mission.MissionQueryService;
 import com.atwoz.mission.application.mission.MissionService;
+import com.atwoz.report.application.ReportService;
 import com.atwoz.survey.application.membersurvey.MemberSurveysQueryService;
 import com.atwoz.survey.application.membersurvey.MemberSurveysService;
 import com.atwoz.survey.application.survey.SurveyService;
@@ -77,4 +78,7 @@ public class MockBeanInjection {
 
     @MockBean
     protected MemberQueryService memberQueryService;
+
+    @MockBean
+    protected ReportService reportService;
 }
