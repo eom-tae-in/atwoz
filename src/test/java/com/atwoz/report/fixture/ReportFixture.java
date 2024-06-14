@@ -10,44 +10,46 @@ import static com.atwoz.report.domain.vo.ReportType.FAKE_PROFILE;
 @SuppressWarnings("NonAsciiCharacters")
 public class ReportFixture {
 
-    public static Report 신고_생성() {
+    private static final int DELETION_THRESHOLD = 31;
+    private static final Long REPORTED_USER_ID = 1L;
+    private static final Long REPORTER_ID = 2L;
+    private static final String REPORT_CONTENT = "사진을 도용했어요!";
 
+    public static Report 신고_생성() {
         return Report.builder()
-                .reportedUserId(1L)
-                .reporterId(2L)
+                .reportedUserId(REPORTED_USER_ID)
+                .reporterId(REPORTER_ID)
                 .reportType(FAKE_PROFILE)
                 .reportResult(WAITING)
-                .content("사진을 도용했어요!")
+                .content(REPORT_CONTENT)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
 
     public static Report 처리된_신고_생성() {
-
         return Report.builder()
-                .reportedUserId(1L)
-                .reporterId(2L)
+                .reportedUserId(REPORTED_USER_ID)
+                .reporterId(REPORTER_ID)
                 .reportType(FAKE_PROFILE)
                 .reportResult(BAN)
-                .content("사진을 도용했어요!")
+                .content(REPORT_CONTENT)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
 
     public static Report 처리된지_31일된_신고_생성() {
-
         return Report.builder()
-                .reportedUserId(1L)
-                .reporterId(2L)
+                .reportedUserId(REPORTED_USER_ID)
+                .reporterId(REPORTER_ID)
                 .reportType(FAKE_PROFILE)
                 .reportResult(BAN)
-                .content("사진을 도용했어요!")
+                .content(REPORT_CONTENT)
                 .createdAt(LocalDateTime.now()
-                        .minusDays(32))
+                        .minusDays(DELETION_THRESHOLD))
                 .updatedAt(LocalDateTime.now()
-                        .minusDays(31))
+                        .minusDays(DELETION_THRESHOLD))
                 .build();
     }
 }

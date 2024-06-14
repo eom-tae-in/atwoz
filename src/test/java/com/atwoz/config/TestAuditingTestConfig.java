@@ -10,16 +10,16 @@ import org.springframework.data.auditing.AuditingHandler;
 @TestConfiguration
 public class TestAuditingTestConfig {
 
-    private static final int THIRTY_ONE = 31;
+    private static final int DELETION_THRESHOLD = 31;
 
     @Autowired
     private AuditingHandler auditingHandler;
 
     @Bean
     public AuditingHandler customAuditingHandler() {
-        LocalDateTime thirtyOneDaysAgo = LocalDateTime.now()
-                .minusDays(THIRTY_ONE);
-        auditingHandler.setDateTimeProvider(() -> Optional.of(thirtyOneDaysAgo));
+        LocalDateTime pastDate = LocalDateTime.now()
+                .minusDays(DELETION_THRESHOLD);
+        auditingHandler.setDateTimeProvider(() -> Optional.of(pastDate));
 
         return auditingHandler;
     }

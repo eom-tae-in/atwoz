@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public class ReportFakeRepository implements ReportRepository {
 
+    private static final int DELETION_THRESHOLD_DATE = 30;
+
     private final Map<Long, Report> map = new HashMap<>();
     private Long id = 1L;
 
@@ -41,7 +43,7 @@ public class ReportFakeRepository implements ReportRepository {
 
     private boolean isProcessedOldReport(final Report report) {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now()
-                .minusDays(30);
+                .minusDays(DELETION_THRESHOLD_DATE);
 
         return report.getUpdatedAt()
                 .isBefore(thirtyDaysAgo);

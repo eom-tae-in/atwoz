@@ -55,6 +55,5 @@ class ReportControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("reportTypeCode").description("신고 사유"),
                                 fieldWithPath("content").description("상세 내용"))
                 ));
-
     }
 }

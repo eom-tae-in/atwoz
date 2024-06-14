@@ -3,6 +3,7 @@ package com.atwoz.report.application;
 import com.atwoz.report.application.dto.ReportCreateRequest;
 import com.atwoz.report.domain.Report;
 import com.atwoz.report.domain.ReportRepository;
+import com.atwoz.report.domain.vo.ReportResult;
 import com.atwoz.report.exception.exceptions.ReportNotFoundException;
 import com.atwoz.report.infrastructure.ReportFakeRepository;
 import java.util.Optional;
@@ -77,7 +78,8 @@ class ReportServiceTest {
             reportService.updateReportResult(reportResult, savedReport.getId());
 
             // then
-            assertThat(savedReport.getReportResult().getName()).isEqualTo(reportResult);
+            ReportResult savedReportResult = savedReport.getReportResult();
+            assertThat(savedReportResult.getName()).isEqualTo(reportResult);
         }
     }
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.atwoz.report.domain.vo.ReportType.FAKE_PROFILE;
-import static com.atwoz.report.domain.vo.ReportType.findByCode;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -24,7 +23,7 @@ class ReportTypeTest {
             String invalidReportType = "invalid report type";
 
             // when
-            assertThatThrownBy(() -> findByCode(invalidReportType))
+            assertThatThrownBy(() -> ReportType.findByCode(invalidReportType))
                     .isInstanceOf(InvalidReportTypeException.class);
         }
 
@@ -34,7 +33,7 @@ class ReportTypeTest {
             String validReportType = FAKE_PROFILE.getCode();
 
             // When
-            ReportType foundReportType = findByCode(validReportType);
+            ReportType foundReportType = ReportType.findByCode(validReportType);
 
             // then
             assertThat(foundReportType.getCode()).isEqualTo(validReportType);
