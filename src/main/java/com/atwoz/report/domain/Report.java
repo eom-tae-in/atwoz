@@ -11,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.validator.constraints.Length;
 
 import static com.atwoz.report.domain.vo.ReportResult.WAITING;
 
@@ -48,14 +48,15 @@ public class Report extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReportResult reportResult;
 
-    @Length(max = 1000)
+    @Lob
+    @Column(length = 1000)
     private String content;
 
     public static Report createWith(final Long reportedUserId,
                                     final Long reporterId,
                                     final String reportType,
                                     final String content) {
-        validateSameUser(reportedUserId, reporterId);
+        validateNotSameUser(reportedUserId, reporterId);
         return Report.builder()
                 .reportedUserId(reportedUserId)
                 .reporterId(reporterId)
@@ -65,7 +66,7 @@ public class Report extends BaseEntity {
                 .build();
     }
 
-    private static void validateSameUser(final Long reportedUserId, final Long reporterId) {
+    private static void validateNotSameUser(final Long reportedUserId, final Long reporterId) {
         if (Objects.equals(reportedUserId, reporterId)) {
             throw new InvalidReporterException();
         }
