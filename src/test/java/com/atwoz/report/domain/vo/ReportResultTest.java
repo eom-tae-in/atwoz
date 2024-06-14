@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.atwoz.report.domain.vo.ReportResult.BAN;
-import static com.atwoz.report.domain.vo.ReportResult.findByName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -19,12 +18,12 @@ class ReportResultTest {
     class ReportResult_조회 {
 
         @Test
-        void 신고_결과_정보가_유효하지_않으면_예외가_밠생한다() {
-            //  given
+        void 신고_결과_정보가_유효하지_않으면_예외가_발생한다() {
+            // given
             String invalidReportResult = "invalid report result";
 
-            // when
-            assertThatThrownBy(() -> findByName(invalidReportResult))
+            // when & then
+            assertThatThrownBy(() -> ReportResult.findByName(invalidReportResult))
                     .isInstanceOf(InvalidReportResultException.class);
         }
 
@@ -33,8 +32,8 @@ class ReportResultTest {
             // given
             String validReportResult = BAN.getName();
 
-            // When
-            ReportResult foundReportResult = findByName(validReportResult);
+            // when
+            ReportResult foundReportResult = ReportResult.findByName(validReportResult);
 
             // then
             assertThat(foundReportResult.getName()).isEqualTo(validReportResult);

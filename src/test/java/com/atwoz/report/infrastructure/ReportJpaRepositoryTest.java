@@ -45,7 +45,9 @@ class ReportJpaRepositoryTest {
         assertSoftly(softly -> {
             softly.assertThat(foundReport).isPresent();
             Report report = foundReport.get();
-            softly.assertThat(report).usingRecursiveComparison().isEqualTo(createdReport);
+            softly.assertThat(report)
+                    .usingRecursiveComparison()
+                    .isEqualTo(createdReport);
         });
     }
 }

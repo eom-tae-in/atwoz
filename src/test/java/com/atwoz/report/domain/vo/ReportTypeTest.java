@@ -18,11 +18,11 @@ class ReportTypeTest {
     class ReportType_조회{
 
         @Test
-        void 신고_유형_정보가_유효하지_않으면_예외가_밠생한다() {
-            //  given
+        void 신고_유형_정보가_유효하지_않으면_예외가_발생한다() {
+            // given
             String invalidReportType = "invalid report type";
 
-            // when
+            // when & then
             assertThatThrownBy(() -> ReportType.findByCode(invalidReportType))
                     .isInstanceOf(InvalidReportTypeException.class);
         }
@@ -32,7 +32,7 @@ class ReportTypeTest {
             // given
             String validReportType = FAKE_PROFILE.getCode();
 
-            // When
+            // when
             ReportType foundReportType = ReportType.findByCode(validReportType);
 
             // then
