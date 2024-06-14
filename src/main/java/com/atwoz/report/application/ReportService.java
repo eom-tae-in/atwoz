@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ReportService {
 
+    private static final String MIDNIGHT = "0 0 0 * * ?";
+
     private final ReportRepository reportRepository;
 
     public void createReport(final ReportCreateRequest reportCreateRequest, final Long reporterId) {
@@ -33,7 +35,7 @@ public class ReportService {
                 .orElseThrow(ReportNotFoundException::new);
     }
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = MIDNIGHT)
     public void deleteReport() {
         reportRepository.deleteProcessedOldReports();
     }
