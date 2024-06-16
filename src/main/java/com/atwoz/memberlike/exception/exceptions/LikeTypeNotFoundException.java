@@ -1,4 +1,4 @@
-package com.atwoz.like.exception.exceptions;
+package com.atwoz.memberlike.exception.exceptions;
 
 public class LikeTypeNotFoundException extends RuntimeException {
 

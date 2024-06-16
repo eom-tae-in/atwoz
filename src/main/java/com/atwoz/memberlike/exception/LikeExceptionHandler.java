@@ -1,6 +1,6 @@
-package com.atwoz.like.exception;
+package com.atwoz.memberlike.exception;
 
-import com.atwoz.like.exception.exceptions.LikeTypeNotFoundException;
+import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

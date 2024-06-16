@@ -1,6 +1,6 @@
-package com.atwoz.like.domain.vo;
+package com.atwoz.memberlike.domain.vo;
 
-import com.atwoz.like.exception.exceptions.LikeTypeNotFoundException;
+import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
 
 import java.util.Arrays;
 
