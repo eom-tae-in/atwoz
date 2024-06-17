@@ -1,5 +1,6 @@
 package com.atwoz.memberlike.exception;
 
+import com.atwoz.memberlike.exception.exceptions.LikeIconNotFoundException;
 import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,11 @@ public class LikeExceptionHandler {
 
     @ExceptionHandler(LikeTypeNotFoundException.class)
     public ResponseEntity<String> handleLikeTypeNotFoundException(final LikeTypeNotFoundException exception) {
+        return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(LikeIconNotFoundException.class)
+    public ResponseEntity<String> handleLikeIconNotFoundException(final LikeIconNotFoundException exception) {
         return getExceptionWithStatus(exception, HttpStatus.NOT_FOUND);
     }
 
