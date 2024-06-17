@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 public enum LikeType {
 
-    SMALL_LIKE("조금 관심있음"),
-    MUCH_LIKE("많이 관심있음");
+    DEFAULT_LIKE("관심있어요"),
+    MUCH_LIKE("매우 관심있어요");
 
     private final String name;
 
