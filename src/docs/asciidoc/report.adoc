@@ -1,0 +1,18 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Report
+
+=== 설문 생성 (POST /api/reports)
+
+==== 요청
+include::{snippets}/report-controller-web-mvc-test/불건전한_유저_신고/http-request.adoc[]
+include::{snippets}/report-controller-web-mvc-test/불건전한_유저_신고/request-headers.adoc[]
+include::{snippets}/report-controller-web-mvc-test/불건전한_유저_신고/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/report-controller-web-mvc-test/불건전한_유저_신고/http-response.adoc[]
