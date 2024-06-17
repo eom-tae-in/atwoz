@@ -83,4 +83,10 @@ public class MemberService {
             throw new MemberNotFoundException();
         }
     }
+
+    public void validateMemberExist(final Long memberId) {
+        if (!memberRepository.existsById(memberId)) {
+            throw new MemberNotFoundException();
+        }
+    }
 }
