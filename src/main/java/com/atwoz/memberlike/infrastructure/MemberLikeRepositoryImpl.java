@@ -24,6 +24,6 @@ public class MemberLikeRepositoryImpl implements MemberLikeRepository {
 
     @Override
     public boolean isAlreadyExisted(final Long senderId, final Long receiverId) {
-        return memberLikeJpaRepository.isExistsBySenderIdAndReceiverId(senderId, receiverId);
+        return memberLikeJpaRepository.existsBySenderIdAndReceiverId(senderId, receiverId);
     }
 }
