@@ -37,4 +37,9 @@ public class MemberLikeService {
     public void deleteExpiredLikes() {
         memberLikeRepository.deleteExpiredLikes();
     }
+
+    @Scheduled(cron = MIDNIGHT)
+    public void endRecentByTimeExpired() {
+        memberLikeRepository.endRecentByTimeExpired();
+    }
 }

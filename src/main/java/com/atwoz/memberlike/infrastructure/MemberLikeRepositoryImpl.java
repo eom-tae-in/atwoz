@@ -23,6 +23,11 @@ public class MemberLikeRepositoryImpl implements MemberLikeRepository {
     }
 
     @Override
+    public void endRecentByTimeExpired() {
+        memberLikeJdbcRepository.endRecentByTimeExpired();
+    }
+
+    @Override
     public boolean isAlreadyExisted(final Long senderId, final Long receiverId) {
         return memberLikeJpaRepository.existsBySenderIdAndReceiverId(senderId, receiverId);
     }

@@ -52,10 +52,6 @@ public class MemberLike extends BaseEntity {
         return new MemberLike(senderId, receiverId, LikeType.findByName(level));
     }
 
-    public void endRecentByTimeExpired() {
-        this.isRecent = false;
-    }
-
     public void updateLikeIcon(final LikeIcon likeIcon) {
         this.likeIcon = likeIcon;
     }

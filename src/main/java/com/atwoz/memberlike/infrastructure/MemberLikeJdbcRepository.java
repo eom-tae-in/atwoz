@@ -17,4 +17,12 @@ public class MemberLikeJdbcRepository {
 
         jdbcTemplate.update(sql);
     }
+
+    public void endRecentByTimeExpired() {
+        String sql = "UPDATE MemberLike"
+                + " SET is_recent = false"
+                + " WHERE updated_at < TIMESTAMPADD(HOUR, -48, CURRENT_TIMESTAMP)";
+
+        jdbcTemplate.update(sql);
+    }
 }
