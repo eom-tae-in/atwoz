@@ -5,6 +5,7 @@ import com.atwoz.member.application.member.event.ValidatedMemberExistEvent;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
+import com.atwoz.memberlike.exception.exceptions.AlreadyLikedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,15 @@ public class MemberLikeService {
 
     public void sendLike(final Long memberId, final MemberLikeCreateRequest request) {
         Events.raise(new ValidatedMemberExistEvent(request.memberId()));
+        validateNotAlreadyLiked(memberId, request.memberId());
 
         memberLikeRepository.save(MemberLike.createWith(memberId, request.memberId(), request.likeLevel()));
+    }
+
+    private void validateNotAlreadyLiked(final Long senderId, final Long receiverId) {
+        if (memberLikeRepository.isAlreadyExisted(senderId, receiverId)) {
+            throw new AlreadyLikedException();
+        }
     }
 
     @Scheduled(cron = MIDNIGHT)

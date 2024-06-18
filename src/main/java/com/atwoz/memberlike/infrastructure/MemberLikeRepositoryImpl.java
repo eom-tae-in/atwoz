@@ -21,4 +21,9 @@ public class MemberLikeRepositoryImpl implements MemberLikeRepository {
     public void deleteExpiredLikes() {
         memberLikeJdbcRepository.deleteExpiredLikes();
     }
+
+    @Override
+    public boolean isAlreadyExisted(final Long senderId, final Long receiverId) {
+        return memberLikeJpaRepository.isExistsBySenderIdAndReceiverId(senderId, receiverId);
+    }
 }
