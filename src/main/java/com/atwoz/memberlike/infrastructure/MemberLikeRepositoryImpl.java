@@ -9,10 +9,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MemberLikeRepositoryImpl implements MemberLikeRepository {
 
+    private final MemberLikeJdbcRepository memberLikeJdbcRepository;
     private final MemberLikeJpaRepository memberLikeJpaRepository;
 
     @Override
     public MemberLike save(final MemberLike memberLike) {
         return memberLikeJpaRepository.save(memberLike);
+    }
+
+    @Override
+    public void deleteExpiredLikes() {
+        memberLikeJdbcRepository.deleteExpiredLikes();
     }
 }
