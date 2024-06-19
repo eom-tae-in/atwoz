@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class LikeTypeTest {
+class LikeLevelTest {
 
     @Test
     void 없는_호감_타입이면_예외가_발생한다() {
@@ -17,7 +17,7 @@ class LikeTypeTest {
         String name = "abc";
 
         // when & then
-        assertThatThrownBy(() -> LikeType.findByName(name))
+        assertThatThrownBy(() -> LikeLevel.findByName(name))
                 .isInstanceOf(LikeTypeNotFoundException.class);
     }
 }

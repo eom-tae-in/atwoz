@@ -1,7 +1,7 @@
 package com.atwoz.memberlike.domain;
 
 import com.atwoz.memberlike.domain.vo.LikeIcon;
-import com.atwoz.memberlike.domain.vo.LikeType;
+import com.atwoz.memberlike.domain.vo.LikeLevel;
 import com.atwoz.memberlike.exception.exceptions.InvalidMemberLikeException;
 import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -34,7 +34,7 @@ class MemberLikeTest {
         Long senderId = 1L;
         Long receiverId = 2L;
         String likeLevel = "관심있어요";
-        LikeType expectedLevel = LikeType.DEFAULT_LIKE;
+        LikeLevel expectedLevel = LikeLevel.DEFAULT_LIKE;
         LikeIcon expectedIcon = LikeIcon.NONE;
 
         // when
@@ -44,7 +44,7 @@ class MemberLikeTest {
         assertSoftly(softly -> {
             softly.assertThat(memberLike.getSenderId()).isEqualTo(senderId);
             softly.assertThat(memberLike.getReceiverId()).isEqualTo(receiverId);
-            softly.assertThat(memberLike.getLikeType()).isEqualTo(expectedLevel);
+            softly.assertThat(memberLike.getLikeLevel()).isEqualTo(expectedLevel);
             softly.assertThat(memberLike.getLikeIcon()).isEqualTo(expectedIcon);
             softly.assertThat(memberLike.getIsRecent()).isEqualTo(true);
         });

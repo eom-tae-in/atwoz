@@ -2,7 +2,7 @@ package com.atwoz.memberlike.domain;
 
 import com.atwoz.global.domain.BaseEntity;
 import com.atwoz.memberlike.domain.vo.LikeIcon;
-import com.atwoz.memberlike.domain.vo.LikeType;
+import com.atwoz.memberlike.domain.vo.LikeLevel;
 import com.atwoz.memberlike.exception.exceptions.InvalidMemberLikeException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +33,7 @@ public class MemberLike extends BaseEntity {
     private Long receiverId;
 
     @Enumerated(value = EnumType.STRING)
-    private LikeType likeType;
+    private LikeLevel likeLevel;
 
     @Enumerated(value = EnumType.STRING)
     private LikeIcon likeIcon;
@@ -41,10 +41,10 @@ public class MemberLike extends BaseEntity {
     @Column(nullable = false)
     private Boolean isRecent;
 
-    private MemberLike(final Long senderId, final Long receiverId, final LikeType likeType) {
+    private MemberLike(final Long senderId, final Long receiverId, final LikeLevel likeLevel) {
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.likeType = likeType;
+        this.likeLevel = likeLevel;
         this.likeIcon = LikeIcon.NONE;
         this.isRecent = true;
     }
@@ -52,7 +52,7 @@ public class MemberLike extends BaseEntity {
     public static MemberLike createWith(final Long senderId, final Long receiverId, final String level) {
         validateNotSameUser(senderId, receiverId);
 
-        return new MemberLike(senderId, receiverId, LikeType.findByName(level));
+        return new MemberLike(senderId, receiverId, LikeLevel.findByName(level));
     }
 
     private static void validateNotSameUser(final Long senderId, final Long receiverId) {
