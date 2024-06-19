@@ -11,7 +11,7 @@ public class MemberLikeJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public void deleteExpiredLikes() {
-        String sql = "DELETE FROM MemberLike"
+        String sql = "DELETE FROM member_like"
                 + " WHERE updated_at < TIMESTAMPADD(DAY, -30, CURRENT_DATE)" +
                 " AND like_icon = 'NONE'";
 
@@ -19,7 +19,7 @@ public class MemberLikeJdbcRepository {
     }
 
     public void endRecentByTimeExpired() {
-        String sql = "UPDATE MemberLike"
+        String sql = "UPDATE member_like"
                 + " SET is_recent = false"
                 + " WHERE updated_at < TIMESTAMPADD(HOUR, -48, CURRENT_TIMESTAMP)";
 
