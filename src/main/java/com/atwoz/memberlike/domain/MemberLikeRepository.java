@@ -1,6 +1,6 @@
 package com.atwoz.memberlike.domain;
 
-import com.atwoz.memberlike.infrastructure.dto.MemberLikePagingResponse;
+import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,6 +10,6 @@ public interface MemberLikeRepository {
     void deleteExpiredLikes();
     void endRecentByTimeExpired();
     boolean isAlreadyExisted(Long senderId, Long receiverId);
-    Page<MemberLikePagingResponse> findSendLikesWithPaging(Long senderId, Pageable pageable);
-    Page<MemberLikePagingResponse> findReceiveLikesWithPaging(Long receiverId, Pageable pageable);
+    Page<MemberLikeSimpleResponse> findSendLikesWithPaging(Long senderId, Pageable pageable);
+    Page<MemberLikeSimpleResponse> findReceiveLikesWithPaging(Long receiverId, Pageable pageable);
 }

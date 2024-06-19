@@ -1,6 +1,6 @@
 package com.atwoz.memberlike.infrastructure;
 
-import com.atwoz.memberlike.infrastructure.dto.MemberLikePagingResponse;
+import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ public class MemberLikeQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<MemberLikePagingResponse> findSendLikesWithPaging(final Long senderId, final Pageable pageable) {
-        QueryResults<MemberLikePagingResponse> result = jpaQueryFactory.select(
-                        constructor(MemberLikePagingResponse.class,
+    public Page<MemberLikeSimpleResponse> findSendLikesWithPaging(final Long senderId, final Pageable pageable) {
+        QueryResults<MemberLikeSimpleResponse> result = jpaQueryFactory.select(
+                        constructor(MemberLikeSimpleResponse.class,
                                 member.id,
                                 member.nickname,
                                 member.memberProfile.profile.location.city,
@@ -41,9 +41,9 @@ public class MemberLikeQueryRepository {
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 
-    public Page<MemberLikePagingResponse> findReceiveLikesWithPaging(final Long receiverId, final Pageable pageable) {
-        QueryResults<MemberLikePagingResponse> result = jpaQueryFactory.select(
-                        constructor(MemberLikePagingResponse.class,
+    public Page<MemberLikeSimpleResponse> findReceivedLikesWithPaging(final Long receiverId, final Pageable pageable) {
+        QueryResults<MemberLikeSimpleResponse> result = jpaQueryFactory.select(
+                        constructor(MemberLikeSimpleResponse.class,
                                 member.id,
                                 member.nickname,
                                 member.memberProfile.profile.location.city,

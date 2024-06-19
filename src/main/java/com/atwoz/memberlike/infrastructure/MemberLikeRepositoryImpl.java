@@ -2,7 +2,7 @@ package com.atwoz.memberlike.infrastructure;
 
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
-import com.atwoz.memberlike.infrastructure.dto.MemberLikePagingResponse;
+import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,12 +37,12 @@ public class MemberLikeRepositoryImpl implements MemberLikeRepository {
     }
 
     @Override
-    public Page<MemberLikePagingResponse> findSendLikesWithPaging(final Long senderId, final Pageable pageable) {
+    public Page<MemberLikeSimpleResponse> findSendLikesWithPaging(final Long senderId, final Pageable pageable) {
         return memberLikeQueryRepository.findSendLikesWithPaging(senderId, pageable);
     }
 
     @Override
-    public Page<MemberLikePagingResponse> findReceiveLikesWithPaging(final Long receiverId, final Pageable pageable) {
-        return memberLikeQueryRepository.findReceiveLikesWithPaging(receiverId, pageable);
+    public Page<MemberLikeSimpleResponse> findReceiveLikesWithPaging(final Long receiverId, final Pageable pageable) {
+        return memberLikeQueryRepository.findReceivedLikesWithPaging(receiverId, pageable);
     }
 }
