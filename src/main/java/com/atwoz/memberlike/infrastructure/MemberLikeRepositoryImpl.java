@@ -2,7 +2,10 @@ package com.atwoz.memberlike.infrastructure;
 
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
+import com.atwoz.memberlike.infrastructure.dto.MemberLikePagingResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public class MemberLikeRepositoryImpl implements MemberLikeRepository {
 
     private final MemberLikeJdbcRepository memberLikeJdbcRepository;
+    private final MemberLikeQueryRepository memberLikeQueryRepository;
     private final MemberLikeJpaRepository memberLikeJpaRepository;
 
     @Override
@@ -30,5 +34,15 @@ public class MemberLikeRepositoryImpl implements MemberLikeRepository {
     @Override
     public boolean isAlreadyExisted(final Long senderId, final Long receiverId) {
         return memberLikeJpaRepository.existsBySenderIdAndReceiverId(senderId, receiverId);
+    }
+
+    @Override
+    public Page<MemberLikePagingResponse> findSendLikesWithPaging(final Long senderId, final Pageable pageable) {
+        return memberLikeQueryRepository.findSendLikesWithPaging(senderId, pageable);
+    }
+
+    @Override
+    public Page<MemberLikePagingResponse> findReceiveLikesWithPaging(final Long receiverId, final Pageable pageable) {
+        return memberLikeQueryRepository.findReceiveLikesWithPaging(receiverId, pageable);
     }
 }
