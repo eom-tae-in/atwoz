@@ -114,7 +114,7 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
         return new PageImpl<>(responses, pageable, total);
     }
 
-    private MemberLikeSimpleResponse convertToResponse(Long id, MemberLike memberLike) {
+    private MemberLikeSimpleResponse convertToResponse(final Long id, final MemberLike memberLike) {
         return new MemberLikeSimpleResponse(
                 id,
                 "회원 " + id,
