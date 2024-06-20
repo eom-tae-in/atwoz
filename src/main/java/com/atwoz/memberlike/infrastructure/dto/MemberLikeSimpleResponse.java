@@ -6,7 +6,7 @@ public record MemberLikeSimpleResponse(
         String city,
         String sector,
         Integer age,
-        String LikeIcon,
+        String likeIcon,
         Boolean isRecent
 ) {
 }

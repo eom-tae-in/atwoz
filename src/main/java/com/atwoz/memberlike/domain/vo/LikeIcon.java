@@ -1,9 +1,11 @@
 package com.atwoz.memberlike.domain.vo;
 
 import com.atwoz.memberlike.exception.exceptions.LikeIconNotFoundException;
+import lombok.Getter;
 
 import java.util.Arrays;
 
+@Getter
 public enum LikeIcon {
 
     NONE("아이콘 없음"),
