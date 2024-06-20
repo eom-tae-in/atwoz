@@ -1,7 +1,7 @@
 package com.atwoz.memberlike.application;
 
-import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.infrastructure.member.MemberFakeRepository;
+import com.atwoz.global.event.Events;
+import com.atwoz.member.application.member.event.ValidatedMemberExistEvent;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.exception.exceptions.InvalidMemberLikeException;
@@ -11,38 +11,45 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.event.RecordApplicationEvents;
 
-import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.보낸_지_31일_된_호감_생성;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.보낸_지_사흘_된_호감_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
+@RecordApplicationEvents
 class MemberLikeServiceTest {
 
     private MemberLikeService memberLikeService;
     private MemberLikeRepository memberLikeRepository;
-    private MemberRepository memberRepository;
+
+    @MockBean
+    private ApplicationEventPublisher eventPublisher;
 
     @BeforeEach
     void init() {
         memberLikeRepository = new MemberLikeFakeRepository();
-        memberRepository = new MemberFakeRepository();
         memberLikeService = new MemberLikeService(memberLikeRepository);
+        eventPublisher = mock(ApplicationEventPublisher.class);
+        Events.setPublisher(eventPublisher);
     }
 
     @Test
     void 호감을_보낸다() {
         // given
-        memberRepository.save(일반_유저_생성("회원 1", "000-000-0001"));
-        memberRepository.save(일반_유저_생성("회원 2", "000-000-0002"));
-        
         Long memberId = 1L;
         MemberLikeCreateRequest request = new MemberLikeCreateRequest(2L, "관심있어요");
+        doNothing().when(eventPublisher).publishEvent(any(ValidatedMemberExistEvent.class));
 
         // when
         memberLikeService.sendLike(memberId, request);
