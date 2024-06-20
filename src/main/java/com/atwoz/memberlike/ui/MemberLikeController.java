@@ -24,7 +24,7 @@ public class MemberLikeController {
     private final MemberLikeService memberLikeService;
     private final MemberLikeQueryService memberLikeQueryService;
 
-    @GetMapping("/send")
+    @GetMapping("/sent")
     public ResponseEntity<MemberLikePagingResponse> findSendLikesWithPaging(
             @AuthMember final Long memberId,
             @PageableDefault final Pageable pageable
@@ -32,7 +32,7 @@ public class MemberLikeController {
         return ResponseEntity.ok(memberLikeQueryService.findSendLikesWithPaging(memberId, pageable));
     }
 
-    @GetMapping("/receive")
+    @GetMapping("/received")
     public ResponseEntity<MemberLikePagingResponse> findReceivedLikesWithPaging(
             @AuthMember final Long memberId,
             @PageableDefault final Pageable pageable

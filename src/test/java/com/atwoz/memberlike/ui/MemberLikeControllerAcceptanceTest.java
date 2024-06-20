@@ -13,8 +13,8 @@ import static com.atwoz.memberlike.fixture.MemberLikeCreateRequestFixture.호감
 class MemberLikeControllerAcceptanceTest extends MemberLikeControllerAcceptanceFixture {
 
     private static final String 호감_URI = "/api/members/me/likes";
-    private static final String 보낸_호감_조회_URI = "/api/members/me/likes/send?page=0&size=2";
-    private static final String 받은_호감_조회_URI = "/api/members/me/likes/receive?page=0&size=2";
+    private static final String 보낸_호감_조회_URI = "/api/members/me/likes/sent?page=0&size=2";
+    private static final String 받은_호감_조회_URI = "/api/members/me/likes/received?page=0&size=2";
 
     private String 토큰;
     private Member 회원;

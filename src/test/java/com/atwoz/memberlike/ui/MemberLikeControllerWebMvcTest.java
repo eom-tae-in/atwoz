@@ -97,7 +97,7 @@ class MemberLikeControllerWebMvcTest extends MockBeanInjection {
                 .thenReturn(new MemberLikePagingResponse(details, 1));
 
         // when & then
-        mockMvc.perform(get("/api/members/me/likes/send")
+        mockMvc.perform(get("/api/members/me/likes/sent")
                 .param("page", "0")
                 .param("size", "3")
                 .header(AUTHORIZATION, BEARER_TOKEN))
@@ -147,7 +147,7 @@ class MemberLikeControllerWebMvcTest extends MockBeanInjection {
                 .thenReturn(new MemberLikePagingResponse(details, 1));
 
         // when & then
-        mockMvc.perform(get("/api/members/me/likes/receive")
+        mockMvc.perform(get("/api/members/me/likes/received")
                         .param("page", "0")
                         .param("size", "3")
                         .header(AUTHORIZATION, BEARER_TOKEN))

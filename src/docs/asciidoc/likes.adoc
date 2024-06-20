@@ -16,7 +16,7 @@ include::{snippets}/member-like-controller-web-mvc-test/호감_전송/request-fi
 
 ==== 응답
 
-=== 보낸 호감 조회 (GET api/members/me/likes/send)
+=== 보낸 호감 조회 (GET api/members/me/likes/sent)
 
 ==== 요청
 include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/request-headers.adoc[]
@@ -26,7 +26,7 @@ include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징�
 include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/http-response.adoc[]
 include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/response-fields.adoc[]
 
-=== 받은 호감 조회 (GET api/members/me/likes/receive)
+=== 받은 호감 조회 (GET api/members/me/likes/received)
 
 ==== 요청
 include::{snippets}/member-like-controller-web-mvc-test/받은_호감_페이징조회/request-headers.adoc[]
