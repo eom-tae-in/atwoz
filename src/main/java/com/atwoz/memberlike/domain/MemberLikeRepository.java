@@ -11,5 +11,5 @@ public interface MemberLikeRepository {
     void endRecentByTimeExpired();
     boolean isAlreadyExisted(Long senderId, Long receiverId);
     Page<MemberLikeSimpleResponse> findSendLikesWithPaging(Long senderId, Pageable pageable);
-    Page<MemberLikeSimpleResponse> findReceiveLikesWithPaging(Long receiverId, Pageable pageable);
+    Page<MemberLikeSimpleResponse> findReceivedLikesWithPaging(Long receiverId, Pageable pageable);
 }

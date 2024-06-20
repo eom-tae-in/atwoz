@@ -42,7 +42,7 @@ public class MemberLikeRepositoryImpl implements MemberLikeRepository {
     }
 
     @Override
-    public Page<MemberLikeSimpleResponse> findReceiveLikesWithPaging(final Long receiverId, final Pageable pageable) {
+    public Page<MemberLikeSimpleResponse> findReceivedLikesWithPaging(final Long receiverId, final Pageable pageable) {
         return memberLikeQueryRepository.findReceivedLikesWithPaging(receiverId, pageable);
     }
 }

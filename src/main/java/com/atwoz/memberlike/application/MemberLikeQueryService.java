@@ -1,6 +1,6 @@
 package com.atwoz.memberlike.application;
 
-import com.atwoz.memberlike.infrastructure.MemberLikeQueryRepository;
+import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.infrastructure.dto.MemberLikePagingResponse;
 import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,10 @@ public class MemberLikeQueryService {
     private static final int NEXT_PAGE_INDEX = 1;
     private static final int NO_MORE_PAGE = -1;
 
-    private final MemberLikeQueryRepository memberLikeQueryRepository;
+    private final MemberLikeRepository memberLikeRepository;
 
     public MemberLikePagingResponse findSendLikesWithPaging(final Long memberId, final Pageable pageable) {
-        Page<MemberLikeSimpleResponse> response = memberLikeQueryRepository.findSendLikesWithPaging(memberId, pageable);
+        Page<MemberLikeSimpleResponse> response = memberLikeRepository.findSendLikesWithPaging(memberId, pageable);
         int nextPage = getNextPage(pageable.getPageNumber(), response);
         return MemberLikePagingResponse.of(response, nextPage);
     }
@@ -34,7 +34,7 @@ public class MemberLikeQueryService {
     }
 
     public MemberLikePagingResponse findReceivedLikesWithPaging(final Long memberId, final Pageable pageable) {
-        Page<MemberLikeSimpleResponse> response = memberLikeQueryRepository.findReceivedLikesWithPaging(memberId, pageable);
+        Page<MemberLikeSimpleResponse> response = memberLikeRepository.findReceivedLikesWithPaging(memberId, pageable);
         int nextPage = getNextPage(pageable.getPageNumber(), response);
         return MemberLikePagingResponse.of(response, nextPage);
     }
