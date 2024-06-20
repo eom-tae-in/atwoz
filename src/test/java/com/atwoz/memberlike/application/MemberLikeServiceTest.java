@@ -1,5 +1,7 @@
 package com.atwoz.memberlike.application;
 
+import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.infrastructure.member.MemberFakeRepository;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.exception.exceptions.InvalidMemberLikeException;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.보낸_지_31일_된_호감_생성;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.보낸_지_사흘_된_호감_생성;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,16 +26,21 @@ class MemberLikeServiceTest {
 
     private MemberLikeService memberLikeService;
     private MemberLikeRepository memberLikeRepository;
+    private MemberRepository memberRepository;
 
     @BeforeEach
     void init() {
         memberLikeRepository = new MemberLikeFakeRepository();
+        memberRepository = new MemberFakeRepository();
         memberLikeService = new MemberLikeService(memberLikeRepository);
     }
 
     @Test
     void 호감을_보낸다() {
         // given
+        memberRepository.save(일반_유저_생성("회원 1", "000-000-0001"));
+        memberRepository.save(일반_유저_생성("회원 2", "000-000-0002"));
+        
         Long memberId = 1L;
         MemberLikeCreateRequest request = new MemberLikeCreateRequest(2L, "관심있어요");
 
