@@ -1,7 +1,7 @@
 package com.atwoz.memberlike.application;
 
 import com.atwoz.global.event.Events;
-import com.atwoz.member.application.member.event.ValidatedMemberExistEvent;
+import com.atwoz.member.application.member.event.ValidatedMemberExistenceEvent;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
@@ -21,7 +21,7 @@ public class MemberLikeService {
     private final MemberLikeRepository memberLikeRepository;
 
     public void sendLike(final Long memberId, final MemberLikeCreateRequest request) {
-        Events.raise(new ValidatedMemberExistEvent(request.memberId()));
+        Events.raise(new ValidatedMemberExistenceEvent(request.memberId()));
         validateNotAlreadyLiked(memberId, request.memberId());
 
         memberLikeRepository.save(MemberLike.createWith(memberId, request.memberId(), request.likeLevel()));

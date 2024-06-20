@@ -1,7 +1,7 @@
 package com.atwoz.memberlike.application;
 
 import com.atwoz.global.event.Events;
-import com.atwoz.member.application.member.event.ValidatedMemberExistEvent;
+import com.atwoz.member.application.member.event.ValidatedMemberExistenceEvent;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.exception.exceptions.InvalidMemberLikeException;
@@ -49,7 +49,7 @@ class MemberLikeServiceTest {
         // given
         Long memberId = 1L;
         MemberLikeCreateRequest request = new MemberLikeCreateRequest(2L, "관심있어요");
-        doNothing().when(eventPublisher).publishEvent(any(ValidatedMemberExistEvent.class));
+        doNothing().when(eventPublisher).publishEvent(any(ValidatedMemberExistenceEvent.class));
 
         // when
         memberLikeService.sendLike(memberId, request);

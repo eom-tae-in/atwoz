@@ -1,6 +1,6 @@
 package com.atwoz.member.application.member.event;
 
-public record ValidatedMemberExistEvent(
+public record ValidatedMemberExistenceEvent(
         Long memberId
 ) {
 }
