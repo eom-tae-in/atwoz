@@ -78,4 +78,16 @@ public class MemberLikeFixture {
                         .minusDays(EXPIRED_TIME_LIKE_DAY))
                 .build();
     }
+
+    public static MemberLike 호감_생성_id_주입(final Long senderId, final Long receiverId) {
+        return MemberLike.builder()
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .isRecent(true)
+                .likeIcon(LikeIcon.NONE)
+                .likeLevel(LikeLevel.DEFAULT_LIKE)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
 }
