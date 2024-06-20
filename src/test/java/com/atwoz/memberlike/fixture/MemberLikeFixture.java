@@ -35,4 +35,16 @@ public class MemberLikeFixture {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
+
+    public static MemberLike 호감_생성_id_없음() {
+        return MemberLike.builder()
+                .senderId(SENDER_ID)
+                .receiverId(RECEIVER_ID)
+                .isRecent(true)
+                .likeIcon(LikeIcon.NONE)
+                .likeLevel(LikeLevel.DEFAULT_LIKE)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
 }
