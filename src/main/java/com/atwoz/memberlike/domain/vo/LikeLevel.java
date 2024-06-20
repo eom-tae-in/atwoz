@@ -1,6 +1,6 @@
 package com.atwoz.memberlike.domain.vo;
 
-import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
+import com.atwoz.memberlike.exception.exceptions.LikeLevelNotFoundException;
 
 import java.util.Arrays;
 
@@ -19,7 +19,7 @@ public enum LikeLevel {
         return Arrays.stream(values())
                 .filter(likeType -> likeType.isSame(name))
                 .findAny()
-                .orElseThrow(LikeTypeNotFoundException::new);
+                .orElseThrow(LikeLevelNotFoundException::new);
     }
 
     private boolean isSame(final String name) {

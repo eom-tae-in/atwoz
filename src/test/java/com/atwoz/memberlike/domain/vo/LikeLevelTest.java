@@ -1,6 +1,6 @@
 package com.atwoz.memberlike.domain.vo;
 
-import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
+import com.atwoz.memberlike.exception.exceptions.LikeLevelNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -18,6 +18,6 @@ class LikeLevelTest {
 
         // when & then
         assertThatThrownBy(() -> LikeLevel.findByName(name))
-                .isInstanceOf(LikeTypeNotFoundException.class);
+                .isInstanceOf(LikeLevelNotFoundException.class);
     }
 }

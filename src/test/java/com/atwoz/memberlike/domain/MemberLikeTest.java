@@ -3,7 +3,7 @@ package com.atwoz.memberlike.domain;
 import com.atwoz.memberlike.domain.vo.LikeIcon;
 import com.atwoz.memberlike.domain.vo.LikeLevel;
 import com.atwoz.memberlike.exception.exceptions.InvalidMemberLikeException;
-import com.atwoz.memberlike.exception.exceptions.LikeTypeNotFoundException;
+import com.atwoz.memberlike.exception.exceptions.LikeLevelNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -74,7 +74,7 @@ class MemberLikeTest {
 
             // when & then
             assertThatThrownBy(() -> MemberLike.createWith(senderId, receiverId, likeLevel))
-                    .isInstanceOf(LikeTypeNotFoundException.class);
+                    .isInstanceOf(LikeLevelNotFoundException.class);
         }
     }
 }
