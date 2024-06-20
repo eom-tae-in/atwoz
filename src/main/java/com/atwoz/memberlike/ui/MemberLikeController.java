@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.data.domain.Sort.Direction.DESC;
-
 @RequiredArgsConstructor
 @RequestMapping("/api/members/me/likes")
 @RestController
@@ -29,7 +27,7 @@ public class MemberLikeController {
     @GetMapping("/send")
     public ResponseEntity<MemberLikePagingResponse> findSendLikesWithPaging(
             @AuthMember final Long memberId,
-            @PageableDefault(sort = "id", direction = DESC) final Pageable pageable
+            @PageableDefault final Pageable pageable
             ) {
         return ResponseEntity.ok(memberLikeQueryService.findSendLikesWithPaging(memberId, pageable));
     }
@@ -37,7 +35,7 @@ public class MemberLikeController {
     @GetMapping("/receive")
     public ResponseEntity<MemberLikePagingResponse> findReceivedLikesWithPaging(
             @AuthMember final Long memberId,
-            @PageableDefault(sort = "id", direction = DESC) final Pageable pageable
+            @PageableDefault final Pageable pageable
     ) {
         return ResponseEntity.ok(memberLikeQueryService.findReceivedLikesWithPaging(memberId, pageable));
     }
