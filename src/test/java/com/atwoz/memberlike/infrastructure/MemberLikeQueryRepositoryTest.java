@@ -63,15 +63,8 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
         Page<MemberLikeSimpleResponse> found = memberLikeQueryRepository.findSendLikesWithPaging(senderId, pageRequest);
 
         // then
-        List<Long> expected = memberLikes.stream()
-                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
-                .map(MemberLike::getReceiverId)
-                .limit(9)
-                .toList();
-        List<Long> foundMembers = found.getContent().stream()
-                .map(MemberLikeSimpleResponse::memberId)
-                .limit(9)
-                .toList();
+        List<Long> expected = extractMemberLikeReceiverIds(memberLikes, 9);
+        List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found, 9);
         
         assertSoftly(softly -> {
             softly.assertThat(found).hasSize(9);
@@ -79,6 +72,21 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
             softly.assertThat(foundMembers)
                     .isEqualTo(expected);
         });
+    }
+
+    private List<Long> extractMemberLikeReceiverIds(final List<MemberLike> memberLikes, final int limit) {
+        return memberLikes.stream()
+                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
+                .map(MemberLike::getReceiverId)
+                .limit(limit)
+                .toList();
+    }
+
+    private List<Long> extractMemberLikeSimpleResponseIds(final Page<MemberLikeSimpleResponse> responses, final int limit) {
+        return responses.getContent().stream()
+                .map(MemberLikeSimpleResponse::memberId)
+                .limit(limit)
+                .toList();
     }
 
     @Test
@@ -103,15 +111,8 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
         Page<MemberLikeSimpleResponse> found = memberLikeQueryRepository.findReceivedLikesWithPaging(receiverId, pageRequest);
 
         // then
-        List<Long> expected = memberLikes.stream()
-                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
-                .map(MemberLike::getSenderId)
-                .limit(9)
-                .toList();
-        List<Long> foundMembers = found.getContent().stream()
-                .map(MemberLikeSimpleResponse::memberId)
-                .limit(9)
-                .toList();
+        List<Long> expected = extractMemberLikeReceiverIds(memberLikes, 9);
+        List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found, 9);
 
         assertSoftly(softly -> {
             softly.assertThat(found).hasSize(9);
