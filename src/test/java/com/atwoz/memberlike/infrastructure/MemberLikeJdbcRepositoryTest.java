@@ -36,7 +36,8 @@ class MemberLikeJdbcRepositoryTest extends IntegrationHelper {
     @Test
     void 호감을_보낸_지_30일이_지나도_응답이_없는_호감은_삭제된다() {
         // given
-        LocalDateTime pastTime = LocalDateTime.now().minusDays(MINUS_DAY_FOR_DELETE_NOT_ANSWERED_LIKE);
+        LocalDateTime pastTime = LocalDateTime.now()
+                .minusDays(MINUS_DAY_FOR_DELETE_NOT_ANSWERED_LIKE);
         auditingHandler.setDateTimeProvider(() -> Optional.of(pastTime));
         MemberLike memberLike = 만료된_호감_생성();
         memberLikeRepository.save(memberLike);
@@ -53,7 +54,8 @@ class MemberLikeJdbcRepositoryTest extends IntegrationHelper {
     @Transactional
     void 호감을_보낸_지_48시간이_지나면_최근_여부가_변경된다() {
         // given
-        LocalDateTime pastTime = LocalDateTime.now().minusDays(MINUS_DAY_FOR_UPDATE_RECENT_LIKE);
+        LocalDateTime pastTime = LocalDateTime.now()
+                .minusDays(MINUS_DAY_FOR_UPDATE_RECENT_LIKE);
         auditingHandler.setDateTimeProvider(() -> Optional.of(pastTime));
 
         MemberLike memberLike = 옛날_호감_생성();
