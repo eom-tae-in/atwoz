@@ -17,37 +17,41 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @SuppressWarnings("NonAsciiCharacters")
 class MemberLikeTest {
 
-    @Test
-    void 호감_정상_생성() {
-        // given
-        Long senderId = 1L;
-        Long receiverId = 2L;
-        String likeLevel = "관심있어요";
+    @Nested
+    class 호감_생성_정상 {
 
-        // when & then
-        assertDoesNotThrow(() -> MemberLike.createWith(senderId, receiverId, likeLevel));
-    }
+        @Test
+        void 호감_정상() {
+            // given
+            Long senderId = 1L;
+            Long receiverId = 2L;
+            String likeLevel = "관심있어요";
 
-    @Test
-    void 호감_값_정상() {
-        // given
-        Long senderId = 1L;
-        Long receiverId = 2L;
-        String likeLevel = "관심있어요";
-        LikeLevel expectedLevel = LikeLevel.DEFAULT_LIKE;
-        LikeIcon expectedIcon = LikeIcon.NONE;
+            // when & then
+            assertDoesNotThrow(() -> MemberLike.createWith(senderId, receiverId, likeLevel));
+        }
 
-        // when
-        MemberLike memberLike = MemberLike.createWith(senderId, receiverId, likeLevel);
+        @Test
+        void 호감_값_정상() {
+            // given
+            Long senderId = 1L;
+            Long receiverId = 2L;
+            String likeLevel = "관심있어요";
+            LikeLevel expectedLevel = LikeLevel.DEFAULT_LIKE;
+            LikeIcon expectedIcon = LikeIcon.NONE;
 
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(memberLike.getSenderId()).isEqualTo(senderId);
-            softly.assertThat(memberLike.getReceiverId()).isEqualTo(receiverId);
-            softly.assertThat(memberLike.getLikeLevel()).isEqualTo(expectedLevel);
-            softly.assertThat(memberLike.getLikeIcon()).isEqualTo(expectedIcon);
-            softly.assertThat(memberLike.getIsRecent()).isEqualTo(true);
-        });
+            // when
+            MemberLike memberLike = MemberLike.createWith(senderId, receiverId, likeLevel);
+
+            // then
+            assertSoftly(softly -> {
+                softly.assertThat(memberLike.getSenderId()).isEqualTo(senderId);
+                softly.assertThat(memberLike.getReceiverId()).isEqualTo(receiverId);
+                softly.assertThat(memberLike.getLikeLevel()).isEqualTo(expectedLevel);
+                softly.assertThat(memberLike.getLikeIcon()).isEqualTo(expectedIcon);
+                softly.assertThat(memberLike.getIsRecent()).isEqualTo(true);
+            });
+        }
     }
 
     @Nested
