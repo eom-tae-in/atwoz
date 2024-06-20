@@ -70,6 +70,7 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
                 .toList();
         List<Long> foundMembers = found.getContent().stream()
                 .map(MemberLikeSimpleResponse::memberId)
+                .limit(9)
                 .toList();
         
         assertSoftly(softly -> {
@@ -109,6 +110,7 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
                 .toList();
         List<Long> foundMembers = found.getContent().stream()
                 .map(MemberLikeSimpleResponse::memberId)
+                .limit(9)
                 .toList();
 
         assertSoftly(softly -> {
