@@ -117,10 +117,10 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
     private MemberLikeSimpleResponse convertToResponse(Long id, MemberLike memberLike) {
         return new MemberLikeSimpleResponse(
                 id,
-                null,
-                null,
-                null,
-                null,
+                "회원 " + id,
+                "서울시",
+                "강남구",
+                20,
                 memberLike.getLikeIcon().getName(),
                 memberLike.getIsRecent()
         );
