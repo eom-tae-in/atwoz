@@ -5,6 +5,7 @@ import com.atwoz.member.domain.member.profile.Profile;
 import com.atwoz.member.domain.member.profile.vo.Location;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,30 +27,28 @@ public class MemberLikeQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     public Page<MemberLikeSimpleResponse> findSendLikesWithPaging(final Long senderId, final Pageable pageable) {
-            List<Member> receivers = findReceivers(senderId).stream()
-                    .map(this::findMember)
-                    .toList();
-            List<MemberLikeSimpleResponse> responses = receivers.stream()
+        QueryResults<Long> results = findReceivers(senderId, pageable);
+        List<Member> receivers = results.getResults()
+                .stream()
+                .map(this::findMember)
+                .toList();
+        List<MemberLikeSimpleResponse> responses = receivers.stream()
                     .map(receiver -> collectReceiverResponse(senderId, receiver))
                     .toList();
 
-            int total = responses.size();
-            int start = (int) pageable.getOffset();
-            int end = Math.min((start + pageable.getPageSize()), total);
-
-            List<MemberLikeSimpleResponse> result = responses.subList(start, end);
-
-            return new PageImpl<>(result, pageable, total);
+            return new PageImpl<>(responses, pageable, results.getTotal());
         }
 
-    private List<Long> findReceivers(final Long senderId) {
+    private QueryResults<Long> findReceivers(final Long senderId, final Pageable pageable) {
         return jpaQueryFactory.select(memberLike.receiverId)
                 .from(memberLike)
                 .innerJoin(member)
                 .on(memberLike.receiverId.eq(member.id))
                 .where(memberLike.senderId.eq(senderId))
                 .orderBy(memberLike.createdAt.desc())
-                .fetch();
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
     }
 
     private Member findMember(final Long memberId) {
@@ -96,30 +95,28 @@ public class MemberLikeQueryRepository {
     }
     
     public Page<MemberLikeSimpleResponse> findReceivedLikesWithPaging(final Long receiverId, final Pageable pageable) {
-        List<Member> senders = findSenders(receiverId).stream()
+        QueryResults<Long> results = findSenders(receiverId, pageable);
+        List<Member> senders = results.getResults()
+                .stream()
                 .map(this::findMember)
                 .toList();
         List<MemberLikeSimpleResponse> responses = senders.stream()
                 .map(receiver -> collectSenderResponse(receiverId, receiver))
                 .toList();
 
-        int total = responses.size();
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), total);
-
-        List<MemberLikeSimpleResponse> result = responses.subList(start, end);
-
-        return new PageImpl<>(result, pageable, total);
+        return new PageImpl<>(responses, pageable, results.getTotal());
     }
 
-    private List<Long> findSenders(final Long receiverId) {
+    private QueryResults<Long> findSenders(final Long receiverId, final Pageable pageable) {
         return jpaQueryFactory.select(memberLike.senderId)
                 .from(memberLike)
                 .innerJoin(member)
                 .on(memberLike.senderId.eq(member.id))
                 .where(memberLike.receiverId.eq(receiverId))
                 .orderBy(memberLike.createdAt.desc())
-                .fetch();
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
     }
 
     private MemberLikeSimpleResponse collectSenderResponse(final Long receiverId, final Member sender) {
