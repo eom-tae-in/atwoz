@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+import static com.atwoz.memberlike.fixture.MemberLikeFixture.호감_생성_id_주입;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -45,14 +46,13 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
     void 보낸_호감_목록_페이징_조회() {
         // given
         Long senderId = 1L;
-        String like = "관심있어요";
         List<MemberLike> memberLikes = new ArrayList<>();
 
         for (long i = 2L; i <= 15L; i++) {
             Member member = 일반_유저_생성("회원 " + i, "000-0000-000" + i);
             member.updateWith("회원 " + i, 회원_프로필_DTO_요청());
             memberRepository.save(member);
-            MemberLike memberLike = MemberLike.createWith(senderId, i, like);
+            MemberLike memberLike = 호감_생성_id_주입(senderId, i);
             MemberLike savedMemberLike = memberLikeRepository.save(memberLike);
             memberLikes.add(savedMemberLike);
         }
