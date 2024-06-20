@@ -111,7 +111,7 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
         Page<MemberLikeSimpleResponse> found = memberLikeQueryRepository.findReceivedLikesWithPaging(receiverId, pageRequest);
 
         // then
-        List<Long> expected = extractMemberLikeReceiverIds(memberLikes, 9);
+        List<Long> expected = extractMemberLikeSenderIds(memberLikes, 9);
         List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found, 9);
 
         assertSoftly(softly -> {
@@ -120,5 +120,13 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
             softly.assertThat(foundMembers)
                     .isEqualTo(expected);
         });
+    }
+
+    private List<Long> extractMemberLikeSenderIds(final List<MemberLike> memberLikes, final int limit) {
+        return memberLikes.stream()
+                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
+                .map(MemberLike::getSenderId)
+                .limit(limit)
+                .toList();
     }
 }
