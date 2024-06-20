@@ -1,0 +1,37 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Like
+
+=== 호감 전송 (POST api/members/me/likes)
+
+==== 요청
+include::{snippets}/member-like-controller-web-mvc-test/호감_전송/request-headers.adoc[]
+include::{snippets}/member-like-controller-web-mvc-test/호감_전송/http-request.adoc[]
+include::{snippets}/member-like-controller-web-mvc-test/호감_전송/request-fields.adoc[]
+
+==== 응답
+
+=== 보낸 호감 조회 (GET api/members/me/likes/send)
+
+==== 요청
+include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/request-headers.adoc[]
+include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/http-response.adoc[]
+include::{snippets}/member-like-controller-web-mvc-test/보낸_호감_페이징조회/response-fields.adoc[]
+
+=== 받은 호감 조회 (GET api/members/me/likes/receive)
+
+==== 요청
+include::{snippets}/member-like-controller-web-mvc-test/받은_호감_페이징조회/request-headers.adoc[]
+include::{snippets}/member-like-controller-web-mvc-test/받은_호감_페이징조회/http-request.adoc[]
+
+==== 응답
+include::{snippets}/member-like-controller-web-mvc-test/받은_호감_페이징조회/http-response.adoc[]
+include::{snippets}/member-like-controller-web-mvc-test/받은_호감_페이징조회/response-fields.adoc[]
