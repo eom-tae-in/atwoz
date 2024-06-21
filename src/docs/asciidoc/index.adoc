@@ -12,3 +12,4 @@
 * link:survey.adoc[연애고사 API]
 * link:membersurveys.adoc[회원 연애고사 API]
 * link:report.adoc[회원 신고 API]
+* link:likes.adoc[호감 API]

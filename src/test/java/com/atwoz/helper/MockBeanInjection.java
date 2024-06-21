@@ -11,6 +11,8 @@ import com.atwoz.member.ui.auth.support.auth.AuthenticationContext;
 import com.atwoz.member.ui.auth.support.auth.OAuthProperties;
 import com.atwoz.member.ui.auth.support.resolver.AuthArgumentResolver;
 import com.atwoz.member.ui.auth.support.resolver.OAuthArgumentResolver;
+import com.atwoz.memberlike.application.MemberLikeQueryService;
+import com.atwoz.memberlike.application.MemberLikeService;
 import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
 import com.atwoz.mission.application.membermission.MemberMissionsService;
 import com.atwoz.mission.application.mission.MissionQueryService;
@@ -81,4 +83,10 @@ public class MockBeanInjection {
 
     @MockBean
     protected ReportService reportService;
+
+    @MockBean
+    protected MemberLikeQueryService memberLikeQueryService;
+
+    @MockBean
+    protected MemberLikeService memberLikeService;
 }
