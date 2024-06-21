@@ -45,7 +45,7 @@ public class MemberLikeQueryRepository {
                 .innerJoin(member)
                 .on(memberLike.receiverId.eq(member.id))
                 .where(memberLike.senderId.eq(senderId))
-                .orderBy(memberLike.createdAt.desc())
+                .orderBy(memberLike.createdAt.desc(), memberLike.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
@@ -113,7 +113,7 @@ public class MemberLikeQueryRepository {
                 .innerJoin(member)
                 .on(memberLike.senderId.eq(member.id))
                 .where(memberLike.receiverId.eq(receiverId))
-                .orderBy(memberLike.createdAt.desc())
+                .orderBy(memberLike.createdAt.desc(), memberLike.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();

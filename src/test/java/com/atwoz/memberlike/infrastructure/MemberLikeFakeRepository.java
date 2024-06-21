@@ -100,7 +100,8 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
         List<MemberLike> memberLikes = map.values()
                 .stream()
                 .filter(memberLike -> isSame(memberLike, senderId, memberLike.getReceiverId()))
-                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
+                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed()
+                        .thenComparing(Comparator.comparing(MemberLike::getId).reversed()))
                 .toList();
 
         int total = memberLikes.size();
@@ -133,7 +134,8 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
         List<MemberLike> memberLikes = map.values()
                 .stream()
                 .filter(memberLike -> isSame(memberLike, memberLike.getSenderId(), receiverId))
-                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
+                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed()
+                        .thenComparing(Comparator.comparing(MemberLike::getId).reversed()))
                 .toList();
 
         int total = memberLikes.size();
