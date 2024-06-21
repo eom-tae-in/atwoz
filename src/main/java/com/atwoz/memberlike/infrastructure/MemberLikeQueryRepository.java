@@ -36,8 +36,8 @@ public class MemberLikeQueryRepository {
                     .map(receiver -> collectReceiverResponse(senderId, receiver))
                     .toList();
 
-            return new PageImpl<>(responses, pageable, results.getTotal());
-        }
+        return new PageImpl<>(responses, pageable, results.getTotal());
+    }
 
     private QueryResults<Long> findReceivers(final Long senderId, final Pageable pageable) {
         return jpaQueryFactory.select(memberLike.receiverId)

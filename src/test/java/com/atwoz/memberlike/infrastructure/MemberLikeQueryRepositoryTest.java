@@ -11,12 +11,15 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.auditing.AuditingHandler;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
@@ -36,6 +39,9 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private AuditingHandler auditingHandler;
+
     @BeforeEach
     void addMember() {
         Member member = 일반_유저_생성("회원 1", "000-0000-0001");
@@ -54,6 +60,8 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
             member.initializeWith("회원 " + i, i + 1, 회원_프로필_DTO_요청());
             memberRepository.save(member);
             MemberLike memberLike = 호감_생성_id_날짜_주입(senderId, i, (int) i);
+            LocalDateTime futureTime = LocalDateTime.now().plusDays(i);
+            auditingHandler.setDateTimeProvider(() -> Optional.of(futureTime));
             memberLikeRepository.save(memberLike);
             memberLikes.add(memberLike);
         }
@@ -100,6 +108,8 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
             member.initializeWith("회원 " + i, i + 1, 회원_프로필_DTO_요청());
             memberRepository.save(member);
             MemberLike memberLike = 호감_생성_id_날짜_주입(i, receiverId, (int) i);
+            LocalDateTime futureTime = LocalDateTime.now().plusDays(i);
+            auditingHandler.setDateTimeProvider(() -> Optional.of(futureTime));
             memberLikeRepository.save(memberLike);
             memberLikes.add(memberLike);
         }

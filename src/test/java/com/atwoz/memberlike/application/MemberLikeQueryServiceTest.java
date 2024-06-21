@@ -50,8 +50,7 @@ class MemberLikeQueryServiceTest {
                 .stream()
                 .map(MemberLikeSimpleResponse::memberId)
                 .toList();
-        System.out.println("senders = " + senders);
-        System.out.println("result = " + result);
+
         // then
         assertSoftly(softly -> {
             softly.assertThat(response.memberLikes().size()).isEqualTo(9);
@@ -88,8 +87,7 @@ class MemberLikeQueryServiceTest {
                 .stream()
                 .map(MemberLikeSimpleResponse::memberId)
                 .toList();
-        System.out.println("receivers = " + receivers);
-        System.out.println("result = " + result);
+
         // then
         assertSoftly(softly -> {
             softly.assertThat(response.memberLikes().size()).isEqualTo(9);
