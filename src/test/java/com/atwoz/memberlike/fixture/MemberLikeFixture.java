@@ -90,4 +90,18 @@ public class MemberLikeFixture {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
+
+    public static MemberLike 호감_생성_id_날짜_주입(final Long senderId, final Long receiverId, final int day) {
+        return MemberLike.builder()
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .isRecent(true)
+                .likeIcon(LikeIcon.NONE)
+                .likeLevel(LikeLevel.DEFAULT_LIKE)
+                .createdAt(LocalDateTime.now()
+                        .minusDays(day))
+                .updatedAt(LocalDateTime.now()
+                        .minusDays(day))
+                .build();
+    }
 }
