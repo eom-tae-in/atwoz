@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +100,7 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
         List<MemberLike> memberLikes = map.values()
                 .stream()
                 .filter(memberLike -> isSame(memberLike, senderId, memberLike.getReceiverId()))
+                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
                 .toList();
 
         int total = memberLikes.size();
@@ -131,6 +133,7 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
         List<MemberLike> memberLikes = map.values()
                 .stream()
                 .filter(memberLike -> isSame(memberLike, memberLike.getSenderId(), receiverId))
+                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
                 .toList();
 
         int total = memberLikes.size();

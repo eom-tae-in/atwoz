@@ -15,8 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
 import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.호감_생성_id_날짜_주입;
@@ -53,8 +54,8 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
             member.initializeWith("회원 " + i, i + 1, 회원_프로필_DTO_요청());
             memberRepository.save(member);
             MemberLike memberLike = 호감_생성_id_날짜_주입(senderId, i, (int) i);
-            MemberLike savedMemberLike = memberLikeRepository.save(memberLike);
-            memberLikes.add(savedMemberLike);
+            memberLikeRepository.save(memberLike);
+            memberLikes.add(memberLike);
         }
 
         PageRequest pageRequest = PageRequest.of(0, 9);
@@ -64,28 +65,27 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
 
         // then
         List<Long> expected = extractMemberLikeReceiverIds(memberLikes, 9);
-        List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found, 9);
+        List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found);
 
         assertSoftly(softly -> {
             softly.assertThat(found).hasSize(9);
             softly.assertThat(found.hasNext()).isTrue();
-            softly.assertThat(foundMembers)
-                    .isEqualTo(expected);
+            softly.assertThat(foundMembers).isEqualTo(expected);
         });
     }
 
     private List<Long> extractMemberLikeReceiverIds(final List<MemberLike> memberLikes, final int limit) {
-        return memberLikes.stream()
-                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
+        List<Long> ids = memberLikes.subList(memberLikes.size() - limit, memberLikes.size())
+                .stream()
                 .map(MemberLike::getReceiverId)
-                .limit(limit)
-                .toList();
+                .collect(Collectors.toList());
+        Collections.reverse(ids);
+        return ids;
     }
 
-    private List<Long> extractMemberLikeSimpleResponseIds(final Page<MemberLikeSimpleResponse> responses, final int limit) {
+    private List<Long> extractMemberLikeSimpleResponseIds(final Page<MemberLikeSimpleResponse> responses) {
         return responses.getContent().stream()
                 .map(MemberLikeSimpleResponse::memberId)
-                .limit(limit)
                 .toList();
     }
 
@@ -100,8 +100,8 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
             member.initializeWith("회원 " + i, i + 1, 회원_프로필_DTO_요청());
             memberRepository.save(member);
             MemberLike memberLike = 호감_생성_id_날짜_주입(i, receiverId, (int) i);
-            MemberLike savedMemberLike = memberLikeRepository.save(memberLike);
-            memberLikes.add(savedMemberLike);
+            memberLikeRepository.save(memberLike);
+            memberLikes.add(memberLike);
         }
 
         PageRequest pageRequest = PageRequest.of(0, 9);
@@ -111,22 +111,21 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
 
         // then
         List<Long> expected = extractMemberLikeSenderIds(memberLikes, 9);
-        List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found, 9);
-        System.out.println("expected = " + expected);
-        System.out.println("foundMembers = " + foundMembers);
+        List<Long> foundMembers = extractMemberLikeSimpleResponseIds(found);
+
         assertSoftly(softly -> {
             softly.assertThat(found).hasSize(9);
             softly.assertThat(found.hasNext()).isTrue();
-            softly.assertThat(foundMembers)
-                    .isEqualTo(expected);
+            softly.assertThat(foundMembers).isEqualTo(expected);
         });
     }
 
     private List<Long> extractMemberLikeSenderIds(final List<MemberLike> memberLikes, final int limit) {
-        return memberLikes.stream()
-                .sorted(Comparator.comparing(MemberLike::getCreatedAt).reversed())
+        List<Long> ids = memberLikes.subList(memberLikes.size() - limit, memberLikes.size())
+                .stream()
                 .map(MemberLike::getSenderId)
-                .limit(limit)
-                .toList();
+                .collect(Collectors.toList());
+        Collections.reverse(ids);
+        return ids;
     }
 }

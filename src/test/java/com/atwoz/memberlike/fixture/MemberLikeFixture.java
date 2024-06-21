@@ -99,9 +99,9 @@ public class MemberLikeFixture {
                 .likeIcon(LikeIcon.NONE)
                 .likeLevel(LikeLevel.DEFAULT_LIKE)
                 .createdAt(LocalDateTime.now()
-                        .minusDays(day))
+                        .plusDays(day))
                 .updatedAt(LocalDateTime.now()
-                        .minusDays(day))
+                        .plusDays(day))
                 .build();
     }
 }
