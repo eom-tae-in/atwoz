@@ -5,11 +5,11 @@
 :sectlinks:
 
 == atwoz Server API
-* link:auth.adoc[회원 API]
-* link:member.adoc[회원 정보 API]
-* link:mission.adoc[미션 API]
-* link:membermissions.adoc[회원 미션 API]
-* link:survey.adoc[연애고사 API]
-* link:membersurveys.adoc[회원 연애고사 API]
-* link:report.adoc[회원 신고 API]
-* link:likes.adoc[호감 API]
+* link:auth.html[회원 API]
+* link:member.html[회원 정보 API]
+* link:mission.html[미션 API]
+* link:membermissions.html[회원 미션 API]
+* link:survey.html[연애고사 API]
+* link:membersurveys.html[회원 연애고사 API]
+* link:report.html[회원 신고 API]
+* link:likes.html[호감 API]
