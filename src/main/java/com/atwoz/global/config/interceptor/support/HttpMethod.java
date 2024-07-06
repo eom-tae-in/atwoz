@@ -1,4 +1,4 @@
-package com.atwoz.member.ui.auth.interceptor;
+package com.atwoz.global.config.interceptor.support;
 
 public enum HttpMethod {
 

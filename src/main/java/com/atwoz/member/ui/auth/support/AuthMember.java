@@ -1,4 +1,4 @@
-package com.atwoz.member.ui.auth.support.auth;
+package com.atwoz.member.ui.auth.support;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

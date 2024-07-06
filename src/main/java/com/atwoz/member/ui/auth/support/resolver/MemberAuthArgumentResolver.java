@@ -1,8 +1,7 @@
 package com.atwoz.member.ui.auth.support.resolver;
 
-import com.atwoz.member.exception.exceptions.auth.LoginInvalidException;
-import com.atwoz.member.ui.auth.support.auth.AuthMember;
-import com.atwoz.member.ui.auth.support.auth.AuthenticationContext;
+import com.atwoz.member.ui.auth.support.AuthMember;
+import com.atwoz.member.ui.auth.support.MemberAuthenticationContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -13,11 +12,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @RequiredArgsConstructor
 @Component
-public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
+public class MemberAuthArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private static final int ANONYMOUS = -1;
-
-    private final AuthenticationContext authenticationContext;
+    private final MemberAuthenticationContext memberAuthenticationContext;
 
     @Override
     public boolean supportsParameter(final MethodParameter parameter) {
@@ -30,12 +27,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
                                   final ModelAndViewContainer mavContainer,
                                   final NativeWebRequest webRequest,
                                   final WebDataBinderFactory binderFactory) throws Exception {
-        Long memberId = authenticationContext.getPrincipal();
 
-        if (memberId == ANONYMOUS) {
-            throw new LoginInvalidException();
-        }
-
-        return memberId;
+        return memberAuthenticationContext.getPrincipal();
     }
 }
