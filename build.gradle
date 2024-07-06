@@ -77,6 +77,9 @@ dependencies {
     // actuator, prometheus
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-admin:8.0.0'
 }
 
 def generated = 'src/main/generated'
