@@ -10,10 +10,8 @@
 === 로그인 (POST api/members/auth/login)
 
 ==== 요청
-
 include::{snippets}/member-auth-controller-web-mvc-test/유저_로그인/http-request.adoc[]
 include::{snippets}/member-auth-controller-web-mvc-test/유저_로그인/request-fields.adoc[]
-
 
 ==== 응답
 include::{snippets}/member-auth-controller-web-mvc-test/유저_로그인/http-response.adoc[]
