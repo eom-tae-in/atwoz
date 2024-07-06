@@ -21,9 +21,14 @@ jasypt:
     bean: jasyptEncryptor
     password: ${ENCRYPT_KEY}
 
+cookie:
+  max-age: ENC(71TbGrGwW0GBoO63e+8OOw==)
+
+
 jwt:
   secret: ENC(Tnm4CPIFdSiqmH67nWcDfRgaKmpSr4EvRJYZAYLiwOXazIY9aZnLBMlxQnKC2C0j10l6zkOEbRMKIa2W4u7DtIRjCC7QEzCSCdtm1NCEntKRybirDvUH8g==)
-  expiration-period: ENC(wtkJPr944E3bs6eMwjj4lQ==)
+  access-token-expiration-period: ENC(DXtx/CcsaXQDR8usvews6w====)
+  refresh-token-expiration-period: ENC(Z1emThIkYnnDGGpAkbp+kA==)
 
 mail:
   host: ENC(2PviuayFL6dKe91WydIBx81bpSBoI3FU)
