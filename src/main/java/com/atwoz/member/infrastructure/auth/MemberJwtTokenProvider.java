@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
-public class MemberJwtMemberTokenProvider implements MemberTokenProvider {
+public class MemberJwtTokenProvider implements MemberTokenProvider {
 
     private static final String ID = "id";
     private static final String TOKEN_TYPE = "token type";
