@@ -40,4 +40,3 @@ include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발
 ==== 응답
 include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/http-response.adoc[]
 include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/response-fields.adoc[]
-
