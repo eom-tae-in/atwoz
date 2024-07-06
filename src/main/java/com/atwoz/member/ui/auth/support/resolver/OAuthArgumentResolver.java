@@ -1,8 +1,8 @@
 package com.atwoz.member.ui.auth.support.resolver;
 
 import com.atwoz.member.domain.auth.JsonMapper;
-import com.atwoz.member.ui.auth.support.auth.OAuthAuthority;
-import com.atwoz.member.ui.auth.support.auth.OAuthProperties;
+import com.atwoz.member.ui.auth.support.OAuthAuthority;
+import com.atwoz.member.ui.auth.support.OAuthProperties;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
