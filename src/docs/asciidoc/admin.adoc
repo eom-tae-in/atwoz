@@ -1,0 +1,42 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Admin
+
+=== 회원 가입(POST api/admins/auth/sign-up)
+
+==== 요청
+include::{snippets}/admin-auth-controller-test/관리자_회원가입/http-request.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_회원가입/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/admin-auth-controller-test/관리자_회원가입/http-response.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_회원가입/response-headers.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_회원가입/response-fields.adoc[]
+
+
+=== 로그인(POST api/admins/auth/login)
+
+==== 요청
+include::{snippets}/admin-auth-controller-test/관리자_로그인/http-request.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_로그인/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/admin-auth-controller-test/관리자_로그인/http-response.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_로그인/response-headers.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_로그인/response-fields.adoc[]
+
+
+=== 엑세스 토큰 재발행(POST api/admins/auth/access-token-regeneration)
+
+==== 요청
+include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/http-request.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/request-headers.adoc[]
+
+==== 응답
+include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/http-response.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/response-fields.adoc[]

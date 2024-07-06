@@ -1,6 +1,6 @@
 package com.atwoz.report.ui;
 
-import com.atwoz.member.ui.auth.support.auth.AuthMember;
+import com.atwoz.member.ui.auth.support.AuthMember;
 import com.atwoz.report.application.ReportService;
 import com.atwoz.report.application.dto.ReportCreateRequest;
 import jakarta.validation.Valid;

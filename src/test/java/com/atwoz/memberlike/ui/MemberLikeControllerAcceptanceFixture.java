@@ -3,7 +3,7 @@ package com.atwoz.memberlike.ui;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
+import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 public class MemberLikeControllerAcceptanceFixture extends IntegrationHelper {
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private MemberJwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -43,7 +43,7 @@ public class MemberLikeControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected String 토큰_생성(final Member member) {
-        return jwtTokenProvider.createTokenWithId(member.getId());
+        return jwtTokenProvider.createAccessToken(member.getId());
     }
 
     protected void 보낸_호감_목록_생성(final Long memberId) {

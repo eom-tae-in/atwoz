@@ -3,7 +3,7 @@ package com.atwoz.survey.ui.survey;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
+import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.ui.survey.dto.SurveyCreateResponse;
 import io.restassured.RestAssured;
@@ -24,7 +24,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 class SurveyControllerAcceptanceFixture extends IntegrationHelper {
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private MemberJwtTokenProvider memberJwtTokenProvider;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -34,7 +34,7 @@ class SurveyControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected String 토큰_생성(final Member member) {
-        return jwtTokenProvider.createTokenWithId(member.getId());
+        return memberJwtTokenProvider.createAccessToken(member.getId());
     }
 
     protected ExtractableResponse<Response> 연애고사_과목_생성_요청(final String url, final String token, final SurveyCreateRequest request) {
