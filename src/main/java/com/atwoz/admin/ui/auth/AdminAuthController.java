@@ -53,7 +53,6 @@ public class AdminAuthController {
     @PostMapping("/access-token-regeneration")
     public ResponseEntity<AdminAccessTokenResponse> reGenerateAccessToken(
             @AdminRefreshToken final String refreshToken) {
-        System.out.println("hihi : " + refreshToken);
         return ResponseEntity.ok(adminAuthService.reGenerateAccessToken(refreshToken));
     }
 
