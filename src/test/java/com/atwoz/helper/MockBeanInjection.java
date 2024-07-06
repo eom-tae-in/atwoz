@@ -1,15 +1,23 @@
 package com.atwoz.helper;
 
-import com.atwoz.member.application.auth.AuthService;
+import com.atwoz.admin.application.auth.AdminAuthService;
+import com.atwoz.admin.domain.admin.AdminTokenProvider;
+import com.atwoz.admin.ui.auth.interceptor.AdminLoginValidCheckerInterceptor;
+import com.atwoz.admin.ui.auth.support.AdminAuthenticationContext;
+import com.atwoz.admin.ui.auth.support.AdminAuthenticationExtractor;
+import com.atwoz.admin.ui.auth.support.resolver.AdminAuthArgumentResolver;
+import com.atwoz.admin.ui.auth.support.resolver.AdminRefreshTokenExtractionArgumentResolver;
+import com.atwoz.member.application.auth.MemberAuthService;
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
-import com.atwoz.member.domain.auth.TokenProvider;
-import com.atwoz.member.ui.auth.interceptor.LoginValidCheckerInterceptor;
-import com.atwoz.member.ui.auth.interceptor.ParseMemberIdFromTokenInterceptor;
-import com.atwoz.member.ui.auth.interceptor.TokenRegenerateInterceptor;
-import com.atwoz.member.ui.auth.support.auth.AuthenticationContext;
-import com.atwoz.member.ui.auth.support.auth.OAuthProperties;
-import com.atwoz.member.ui.auth.support.resolver.AuthArgumentResolver;
+import com.atwoz.member.domain.auth.JsonMapper;
+import com.atwoz.member.domain.auth.MemberTokenProvider;
+import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.ui.auth.interceptor.MemberLoginValidCheckerInterceptor;
+import com.atwoz.member.ui.auth.support.MemberAuthenticationContext;
+import com.atwoz.member.ui.auth.support.MemberAuthenticationExtractor;
+import com.atwoz.member.ui.auth.support.OAuthProperties;
+import com.atwoz.member.ui.auth.support.resolver.MemberAuthArgumentResolver;
 import com.atwoz.member.ui.auth.support.resolver.OAuthArgumentResolver;
 import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
 import com.atwoz.mission.application.membermission.MemberMissionsService;
@@ -25,33 +33,67 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 @MockBean(JpaMetamodelMappingContext.class)
 public class MockBeanInjection {
 
+    // Member
     @MockBean
-    protected TokenProvider tokenProvider;
+    protected OAuthArgumentResolver oAuthArgumentResolver;
 
     @MockBean
-    protected AuthenticationContext authenticationContext;
+    protected MemberAuthArgumentResolver memberAuthArgumentResolver;
 
     @MockBean
-    protected AuthService authService;
+    protected MemberLoginValidCheckerInterceptor memberLoginValidCheckerInterceptor;
+
+    @MockBean
+    protected MemberAuthenticationContext memberAuthenticationContext;
+
+    @MockBean
+    protected MemberAuthenticationExtractor authenticationExtractor;
 
     @MockBean
     protected OAuthProperties oAuthProperties;
 
     @MockBean
-    protected OAuthArgumentResolver oAuthArgumentResolver;
+    protected MemberService memberService;
 
     @MockBean
-    protected AuthArgumentResolver authArgumentResolver;
+    protected MemberQueryService memberQueryService;
 
     @MockBean
-    protected ParseMemberIdFromTokenInterceptor parseMemberIdFromTokenInterceptor;
+    protected MemberAuthService memberAuthService;
 
     @MockBean
-    protected LoginValidCheckerInterceptor loginValidCheckerInterceptor;
+    protected MemberTokenProvider memberTokenProvider;
 
     @MockBean
-    protected TokenRegenerateInterceptor tokenRegenerateInterceptor;
+    protected MemberRepository memberRepository;
 
+    @MockBean
+    protected JsonMapper jsonMapper;
+
+    // Admin
+    @MockBean
+    protected AdminAuthArgumentResolver adminAuthArgumentResolver;
+
+    @MockBean
+    protected AdminRefreshTokenExtractionArgumentResolver adminRefreshTokenExtractionArgumentResolver;
+
+    @MockBean
+    protected AdminLoginValidCheckerInterceptor adminLoginValidCheckerInterceptor;
+
+    @MockBean
+    protected AdminAuthenticationContext adminAuthenticationContext;
+
+    @MockBean
+    protected AdminAuthenticationExtractor adminAuthenticationExtractor;
+
+    @MockBean
+    protected AdminAuthService adminAuthService;
+
+    @MockBean
+    protected AdminTokenProvider adminTokenProvider;
+
+
+    // Mission
     @MockBean
     protected MissionService missionService;
 
@@ -64,9 +106,7 @@ public class MockBeanInjection {
     @MockBean
     protected MemberMissionsQueryService memberMissionsQueryService;
 
-    @MockBean
-    protected MemberService memberService;
-
+    // Survey
     @MockBean
     protected SurveyService surveyService;
 
@@ -76,9 +116,7 @@ public class MockBeanInjection {
     @MockBean
     protected MemberSurveysQueryService memberSurveysQueryService;
 
-    @MockBean
-    protected MemberQueryService memberQueryService;
-
+    // Report
     @MockBean
     protected ReportService reportService;
 }

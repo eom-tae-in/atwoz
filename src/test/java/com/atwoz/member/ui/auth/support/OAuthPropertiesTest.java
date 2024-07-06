@@ -1,4 +1,4 @@
-package com.atwoz.member.ui.auth.support.auth;
+package com.atwoz.member.ui.auth.support;
 
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.infrastructure.auth.dto.OAuthProviderRequest;

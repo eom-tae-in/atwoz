@@ -1,5 +1,6 @@
-package com.atwoz.member.ui.auth.interceptor;
+package com.atwoz.global;
 
+import com.atwoz.global.config.interceptor.support.HttpMethod;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
