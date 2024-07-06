@@ -1,6 +1,6 @@
 package com.atwoz.member.infrastructure.auth;
 
-import com.atwoz.member.domain.auth.TokenProvider;
+import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.exception.exceptions.auth.ExpiredTokenException;
 import com.atwoz.member.exception.exceptions.auth.SignatureInvalidException;
 import com.atwoz.member.exception.exceptions.auth.TokenFormInvalidException;
@@ -24,13 +24,23 @@ import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
-public class JwtTokenProvider implements TokenProvider {
+public class MemberJwtMemberTokenProvider implements MemberTokenProvider {
+
+    private static final String ID = "id";
+    private static final String TOKEN_TYPE = "token type";
+    private static final String REFRESH_TOKEN = "refresh token";
+    private static final String ACCESS_TOKEN = "access token";
+    private static final String ROLE = "role";
+    private static final String MEMBER = "member";
 
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration-period}")
-    private int expirationPeriod;
+    @Value("${jwt.access-token-expiration-period}")
+    private int accessTokenExpirationPeriod;
+
+    @Value("${jwt.refresh-token-expiration-period}")
+    private int refreshTokenExpirationPeriod;
 
     private Key key;
 
@@ -40,24 +50,28 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String createTokenWithId(final Long id) {
+    public String createAccessToken(final Long id) {
         Claims claims = Jwts.claims();
-        claims.put("id", id);
-        return createToken(claims);
+        claims.put(ID, id);
+        claims.put(TOKEN_TYPE, ACCESS_TOKEN);
+        claims.put(ROLE, MEMBER);
+        return createToken(claims, accessTokenExpirationPeriod);
     }
 
     @Override
-    public String createTokenWithPhoneNumber(final String phoneNumber) {
+    public String createRefreshToken(final Long id) {
         Claims claims = Jwts.claims();
-        claims.put("phoneNumber", phoneNumber);
-        return createToken(claims);
+        claims.put(ID, id);
+        claims.put(TOKEN_TYPE, REFRESH_TOKEN);
+        claims.put(ROLE, MEMBER);
+        return createToken(claims, refreshTokenExpirationPeriod);
     }
 
-    private String createToken(final Claims claims) {
+    private String createToken(final Claims claims, final int expirationPeriod) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(issuedAt())
-                .setExpiration(expiredAt())
+                .setExpiration(expiredAt(expirationPeriod))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -69,10 +83,10 @@ public class JwtTokenProvider implements TokenProvider {
                 .toInstant());
     }
 
-    private Date expiredAt() {
+    private Date expiredAt(final int expirationPeriod) {
         LocalDateTime now = LocalDateTime.now();
 
-        return Date.from(now.plusHours(expirationPeriod)
+        return Date.from(now.plusDays(expirationPeriod)
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
     }

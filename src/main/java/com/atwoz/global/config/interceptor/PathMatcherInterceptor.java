@@ -1,5 +1,7 @@
-package com.atwoz.member.ui.auth.interceptor;
+package com.atwoz.global.config.interceptor;
 
+import com.atwoz.global.config.interceptor.support.HttpMethod;
+import com.atwoz.global.config.interceptor.support.PathContainer;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.Nullable;

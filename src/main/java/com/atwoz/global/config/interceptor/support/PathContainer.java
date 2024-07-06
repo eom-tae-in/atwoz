@@ -1,10 +1,9 @@
-package com.atwoz.member.ui.auth.interceptor;
-
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.PathMatcher;
+package com.atwoz.global.config.interceptor.support;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 public class PathContainer {
 
