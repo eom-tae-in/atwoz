@@ -3,7 +3,7 @@ package com.atwoz.survey.ui.membersurvey;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.infrastructure.auth.MemberJwtMemberTokenProvider;
+import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
@@ -30,7 +30,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
 
     @Autowired
-    private MemberJwtMemberTokenProvider memberJwtTokenProvider;
+    private MemberJwtTokenProvider memberJwtTokenProvider;
 
     @Autowired
     private MemberRepository memberRepository;
