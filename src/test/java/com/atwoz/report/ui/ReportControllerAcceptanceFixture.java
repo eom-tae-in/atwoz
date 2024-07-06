@@ -1,7 +1,7 @@
 package com.atwoz.report.ui;
 
 import com.atwoz.helper.IntegrationHelper;
-import com.atwoz.member.domain.auth.TokenProvider;
+import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.report.application.dto.ReportCreateRequest;
@@ -27,14 +27,14 @@ public class ReportControllerAcceptanceFixture extends IntegrationHelper {
     protected MemberRepository memberRepository;
 
     @Autowired
-    protected TokenProvider tokenProvider;
+    protected MemberTokenProvider memberTokenProvider;
 
     protected Member 회원_생성() {
         return memberRepository.save(일반_유저_생성());
     }
 
     protected String 토큰_생성(final Member member) {
-        return tokenProvider.createTokenWithId(member.getId());
+        return memberTokenProvider.createAccessToken(member.getId());
     }
 
     protected ReportCreateRequest 신고_요청서_요청() {

@@ -1,4 +1,4 @@
-package com.atwoz.member.ui.auth.support.auth;
+package com.atwoz.member.ui.auth.support;
 
 import com.atwoz.member.exception.exceptions.auth.OAuthPlatformNotFountException;
 import org.junit.jupiter.api.DisplayName;

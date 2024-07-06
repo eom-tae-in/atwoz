@@ -3,7 +3,7 @@ package com.atwoz.member.ui.member;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
-import com.atwoz.member.domain.auth.TokenProvider;
+import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.fixture.MemberRequestFixture;
@@ -31,14 +31,14 @@ public class MemberControllerAcceptanceFixture extends IntegrationHelper {
     protected MemberRepository memberRepository;
 
     @Autowired
-    protected TokenProvider tokenProvider;
+    protected MemberTokenProvider memberTokenProvider;
 
     protected Member 회원_생성() {
         return memberRepository.save(일반_유저_생성());
     }
 
     protected String 토큰_생성(final Member member) {
-        return tokenProvider.createTokenWithId(member.getId());
+        return memberTokenProvider.createAccessToken(member.getId());
     }
 
     protected String 회원_닉네임을_요청한다() {

@@ -26,8 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @AutoConfigureRestDocs
-@WebMvcTest(AuthController.class)
-class AuthControllerWebMvcTest extends MockBeanInjection {
+@WebMvcTest(MemberAuthController.class)
+class MemberAuthControllerWebMvcTest extends MockBeanInjection {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,15 +41,15 @@ class AuthControllerWebMvcTest extends MockBeanInjection {
         OAuthProviderRequest oAuthProviderRequest = 인증_기관_생성();
         LoginRequest loginRequest = new LoginRequest("kakao", "code");
         String expectedToken = "token";
-        when(authService.login(loginRequest, oAuthProviderRequest)).thenReturn(expectedToken);
+        when(memberAuthService.login(loginRequest, oAuthProviderRequest)).thenReturn(expectedToken);
 
         // when & then
-        mockMvc.perform(post("/api/auth/login")
+        mockMvc.perform(post("/api/members/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest))
                 ).andExpect(status().isOk())
                 .andDo(print())
-                .andDo(customDocument("do_signup",
+                .andDo(customDocument("유저_로그인",
                         requestFields(
                                 fieldWithPath("provider").description("인증기관"),
                                 fieldWithPath("code").description("인증코드")
