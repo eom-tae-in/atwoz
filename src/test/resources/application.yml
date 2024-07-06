@@ -24,9 +24,14 @@ jasypt:
   encryptor:
     password: password
 
+cookie:
+  max-age: 10000
+
+
 jwt:
   secret: fortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortest
-  expiration-period: 10000
+  access-token-expiration-period: 10000
+  refresh-token-expiration-period: 10000
 
 mail:
   host: smtp.blabla.com
