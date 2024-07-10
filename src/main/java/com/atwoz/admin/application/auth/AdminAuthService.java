@@ -6,9 +6,12 @@ import com.atwoz.admin.application.auth.dto.AdminProfileSignUpRequest;
 import com.atwoz.admin.application.auth.dto.AdminSignUpRequest;
 import com.atwoz.admin.application.auth.dto.AdminTokenResponse;
 import com.atwoz.admin.domain.admin.Admin;
+import com.atwoz.admin.domain.admin.AdminRefreshToken;
+import com.atwoz.admin.domain.admin.AdminRefreshTokenRepository;
 import com.atwoz.admin.domain.admin.AdminRepository;
-import com.atwoz.admin.domain.admin.AdminTokenProvider;
+import com.atwoz.admin.domain.admin.service.AdminRefreshTokenProvider;
 import com.atwoz.admin.exception.exceptions.AdminNotFoundException;
+import com.atwoz.admin.exception.exceptions.InvalidRefreshTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AdminAuthService {
 
-    private static final String ID = "id";
-
     private final AdminRepository adminRepository;
-    private final AdminTokenProvider adminTokenProvider;
+    private final AdminAccessTokenProvider adminAccessTokenProvider;
+    private final AdminRefreshTokenProvider adminRefreshTokenProvider;
+    private final AdminRefreshTokenRepository adminRefreshTokenRepository;
 
     public AdminTokenResponse signUp(final AdminSignUpRequest adminSignUpRequest) {
         AdminProfileSignUpRequest adminProfileSignUpRequest = adminSignUpRequest.adminProfileSignUpRequest();
@@ -33,28 +36,21 @@ public class AdminAuthService {
                 adminProfileSignUpRequest.phoneNumber()
         );
         Admin savedAdmin = adminRepository.save(admin);
+        AdminRefreshToken adminRefreshToken = createAdminRefreshToken(savedAdmin);
+        adminRefreshTokenRepository.save(adminRefreshToken);
+        String accessToken = adminAccessTokenProvider.createAccessToken(savedAdmin.getId());
 
-        return createAdminTokenResponse(savedAdmin.getId());
-    }
-
-    private AdminTokenResponse createAdminTokenResponse(final Long id) {
-        return new AdminTokenResponse(
-                adminTokenProvider.createAccessToken(id),
-                adminTokenProvider.createRefreshToken(id)
-        );
+        return new AdminTokenResponse(accessToken, adminRefreshToken.refreshToken());
     }
 
     public AdminTokenResponse login(final AdminLoginRequest adminLoginRequest) {
         Admin foundAdmin = findAdminByEmail(adminLoginRequest.email());
         foundAdmin.validatePassword(adminLoginRequest.password());
+        AdminRefreshToken adminRefreshToken = createAdminRefreshToken(foundAdmin);
+        adminRefreshTokenRepository.save(adminRefreshToken);
+        String accessToken = adminAccessTokenProvider.createAccessToken(foundAdmin.getId());
 
-        return createAdminTokenResponse(foundAdmin.getId());
-    }
-
-    public AdminAccessTokenResponse reGenerateAccessToken(final String refreshToken) {
-        Admin foundAdmin = findAdminById(adminTokenProvider.extract(refreshToken, ID, Long.class));
-
-        return new AdminAccessTokenResponse(adminTokenProvider.createAccessToken(foundAdmin.getId()));
+        return new AdminTokenResponse(accessToken, adminRefreshToken.refreshToken());
     }
 
     private Admin findAdminByEmail(final String email) {
@@ -62,8 +58,24 @@ public class AdminAuthService {
                 .orElseThrow(AdminNotFoundException::new);
     }
 
-    private Admin findAdminById(final Long id) {
-        return adminRepository.findAdminById(id)
-                .orElseThrow(AdminNotFoundException::new);
+    private AdminRefreshToken createAdminRefreshToken(final Admin savedAdmin) {
+        return AdminRefreshToken.createWith(
+                adminRefreshTokenProvider,
+                savedAdmin.getEmail(),
+                savedAdmin.getId()
+        );
+    }
+
+    public AdminAccessTokenResponse reGenerateAccessToken(final String refreshToken) {
+        AdminRefreshToken foundAdminRefreshToken = adminRefreshTokenRepository.findById(refreshToken)
+                .orElseThrow(InvalidRefreshTokenException::new);
+        Long memberId = foundAdminRefreshToken.memberId();
+        String createdAccessToken = adminAccessTokenProvider.createAccessToken(memberId);
+
+        return new AdminAccessTokenResponse(createdAccessToken);
+    }
+
+    public void logout(final String refreshToken) {
+        adminRefreshTokenRepository.delete(refreshToken);
     }
 }
