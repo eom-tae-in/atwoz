@@ -4,6 +4,12 @@ spring:
     username: sa
     password: sa
     driver-class-name: org.h2.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -11,6 +17,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
   flyway:
     enabled: false
 
@@ -26,6 +33,9 @@ jasypt:
 
 cookie:
   max-age: 10000
+
+redis:
+  expiration-period: 1000
 
 jwt:
   secret: fortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortestfortest
