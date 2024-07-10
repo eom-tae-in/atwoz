@@ -33,7 +33,7 @@ jwt:
   refresh-token-expiration-period: ENC(kb9YVXMB9HqUuxoxcnMHXw==)
 
 redis:
-  expiration-period: 1000
+  expiration-period: ENC(wFlCe4YyS4e4YGsFGvYAkA==)
 
 mail:
   host: ENC(2PviuayFL6dKe91WydIBx81bpSBoI3FU)
