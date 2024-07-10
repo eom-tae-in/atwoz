@@ -1,7 +1,6 @@
 package com.atwoz.helper;
 
 import com.atwoz.admin.application.auth.AdminAuthService;
-import com.atwoz.admin.domain.admin.AdminTokenProvider;
 import com.atwoz.admin.ui.auth.interceptor.AdminLoginValidCheckerInterceptor;
 import com.atwoz.admin.ui.auth.support.AdminAuthenticationContext;
 import com.atwoz.admin.ui.auth.support.AdminAuthenticationExtractor;
@@ -90,10 +89,6 @@ public class MockBeanInjection {
 
     @MockBean
     protected AdminAuthService adminAuthService;
-
-    @MockBean
-    protected AdminTokenProvider adminTokenProvider;
-
 
     // Mission
     @MockBean
