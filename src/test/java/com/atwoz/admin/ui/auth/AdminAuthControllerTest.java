@@ -24,13 +24,15 @@ import static com.atwoz.admin.fixture.AdminTokenResponseFixture.관리자_토큰
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.COOKIE;
+import static org.springframework.http.HttpHeaders.SET_COOKIE;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,7 +75,7 @@ class AdminAuthControllerTest extends MockBeanInjection {
                                         fieldWithPath("adminProfileSignUpRequest.phoneNumber").description("전화번호")
                                 ),
                                 responseHeaders(
-                                        headerWithName("Cookie").description("발급된 리프레쉬 토큰")
+                                        headerWithName(SET_COOKIE).description("발급된 리프레쉬 토큰")
                                 ),
                                 responseFields(
                                         fieldWithPath("accessToken").description("발급된 액세스 토큰")
@@ -101,7 +103,7 @@ class AdminAuthControllerTest extends MockBeanInjection {
                                         fieldWithPath("password").description("비밀번호")
                                 ),
                                 responseHeaders(
-                                        headerWithName("Cookie").description("발급된 리프레쉬 토큰")
+                                        headerWithName(SET_COOKIE).description("발급된 리프레쉬 토큰")
                                 ),
                                 responseFields(
                                         fieldWithPath("accessToken").description("발급된 액세스 토큰")
@@ -119,17 +121,33 @@ class AdminAuthControllerTest extends MockBeanInjection {
 
         // when & then
         mockMvc.perform(post("/api/admins/auth/access-token-regeneration")
-                        .header(AUTHORIZATION, BEARER_TOKEN)
                         .header(HttpHeaders.COOKIE, refreshToken)
                 ).andExpect(status().isOk())
                 .andDo(print())
                 .andDo(customDocument("관리자_액세스_토큰_재발행",
                                 requestHeaders(
-                                        headerWithName(AUTHORIZATION).description("유저 토큰 정보"),
-                                        headerWithName("Cookie").description("이전에 발급받은 리프레쉬 토큰")
+                                        headerWithName(COOKIE).description("이전에 발급받은 리프레쉬 토큰")
                                 ),
                                 responseFields(
                                         fieldWithPath("accessToken").description("지금 발급된 액세스 토큰")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void 로그아웃을_진행한다() throws Exception{
+        // given
+        String refreshToken = "refreshToken";
+
+        // when & then
+        mockMvc.perform(delete("/api/admins/auth/logout")
+                        .header(HttpHeaders.COOKIE, refreshToken)
+                ).andExpect(status().isOk())
+                .andDo(print())
+                .andDo(customDocument("관리자_로그아웃",
+                                requestHeaders(
+                                        headerWithName(COOKIE).description("이전에 발급받은 리프레쉬 토큰")
                                 )
                         )
                 );
