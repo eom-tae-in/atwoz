@@ -40,3 +40,13 @@ include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발
 ==== 응답
 include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/http-response.adoc[]
 include::{snippets}/admin-auth-controller-test/관리자_액세스_토큰_재발행/response-fields.adoc[]
+
+
+=== 로그아웃 (DELETE api/admins/auth/logout)
+
+==== 요청
+include::{snippets}/admin-auth-controller-test/관리자_로그아웃/http-request.adoc[]
+include::{snippets}/admin-auth-controller-test/관리자_로그아웃/request-headers.adoc[]
+
+==== 응답
+include::{snippets}/admin-auth-controller-test/관리자_로그아웃/http-response.adoc[]
