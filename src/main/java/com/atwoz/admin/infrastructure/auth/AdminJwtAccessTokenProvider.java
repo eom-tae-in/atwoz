@@ -1,6 +1,8 @@
 package com.atwoz.admin.infrastructure.auth;
 
-import com.atwoz.admin.domain.admin.AdminTokenProvider;
+import com.atwoz.admin.application.auth.AdminAccessTokenProvider;
+import com.atwoz.admin.domain.admin.service.AdminRefreshTokenProvider;
+import com.atwoz.admin.ui.auth.support.AdminTokenExtractor;
 import com.atwoz.member.exception.exceptions.auth.ExpiredTokenException;
 import com.atwoz.member.exception.exceptions.auth.SignatureInvalidException;
 import com.atwoz.member.exception.exceptions.auth.TokenFormInvalidException;
@@ -24,9 +26,12 @@ import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
-public class AdminJwtTokenProvider implements AdminTokenProvider {
+public class AdminJwtAccessTokenProvider implements AdminAccessTokenProvider,
+        AdminRefreshTokenProvider,
+        AdminTokenExtractor {
 
     private static final String ID = "id";
+    private static final String EMAIL = "email";
     private static final String TOKEN_TYPE = "token type";
     private static final String REFRESH_TOKEN = "refresh token";
     private static final String ACCESS_TOKEN = "access token";
@@ -60,16 +65,17 @@ public class AdminJwtTokenProvider implements AdminTokenProvider {
     }
 
     @Override
-    public String createRefreshToken(final Long id) {
+    public String createRefreshToken(final String email) {
         Claims claims = Jwts.claims();
-        claims.put(ID, id);
+        claims.put(EMAIL, email);
         claims.put(TOKEN_TYPE, REFRESH_TOKEN);
         claims.put(ROLE, ADMIN);
 
         return createToken(claims, refreshTokenExpirationPeriod);
     }
 
-    private String createToken(final Claims claims, final int expirationPeriod) {
+    private String createToken(final Claims claims,
+                               final int expirationPeriod) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(issuedAt())
@@ -94,7 +100,9 @@ public class AdminJwtTokenProvider implements AdminTokenProvider {
     }
 
     @Override
-    public <T> T extract(final String token, final String claimName, final Class<T> classType) {
+    public <T> T extract(final String token,
+                         final String claimName,
+                         final Class<T> classType) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(secret.getBytes())
