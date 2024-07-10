@@ -74,7 +74,7 @@ public class AdminAuthController {
                 .maxAge(maxAge)
                 .build();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(HttpHeaders.COOKIE, cookie.toString());
+        httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return httpHeaders;
     }
