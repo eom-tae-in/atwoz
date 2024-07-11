@@ -9,7 +9,6 @@ public record CreateAlertRequest(
         String token,
         @NotEmpty(message = "알림 제목이 있어야 합니다.")
         String title,
-        @NotEmpty(message = "알림 본문이 있어야 합니다.")
         String body
 ) {
 }
