@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Alert extends BaseEntity {
 
+    private static final String SYSTEM_SEND = "SYSTEM";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,18 +37,29 @@ public class Alert extends BaseEntity {
     private AlertMessage alertMessage;
 
     @Column(nullable = false)
+    private String sender;
+
+    @Column(nullable = false)
     private String token;
 
-    private Alert(final AlertGroup alertGroup, final AlertMessage alertMessage, final String token) {
+    private Alert(final AlertGroup alertGroup, final AlertMessage alertMessage, final String sender, final String token) {
         this.alertGroup = alertGroup;
         this.alertMessage = alertMessage;
+        this.sender = sender;
         this.token = token;
     }
 
-    public static Alert createWith(final String group, final String title, final String body, final String token) {
+    public static Alert createWith(final String group, final String title, final String body, final String sender, final String token) {
         AlertGroup alertGroup = AlertGroup.findByName(group);
         AlertMessage message = AlertMessage.createWith(title, body);
-        return new Alert(alertGroup, message, token);
+        return new Alert(alertGroup, message, convertSenderValue(sender), token);
+    }
+
+    private static String convertSenderValue(final String sender) {
+        if (sender == null) {
+            return SYSTEM_SEND;
+        }
+        return sender;
     }
 
     public void read() {

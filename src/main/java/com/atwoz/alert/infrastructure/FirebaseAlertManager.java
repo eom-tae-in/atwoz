@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class FirebaseAlertManager implements AlertManager {
 
     private static final String GROUP = "group";
+    private static final String SENDER = "sender";
 
     @Override
     public void send(final Alert alert) {
@@ -22,6 +23,7 @@ public class FirebaseAlertManager implements AlertManager {
                 .setToken(alert.getToken())
                 .putData(GROUP, alert.getGroup())
                 .setNotification(firebaseNotification)
+                .putData(SENDER, alert.getSender())
                 .build();
         FirebaseMessaging firebase = FirebaseMessaging.getInstance();
         firebase.sendAsync(firebaseMessage);

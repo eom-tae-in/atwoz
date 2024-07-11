@@ -15,7 +15,7 @@ public class AlertService {
     private final AlertManager alertManager;
 
     public void sendAlert(final CreateAlertRequest request) {
-        Alert alert = Alert.createWith(request.group(), request.title(), request.body(), request.token());
+        Alert alert = Alert.createWith(request.group(), request.title(), request.body(), request.sender(), request.token());
         alertManager.send(alert);
     }
 }
