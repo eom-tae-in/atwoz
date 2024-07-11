@@ -19,7 +19,6 @@ class AdminRedisRefreshTokenRepositoryTest extends IntegrationHelper {
     @Autowired
     private AdminRedisRefreshTokenRepository adminRedisRefreshTokenRepository;
 
-
     @Test
     void 관리자_토큰_저장_및_조회() {
         // given

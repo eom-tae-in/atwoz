@@ -20,7 +20,6 @@ public class AdminRedisRefreshTokenRepository implements AdminRefreshTokenReposi
 
     private final RedisTemplate<String, Long> redisTemplate;
 
-
     @Override
     public void save(final AdminRefreshToken adminRefreshToken) {
         ValueOperations<String, Long> valueOperations = redisTemplate.opsForValue();
