@@ -1,9 +1,9 @@
 package com.atwoz.admin.ui.auth.support.resolver;
 
-import com.atwoz.admin.domain.admin.AdminTokenProvider;
 import com.atwoz.admin.exception.exceptions.AdminLoginInvalidException;
 import com.atwoz.admin.exception.exceptions.UnauthorizedAccessToAdminException;
 import com.atwoz.admin.ui.auth.support.AdminRefreshToken;
+import com.atwoz.admin.ui.auth.support.AdminTokenExtractor;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class AdminRefreshTokenExtractionArgumentResolver implements HandlerMetho
     private static final String ROLE = "role";
     private static final String ADMIN = "admin";
 
-    private final AdminTokenProvider adminTokenProvider;
+    private final AdminTokenExtractor adminTokenExtractor;
 
     @Override
     public boolean supportsParameter(final MethodParameter parameter) {
@@ -43,7 +43,7 @@ public class AdminRefreshTokenExtractionArgumentResolver implements HandlerMetho
         }
 
         String refreshToken = findRefreshToken(request.getCookies());
-        String role = adminTokenProvider.extract(refreshToken, ROLE, String.class);
+        String role = adminTokenExtractor.extract(refreshToken, ROLE, String.class);
         if (!Objects.equals(role, ADMIN)) {
             throw new UnauthorizedAccessToAdminException();
         }

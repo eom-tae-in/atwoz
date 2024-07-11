@@ -1,10 +1,10 @@
 package com.atwoz.admin.ui.auth.interceptor;
 
-import com.atwoz.admin.domain.admin.AdminTokenProvider;
 import com.atwoz.admin.exception.exceptions.AdminLoginInvalidException;
 import com.atwoz.admin.exception.exceptions.UnauthorizedAccessToAdminException;
 import com.atwoz.admin.ui.auth.support.AdminAuthenticationContext;
 import com.atwoz.admin.ui.auth.support.AdminAuthenticationExtractor;
+import com.atwoz.admin.ui.auth.support.AdminTokenExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AdminLoginValidCheckerInterceptor implements HandlerInterceptor {
 
     private final AdminAuthenticationContext adminAuthenticationContext;
     private final AdminAuthenticationExtractor adminAuthenticationExtractor;
-    private final AdminTokenProvider adminTokenProvider;
+    private final AdminTokenExtractor adminTokenExtractor;
 
     @Override
     public boolean preHandle(final HttpServletRequest request,
@@ -29,12 +29,12 @@ public class AdminLoginValidCheckerInterceptor implements HandlerInterceptor {
                              final Object handler) throws Exception {
         String token = adminAuthenticationExtractor.extractFromRequest(request)
                 .orElseThrow(AdminLoginInvalidException::new);
-        String extractedRole = adminTokenProvider.extract(token, ROLE, String.class);
+        String extractedRole = adminTokenExtractor.extract(token, ROLE, String.class);
         if (!extractedRole.equals(ADMIN)) {
             throw new UnauthorizedAccessToAdminException();
         }
 
-        Long extractedId = adminTokenProvider.extract(token, ADMIN_ID, Long.class);
+        Long extractedId = adminTokenExtractor.extract(token, ADMIN_ID, Long.class);
         adminAuthenticationContext.setAuthentication(extractedId);
 
         return true;

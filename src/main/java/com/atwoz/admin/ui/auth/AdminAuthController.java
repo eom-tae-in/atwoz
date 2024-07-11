@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +57,14 @@ public class AdminAuthController {
         return ResponseEntity.ok(adminAuthService.reGenerateAccessToken(refreshToken));
     }
 
+    @DeleteMapping("/logout")
+    public ResponseEntity<Void> logout(@AdminRefreshToken final String refreshToken) {
+        adminAuthService.logout(refreshToken);
+
+        return ResponseEntity.ok()
+                .build();
+    }
+
 
     private HttpHeaders createCookieHeaders(final String refreshToken) {
         ResponseCookie cookie = ResponseCookie.from(COOKIE_NAME, refreshToken)
@@ -65,7 +74,7 @@ public class AdminAuthController {
                 .maxAge(maxAge)
                 .build();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(HttpHeaders.COOKIE, cookie.toString());
+        httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return httpHeaders;
     }

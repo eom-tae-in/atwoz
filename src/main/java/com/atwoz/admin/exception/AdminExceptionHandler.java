@@ -3,6 +3,7 @@ package com.atwoz.admin.exception;
 import com.atwoz.admin.exception.exceptions.AdminLoginInvalidException;
 import com.atwoz.admin.exception.exceptions.AdminNotFoundException;
 import com.atwoz.admin.exception.exceptions.InvalidPasswordException;
+import com.atwoz.admin.exception.exceptions.InvalidRefreshTokenException;
 import com.atwoz.admin.exception.exceptions.PasswordMismatchException;
 import com.atwoz.admin.exception.exceptions.UnauthorizedAccessToAdminException;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,11 @@ public class AdminExceptionHandler {
 
     @ExceptionHandler(AdminLoginInvalidException.class)
     public ResponseEntity<String> handleAdminLoginInvalidException(final AdminLoginInvalidException e) {
+        return getUnauthorized(e);
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<String> handleRefreshTokenInvalidException(final InvalidRefreshTokenException e) {
         return getUnauthorized(e);
     }
 
