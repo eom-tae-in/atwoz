@@ -1,6 +1,7 @@
 package com.atwoz.alert.infrastructure;
 
 import com.atwoz.alert.domain.AlertTokenRepository;
+import com.atwoz.alert.exception.exceptions.ReceiverTokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,8 +22,15 @@ public class FirebaseTokenRepository implements AlertTokenRepository {
 
     @Override
     public String getToken(final Long id) {
+        validateTokenExistence(id);
         return tokenRedisTemplate.opsForValue()
                 .get(convertId(id));
+    }
+
+    private void validateTokenExistence(final Long id) {
+        if (!hasKey(id)) {
+            throw new ReceiverTokenNotFoundException();
+        }
     }
 
     @Override
