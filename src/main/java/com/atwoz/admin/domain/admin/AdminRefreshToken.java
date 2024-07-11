@@ -2,10 +2,11 @@ package com.atwoz.admin.domain.admin;
 
 import com.atwoz.admin.domain.admin.service.AdminRefreshTokenProvider;
 import lombok.Builder;
+import org.springframework.data.annotation.Id;
 
 @Builder
 public record AdminRefreshToken(
-        String refreshToken,
+        @Id String refreshToken,
         Long memberId
 ) {
 
