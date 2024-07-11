@@ -27,20 +27,32 @@ public class AdminAuthService {
     private final AdminRefreshTokenRepository adminRefreshTokenRepository;
 
     public AdminTokenResponse signUp(final AdminSignUpRequest adminSignUpRequest) {
-        AdminProfileSignUpRequest adminProfileSignUpRequest = adminSignUpRequest.adminProfileSignUpRequest();
-        Admin admin = Admin.createWith(
-                adminSignUpRequest.email(),
-                adminSignUpRequest.password(),
-                adminSignUpRequest.confirmPassword(),
-                adminProfileSignUpRequest.name(),
-                adminProfileSignUpRequest.phoneNumber()
-        );
+        Admin admin = createAdmin(adminSignUpRequest);
         Admin savedAdmin = adminRepository.save(admin);
         AdminRefreshToken adminRefreshToken = createAdminRefreshToken(savedAdmin);
         adminRefreshTokenRepository.save(adminRefreshToken);
         String accessToken = adminAccessTokenProvider.createAccessToken(savedAdmin.getId());
 
         return new AdminTokenResponse(accessToken, adminRefreshToken.refreshToken());
+    }
+
+    private Admin createAdmin(final AdminSignUpRequest adminSignUpRequest) {
+        AdminProfileSignUpRequest adminProfileSignUpRequest = adminSignUpRequest.adminProfileSignUpRequest();
+        return Admin.createWith(
+                adminSignUpRequest.email(),
+                adminSignUpRequest.password(),
+                adminSignUpRequest.confirmPassword(),
+                adminProfileSignUpRequest.name(),
+                adminProfileSignUpRequest.phoneNumber()
+        );
+    }
+
+    private AdminRefreshToken createAdminRefreshToken(final Admin savedAdmin) {
+        return AdminRefreshToken.createWith(
+                adminRefreshTokenProvider,
+                savedAdmin.getEmail(),
+                savedAdmin.getId()
+        );
     }
 
     public AdminTokenResponse login(final AdminLoginRequest adminLoginRequest) {
@@ -56,14 +68,6 @@ public class AdminAuthService {
     private Admin findAdminByEmail(final String email) {
         return adminRepository.findAdminByEmail(email)
                 .orElseThrow(AdminNotFoundException::new);
-    }
-
-    private AdminRefreshToken createAdminRefreshToken(final Admin savedAdmin) {
-        return AdminRefreshToken.createWith(
-                adminRefreshTokenProvider,
-                savedAdmin.getEmail(),
-                savedAdmin.getId()
-        );
     }
 
     public AdminAccessTokenResponse reGenerateAccessToken(final String refreshToken) {
