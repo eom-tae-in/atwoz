@@ -49,10 +49,9 @@ public class Alert extends BaseEntity {
         this.token = token;
     }
 
-    public static Alert createWith(final String group, final String title, final String body, final String sender, final String token) {
-        AlertGroup alertGroup = AlertGroup.findByName(group);
+    public static Alert createWith(final AlertGroup group, final String title, final String body, final String sender, final String token) {
         AlertMessage message = AlertMessage.createWith(title, body);
-        return new Alert(alertGroup, message, convertSenderValue(sender), token);
+        return new Alert(group, message, convertSenderValue(sender), token);
     }
 
     private static String convertSenderValue(final String sender) {
