@@ -10,9 +10,15 @@ import org.springframework.stereotype.Repository;
 public class AlertRepositoryImpl implements AlertRepository {
 
     private final AlertJpaRepository alertJpaRepository;
+    private final AlertJdbcRepository alertJdbcRepository;
 
     @Override
     public Alert save(final Alert alert) {
         return alertJpaRepository.save(alert);
+    }
+
+    @Override
+    public void deleteExpiredAlerts() {
+        alertJdbcRepository.deleteExpiredAlerts();
     }
 }

@@ -5,6 +5,7 @@ import com.atwoz.alert.domain.AlertManager;
 import com.atwoz.alert.domain.AlertRepository;
 import com.atwoz.alert.domain.vo.AlertGroup;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AlertService {
 
+    private static final String MIDNIGHT = "0 0 0 * * ?";
+
     private final AlertRepository alertRepository;
     private final AlertManager alertManager;
 
@@ -20,5 +23,10 @@ public class AlertService {
         Alert alert = Alert.createWith(group, title, body, sender, token);
         alertManager.send(alert);
         alertRepository.save(alert);
+    }
+
+    @Scheduled(cron = MIDNIGHT)
+    public void deleteExpiredAlerts() {
+        alertRepository.deleteExpiredAlerts();
     }
 }
