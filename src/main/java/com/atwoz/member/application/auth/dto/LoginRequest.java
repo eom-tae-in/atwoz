@@ -7,6 +7,9 @@ public record LoginRequest(
         String provider,
 
         @NotBlank(message = "인증 코드가 비었습니다.")
-        String code
+        String code,
+
+        @NotBlank(message = "FCM 토큰이 비었습니다.")
+        String token
 ) {
 }

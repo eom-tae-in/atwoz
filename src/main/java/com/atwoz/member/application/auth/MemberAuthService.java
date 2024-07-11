@@ -1,5 +1,7 @@
 package com.atwoz.member.application.auth;
 
+import com.atwoz.alert.application.event.AlertTokenCreatedEvent;
+import com.atwoz.global.event.Events;
 import com.atwoz.member.application.auth.dto.LoginRequest;
 import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.Member;
@@ -29,6 +31,8 @@ public class MemberAuthService {
         MemberInfoResponse memberInfoResponse = oAuthRequester.getMemberInfo(accessToken, provider);
         Member createdMember = Member.createWithOAuth(DEFAULT_PHONE_NUMBER);
         memberRepository.save(createdMember);
+        Events.raise(new AlertTokenCreatedEvent(createdMember.getId(), request.token()));
+
         return memberTokenProvider.createAccessToken(createdMember.getId());
     }
 }
