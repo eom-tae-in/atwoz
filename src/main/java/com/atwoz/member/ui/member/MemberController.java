@@ -5,7 +5,7 @@ import com.atwoz.member.application.member.MemberService;
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
-import com.atwoz.member.ui.auth.support.auth.AuthMember;
+import com.atwoz.member.ui.auth.support.AuthMember;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.atwoz.memberlike.ui;
 
-import com.atwoz.member.ui.auth.support.auth.AuthMember;
+import com.atwoz.member.ui.auth.support.AuthMember;
 import com.atwoz.memberlike.application.MemberLikeQueryService;
 import com.atwoz.memberlike.application.MemberLikeService;
 import com.atwoz.memberlike.application.dto.MemberLikeCreateRequest;

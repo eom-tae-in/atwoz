@@ -4,7 +4,7 @@ import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.domain.member.profile.physical.vo.Gender;
-import com.atwoz.member.infrastructure.auth.JwtTokenProvider;
+import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
@@ -31,7 +31,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private MemberJwtTokenProvider memberJwtTokenProvider;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -47,7 +47,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected String 토큰_생성(final Member member) {
-        return jwtTokenProvider.createTokenWithId(member.getId());
+        return memberJwtTokenProvider.createAccessToken(member.getId());
     }
 
     protected Mission 데일리_미션_생성() {

@@ -1,6 +1,6 @@
 package com.atwoz.mission.ui.membermission;
 
-import com.atwoz.member.ui.auth.support.auth.AuthMember;
+import com.atwoz.member.ui.auth.support.AuthMember;
 import com.atwoz.mission.application.membermission.MemberMissionsQueryService;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import lombok.RequiredArgsConstructor;

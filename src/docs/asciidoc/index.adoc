@@ -5,8 +5,8 @@
 :sectlinks:
 
 == atwoz Server API
-* link:auth.html[회원 API]
 * link:member.html[회원 정보 API]
+* link:admin.html[관리자 정보 API]
 * link:mission.html[미션 API]
 * link:membermissions.html[회원 미션 API]
 * link:survey.html[연애고사 API]
