@@ -2,5 +2,5 @@ package com.atwoz.alert.domain;
 
 public interface AlertManager {
 
-    void send(Alert alert);
+    void send(Alert alert, String sender, String token);
 }

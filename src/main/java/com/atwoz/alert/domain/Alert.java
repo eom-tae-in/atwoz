@@ -11,15 +11,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Alert extends SoftDeleteBaseEntity {
-
-    private static final String SYSTEM_SEND = "SYSTEM";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,28 +33,18 @@ public class Alert extends SoftDeleteBaseEntity {
     private AlertMessage alertMessage;
 
     @Column(nullable = false)
-    private String sender;
+    private Long senderId;
 
-    @Column(nullable = false)
-    private String token;
-
-    private Alert(final AlertGroup alertGroup, final AlertMessage alertMessage, final String sender, final String token) {
+    private Alert(final AlertGroup alertGroup, final AlertMessage alertMessage, final Long senderId) {
         this.alertGroup = alertGroup;
         this.alertMessage = alertMessage;
-        this.sender = sender;
-        this.token = token;
+        this.senderId = senderId;
+        this.isRead = false;
     }
 
-    public static Alert createWith(final AlertGroup group, final String title, final String body, final String sender, final String token) {
+    public static Alert createWith(final AlertGroup group, final String title, final String body, final Long senderId) {
         AlertMessage message = AlertMessage.createWith(title, body);
-        return new Alert(group, message, convertSenderValue(sender), token);
-    }
-
-    private static String convertSenderValue(final String sender) {
-        if (sender == null) {
-            return SYSTEM_SEND;
-        }
-        return sender;
+        return new Alert(group, message, senderId);
     }
 
     public void read() {

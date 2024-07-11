@@ -19,7 +19,7 @@ public class FirebaseAlertManager implements AlertManager {
     private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Override
-    public void send(final Alert alert) {
+    public void send(final Alert alert, final String sender, final String token) {
         LocalDateTime createdAt = alert.getCreatedAt();
         String time = createdAt.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
 
@@ -28,10 +28,10 @@ public class FirebaseAlertManager implements AlertManager {
                 .setBody(alert.getBody())
                 .build();
         Message firebaseMessage = Message.builder()
-                .setToken(alert.getToken())
+                .setToken(token)
                 .putData(GROUP, alert.getGroup())
                 .setNotification(firebaseNotification)
-                .putData(SENDER, alert.getSender())
+                .putData(SENDER, sender)
                 .putData(CREATED_TIME, time)
                 .build();
         FirebaseMessaging firebase = FirebaseMessaging.getInstance();

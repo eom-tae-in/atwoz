@@ -19,9 +19,9 @@ public class AlertService {
     private final AlertRepository alertRepository;
     private final AlertManager alertManager;
 
-    public void sendAlert(final AlertGroup group, final String title, final String body, final String sender, final String token) {
-        Alert alert = Alert.createWith(group, title, body, sender, token);
-        alertManager.send(alert);
+    public void sendAlert(final AlertGroup group, final String title, final String body, final String sender, final Long senderId, final String token) {
+        Alert alert = Alert.createWith(group, title, body, senderId);
+        alertManager.send(alert, sender, token);
         alertRepository.save(alert);
     }
 

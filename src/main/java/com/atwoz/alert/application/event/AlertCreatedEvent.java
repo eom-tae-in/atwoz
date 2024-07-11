@@ -7,6 +7,7 @@ public record AlertCreatedEvent(
         String title,
         String body,
         String sender,
+        Long senderId,
         String token
 ) {
 }
