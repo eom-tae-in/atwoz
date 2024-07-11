@@ -14,7 +14,7 @@ public class AlertEventHandler {
 
     @EventListener
     public void sendAlertCreatedEvent(final AlertCreatedEvent event) {
-        alertService.sendAlert(event.group(), event.title(), event.body(), event.sender(), event.senderId(), event.token());
+        alertService.sendAlert(event.group(), event.title(), event.body(), event.sender(), event.receiverId());
     }
 
     @EventListener
