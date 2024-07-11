@@ -2,7 +2,7 @@ package com.atwoz.alert.domain;
 
 import com.atwoz.alert.domain.vo.AlertGroup;
 import com.atwoz.alert.domain.vo.AlertMessage;
-import com.atwoz.global.domain.BaseEntity;
+import com.atwoz.global.domain.SoftDeleteBaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Alert extends BaseEntity {
+public class Alert extends SoftDeleteBaseEntity {
 
     private static final String SYSTEM_SEND = "SYSTEM";
 
