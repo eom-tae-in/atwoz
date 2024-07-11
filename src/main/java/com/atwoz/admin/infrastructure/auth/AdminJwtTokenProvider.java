@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
-public class AdminJwtAccessTokenProvider implements AdminAccessTokenProvider,
+public class AdminJwtTokenProvider implements AdminAccessTokenProvider,
         AdminRefreshTokenProvider,
         AdminTokenExtractor {
 
