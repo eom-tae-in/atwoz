@@ -58,7 +58,7 @@ public class AdminAuthController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> login(@AdminRefreshToken final String refreshToken) {
+    public ResponseEntity<Void> logout(@AdminRefreshToken final String refreshToken) {
         adminAuthService.logout(refreshToken);
 
         return ResponseEntity.ok()
