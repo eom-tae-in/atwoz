@@ -7,14 +7,22 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class FirebaseAlertManager implements AlertManager {
 
     private static final String GROUP = "group";
     private static final String SENDER = "sender";
+    private static final String CREATED_TIME = "created_at";
+    private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Override
     public void send(final Alert alert) {
+        LocalDateTime createdAt = alert.getCreatedAt();
+        String time = createdAt.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
+
         Notification firebaseNotification = Notification.builder()
                 .setTitle(alert.getTitle())
                 .setBody(alert.getBody())
@@ -24,6 +32,7 @@ public class FirebaseAlertManager implements AlertManager {
                 .putData(GROUP, alert.getGroup())
                 .setNotification(firebaseNotification)
                 .putData(SENDER, alert.getSender())
+                .putData(CREATED_TIME, time)
                 .build();
         FirebaseMessaging firebase = FirebaseMessaging.getInstance();
         firebase.sendAsync(firebaseMessage);
