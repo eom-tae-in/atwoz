@@ -39,7 +39,7 @@ class MemberAuthControllerWebMvcTest extends MockBeanInjection {
     void 로그인을_진행한다() throws Exception {
         // given
         OAuthProviderRequest oAuthProviderRequest = 인증_기관_생성();
-        LoginRequest loginRequest = new LoginRequest("kakao", "code");
+        LoginRequest loginRequest = new LoginRequest("kakao", "code", "token");
         String expectedToken = "token";
         when(memberAuthService.login(loginRequest, oAuthProviderRequest)).thenReturn(expectedToken);
 
@@ -52,7 +52,8 @@ class MemberAuthControllerWebMvcTest extends MockBeanInjection {
                 .andDo(customDocument("유저_로그인",
                         requestFields(
                                 fieldWithPath("provider").description("인증기관"),
-                                fieldWithPath("code").description("인증코드")
+                                fieldWithPath("code").description("인증코드"),
+                                fieldWithPath("token").description("FCM 토큰")
                         ),
                         responseFields(
                                 fieldWithPath("token").description("발급되는 토큰")
