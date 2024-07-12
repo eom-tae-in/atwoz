@@ -66,6 +66,20 @@ public class AlertFixture {
                 .build();
     }
 
+    public static Alert 알림_생성_제목_날짜_회원id_주입(final String title, final int day, final long receiverId) {
+        return Alert.builder()
+                .isRead(false)
+                .alertGroup(AlertGroup.ALERT)
+                .alertMessage(AlertMessage.createWith(title, "알림 상세 내용"))
+                .receiverId(receiverId)
+                .createdAt(LocalDateTime.now()
+                        .plusDays(day))
+                .updatedAt(LocalDateTime.now()
+                        .plusDays(day))
+                .deletedAt(null)
+                .build();
+    }
+
     public static Alert 알림_생성_id_있음() {
         return Alert.builder()
                 .id(1L)
