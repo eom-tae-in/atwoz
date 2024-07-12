@@ -39,6 +39,3 @@ out/
 ### REST Docs, QueryDSL ###
 /src/main/resources/static/docs/
 /src/main/generated
-
-### Firebase ###
-/src/main/resources/firebase/firebase_key.json
