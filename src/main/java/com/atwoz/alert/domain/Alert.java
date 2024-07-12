@@ -48,7 +48,9 @@ public class Alert extends SoftDeleteBaseEntity {
     }
 
     public void read() {
-        this.isRead = true;
+        if (!isRead) {
+            this.isRead = true;
+        }
     }
 
     public String getTitle() {
@@ -61,5 +63,9 @@ public class Alert extends SoftDeleteBaseEntity {
 
     public String getGroup() {
         return alertGroup.getName();
+    }
+
+    public boolean isRead() {
+        return isRead;
     }
 }
