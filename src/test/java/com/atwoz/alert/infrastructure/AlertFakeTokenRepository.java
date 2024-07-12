@@ -6,7 +6,7 @@ import com.atwoz.alert.exception.exceptions.ReceiverTokenNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FakeAlertTokenRepository implements AlertTokenRepository {
+public class AlertFakeTokenRepository implements AlertTokenRepository {
 
     private final Map<Long, String> map = new HashMap<>();
 

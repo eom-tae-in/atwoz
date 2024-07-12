@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class FakeAlertRepository implements AlertRepository {
+public class AlertFakeRepository implements AlertRepository {
 
     private static final int DELETION_THRESHOLD_DATE = 61;
 

@@ -7,9 +7,9 @@ import com.atwoz.alert.domain.AlertTokenRepository;
 import com.atwoz.alert.domain.vo.AlertGroup;
 import com.atwoz.alert.exception.exceptions.AlertNotFoundException;
 import com.atwoz.alert.exception.exceptions.ReceiverTokenNotFoundException;
-import com.atwoz.alert.infrastructure.FakeAlertManager;
-import com.atwoz.alert.infrastructure.FakeAlertRepository;
-import com.atwoz.alert.infrastructure.FakeAlertTokenRepository;
+import com.atwoz.alert.infrastructure.AlertFakeManager;
+import com.atwoz.alert.infrastructure.AlertFakeRepository;
+import com.atwoz.alert.infrastructure.AlertFakeTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -35,9 +35,9 @@ class AlertServiceTest {
 
     @BeforeEach
     void init() {
-        alertRepository = new FakeAlertRepository();
-        tokenRepository = new FakeAlertTokenRepository();
-        alertManager = new FakeAlertManager();
+        alertRepository = new AlertFakeRepository();
+        tokenRepository = new AlertFakeTokenRepository();
+        alertManager = new AlertFakeManager();
         alertService = new AlertService(alertRepository, tokenRepository, alertManager);
     }
 

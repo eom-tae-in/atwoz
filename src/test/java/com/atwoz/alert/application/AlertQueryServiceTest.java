@@ -2,7 +2,7 @@ package com.atwoz.alert.application;
 
 import com.atwoz.alert.domain.Alert;
 import com.atwoz.alert.domain.AlertRepository;
-import com.atwoz.alert.infrastructure.FakeAlertRepository;
+import com.atwoz.alert.infrastructure.AlertFakeRepository;
 import com.atwoz.alert.infrastructure.dto.AlertContentSearchResponse;
 import com.atwoz.alert.infrastructure.dto.AlertPagingResponse;
 import com.atwoz.alert.infrastructure.dto.AlertSearchResponse;
@@ -27,7 +27,7 @@ class AlertQueryServiceTest {
 
     @BeforeEach
     void init() {
-        alertRepository = new FakeAlertRepository();
+        alertRepository = new AlertFakeRepository();
         alertQueryService = new AlertQueryService(alertRepository);
     }
 
