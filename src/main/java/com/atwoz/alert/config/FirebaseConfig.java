@@ -17,6 +17,9 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp firebaseApp() {
+        if (!FirebaseApp.getApps().isEmpty()) {
+            return FirebaseApp.getInstance();
+        }
         try {
             FileInputStream firebaseFile = new FileInputStream(FIREBASE_URL);
             FirebaseOptions options = new FirebaseOptions.Builder()
