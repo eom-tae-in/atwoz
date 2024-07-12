@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import static com.atwoz.alert.fixture.AlertFixture.옛날_알림_생성;
+import static com.atwoz.alert.fixture.AlertFixture.알림_생성_id_없음;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -39,7 +39,7 @@ class AlertJdbcRepositoryTest extends IntegrationHelper {
                 .minusDays(MINUS_DAY_FOR_DELETE_ALERT);
         auditingHandler.setDateTimeProvider(() -> Optional.of(pastTime));
 
-        Alert alert = 옛날_알림_생성();
+        Alert alert = 알림_생성_id_없음();
         entityManager.persist(alert);
         entityManager.flush();
         entityManager.clear();

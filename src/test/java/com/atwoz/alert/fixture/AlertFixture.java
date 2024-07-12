@@ -6,7 +6,10 @@ import com.atwoz.alert.domain.vo.AlertMessage;
 
 import java.time.LocalDateTime;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class AlertFixture {
+
+    private static final int DELETION_THRESHOLD = 61;
 
     public static Alert 옛날_알림_생성() {
         return Alert.builder()
@@ -14,8 +17,10 @@ public class AlertFixture {
                 .alertGroup(AlertGroup.ALERT)
                 .alertMessage(AlertMessage.createWith("알림 제목", "알림 상세 내용"))
                 .receiverId(1L)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now()
+                        .minusDays(DELETION_THRESHOLD))
+                .updatedAt(LocalDateTime.now()
+                        .minusDays(DELETION_THRESHOLD))
                 .deletedAt(null)
                 .build();
     }
@@ -42,6 +47,19 @@ public class AlertFixture {
                         .plusDays(day))
                 .updatedAt(LocalDateTime.now()
                         .plusDays(day))
+                .deletedAt(null)
+                .build();
+    }
+
+    public static Alert 알림_생성_id_있음() {
+        return Alert.builder()
+                .id(1L)
+                .isRead(false)
+                .alertGroup(AlertGroup.ALERT)
+                .alertMessage(AlertMessage.createWith("알림 제목", "알림 상세 내용"))
+                .receiverId(1L)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .deletedAt(null)
                 .build();
     }

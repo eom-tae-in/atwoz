@@ -29,6 +29,7 @@ public class FakeAlertRepository implements AlertRepository {
                 .isRead(alert.getIsRead())
                 .alertMessage(alert.getAlertMessage())
                 .alertGroup(alert.getAlertGroup())
+                .receiverId(alert.getReceiverId())
                 .createdAt(alert.getCreatedAt())
                 .updatedAt(alert.getUpdatedAt())
                 .deletedAt(alert.getDeletedAt())
