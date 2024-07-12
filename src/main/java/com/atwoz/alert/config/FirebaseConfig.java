@@ -1,7 +1,7 @@
 package com.atwoz.alert.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -9,16 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class FirebaseConfig {
 
-    private static final String FILE_URL = "src/main/resources/firebase/firebase_key.json";
     private static final String TYPE = "type";
     private static final String PROJECT_ID = "project_id";
     private static final String PRIVATE_KEY_ID = "private_key_id";
@@ -67,7 +66,7 @@ public class FirebaseConfig {
     private String universeDomain;
 
     @Bean
-    public FirebaseApp firebaseApp() throws IOException {
+    public FirebaseApp firebaseApp() {
         if (!FirebaseApp.getApps().isEmpty()) {
             return FirebaseApp.getInstance();
         }
@@ -75,37 +74,33 @@ public class FirebaseConfig {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(getCredentials())
                 .build();
-
         return FirebaseApp.initializeApp(options);
     }
 
-    private GoogleCredentials getCredentials() throws IOException {
-        saveConfigToFile();
-
-        File file = new File(FILE_URL);
-        return GoogleCredentials.fromStream(new FileInputStream(file));
-    }
-
-    private void saveConfigToFile() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter(); // Use pretty printer to format output
-
-        Map<String, String> firebaseConfig = saveFirebaseConfigByValues();
-
-        File file = new File(FILE_URL);
-        if (!file.exists()) {
-            writer.writeValue(file, firebaseConfig);
-            file.createNewFile();
+    private GoogleCredentials getCredentials() {
+        try {
+            String jsonContent = generateJsonContent();
+            InputStream inputStream = new ByteArrayInputStream(jsonContent.getBytes());
+            return GoogleCredentials.fromStream(inputStream);
+        } catch (IOException e) {
+            return GoogleCredentials.newBuilder()
+                    .build();
         }
-        updatePrivateKeyInJson(file, mapper, privateKey);
     }
 
-    private Map<String, String> saveFirebaseConfigByValues() {
+    private String generateJsonContent() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> firebaseConfig = generateFirebaseConfig();
+        firebaseConfig.put(PRIVATE_KEY, replaceNewLines(privateKey));
+
+        return mapper.writeValueAsString(firebaseConfig);
+    }
+
+    private Map<String, String> generateFirebaseConfig() {
         Map<String, String> firebaseConfig = new HashMap<>();
         firebaseConfig.put(TYPE, type);
         firebaseConfig.put(PROJECT_ID, projectId);
         firebaseConfig.put(PRIVATE_KEY_ID, privateKeyId);
-        firebaseConfig.put(PRIVATE_KEY, privateKey);
         firebaseConfig.put(CLIENT_EMAIL, clientEmail);
         firebaseConfig.put(CLIENT_ID, clientId);
         firebaseConfig.put(AUTH_URI, authUri);
@@ -115,12 +110,6 @@ public class FirebaseConfig {
         firebaseConfig.put(UNIVERSE_DOMAIN, universeDomain);
 
         return firebaseConfig;
-    }
-
-    private void updatePrivateKeyInJson(File jsonFile, ObjectMapper mapper, String newPrivateKey) throws IOException {
-        Map<String, Object> jsonMap = mapper.readValue(jsonFile, Map.class);
-        jsonMap.put(PRIVATE_KEY, replaceNewLines(newPrivateKey));
-        mapper.writeValue(jsonFile, jsonMap);
     }
 
     private String replaceNewLines(String value) {
