@@ -19,4 +19,16 @@ public class AlertFixture {
                 .deletedAt(null)
                 .build();
     }
+
+    public static Alert 알림_생성_id_없음() {
+        return Alert.builder()
+                .isRead(false)
+                .alertGroup(AlertGroup.ALERT)
+                .alertMessage(AlertMessage.createWith("알림 제목", "알림 상세 내용"))
+                .receiverId(1L)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .deletedAt(null)
+                .build();
+    }
 }
