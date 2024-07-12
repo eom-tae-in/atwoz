@@ -6,6 +6,8 @@ import com.atwoz.admin.ui.auth.support.AdminAuthenticationContext;
 import com.atwoz.admin.ui.auth.support.AdminAuthenticationExtractor;
 import com.atwoz.admin.ui.auth.support.resolver.AdminAuthArgumentResolver;
 import com.atwoz.admin.ui.auth.support.resolver.AdminRefreshTokenExtractionArgumentResolver;
+import com.atwoz.alert.application.AlertQueryService;
+import com.atwoz.alert.application.AlertService;
 import com.atwoz.member.application.auth.MemberAuthService;
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
@@ -117,9 +119,17 @@ public class MockBeanInjection {
     @MockBean
     protected ReportService reportService;
 
+    // MemberLike
     @MockBean
     protected MemberLikeQueryService memberLikeQueryService;
 
     @MockBean
     protected MemberLikeService memberLikeService;
+
+    // Alert
+    @MockBean
+    protected AlertQueryService alertQueryService;
+
+    @MockBean
+    protected AlertService alertService;
 }

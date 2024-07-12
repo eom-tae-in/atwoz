@@ -35,13 +35,14 @@ public class AlertService {
         alertRepository.save(alert);
     }
 
-    public void readAlert(final Long memberId, final Long id) {
+    public Alert readAlert(final Long memberId, final Long id) {
         Optional<Alert> alert = alertRepository.findByMemberIdAndId(memberId, id);
         if (alert.isEmpty()) {
             throw new AlertNotFoundException();
         }
         Alert targetAlert = alert.get();
         targetAlert.read();
+        return targetAlert;
     }
 
     @Scheduled(cron = MIDNIGHT)

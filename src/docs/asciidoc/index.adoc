@@ -13,3 +13,4 @@
 * link:membersurveys.html[회원 연애고사 API]
 * link:report.html[회원 신고 API]
 * link:likes.html[호감 API]
+* link:alert.html[알림 API]

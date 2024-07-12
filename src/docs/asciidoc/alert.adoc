@@ -1,0 +1,28 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Alert
+
+=== 알림 페이징 조회 (GET api/members/me/alerts)
+==== 요청
+include::{snippets}/alert-controller-web-mvc-test/받은_알림_페이징조회/request-headers.adoc[]
+include::{snippets}/alert-controller-web-mvc-test/받은_알림_페이징조회/request-parts.adoc[]
+include::{snippets}/alert-controller-web-mvc-test/받은_알림_페이징조회/http-request.adoc[]
+==== 응답
+include::{snippets}/alert-controller-web-mvc-test/받은_알림_페이징조회/response-fields.adoc[]
+include::{snippets}/alert-controller-web-mvc-test/받은_알림_페이징조회/http-response.adoc[]
+
+=== 알림 단일 조회 (GET api/members/me/alerts/{alertId})
+읽지 않았던 알림일 경우 읽음 처리됨
+
+==== 요청
+include::{snippets}/alert-controller-web-mvc-test/단일_알림_조회/request-headers.adoc[]
+include::{snippets}/alert-controller-web-mvc-test/단일_알림_조회/path-parameters.adoc[]
+include::{snippets}/alert-controller-web-mvc-test/단일_알림_조회/http-request.adoc[]
+==== 응답
+include::{snippets}/alert-controller-web-mvc-test/단일_알림_조회/response-fields.adoc[]
+include::{snippets}/alert-controller-web-mvc-test/단일_알림_조회/http-response.adoc[]

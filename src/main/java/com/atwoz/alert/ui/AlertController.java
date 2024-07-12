@@ -2,7 +2,9 @@ package com.atwoz.alert.ui;
 
 import com.atwoz.alert.application.AlertQueryService;
 import com.atwoz.alert.application.AlertService;
+import com.atwoz.alert.domain.Alert;
 import com.atwoz.alert.infrastructure.dto.AlertPagingResponse;
+import com.atwoz.alert.infrastructure.dto.AlertSearchResponse;
 import com.atwoz.member.ui.auth.support.AuthMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -32,9 +34,8 @@ public class AlertController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Void> readAlert(@AuthMember final Long memberId, @PathVariable final Long id) {
-        alertService.readAlert(memberId, id);
-        return ResponseEntity.ok()
-                .build();
+    public ResponseEntity<AlertSearchResponse> readAlert(@AuthMember final Long memberId, @PathVariable final Long id) {
+        Alert alert = alertService.readAlert(memberId, id);
+        return ResponseEntity.ok(AlertSearchResponse.from(alert));
     }
 }
