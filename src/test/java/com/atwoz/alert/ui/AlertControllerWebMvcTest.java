@@ -106,6 +106,7 @@ class AlertControllerWebMvcTest extends MockBeanInjection {
         // given
         long id = 1L;
         Alert alert = 알림_생성_제목_날짜_id_주입("알림 제목", (int) id, id);
+        alert.read();
 
         when(alertService.readAlert(any(), any())).thenReturn(alert);
 
