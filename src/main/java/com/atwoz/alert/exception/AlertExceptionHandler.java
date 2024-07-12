@@ -1,5 +1,6 @@
 package com.atwoz.alert.exception;
 
+import com.atwoz.alert.exception.exceptions.AlertNotFoundException;
 import com.atwoz.alert.exception.exceptions.AlertSendException;
 import com.atwoz.alert.exception.exceptions.FirebaseFileNotFoundException;
 import com.atwoz.alert.exception.exceptions.ReceiverTokenNotFoundException;
@@ -23,6 +24,11 @@ public class AlertExceptionHandler {
 
     @ExceptionHandler(ReceiverTokenNotFoundException.class)
     public ResponseEntity<String> handleReceiverTokenNotFoundException(final ReceiverTokenNotFoundException e) {
+        return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AlertNotFoundException.class)
+    public ResponseEntity<String> handleAlertNotFoundException(final AlertNotFoundException e) {
         return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
     }
 

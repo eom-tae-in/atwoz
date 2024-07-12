@@ -5,10 +5,13 @@ import com.atwoz.alert.domain.AlertManager;
 import com.atwoz.alert.domain.AlertRepository;
 import com.atwoz.alert.domain.AlertTokenRepository;
 import com.atwoz.alert.domain.vo.AlertGroup;
+import com.atwoz.alert.exception.exceptions.AlertNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -30,6 +33,15 @@ public class AlertService {
         Alert alert = Alert.createWith(group, title, body, receiverId);
         alertManager.send(alert, sender, token);
         alertRepository.save(alert);
+    }
+
+    public void readAlert(final Long memberId, final Long id) {
+        Optional<Alert> alert = alertRepository.findByMemberIdAndId(memberId, id);
+        if (alert.isEmpty()) {
+            throw new AlertNotFoundException();
+        }
+        Alert targetAlert = alert.get();
+        targetAlert.read();
     }
 
     @Scheduled(cron = MIDNIGHT)
