@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import static com.atwoz.alert.fixture.AlertFixture.알림_생성_제목_날짜_id_주입;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
@@ -68,9 +69,13 @@ class AlertControllerWebMvcTest extends MockBeanInjection {
             );
             details.add(detail);
         }
-
+        List<AlertSearchResponse> sorted = details.stream()
+                .sorted(Comparator.comparing(AlertSearchResponse::createdAt)
+                        .reversed()
+                        .thenComparing(Comparator.comparing(AlertSearchResponse::id).reversed()))
+                .toList();
         when(alertQueryService.findMemberAlertsWithPaging(any(), any(Pageable.class)))
-                .thenReturn(new AlertPagingResponse(details, 1));
+                .thenReturn(new AlertPagingResponse(sorted, 1));
 
         // when & then
         mockMvc.perform(get("/api/members/me/alerts")

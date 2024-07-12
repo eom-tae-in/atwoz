@@ -58,8 +58,9 @@ class AlertQueryServiceTest {
 
     private List<AlertSearchResponse> extractAlertResponsesWithLimit(final List<Alert> alerts, final int limit) {
         return alerts.stream()
-                .sorted(Comparator.comparing(Alert::getCreatedAt).reversed()
-                        .thenComparing(Alert::getId).reversed())
+                .sorted(Comparator.comparing(Alert::getCreatedAt)
+                        .reversed()
+                        .thenComparing(Comparator.comparing(Alert::getId).reversed()))
                 .map(alert -> new AlertSearchResponse(
                         alert.getId(),
                         alert.getAlertGroup(),

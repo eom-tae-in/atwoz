@@ -44,8 +44,9 @@ public class FakeAlertRepository implements AlertRepository {
         List<AlertSearchResponse> alertResponses = map.values()
                 .stream()
                 .filter(alert -> memberId.equals(alert.getReceiverId()))
-                .sorted(Comparator.comparing(Alert::getCreatedAt).reversed()
-                        .thenComparing(Alert::getId).reversed())
+                .sorted(Comparator.comparing(Alert::getCreatedAt)
+                        .reversed()
+                        .thenComparing(Comparator.comparing(Alert::getId).reversed()))
                 .skip(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .map(alert -> new AlertSearchResponse(
