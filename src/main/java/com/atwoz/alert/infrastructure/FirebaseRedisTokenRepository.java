@@ -10,7 +10,7 @@ import static java.lang.Boolean.TRUE;
 
 @RequiredArgsConstructor
 @Repository
-public class FirebaseTokenRepository implements AlertTokenRepository {
+public class FirebaseRedisTokenRepository implements AlertTokenRepository {
 
     private final StringRedisTemplate tokenRedisTemplate;
 
