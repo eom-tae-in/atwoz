@@ -2,7 +2,6 @@ package com.atwoz.alert.infrastructure;
 
 import com.atwoz.alert.domain.Alert;
 import com.atwoz.alert.domain.AlertRepository;
-import com.atwoz.alert.fixture.AlertFixture;
 import com.atwoz.alert.infrastructure.dto.AlertContentSearchResponse;
 import com.atwoz.alert.infrastructure.dto.AlertSearchResponse;
 import com.atwoz.helper.IntegrationHelper;
@@ -19,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import static com.atwoz.alert.fixture.AlertFixture.알림_생성_id_없음;
+import static com.atwoz.alert.fixture.AlertFixture.알림_생성_제목_날짜_주입;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -42,7 +42,7 @@ class AlertQueryRepositoryTest extends IntegrationHelper {
             List<Alert> alerts = new ArrayList<>();
 
             for (int day = 1; day <= 10; day++) {
-                Alert alert = AlertFixture.알림_생성_제목_날짜_주입("알림 제목 " + day, day);
+                Alert alert = 알림_생성_제목_날짜_주입("알림 제목 " + day, day);
                 alertRepository.save(alert);
                 alerts.add(alert);
             }
@@ -63,8 +63,8 @@ class AlertQueryRepositoryTest extends IntegrationHelper {
 
         private List<AlertSearchResponse> extractAlertResponsesWithLimit(final List<Alert> alerts, final int limit) {
             return alerts.stream()
-                    .sorted(Comparator.comparing(Alert::getCreatedAt)
-                            .reversed())
+                    .sorted(Comparator.comparing(Alert::getCreatedAt).reversed()
+                            .thenComparing(Alert::getId).reversed())
                     .map(alert -> new AlertSearchResponse(
                             alert.getId(),
                             alert.getAlertGroup(),

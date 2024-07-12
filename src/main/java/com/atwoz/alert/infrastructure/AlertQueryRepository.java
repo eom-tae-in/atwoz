@@ -33,7 +33,7 @@ public class AlertQueryRepository {
                                 alert.createdAt))
                 .from(alert)
                 .where(alert.receiverId.eq(memberId), alert.deletedAt.isNull())
-                .orderBy(alert.createdAt.desc())
+                .orderBy(alert.createdAt.desc(), alert.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
