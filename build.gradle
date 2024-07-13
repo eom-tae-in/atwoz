@@ -80,7 +80,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-admin:8.0.0'
+    implementation 'com.google.firebase:firebase-admin:9.3.0'
 }
 
 def generated = 'src/main/generated'
