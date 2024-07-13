@@ -1,4 +1,6 @@
-package com.atwoz.alert.domain;
+package com.atwoz.alert.application;
+
+import com.atwoz.alert.domain.Alert;
 
 public interface AlertManager {
 

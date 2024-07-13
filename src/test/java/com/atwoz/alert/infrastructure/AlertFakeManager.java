@@ -1,7 +1,7 @@
 package com.atwoz.alert.infrastructure;
 
 import com.atwoz.alert.domain.Alert;
-import com.atwoz.alert.domain.AlertManager;
+import com.atwoz.alert.application.AlertManager;
 
 public class AlertFakeManager implements AlertManager {
 

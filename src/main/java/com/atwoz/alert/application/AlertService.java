@@ -1,7 +1,6 @@
 package com.atwoz.alert.application;
 
 import com.atwoz.alert.domain.Alert;
-import com.atwoz.alert.domain.AlertManager;
 import com.atwoz.alert.domain.AlertRepository;
 import com.atwoz.alert.domain.AlertTokenRepository;
 import com.atwoz.alert.domain.vo.AlertGroup;
