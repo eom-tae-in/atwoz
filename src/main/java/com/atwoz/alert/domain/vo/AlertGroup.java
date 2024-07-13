@@ -13,7 +13,7 @@ public enum AlertGroup {
     INTERVIEW("인터뷰"),
     ALERT("알림");
 
-    private String name;
+    private final String name;
 
     AlertGroup(final String name) {
         this.name = name;
