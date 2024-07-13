@@ -10,11 +10,9 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.auditing.AuditingHandler;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,9 +30,6 @@ class AlertQueryRepositoryTest extends IntegrationHelper {
     private AlertQueryRepository alertQueryRepository;
 
     @Autowired
-    private AuditingHandler auditingHandler;
-
-    @Autowired
     private AlertRepository alertRepository;
 
     @Nested
@@ -48,8 +43,6 @@ class AlertQueryRepositoryTest extends IntegrationHelper {
 
             for (int day = 1; day <= 10; day++) {
                 Alert alert = 알림_생성_제목_날짜_주입("알림 제목 " + day, day);
-                LocalDateTime futureTime = LocalDateTime.now().plusDays(day);
-                auditingHandler.setDateTimeProvider(() -> Optional.of(futureTime));
                 alertRepository.save(alert);
                 alerts.add(alert);
             }
