@@ -30,8 +30,8 @@ public class Alert extends SoftDeleteBaseEntity {
     @Column(nullable = false)
     private Boolean isRead;
 
-    @Column(nullable = false)
     @Enumerated
+    @Column(nullable = false)
     private AlertGroup alertGroup;
 
     @Embedded
