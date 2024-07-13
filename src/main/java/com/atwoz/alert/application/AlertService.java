@@ -10,8 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -35,13 +33,10 @@ public class AlertService {
     }
 
     public Alert readAlert(final Long memberId, final Long id) {
-        Optional<Alert> alert = alertRepository.findByMemberIdAndId(memberId, id);
-        if (alert.isEmpty()) {
-            throw new AlertNotFoundException();
-        }
-        Alert targetAlert = alert.get();
-        targetAlert.read();
-        return targetAlert;
+        Alert alert = alertRepository.findByMemberIdAndId(memberId, id)
+                .orElseThrow(AlertNotFoundException::new);
+        alert.read();
+        return alert;
     }
 
     @Scheduled(cron = MIDNIGHT)
