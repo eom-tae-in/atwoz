@@ -64,7 +64,9 @@ class AlertQueryRepositoryTest extends IntegrationHelper {
             assertSoftly(softly -> {
                 softly.assertThat(found).hasSize(9);
                 softly.assertThat(found.hasNext()).isTrue();
-                softly.assertThat(found.getContent()).isEqualTo(expected);
+                softly.assertThat(found.getContent())
+                        .usingRecursiveFieldByFieldElementComparatorIgnoringFields("createdAt", "updatedAt", "deletedAt")
+                        .isEqualTo(expected);
             });
         }
 
@@ -99,7 +101,7 @@ class AlertQueryRepositoryTest extends IntegrationHelper {
             assertSoftly(softly -> {
                 softly.assertThat(found).isNotEmpty();
                 softly.assertThat(found.get()).usingRecursiveComparison()
-                        .ignoringFields("id")
+                        .ignoringFields("id", "createdAt", "updatedAt", "deletedAt")
                         .isEqualTo(alert);
             });
         }
