@@ -41,16 +41,14 @@ public class Alert extends SoftDeleteBaseEntity {
     @Column(nullable = false)
     private Long receiverId;
 
-    private Alert(final AlertGroup alertGroup, final AlertMessage alertMessage, final Long receiverId) {
-        this.alertGroup = alertGroup;
-        this.alertMessage = alertMessage;
-        this.receiverId = receiverId;
-        this.isRead = false;
-    }
-
     public static Alert createWith(final AlertGroup group, final String title, final String body, final Long receiverId) {
         AlertMessage message = AlertMessage.createWith(title, body);
-        return new Alert(group, message, receiverId);
+        return Alert.builder()
+                .alertGroup(group)
+                .alertMessage(message)
+                .receiverId(receiverId)
+                .isRead(false)
+                .build();
     }
 
     public void read() {
