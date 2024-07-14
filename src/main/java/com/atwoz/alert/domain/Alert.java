@@ -6,6 +6,7 @@ import com.atwoz.global.domain.SoftDeleteBaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class Alert extends SoftDeleteBaseEntity {
     @Column(nullable = false)
     private Boolean isRead;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private AlertGroup alertGroup;
 
