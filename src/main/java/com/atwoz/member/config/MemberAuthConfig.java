@@ -37,11 +37,13 @@ public class MemberAuthConfig implements WebMvcConfigurer {
                 .excludePathPattern("/**", OPTIONS)
                 .excludePathPattern("/api/missions/**", GET, POST, PATCH, DELETE)
                 .excludePathPattern("/api/surveys/**", GET, POST)
+                .excludePathPattern("/api/members/auth/**", POST)
                 .addPathPatterns("/api/members/**", GET, POST, PATCH, DELETE)
                 .addPathPatterns("/api/reports/**", POST)
                 .addPathPatterns("/api/surveys/**", GET, POST)
                 .addPathPatterns("/api/members/me/missions/**", GET, POST, PATCH)
-                .addPathPatterns("/api/members/me/surveys/**", GET, POST);
+                .addPathPatterns("/api/members/me/surveys/**", GET, POST)
+                .addPathPatterns("/api/members/self-intros/**", GET, POST, PATCH, DELETE);
     }
 
     @Override
