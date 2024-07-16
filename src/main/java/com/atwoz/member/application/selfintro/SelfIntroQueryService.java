@@ -19,8 +19,7 @@ public class SelfIntroQueryService {
 
     public SelfIntrosResponse findAllSelfIntrosWithPaging(final Pageable pageable,
                                                           final Long memberId) {
-        Page<SelfIntroResponse> selfIntroResponses = selfIntroRepository.findAllSelfIntrosWithPaging(pageable,
-                memberId);
+        Page<SelfIntroResponse> selfIntroResponses = selfIntroRepository.findAllSelfIntrosWithPaging(pageable, memberId);
 
         return SelfIntrosResponse.of(selfIntroResponses, pageable);
     }
