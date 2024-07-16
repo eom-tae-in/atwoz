@@ -1,4 +1,4 @@
-package com.atwoz.member.fixture;
+package com.atwoz.member.fixture.member;
 
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberProfile;
@@ -6,7 +6,7 @@ import com.atwoz.member.domain.member.vo.MemberGrade;
 import com.atwoz.member.domain.member.vo.MemberRole;
 import com.atwoz.member.domain.member.vo.MemberStatus;
 
-import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+import static com.atwoz.member.fixture.member.MemberProfileDtoFixture.회원_프로필_DTO_요청;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberFixture {
@@ -22,6 +22,20 @@ public class MemberFixture {
                 .build();
 
         member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청());
+        return member;
+    }
+
+    public static Member 일반_유저_생성(final int birthYear, final String phoneNumber) {
+        Member member = Member.builder()
+                .nickname("nickname")
+                .phoneNumber(phoneNumber)
+                .memberStatus(MemberStatus.ACTIVE)
+                .memberGrade(MemberGrade.SILVER)
+                .memberRole(MemberRole.MEMBER)
+                .memberProfile(MemberProfile.createWith("남성"))
+                .build();
+
+        member.initializeWith(member.getNickname(), member.getRecommenderId(), 회원_프로필_DTO_요청(birthYear));
         return member;
     }
 

@@ -1,4 +1,4 @@
-package com.atwoz.member.fixture;
+package com.atwoz.member.fixture.member;
 
 import com.atwoz.member.domain.member.dto.HobbiesDto;
 import com.atwoz.member.domain.member.dto.MemberProfileDto;
@@ -13,6 +13,22 @@ public class MemberProfileDtoFixture {
     public static MemberProfileDto 회원_프로필_DTO_요청() {
         return MemberProfileDto.builder()
                 .physicalProfileDto(new PhysicalProfileDto(2000, 170, new FakeYearManager()))
+                .hobbiesdto(new HobbiesDto(List.of("B001", "B002")))
+                .stylesDto(new StylesDto(List.of("C001", "C002")))
+                .city("서울시")
+                .sector("강남구")
+                .job("A001")
+                .graduate("서울 4년제")
+                .smoke("비흡연")
+                .drink("전혀 마시지 않음")
+                .religion("기독교")
+                .mbti("INFP")
+                .build();
+    }
+
+    public static MemberProfileDto 회원_프로필_DTO_요청(final int birthYear) {
+        return MemberProfileDto.builder()
+                .physicalProfileDto(new PhysicalProfileDto(birthYear, 170, new FakeYearManager()))
                 .hobbiesdto(new HobbiesDto(List.of("B001", "B002")))
                 .stylesDto(new StylesDto(List.of("C001", "C002")))
                 .city("서울시")

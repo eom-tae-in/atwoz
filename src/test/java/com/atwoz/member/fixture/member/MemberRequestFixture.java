@@ -1,4 +1,4 @@
-package com.atwoz.member.fixture;
+package com.atwoz.member.fixture.member;
 
 import com.atwoz.member.application.member.dto.HobbiesRequest;
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;

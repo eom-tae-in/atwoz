@@ -1,10 +1,7 @@
-package com.atwoz.member.domain.profile;
+package com.atwoz.member.domain.member.profile;
 
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
 import com.atwoz.member.domain.member.dto.MemberProfileDto;
-import com.atwoz.member.domain.member.profile.MemberHobby;
-import com.atwoz.member.domain.member.profile.MemberStyle;
-import com.atwoz.member.domain.member.profile.Profile;
 import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.domain.member.profile.vo.Hobby;
 import com.atwoz.member.domain.member.profile.vo.Style;
@@ -26,7 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_수정_요청서_요청;
+import static com.atwoz.member.fixture.member.MemberRequestFixture.회원_정보_수정_요청서_요청;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 

@@ -1,6 +1,5 @@
-package com.atwoz.member.domain.profile.vo;
+package com.atwoz.member.domain.member.profile.vo;
 
-import com.atwoz.member.domain.member.profile.vo.Graduate;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidGraduateException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

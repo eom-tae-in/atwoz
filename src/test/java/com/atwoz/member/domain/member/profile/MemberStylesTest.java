@@ -1,7 +1,5 @@
-package com.atwoz.member.domain.profile;
+package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.profile.MemberStyle;
-import com.atwoz.member.domain.member.profile.MemberStyles;
 import com.atwoz.member.domain.member.profile.vo.Style;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
 import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;

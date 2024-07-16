@@ -1,6 +1,5 @@
-package com.atwoz.member.domain.profile.vo;
+package com.atwoz.member.domain.member.profile.vo;
 
-import com.atwoz.member.domain.member.profile.vo.Smoke;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidSmokeException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

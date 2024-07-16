@@ -1,6 +1,5 @@
-package com.atwoz.member.domain.profile.vo;
+package com.atwoz.member.domain.member.profile.vo;
 
-import com.atwoz.member.domain.member.profile.vo.Style;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

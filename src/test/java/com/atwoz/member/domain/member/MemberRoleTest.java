@@ -1,4 +1,4 @@
-package com.atwoz.member.domain;
+package com.atwoz.member.domain.member;
 
 import com.atwoz.member.domain.member.vo.MemberRole;
 import com.atwoz.member.exception.exceptions.member.RoleNotFoundException;

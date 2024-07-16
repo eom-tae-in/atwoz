@@ -1,8 +1,6 @@
-package com.atwoz.member.domain.profile.physical;
+package com.atwoz.member.domain.member.profile.physical;
 
 import com.atwoz.member.domain.member.dto.PhysicalProfileDto;
-import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
-import com.atwoz.member.domain.member.profile.physical.YearManager;
 import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
 import com.atwoz.member.infrastructure.member.physical.FakeYearManager;

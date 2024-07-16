@@ -1,8 +1,7 @@
-package com.atwoz.member.domain;
+package com.atwoz.member.domain.member;
 
 import com.atwoz.member.application.member.dto.MemberInitializeRequest;
 import com.atwoz.member.application.member.dto.MemberUpdateRequest;
-import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import com.atwoz.member.domain.member.vo.MemberGrade;
 import com.atwoz.member.domain.member.vo.MemberRole;
@@ -11,13 +10,13 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.member.fixture.MemberFixture.OAuth_인증만_완료한_유저_생성;
-import static com.atwoz.member.fixture.MemberFixture.PASS_인증만_완료한_유저_생성;
-import static com.atwoz.member.fixture.MemberFixture.어드민_유저_생성;
-import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
-import static com.atwoz.member.fixture.MemberProfileInfoFixture.회원_프로필_정보_생성;
-import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_수정_요청서_요청;
-import static com.atwoz.member.fixture.MemberRequestFixture.회원_정보_초기화_요청서_요청;
+import static com.atwoz.member.fixture.member.MemberFixture.OAuth_인증만_완료한_유저_생성;
+import static com.atwoz.member.fixture.member.MemberFixture.PASS_인증만_완료한_유저_생성;
+import static com.atwoz.member.fixture.member.MemberFixture.어드민_유저_생성;
+import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.member.MemberProfileInfoFixture.회원_프로필_정보_생성;
+import static com.atwoz.member.fixture.member.MemberRequestFixture.회원_정보_수정_요청서_요청;
+import static com.atwoz.member.fixture.member.MemberRequestFixture.회원_정보_초기화_요청서_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 

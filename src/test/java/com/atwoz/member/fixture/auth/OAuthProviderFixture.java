@@ -1,4 +1,4 @@
-package com.atwoz.member.fixture;
+package com.atwoz.member.fixture.auth;
 
 import com.atwoz.member.infrastructure.auth.dto.MemberInfoKeyWordRequest;
 import com.atwoz.member.infrastructure.auth.dto.OAuthProviderRequest;

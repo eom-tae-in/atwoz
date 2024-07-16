@@ -1,6 +1,5 @@
-package com.atwoz.member.domain;
+package com.atwoz.member.domain.member;
 
-import com.atwoz.member.domain.member.MemberProfile;
 import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidProfileAccessStatusException;
 import org.junit.jupiter.api.DisplayNameGeneration;

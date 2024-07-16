@@ -1,6 +1,5 @@
-package com.atwoz.member.domain.profile.physical.vo;
+package com.atwoz.member.domain.member.profile.physical.vo;
 
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.exception.exceptions.member.profile.InvalidGenderException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
