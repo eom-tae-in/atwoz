@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/members/self-intros")
 public class SelfIntroController {
 
-    private static final String CREATION_TIME = "createAt";
+    private static final String CREATION_TIME = "createdAt";
 
     private final SelfIntroService selfIntroService;
     private final SelfIntroQueryService selfIntroQueryService;
