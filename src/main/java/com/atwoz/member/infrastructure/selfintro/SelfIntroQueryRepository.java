@@ -43,6 +43,29 @@ public class SelfIntroQueryRepository {
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 
+    private JPAQuery<SelfIntroResponse> selectSelfIntroResponse() {
+        return jpaQueryFactory.select(
+                constructor(SelfIntroResponse.class,
+                        selfIntro.id,
+                        selfIntro.content,
+                        member.nickname,
+                        profile.location.city,
+                        physicalProfile.age,
+                        physicalProfile.height
+                )
+        );
+    }
+
+    private Gender findMemberGender(final Long memberId) {
+        return jpaQueryFactory.select(physicalProfile.gender)
+                .from(member)
+                .leftJoin(member.memberProfile, memberProfile)
+                .leftJoin(memberProfile.profile, profile)
+                .leftJoin(profile.physicalProfile, physicalProfile)
+                .where(member.id.eq(memberId))
+                .fetchFirst();
+    }
+
     public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(final Pageable pageable,
                                                                            final int minAge,
                                                                            final int maxAge,
@@ -70,27 +93,12 @@ public class SelfIntroQueryRepository {
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 
-    private JPAQuery<SelfIntroResponse> selectSelfIntroResponse() {
-        return jpaQueryFactory.select(
-                constructor(SelfIntroResponse.class,
-                        selfIntro.id,
-                        selfIntro.content,
-                        member.nickname,
-                        profile.location.city,
-                        physicalProfile.age,
-                        physicalProfile.height
-                )
-        );
-    }
+    private BooleanExpression applyGenderCondition(final boolean isOnlyOppositeGender, final Gender gender) {
+        if (!isOnlyOppositeGender) {
+            return null;
+        }
 
-    private Gender findMemberGender(Long memberId) {
-        return jpaQueryFactory.select(physicalProfile.gender)
-                .from(member)
-                .leftJoin(member.memberProfile, memberProfile)
-                .leftJoin(memberProfile.profile, profile)
-                .leftJoin(profile.physicalProfile, physicalProfile)
-                .where(member.id.eq(memberId))
-                .fetchFirst();
+        return physicalProfile.gender.ne(gender);
     }
 
     private BooleanExpression ageBetween(final int minAge, final int maxAge) {
@@ -100,13 +108,5 @@ public class SelfIntroQueryRepository {
 
     private BooleanExpression locationIn(final List<String> cities) {
         return profile.location.city.in(cities);
-    }
-
-    private BooleanExpression applyGenderCondition(final boolean isOnlyOppositeGender, final Gender gender) {
-        if (!isOnlyOppositeGender) {
-            return null;
-        }
-
-        return physicalProfile.gender.ne(gender);
     }
 }
