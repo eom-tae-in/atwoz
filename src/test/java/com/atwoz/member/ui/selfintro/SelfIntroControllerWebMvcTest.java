@@ -109,7 +109,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("selfIntros[].age").description("작성자의 나이"),
                                 fieldWithPath("selfIntros[].height").description("작성자의 키"),
                                 fieldWithPath("nowPage").description("현재 페이지"),
-                                fieldWithPath("nextPage").description("다음 페이지"),
+                                fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
                                 fieldWithPath("totalPages").description("전체 페이지 수")
                         )
                 ));
@@ -154,7 +154,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("selfIntros[].age").description("작성자의 나이"),
                                 fieldWithPath("selfIntros[].height").description("작성자의 키"),
                                 fieldWithPath("nowPage").description("현재 페이지"),
-                                fieldWithPath("nextPage").description("다음 페이지"),
+                                fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
                                 fieldWithPath("totalPages").description("전체 페이지 수")
                         )
                 ));

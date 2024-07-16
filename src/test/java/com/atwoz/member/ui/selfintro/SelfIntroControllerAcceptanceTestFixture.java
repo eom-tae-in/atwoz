@@ -74,7 +74,7 @@ class SelfIntroControllerAcceptanceTestFixture extends IntegrationHelper {
                 .extract();
     }
 
-    protected void 셀프_소개글_페이징_조회_요청_겅즘(final ExtractableResponse<Response> response) {
+    protected void 셀프_소개글_페이징_조회_요청_검증(final ExtractableResponse<Response> response) {
         SelfIntrosResponse selfIntrosResponse = response.as(SelfIntrosResponse.class);
         assertSoftly(softly -> {
             softly.assertThat(selfIntrosResponse.selfIntros().size()).isEqualTo(1);

@@ -25,12 +25,8 @@ public class SelfIntroRequestFixture {
                 MIN_AGE,
                 MAX_AGE,
                 IS_ONLY_OPPOSITE_GENDER,
-                List.of(선호_지역_요청서())
+                List.of(new CityRequest(CITY))
         );
-    }
-
-    private static CityRequest 선호_지역_요청서() {
-        return new CityRequest(CITY);
     }
 
     public static SelfIntroUpdateRequest 셀프_소개글_수정_요청서() {

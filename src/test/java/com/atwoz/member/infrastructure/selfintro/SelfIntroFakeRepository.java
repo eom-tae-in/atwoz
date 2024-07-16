@@ -44,7 +44,6 @@ public class SelfIntroFakeRepository implements SelfIntroRepository {
     @Override
     public void deleteById(final Long id) {
         map.remove(id);
-        this.id--;
     }
 
     @Override

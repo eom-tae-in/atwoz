@@ -2,12 +2,12 @@ package com.atwoz.member.ui.selfintro;
 
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.selfintro.SelfIntro;
-import com.atwoz.member.fixture.selfintro.SelfIntroFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
+import static com.atwoz.member.fixture.selfintro.SelfIntroFixture.셀프_소개글_생성_id_없음;
 import static com.atwoz.member.fixture.selfintro.SelfIntroRequestFixture.셀프_소개글_생성_요청서;
 import static com.atwoz.member.fixture.selfintro.SelfIntroRequestFixture.셀프_소개글_수정_요청서;
 
@@ -27,7 +27,7 @@ class SelfIntroControllerAcceptanceTest extends SelfIntroControllerAcceptanceTes
 
     @BeforeEach
     void setup() {
-        셀프_소개글 = SelfIntroFixture.셀프_소개글_생성_id_없음();
+        셀프_소개글 = 셀프_소개글_생성_id_없음();
         회원 = 회원_저장();
         토큰 = 토큰_생성(회원);
     }
@@ -53,7 +53,7 @@ class SelfIntroControllerAcceptanceTest extends SelfIntroControllerAcceptanceTes
         var 셀프_소개글_페이징_조회_요청_결과 = 셀프_소개글_페이징_조회_요청(셀프_소개글_조회_URL, 토큰);
 
         // then
-        셀프_소개글_페이징_조회_요청_겅즘(셀프_소개글_페이징_조회_요청_결과);
+        셀프_소개글_페이징_조회_요청_검증(셀프_소개글_페이징_조회_요청_결과);
     }
 
     @Test
