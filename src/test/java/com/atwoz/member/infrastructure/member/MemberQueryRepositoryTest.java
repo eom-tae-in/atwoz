@@ -9,10 +9,10 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.atwoz.member.fixture.HobbiesResponseFixture.취미_응답서_요청;
-import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
-import static com.atwoz.member.fixture.MemberProfileResponseFixture.회원_프로필_응답서_요청;
-import static com.atwoz.member.fixture.StylesResponseFixture.스타일_응답서_요청;
+import static com.atwoz.member.fixture.member.HobbiesResponseFixture.취미_응답서_요청;
+import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.member.MemberProfileResponseFixture.회원_프로필_응답서_요청;
+import static com.atwoz.member.fixture.member.StylesResponseFixture.스타일_응답서_요청;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)

@@ -9,6 +9,8 @@ import com.atwoz.admin.ui.auth.support.resolver.AdminRefreshTokenExtractionArgum
 import com.atwoz.member.application.auth.MemberAuthService;
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
+import com.atwoz.member.application.selfintro.SelfIntroQueryService;
+import com.atwoz.member.application.selfintro.SelfIntroService;
 import com.atwoz.member.domain.auth.JsonMapper;
 import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.MemberRepository;
@@ -122,4 +124,11 @@ public class MockBeanInjection {
 
     @MockBean
     protected MemberLikeService memberLikeService;
+
+    // SelfIntro
+    @MockBean
+    protected SelfIntroQueryService selfIntroQueryService;
+
+    @MockBean
+    protected SelfIntroService selfIntroService;
 }

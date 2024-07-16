@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.atwoz.member.fixture.OAuthProviderFixture.인증_기관_생성;
+import static com.atwoz.member.fixture.auth.OAuthProviderFixture.인증_기관_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import static org.mockito.ArgumentMatchers.any;
