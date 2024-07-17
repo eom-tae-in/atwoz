@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
-import static com.atwoz.member.fixture.MemberResponseFixture.회원_정보_응답서_요청;
+import static com.atwoz.member.fixture.member.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+import static com.atwoz.member.fixture.member.MemberResponseFixture.회원_정보_응답서_요청;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberFakeRepository implements MemberRepository {

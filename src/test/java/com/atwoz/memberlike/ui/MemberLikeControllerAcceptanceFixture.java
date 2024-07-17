@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.호감_생성_id_주입;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;

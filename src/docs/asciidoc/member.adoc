@@ -5,7 +5,11 @@
 :sectlinks:
 :sectnums:
 
-== Member
+= Member
+
+
+== Auth
+
 
 === 로그인 (POST api/members/auth/login)
 
@@ -16,6 +20,9 @@ include::{snippets}/member-auth-controller-web-mvc-test/유저_로그인/request
 ==== 응답
 include::{snippets}/member-auth-controller-web-mvc-test/유저_로그인/http-response.adoc[]
 include::{snippets}/member-auth-controller-web-mvc-test/유저_로그인/request-fields.adoc[]
+
+
+== Member
 
 
 === 닉네임 중복 확인 (GET /api/members/nickname/existence)
@@ -41,6 +48,7 @@ include::{snippets}/member-controller-web-mvc-test/회원_정보_초기화/http-
 
 
 === 회원 정보 조회(GET /api/members)
+
 ==== 요청
 include::{snippets}/member-controller-web-mvc-test/회원_정보_조회/request-headers.adoc[]
 include::{snippets}/member-controller-web-mvc-test/회원_정보_조회/http-request.adoc[]
@@ -69,3 +77,64 @@ include::{snippets}/member-controller-web-mvc-test/회원_삭제/http-request.ad
 
 ==== 응답
 include::{snippets}/member-controller-web-mvc-test/회원_삭제/http-response.adoc[]
+
+
+== SelfIntro
+
+
+=== 셀프 소개글 저장 (POST /api/members/self-intros/me)
+
+==== 요청
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_저장/http-request.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_저장/request-headers.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_저장/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_저장/http-response.adoc[]
+
+
+=== 셀프 소개글 페이징 조회 (GET /api/members/self-intros)
+
+==== 요청
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/http-request.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/request-headers.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/request-parts.adoc[]
+
+==== 응답
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/http-response.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/response-fields.adoc[]
+
+
+=== 셀프 소개글 페이징 조회 (필터 적용) (Get /api/members/self-intros/filter)
+
+==== 요청
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회(필터_적용)/http-request.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회(필터_적용)/request-headers.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회(필터_적용)/request-parts.adoc[]
+
+==== 응답
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회(필터_적용)/http-response.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회(필터_적용)/response-fields.adoc[]
+
+
+=== 셀프 소개글 변경 (Patch /api/members/self-intros/{id})
+
+==== 요청
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_변경/http-request.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_변경/request-headers.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_변경/path-parameters.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_변경/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_변경/http-response.adoc[]
+
+
+=== 셀프 소개글 삭제 (Delete /api/members/self-intros/{id})
+
+==== 요청
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_삭제/http-request.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_삭제/request-headers.adoc[]
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_삭제/path-parameters.adoc[]
+
+==== 응답
+include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_삭제/http-response.adoc[]

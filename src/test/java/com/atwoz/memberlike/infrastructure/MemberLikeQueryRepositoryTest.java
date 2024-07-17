@@ -6,6 +6,10 @@ import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,12 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
-import static com.atwoz.member.fixture.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.member.MemberProfileDtoFixture.회원_프로필_DTO_요청;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.호감_생성_id_날짜_주입;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
