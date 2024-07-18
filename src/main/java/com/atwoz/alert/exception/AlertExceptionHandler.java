@@ -1,5 +1,6 @@
 package com.atwoz.alert.exception;
 
+import com.atwoz.alert.exception.exceptions.AlertLockException;
 import com.atwoz.alert.exception.exceptions.AlertNotFoundException;
 import com.atwoz.alert.exception.exceptions.AlertSendException;
 import com.atwoz.alert.exception.exceptions.ReceiverTokenNotFoundException;
@@ -24,6 +25,11 @@ public class AlertExceptionHandler {
     @ExceptionHandler(AlertNotFoundException.class)
     public ResponseEntity<String> handleAlertNotFoundException(final AlertNotFoundException e) {
         return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AlertLockException.class)
+    public ResponseEntity<String> handleAlertLockException(final AlertLockException e) {
+        return getExceptionWithStatus(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private ResponseEntity<String> getExceptionWithStatus(final Exception exception, final HttpStatus status) {

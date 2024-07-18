@@ -16,9 +16,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-import static com.atwoz.alert.fixture.AlertFixture.알림_생성_id_없음;
 import static com.atwoz.alert.fixture.AlertFixture.알림_생성_id_있음;
-import static com.atwoz.alert.fixture.AlertFixture.옛날_알림_생성;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -176,25 +174,5 @@ class AlertServiceTest {
             assertThatThrownBy(() -> alertService.readAlert(id, otherId))
                     .isInstanceOf(AlertNotFoundException.class);
         }
-    }
-
-    @Test
-    void 생성된_지_60일을_초과한_알림은_삭제_상태로_된다() {
-        // given
-        Long memberId = 1L;
-        Alert savedAlert = alertRepository.save(알림_생성_id_없음());
-        Alert savedOldAlert = alertRepository.save(옛날_알림_생성());
-
-        // when
-        alertService.deleteExpiredAlerts();
-
-        // then
-        Optional<Alert> foundSavedAlert = alertRepository.findByMemberIdAndId(memberId, savedAlert.getId());
-        Optional<Alert> foundSavedOldAlert = alertRepository.findByMemberIdAndId(memberId, savedOldAlert.getId());
-
-        assertSoftly(softly -> {
-            softly.assertThat(foundSavedAlert).isPresent();
-            softly.assertThat(foundSavedOldAlert).isEmpty();
-        });
     }
 }

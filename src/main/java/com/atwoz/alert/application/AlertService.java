@@ -6,7 +6,6 @@ import com.atwoz.alert.domain.AlertTokenRepository;
 import com.atwoz.alert.domain.vo.AlertGroup;
 import com.atwoz.alert.exception.exceptions.AlertNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @Service
 public class AlertService {
-
-    private static final String MIDNIGHT = "0 0 0 * * ?";
 
     private final AlertRepository alertRepository;
     private final AlertTokenRepository tokenRepository;
@@ -38,10 +35,5 @@ public class AlertService {
                 .orElseThrow(AlertNotFoundException::new);
         alert.read();
         return alert;
-    }
-
-    @Scheduled(cron = MIDNIGHT)
-    public void deleteExpiredAlerts() {
-        alertRepository.deleteExpiredAlerts();
     }
 }
