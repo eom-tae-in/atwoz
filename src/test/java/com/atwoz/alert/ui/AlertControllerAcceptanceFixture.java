@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import static com.atwoz.alert.fixture.AlertFixture.알림_생성_제목_날짜_회원id_주입;
-import static com.atwoz.member.fixture.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
