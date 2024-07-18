@@ -17,8 +17,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.event.RecordApplicationEvents;
 
-import static com.atwoz.member.fixture.auth.OAuthProviderFixture.인증_기관_생성;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static com.atwoz.member.fixture.auth.OAuthProviderFixture.인증_기관_생성;
+
 import static org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
