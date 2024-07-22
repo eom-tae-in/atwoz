@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.ThreadManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -70,8 +71,9 @@ public class FirebaseConfig {
         if (!FirebaseApp.getApps().isEmpty()) {
             return FirebaseApp.getInstance();
         }
-
+        ThreadManager threadManager = new FirebaseThreadManager();
         FirebaseOptions options = new FirebaseOptions.Builder()
+                .setThreadManager(threadManager)
                 .setCredentials(getCredentials())
                 .build();
         return FirebaseApp.initializeApp(options);
