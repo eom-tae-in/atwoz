@@ -1,5 +1,6 @@
 package com.atwoz.mission.application.membermission;
 
+import com.atwoz.global.application.BaseQueryService;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionPagingResponse;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionSimpleResponse;
@@ -12,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class MemberMissionsQueryService {
-
-    private static final int NEXT_PAGE_INDEX = 1;
-    private static final int NO_MORE_PAGE = -1;
+public class MemberMissionsQueryService extends BaseQueryService<MemberMissionSimpleResponse> {
 
     private final MemberMissionsRepository memberMissionsRepository;
 
@@ -23,13 +21,5 @@ public class MemberMissionsQueryService {
         Page<MemberMissionSimpleResponse> response = memberMissionsRepository.findMemberMissionsWithPaging(memberId, pageable);
         int nextPage = getNextPage(pageable.getPageNumber(), response);
         return MemberMissionPagingResponse.of(response, nextPage);
-    }
-
-    private int getNextPage(final int pageNumber, final Page<MemberMissionSimpleResponse> memberMissions) {
-        if (memberMissions.hasNext()) {
-            return pageNumber + NEXT_PAGE_INDEX;
-        }
-
-        return NO_MORE_PAGE;
     }
 }
