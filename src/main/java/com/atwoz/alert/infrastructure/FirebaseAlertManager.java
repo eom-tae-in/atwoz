@@ -25,6 +25,7 @@ public class FirebaseAlertManager implements AlertManager {
     private static final String GROUP = "group";
     private static final String SENDER = "sender";
     private static final String CREATED_TIME = "created_at";
+    private static final String BODY = "body";
     private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String THREAD_PROBLEM = "FCM 스레드에서 문제가 발생했습니다.";
     private static final String ALERT_FAIL = "알림 전송 실패";
@@ -55,7 +56,6 @@ public class FirebaseAlertManager implements AlertManager {
 
         Notification firebaseNotification = Notification.builder()
                 .setTitle(alert.getTitle())
-                .setBody(alert.getBody())
                 .build();
 
         return Message.builder()
@@ -64,6 +64,7 @@ public class FirebaseAlertManager implements AlertManager {
                 .setNotification(firebaseNotification)
                 .putData(SENDER, sender)
                 .putData(CREATED_TIME, time)
+                .putData(BODY, alert.getBody())
                 .build();
     }
 
