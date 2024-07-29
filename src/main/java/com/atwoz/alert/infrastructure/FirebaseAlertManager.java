@@ -80,12 +80,16 @@ public class FirebaseAlertManager implements AlertManager {
     }
 
     private void retryAlert(final Message message, final ExecutionException exception) {
-        if (exception.getCause() instanceof FirebaseMessagingException e) {
-            MessagingErrorCode errorCode = e.getMessagingErrorCode();
+        try {
+            Throwable cause = exception.getCause();
+            FirebaseMessagingException firebaseException = (FirebaseMessagingException) cause;
+            MessagingErrorCode errorCode = firebaseException.getMessagingErrorCode();
             if (!isRetryErrorCode(errorCode)) {
                 return;
             }
             retryInThreeTimes(message);
+        } catch (ClassCastException e) {
+            return;
         }
     }
 
@@ -113,14 +117,20 @@ public class FirebaseAlertManager implements AlertManager {
         try {
             firebase.sendAsync(message).get();
         } catch (Exception exception) {
-            if (exception.getCause() instanceof FirebaseMessagingException e) {
-                MessagingErrorCode errorCode = e.getMessagingErrorCode();
-                if (isRetryErrorCode(errorCode)) {
-                    return true;
-                }
-            }
+            return shouldRetryFirebaseException(exception);
         }
         return false;
+    }
+
+    private boolean shouldRetryFirebaseException(final Exception exception) {
+        try {
+            Throwable cause = exception.getCause();
+            FirebaseMessagingException firebaseException = (FirebaseMessagingException) cause;
+            MessagingErrorCode errorCode = firebaseException.getMessagingErrorCode();
+            return isRetryErrorCode(errorCode);
+        } catch (ClassCastException e) {
+            return false;
+        }
     }
 
     private void wait(final int retryCount) {
