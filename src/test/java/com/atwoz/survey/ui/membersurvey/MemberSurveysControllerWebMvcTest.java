@@ -40,6 +40,7 @@ class MemberSurveysControllerWebMvcTest extends MockBeanInjection {
 
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private MemberSurveysQueryService memberSurveysQueryService;
 
