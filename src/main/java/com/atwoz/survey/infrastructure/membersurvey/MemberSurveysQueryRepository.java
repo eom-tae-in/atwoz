@@ -3,21 +3,24 @@ package com.atwoz.survey.infrastructure.membersurvey;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyAnswerResponse;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyQuestionResponse;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static com.atwoz.survey.domain.membersurvey.QMemberSurvey.memberSurvey;
+import static com.atwoz.survey.domain.membersurvey.QMemberSurveys.memberSurveys1;
+import static com.querydsl.core.types.Projections.constructor;
 
 @RequiredArgsConstructor
 @Repository
-public class MemberSurveysJdbcRepository {
+public class MemberSurveysQueryRepository {
 
     private static final int MINIMUM_MATCH_SIZE = 30;
 
-    private final JdbcTemplate jdbcTemplate;
+    private final JPAQueryFactory jpaQueryFactory;
 
     public List<Long> findMatchMembers(final Long memberId) {
         List<MemberSurveyAnswerResponse> memberSurveyAnswerResponse = convertMemberSurveys(memberId);
@@ -34,24 +37,22 @@ public class MemberSurveysJdbcRepository {
     }
 
     private List<MemberSurveyAnswerResponse> convertMemberSurveys(final Long memberId) {
-        String sql = "SELECT mss.member_id, ms.survey_id, ms.question_id, ms.answer_number " +
-                "FROM member_surveys mss " +
-                "INNER JOIN member_survey ms " +
-                "ON mss.id = ms.member_surveys_id " +
-                "WHERE mss.member_id = ?";
-        return jdbcTemplate.query(sql, new Object[]{memberId},
-                (rs, rowNum) -> new MemberSurveyAnswerResponse(
-                        rs.getLong("member_id"),
-                        rs.getLong("survey_id"),
-                        rs.getLong("question_id"),
-                        rs.getInt("answer_number")
-                )
-        );
+        return jpaQueryFactory.select(constructor(MemberSurveyAnswerResponse.class,
+                memberSurveys1.memberId,
+                memberSurvey.surveyId,
+                memberSurvey.questionId,
+                memberSurvey.answerNumber)
+        ).from(memberSurveys1)
+                .join(memberSurveys1.memberSurveys, memberSurvey)
+                .where(memberSurveys1.memberId.eq(memberId))
+                .fetch();
     }
 
     private List<Long> collectMembersExceptCurrentMember(final Long memberId) {
-        String sql = "SELECT DISTINCT member_id FROM member_surveys WHERE member_id != ?";
-        return jdbcTemplate.queryForList(sql, new Object[]{memberId}, Long.class);
+        return jpaQueryFactory.selectDistinct(memberSurveys1.memberId)
+                .from(memberSurveys1)
+                .where(memberSurveys1.memberId.ne(memberId))
+                .fetch();
     }
 
     private boolean isMatched(final List<MemberSurveyAnswerResponse> memberResponse, final List<MemberSurveyAnswerResponse> otherResponse) {
@@ -66,26 +67,25 @@ public class MemberSurveysJdbcRepository {
         return matchedSurveyAnswer >= MINIMUM_MATCH_SIZE;
     }
 
-    private static boolean isSameAnswer(final MemberSurveyAnswerResponse member, final MemberSurveyAnswerResponse other) {
+    private boolean isSameAnswer(final MemberSurveyAnswerResponse member, final MemberSurveyAnswerResponse other) {
         return member.surveyId().equals(other.surveyId()) &&
                 member.questionId().equals(other.questionId()) &&
                 member.answerNumber().equals(other.answerNumber());
     }
 
     public Optional<MemberSurveyResponse> findMemberSurvey(final Long memberId, final Long surveyId) {
-        String sql = "SELECT ms.survey_id, ms.question_id, ms.answer_number FROM member_surveys mss " +
-                "INNER JOIN member_survey ms " +
-                "ON mss.id = ms.member_surveys_id " +
-                "WHERE mss.member_id = ? " +
-                "AND ms.survey_id = ?";
-
-        List<MemberSurveyQuestionResponse> questions = jdbcTemplate.query(sql, new Object[]{memberId, surveyId},
-                (rs, rowNum) -> new MemberSurveyQuestionResponse(
-                        rs.getLong("question_id"),
-                        rs.getInt("answer_number")
+        List<MemberSurveyQuestionResponse> questions = jpaQueryFactory.select(
+                        constructor(MemberSurveyQuestionResponse.class,
+                                memberSurvey.questionId,
+                                memberSurvey.answerNumber)
                 )
-        );
-
+                .from(memberSurveys1)
+                .join(memberSurveys1.memberSurveys, memberSurvey)
+                .where(
+                        memberSurveys1.memberId.eq(memberId)
+                                .and(memberSurvey.surveyId.eq(memberId))
+                )
+                .fetch();
         return Optional.of(new MemberSurveyResponse(surveyId, questions));
     }
 }
