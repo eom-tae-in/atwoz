@@ -1,9 +1,9 @@
 package com.atwoz.member.domain.member;
 
 import com.atwoz.global.domain.SoftDeleteBaseEntity;
-import com.atwoz.member.domain.member.dto.MemberProfileDto;
+import com.atwoz.member.domain.member.dto.initial.InternalProfileInitializeRequest;
+import com.atwoz.member.domain.member.dto.update.InternalProfileUpdateRequest;
 import com.atwoz.member.domain.member.vo.MemberGrade;
-import com.atwoz.member.domain.member.vo.MemberRole;
 import com.atwoz.member.domain.member.vo.MemberStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import static com.atwoz.member.domain.member.vo.MemberGrade.SILVER;
-import static com.atwoz.member.domain.member.vo.MemberRole.MEMBER;
 import static com.atwoz.member.domain.member.vo.MemberStatus.ACTIVE;
 
 @Getter
@@ -54,19 +54,13 @@ public class Member extends SoftDeleteBaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private MemberRole memberRole;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
     private MemberGrade memberGrade;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private MemberStatus memberStatus;
 
-    public boolean isAdmin() {
-        return this.memberRole.isAdministrator();
-    }
+    private LocalDate latestVisitDate;
 
     public static Member createWithOAuth(final String phoneNumber) {
         return Member.builder()
@@ -74,7 +68,19 @@ public class Member extends SoftDeleteBaseEntity {
                 .memberProfile(MemberProfile.createWith("남성"))
                 .memberGrade(SILVER)
                 .memberStatus(ACTIVE)
-                .memberRole(MEMBER)
+                .latestVisitDate(LocalDate.now())
+                .build();
+    }
+
+    // 테스트를 위해서 새로 만든 메서드
+    public static Member createWithOAuth(final String phoneNumber,
+                                         final MemberGrade memberGrade,
+                                         final String Gender) {
+        return Member.builder()
+                .phoneNumber(phoneNumber)
+                .memberProfile(MemberProfile.createWith(Gender))
+                .memberGrade(memberGrade)
+                .memberStatus(ACTIVE)
                 .build();
     }
 
@@ -85,15 +91,15 @@ public class Member extends SoftDeleteBaseEntity {
                 .memberProfile(MemberProfile.createWith(gender))
                 .memberGrade(SILVER)
                 .memberStatus(ACTIVE)
-                .memberRole(MEMBER)
                 .build();
     }
 
-    public void initializeWith(final String nickname, final Long recommenderId,
-                               final MemberProfileDto memberProfileDto) {
+    public void initializeWith(final String nickname,
+                               final Long recommenderId,
+                               final InternalProfileInitializeRequest internalProfileInitializeRequest) {
         this.nickname = nickname;
         initializeRecommenderId(recommenderId);
-        memberProfile.change(memberProfileDto);
+        memberProfile.initialize(internalProfileInitializeRequest);
     }
 
     private void initializeRecommenderId(final Long recommenderId) {
@@ -102,8 +108,13 @@ public class Member extends SoftDeleteBaseEntity {
         }
     }
 
-    public void updateWith(final String nickname, final MemberProfileDto memberProfileDto) {
+    public void updateWith(final String nickname,
+                           final InternalProfileUpdateRequest internalProfileUpdateRequest) {
         this.nickname = nickname;
-        memberProfile.change(memberProfileDto);
+        memberProfile.update(internalProfileUpdateRequest);
+    }
+
+    public void updateVisitStatus() {
+        latestVisitDate = LocalDate.now();
     }
 }
