@@ -7,6 +7,7 @@
 == atwoz Server API
 * link:member.html[회원 정보 API]
 * link:admin.html[관리자 정보 API]
+* link:selfIntro.html[셀프 소개글 API]
 * link:mission.html[미션 API]
 * link:membermissions.html[회원 미션 API]
 * link:survey.html[연애고사 API]
@@ -14,3 +15,5 @@
 * link:report.html[회원 신고 API]
 * link:likes.html[호감 API]
 * link:alert.html[알림 API]
+* link:hobby.html[취미 API]
+* link:style.html[스타일 API]
