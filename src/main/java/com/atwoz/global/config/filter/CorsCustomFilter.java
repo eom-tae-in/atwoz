@@ -15,7 +15,7 @@ public class CorsCustomFilter extends OncePerRequestFilter {
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", "https://admin.atwoz.kr");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
