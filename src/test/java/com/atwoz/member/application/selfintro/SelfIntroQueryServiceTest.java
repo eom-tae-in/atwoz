@@ -37,14 +37,14 @@ class SelfIntroQueryServiceTest {
         selfIntroRepository.save(selfIntro);
 
         // when
-        SelfIntrosResponse result = selfIntroQueryService.findAllSelfIntrosWithPaging(pageRequest,
-                selfIntro.getMemberId());
+        SelfIntrosResponse result = selfIntroQueryService.findAllSelfIntrosWithPaging(pageRequest);
 
         // then
         assertSoftly(softly -> {
             softly.assertThat(result.nowPage()).isEqualTo(0);
             softly.assertThat(result.nextPage()).isEqualTo(-1);
             softly.assertThat(result.totalPages()).isEqualTo(1);
+            softly.assertThat(result.totalElements()).isEqualTo(1);
             SelfIntroResponse selfIntroResponse = result.selfIntros().get(0);
             softly.assertThat(selfIntroResponse.selfIntroId()).isEqualTo(selfIntro.getId());
             softly.assertThat(selfIntroResponse.selfIntroContent()).isEqualTo(selfIntro.getContent());

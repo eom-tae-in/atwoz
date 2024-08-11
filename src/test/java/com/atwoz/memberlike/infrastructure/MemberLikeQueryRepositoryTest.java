@@ -3,6 +3,12 @@ package com.atwoz.memberlike.infrastructure;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.domain.member.profile.Hobby;
+import com.atwoz.member.domain.member.profile.HobbyRepository;
+import com.atwoz.member.domain.member.profile.Style;
+import com.atwoz.member.domain.member.profile.StyleRepository;
+import com.atwoz.member.fixture.member.generator.HobbyGenerator;
+import com.atwoz.member.fixture.member.generator.StyleGenerator;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
@@ -18,8 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
-import static com.atwoz.member.fixture.member.MemberProfileDtoFixture.회원_프로필_DTO_요청;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_취미목록_스타일목록;
 import static com.atwoz.memberlike.fixture.MemberLikeFixture.호감_생성_id_날짜_주입;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -36,10 +41,26 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private HobbyRepository hobbyRepository;
+
+    @Autowired
+    private StyleRepository styleRepository;
+
+    private List<Hobby> hobbies;
+
+    private List<Style> styles;
+
     @BeforeEach
     void addMember() {
-        Member member = 일반_유저_생성("회원 1", "000-0000-0001");
-        member.updateWith("회원 1", 회원_프로필_DTO_요청());
+        hobbies = List.of(HobbyGenerator.취미_생성(hobbyRepository, "hobby1", "code1"));
+        styles = List.of(StyleGenerator.스타일_생성(styleRepository, "style1", "code1"));
+        Member member = 회원_생성_닉네임_전화번호_취미목록_스타일목록(
+                "회원 1",
+                "000-0000-0001",
+                hobbies,
+                styles
+        );
         memberRepository.save(member);
     }
 
@@ -50,8 +71,12 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
         List<MemberLike> memberLikes = new ArrayList<>();
 
         for (long i = 2L; i <= 15L; i++) {
-            Member member = 일반_유저_생성("회원 " + i, "000-0000-000" + i);
-            member.initializeWith("회원 " + i, i + 1, 회원_프로필_DTO_요청());
+            Member member = 회원_생성_닉네임_전화번호_취미목록_스타일목록(
+                    "회원 " + i,
+                    "000-0000-000" + i,
+                    hobbies,
+                    styles
+            );
             memberRepository.save(member);
             MemberLike memberLike = 호감_생성_id_날짜_주입(senderId, i, (int) i);
             memberLikeRepository.save(memberLike);
@@ -96,8 +121,12 @@ class MemberLikeQueryRepositoryTest extends IntegrationHelper {
         List<MemberLike> memberLikes = new ArrayList<>();
 
         for (long i = 2L; i <= 15L; i++) {
-            Member member = 일반_유저_생성("회원 " + i, "000-0000-000" + i);
-            member.initializeWith("회원 " + i, i + 1, 회원_프로필_DTO_요청());
+            Member member = 회원_생성_닉네임_전화번호_취미목록_스타일목록(
+                    "회원 " + i,
+                    "000-0000-000" + i,
+                    hobbies,
+                    styles
+            );
             memberRepository.save(member);
             MemberLike memberLike = 호감_생성_id_날짜_주입(i, receiverId, (int) i);
             memberLikeRepository.save(memberLike);

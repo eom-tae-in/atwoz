@@ -3,8 +3,13 @@ package com.atwoz.member.infrastructure.selfintro;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.domain.member.profile.Hobby;
+import com.atwoz.member.domain.member.profile.HobbyRepository;
+import com.atwoz.member.domain.member.profile.Style;
+import com.atwoz.member.domain.member.profile.StyleRepository;
 import com.atwoz.member.domain.selfintro.SelfIntro;
 import com.atwoz.member.domain.selfintro.SelfIntroRepository;
+import com.atwoz.member.fixture.member.generator.UniqueMemberFieldsGenerator;
 import com.atwoz.member.infrastructure.selfintro.dto.SelfIntroResponse;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,7 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_생년월일_취미목록_스타일목록;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
+import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
+import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
 import static com.atwoz.member.fixture.selfintro.SelfIntroFixture.셀프_소개글_생성_id_없음;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -35,11 +43,29 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private HobbyRepository hobbyRepository;
+
+    @Autowired
+    private StyleRepository styleRepository;
+
+    private UniqueMemberFieldsGenerator uniqueMemberFieldsGenerator;
+
     private Member member;
+
+    private List<Hobby> hobbies;
+
+    private List<Style> styles;
 
     @BeforeEach
     void setup() {
-        member = memberRepository.save(일반_유저_생성());
+        hobbies = List.of(취미_생성(hobbyRepository, "hobby1", "code1"));
+        styles = List.of(스타일_생성(styleRepository, "style1", "code1"));
+        member = memberRepository.save(회원_생성_취미목록_스타일목록(
+                hobbies,
+                styles
+        ));
+        uniqueMemberFieldsGenerator = new UniqueMemberFieldsGenerator();
     }
 
     @Test
@@ -50,8 +76,7 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         // when
-        Page<SelfIntroResponse> selfIntroResponses = selfIntroQueryRepository.findAllSelfIntroWithPaging(
-                pageRequest, member.getId());
+        Page<SelfIntroResponse> selfIntroResponses = selfIntroQueryRepository.findAllSelfIntroWithPaging(pageRequest);
 
         // then
         List<SelfIntroResponse> results = selfIntroResponses.getContent();
@@ -59,7 +84,6 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
                 .sorted(Comparator.comparing(SelfIntro::getCreatedAt).reversed())
                 .limit(10)
                 .toList();
-
         assertSoftly(softly -> {
             softly.assertThat(selfIntroResponses.hasNext()).isTrue();
             softly.assertThat(selfIntroResponses.getTotalElements()).isEqualTo(25);
@@ -78,8 +102,8 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
     @Test
     void 셀프_소개글을_여러가지_기준으로_필터링한_후_10개씩_페이징해서_조회한다() {
         // given
-        Member member1 = 일반_유저_생성(1990, "01022222222");
-        Member member2 = 일반_유저_생성(2000, "01033333333");
+        Member member1 = 회원_생성_1990년생();
+        Member member2 = 회원_생성_2000년생();
         memberRepository.save(member1);
         memberRepository.save(member2);
         List<SelfIntro> selfIntros = new ArrayList<>();
@@ -123,5 +147,31 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
                                 final Long memberId) {
         IntStream.range(0, endExclusive)
                 .forEach(i -> selfIntros.add(selfIntroRepository.save(셀프_소개글_생성_id_없음(memberId))));
+    }
+
+    private Member 회원_생성_1990년생() {
+        String nickname = uniqueMemberFieldsGenerator.generateNickname();
+        String phoneNumber = uniqueMemberFieldsGenerator.generatePhoneNumber();
+
+        return 회원_생성_닉네임_전화번호_생년월일_취미목록_스타일목록(
+                nickname,
+                phoneNumber,
+                1990,
+                hobbies,
+                styles
+        );
+    }
+
+    private Member 회원_생성_2000년생() {
+        String nickname = uniqueMemberFieldsGenerator.generateNickname();
+        String phoneNumber = uniqueMemberFieldsGenerator.generatePhoneNumber();
+
+        return 회원_생성_닉네임_전화번호_생년월일_취미목록_스타일목록(
+                nickname,
+                phoneNumber,
+                2000,
+                hobbies,
+                styles
+        );
     }
 }

@@ -21,14 +21,13 @@ class SelfIntroControllerAcceptanceTest extends SelfIntroControllerAcceptanceTes
     private static final String 셀프_소개글_수정_URL = "/api/members/self-intros/1";
     private static final String 셀프_소개글_삭제_URI = "/api/members/self-intros/1";
 
-    private Member 회원;
     private String 토큰;
     private SelfIntro 셀프_소개글;
 
     @BeforeEach
     void setup() {
         셀프_소개글 = 셀프_소개글_생성_id_없음();
-        회원 = 회원_저장();
+        Member 회원 = 회원_생성();
         토큰 = 토큰_생성(회원);
     }
 

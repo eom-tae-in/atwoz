@@ -11,6 +11,10 @@ import com.atwoz.alert.application.AlertService;
 import com.atwoz.member.application.auth.MemberAuthService;
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
+import com.atwoz.member.application.member.profile.hobby.HobbyQueryService;
+import com.atwoz.member.application.member.profile.hobby.HobbyService;
+import com.atwoz.member.application.member.profile.style.StyleQueryService;
+import com.atwoz.member.application.member.profile.style.StyleService;
 import com.atwoz.member.application.selfintro.SelfIntroQueryService;
 import com.atwoz.member.application.selfintro.SelfIntroService;
 import com.atwoz.member.domain.auth.JsonMapper;
@@ -141,4 +145,18 @@ public class MockBeanInjection {
 
     @MockBean
     protected SelfIntroService selfIntroService;
+
+    // Hobby
+    @MockBean
+    protected HobbyService hobbyService;
+
+    @MockBean
+    protected HobbyQueryService hobbyQueryService;
+
+    // Style
+    @MockBean
+    protected StyleService styleService;
+
+    @MockBean
+    protected StyleQueryService styleQueryService;
 }

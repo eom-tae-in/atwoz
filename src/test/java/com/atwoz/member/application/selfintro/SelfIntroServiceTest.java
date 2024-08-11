@@ -45,7 +45,7 @@ class SelfIntroServiceTest {
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(foundSelfIntro).isNotEmpty();
+            softly.assertThat(foundSelfIntro).isPresent();
             SelfIntro selfIntro = foundSelfIntro.get();
             softly.assertThat(selfIntro.getContent()).isEqualTo(selfIntroCreateRequest.content());
         });

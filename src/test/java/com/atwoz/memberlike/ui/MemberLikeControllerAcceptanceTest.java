@@ -21,7 +21,7 @@ class MemberLikeControllerAcceptanceTest extends MemberLikeControllerAcceptanceF
 
     @BeforeEach
     void setup() {
-        회원 = 회원_생성();
+        회원 = 초기_회원_생성();
         토큰 = 토큰_생성(회원);
     }
 
