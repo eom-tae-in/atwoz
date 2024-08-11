@@ -33,9 +33,8 @@ public class SelfIntroRepositoryImpl implements SelfIntroRepository {
     }
 
     @Override
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPaging(final Pageable pageable,
-                                                               final Long memberId) {
-        return selfIntroQueryRepository.findAllSelfIntroWithPaging(pageable, memberId);
+    public Page<SelfIntroResponse> findAllSelfIntrosWithPaging(final Pageable pageable) {
+        return selfIntroQueryRepository.findAllSelfIntroWithPaging(pageable);
     }
 
     @Override
@@ -45,7 +44,13 @@ public class SelfIntroRepositoryImpl implements SelfIntroRepository {
                                                                            final boolean isOnlyOppositeGender,
                                                                            final List<String> cities,
                                                                            final Long memberId) {
-        return selfIntroQueryRepository.findAllSelfIntrosWithPagingAndFiltering(pageable, minAge, maxAge,
-                isOnlyOppositeGender, cities, memberId);
+        return selfIntroQueryRepository.findAllSelfIntrosWithPagingAndFiltering(
+                pageable,
+                minAge,
+                maxAge,
+                isOnlyOppositeGender,
+                cities,
+                memberId
+        );
     }
 }
