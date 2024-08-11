@@ -1,4 +1,4 @@
-package com.atwoz.member.exception.exceptions.member.profile;
+package com.atwoz.member.exception.exceptions.member.profile.style;
 
 public class InvalidStyleException extends RuntimeException {
 
