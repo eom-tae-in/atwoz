@@ -45,10 +45,8 @@ public class SelfIntroController {
 
     @GetMapping
     public ResponseEntity<SelfIntrosResponse> findAllSelfIntrosWithPaging(
-            @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable,
-            @AuthMember final Long memberId
-    ) {
-        return ResponseEntity.ok(selfIntroQueryService.findAllSelfIntrosWithPaging(pageable, memberId));
+            @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable) {
+        return ResponseEntity.ok(selfIntroQueryService.findAllSelfIntrosWithPaging(pageable));
     }
 
     @GetMapping("/filter")
