@@ -1,15 +1,18 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.dto.MemberProfileDto;
+import com.atwoz.member.domain.member.dto.initial.InternalProfileInitializeRequest;
+import com.atwoz.member.domain.member.dto.update.InternalProfileUpdateRequest;
 import com.atwoz.member.domain.member.profile.physical.PhysicalProfile;
 import com.atwoz.member.domain.member.profile.vo.Drink;
 import com.atwoz.member.domain.member.profile.vo.Graduate;
 import com.atwoz.member.domain.member.profile.vo.Job;
 import com.atwoz.member.domain.member.profile.vo.Location;
 import com.atwoz.member.domain.member.profile.vo.Mbti;
+import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import com.atwoz.member.domain.member.profile.vo.Religion;
 import com.atwoz.member.domain.member.profile.vo.Smoke;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,7 +51,6 @@ public class Profile {
     private Smoke smoke;
 
     @Enumerated(value = EnumType.STRING)
-
     private Drink drink;
 
     @Enumerated(value = EnumType.STRING)
@@ -56,6 +58,10 @@ public class Profile {
 
     @Enumerated(value = EnumType.STRING)
     private Mbti mbti;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private ProfileAccessStatus profileAccessStatus;
 
     // 키, 성별, 나이
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -73,21 +79,58 @@ public class Profile {
     public static Profile createWith(final String gender) {
         return Profile.builder()
                 .physicalProfile(PhysicalProfile.createWith(gender))
+                .profileAccessStatus(ProfileAccessStatus.WAITING)
                 .memberHobbies(new MemberHobbies())
                 .memberStyles(new MemberStyles())
                 .build();
     }
 
-    public void change(final MemberProfileDto memberProfileDto) {
-        this.job = Job.findByCode(memberProfileDto.job());
-        this.graduate = Graduate.findByName(memberProfileDto.graduate());
-        this.smoke = Smoke.findByName(memberProfileDto.smoke());
-        this.drink = Drink.findByName(memberProfileDto.drink());
-        this.religion = Religion.findByName(memberProfileDto.religion());
-        this.mbti = Mbti.findByName(memberProfileDto.mbti());
-        this.physicalProfile.change(memberProfileDto.physicalProfileDto());
-        this.location = new Location(memberProfileDto.city(), memberProfileDto.sector());
-        this.memberHobbies.change(memberProfileDto.getHobbies());
-        this.memberStyles.change(memberProfileDto.getStyles());
+    public void initialize(final InternalProfileInitializeRequest request) {
+        changeProfileFields(
+                request.job(),
+                request.graduate(),
+                request.smoke(),
+                request.drink(),
+                request.religion(),
+                request.mbti(),
+                request.city(),
+                request.sector()
+        );
+        this.physicalProfile.initialize(request.internalPhysicalProfileInitializeRequest());
+        this.memberHobbies.initialize(request.internalHobbiesInitializeRequest());
+        this.memberStyles.initialize(request.internalStylesInitializeRequest());
+    }
+
+    public void update(final InternalProfileUpdateRequest request) {
+        changeProfileFields(
+                request.job(),
+                request.graduate(),
+                request.smoke(),
+                request.drink(),
+                request.religion(),
+                request.mbti(),
+                request.city(),
+                request.sector()
+        );
+        this.physicalProfile.update(request.internalPhysicalProfileUpdateRequest());
+        this.memberHobbies.update(request.internalHobbiesUpdateRequest());
+        this.memberStyles.update(request.internalStylesUpdateRequest());
+    }
+
+    private void changeProfileFields(final String job,
+                                     final String graduate,
+                                     final String smoke,
+                                     final String drink,
+                                     final String religion,
+                                     final String mbti,
+                                     final String city,
+                                     final String sector) {
+        this.job = Job.findByCode(job);
+        this.graduate = Graduate.findByName(graduate);
+        this.smoke = Smoke.findByName(smoke);
+        this.drink = Drink.findByName(drink);
+        this.religion = Religion.findByName(religion);
+        this.mbti = Mbti.findByName(mbti);
+        this.location = new Location(city, sector);
     }
 }
