@@ -1,6 +1,7 @@
 package com.atwoz.member.domain.member.profile.physical;
 
-import com.atwoz.member.domain.member.dto.PhysicalProfileDto;
+import com.atwoz.member.domain.member.dto.initial.InternalPhysicalProfileInitializeRequest;
+import com.atwoz.member.domain.member.dto.update.InternalPhysicalProfileUpdateRequest;
 import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.exception.exceptions.member.profile.physical.AgeRangeException;
 import com.atwoz.member.exception.exceptions.member.profile.physical.HeightRangeException;
@@ -49,9 +50,14 @@ public class PhysicalProfile {
                 .build();
     }
 
-    public void change(final PhysicalProfileDto physicalProfileDto) {
-        changeAge(physicalProfileDto.birthYear(), physicalProfileDto.yearManager());
-        changeHeight(physicalProfileDto.height());
+    public void initialize(final InternalPhysicalProfileInitializeRequest request) {
+        changeAge(request.birthYear(), request.yearManager());
+        changeHeight(request.height());
+    }
+
+    public void update(final InternalPhysicalProfileUpdateRequest request) {
+        changeAge(request.birthYear(), request.yearManager());
+        changeHeight(request.height());
     }
 
     private void changeAge(final int birthYear, final YearManager yearManager) {
@@ -59,7 +65,6 @@ public class PhysicalProfile {
         validateAge(memberAge);
         this.age = memberAge;
     }
-
 
     private int calculateMemberAge(final int birthYear, final YearManager yearManager) {
         int currentYear = yearManager.getCurrentYear();
