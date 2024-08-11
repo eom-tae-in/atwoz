@@ -1,10 +1,10 @@
 package com.atwoz.member.ui.member.profile.hobby;
 
+import com.atwoz.admin.application.auth.AdminAccessTokenProvider;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyCreateRequest;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyResponses;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyUpdateRequest;
-import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.domain.member.profile.Hobby;
@@ -36,7 +36,7 @@ public class HobbyControllerAcceptanceTestFixture extends IntegrationHelper {
     private MemberRepository memberRepository;
 
     @Autowired
-    private MemberTokenProvider memberTokenProvider;
+    private AdminAccessTokenProvider adminAccessTokenProvider;
 
     @Autowired
     private HobbyRepository hobbyRepository;
@@ -59,7 +59,7 @@ public class HobbyControllerAcceptanceTestFixture extends IntegrationHelper {
     }
 
     protected String 토큰_생성(final Member member) {
-        return memberTokenProvider.createAccessToken(member.getId());
+        return adminAccessTokenProvider.createAccessToken(member.getId());
     }
 
     protected Hobby 새로운_취미_생성() {

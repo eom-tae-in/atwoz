@@ -1,10 +1,10 @@
 package com.atwoz.member.ui.member.profile.style;
 
+import com.atwoz.admin.application.auth.AdminAccessTokenProvider;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.application.member.profile.style.dto.StyleCreateRequest;
 import com.atwoz.member.application.member.profile.style.dto.StyleResponses;
 import com.atwoz.member.application.member.profile.style.dto.StyleUpdateRequest;
-import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.domain.member.profile.Hobby;
@@ -39,7 +39,7 @@ public class StyleControllerAcceptanceTestFixture extends IntegrationHelper {
     private MemberRepository memberRepository;
 
     @Autowired
-    private MemberTokenProvider memberTokenProvider;
+    private AdminAccessTokenProvider adminAccessTokenProvider;
 
     @Autowired
     private HobbyRepository hobbyRepository;
@@ -62,7 +62,7 @@ public class StyleControllerAcceptanceTestFixture extends IntegrationHelper {
     }
 
     protected String 토큰_생성(final Member member) {
-        return memberTokenProvider.createAccessToken(member.getId());
+        return adminAccessTokenProvider.createAccessToken(member.getId());
     }
 
     protected Style 새로운_스타일_생성() {
