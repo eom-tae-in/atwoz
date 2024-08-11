@@ -1,6 +1,7 @@
 package com.atwoz.member.domain.member;
 
-import com.atwoz.member.domain.member.dto.MemberProfileDto;
+import com.atwoz.member.domain.member.dto.initial.InternalProfileInitializeRequest;
+import com.atwoz.member.domain.member.dto.update.InternalProfileUpdateRequest;
 import com.atwoz.member.domain.member.profile.Profile;
 import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import jakarta.persistence.CascadeType;
@@ -46,8 +47,12 @@ public class MemberProfile {
                 .build();
     }
 
-    public void change(final MemberProfileDto memberProfileDto) {
-        profile.change(memberProfileDto);
+    public void initialize(final InternalProfileInitializeRequest internalProfileInitializeRequest) {
+        profile.initialize(internalProfileInitializeRequest);
+    }
+
+    public void update(final InternalProfileUpdateRequest internalProfileUpdateRequest) {
+        profile.update(internalProfileUpdateRequest);
     }
 
     public void changeProfileAccessStatus(final String status) {
