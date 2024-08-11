@@ -1,0 +1,66 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Style
+
+=== 스타일 저장 (POST /api/members/styles)
+
+==== 요청
+include::{snippets}/style-controller-web-mvc-test/스타일_저장/http-request.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_저장/request-headers.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_저장/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/style-controller-web-mvc-test/스타일_저장/http-response.adoc[]
+
+
+=== 스타일 단건 조회 (GET /api/members/styles/{styleId})
+
+==== 요청
+include::{snippets}/style-controller-web-mvc-test/스타일_단건_조회/http-request.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_단건_조회/path-parameters.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_단건_조회/request-headers.adoc[]
+
+==== 응답
+include::{snippets}/style-controller-web-mvc-test/스타일_단건_조회/http-response.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_단건_조회/response-fields.adoc[]
+
+
+=== 스타일 페이징 조회 (GET /api/members/styles)
+
+==== 요청
+include::{snippets}/style-controller-web-mvc-test/스타일_페이징_조회/http-request.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_페이징_조회/request-headers.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_페이징_조회/request-parts.adoc[]
+
+==== 응답
+include::{snippets}/style-controller-web-mvc-test/스타일_페이징_조회/http-response.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_페이징_조회/response-fields.adoc[]
+
+
+=== 스타일 업데이트 (PATCH /api/members/styles/{styleId})
+
+==== 요청
+include::{snippets}/style-controller-web-mvc-test/스타일_업데이트/http-request.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_업데이트/path-parameters.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_업데이트/request-headers.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_업데이트/request-fields.adoc[]
+
+
+==== 응답
+include::{snippets}/style-controller-web-mvc-test/스타일_업데이트/http-response.adoc[]
+
+
+=== 스타일 삭제 (DELETE /api/members/styles/{styleId})
+
+==== 요청
+include::{snippets}/style-controller-web-mvc-test/스타일_삭제/http-request.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_삭제/path-parameters.adoc[]
+include::{snippets}/style-controller-web-mvc-test/스타일_삭제/request-headers.adoc[]
+
+==== 응답
+include::{snippets}/style-controller-web-mvc-test/스타일_삭제/http-response.adoc[]
