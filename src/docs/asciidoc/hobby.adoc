@@ -1,0 +1,64 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Hobby
+
+=== 취미 저장 (POST /api/members/hobbies)
+
+==== 요청
+include::{snippets}/hobby-controller-web-mvc-test/취미_저장/http-request.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_저장/request-headers.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_저장/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/hobby-controller-web-mvc-test/취미_저장/http-response.adoc[]
+
+=== 취미 단건 조회 (GET /api/members/hobbies/{hobbyId})
+
+==== 요청
+include::{snippets}/hobby-controller-web-mvc-test/취미_단건_조회/http-request.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_단건_조회/path-parameters.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_단건_조회/request-headers.adoc[]
+
+==== 응답
+include::{snippets}/hobby-controller-web-mvc-test/취미_단건_조회/http-response.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_단건_조회/response-fields.adoc[]
+
+
+=== 취미 페이징 조회 (GET /api/members/hobbies)
+
+==== 요청
+include::{snippets}/hobby-controller-web-mvc-test/취미_페이징_조회/http-request.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_페이징_조회/request-headers.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_페이징_조회/request-parts.adoc[]
+
+==== 응답
+include::{snippets}/hobby-controller-web-mvc-test/취미_페이징_조회/http-response.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_페이징_조회/response-fields.adoc[]
+
+
+=== 취미 업데이트 (PATCH /api/members/hobbies/{hobbyId})
+
+==== 요청
+include::{snippets}/hobby-controller-web-mvc-test/취미_업데이트/http-request.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_업데이트/path-parameters.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_업데이트/request-headers.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_업데이트/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/hobby-controller-web-mvc-test/취미_업데이트/http-response.adoc[]
+
+
+=== 취미 삭제 (DELETE /api/members/hobbies/{hobbyId})
+
+==== 요청
+include::{snippets}/hobby-controller-web-mvc-test/취미_삭제/http-request.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_삭제/request-headers.adoc[]
+include::{snippets}/hobby-controller-web-mvc-test/취미_삭제/path-parameters.adoc[]
+
+==== 응답
+include::{snippets}/hobby-controller-web-mvc-test/취미_삭제/http-response.adoc[]
