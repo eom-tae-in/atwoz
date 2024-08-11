@@ -1,9 +1,9 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.profile.vo.Style;
-import com.atwoz.member.exception.exceptions.member.profile.InvalidStyleException;
-import com.atwoz.member.exception.exceptions.member.profile.StyleDuplicateException;
-import com.atwoz.member.exception.exceptions.member.profile.StyleSizeException;
+import com.atwoz.member.domain.member.dto.initial.InternalStylesInitializeRequest;
+import com.atwoz.member.domain.member.dto.update.InternalStylesUpdateRequest;
+import com.atwoz.member.exception.exceptions.member.profile.style.MemberStyleDuplicateException;
+import com.atwoz.member.exception.exceptions.member.profile.style.MemberStyleSizeException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,54 +39,52 @@ public class MemberStyles {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MemberStyle> styles = new HashSet<>();
 
-    public void change(final List<String> styleCodes) {
-        validateStyleCodes(styleCodes);
-        changeStyles(styleCodes);
+    public void initialize(final InternalStylesInitializeRequest request) {
+        List<MemberStyle> requestedMemberStyles = request.memberStyles();
+        validateStyleCodes(requestedMemberStyles);
+        changeStyles(requestedMemberStyles);
     }
 
-    private void validateStyleCodes(final List<String> styleCodes) {
-        validateSize(styleCodes);
-        validateDuplicates(styleCodes);
-        validateHasInvalidCodes(styleCodes);
+    public void update(final InternalStylesUpdateRequest request) {
+        List<MemberStyle> requestedMemberStyles = request.styles();
+        validateStyleCodes(requestedMemberStyles);
+        changeStyles(requestedMemberStyles);
     }
 
-    private void validateSize(final List<String> styleCodes) {
-        int size = styleCodes.size();
+    private void validateStyleCodes(final List<MemberStyle> memberStyles) {
+        validateSize(memberStyles);
+        validateDuplicates(memberStyles);
+    }
+
+    private void validateSize(final List<MemberStyle> memberStyles) {
+        int size = memberStyles.size();
 
         if (size < MIN_STYLE_SIZE || MAX_STYLE_SIZE < size) {
-            throw new StyleSizeException();
+            throw new MemberStyleSizeException();
         }
     }
 
-    private void validateDuplicates(final List<String> styleCodes) {
-        HashSet<String> uniqueCodes = new HashSet<>(styleCodes);
+    private void validateDuplicates(final List<MemberStyle> memberStyles) {
+        Set<String> uniqueStyleKeys = new HashSet<>();
 
-        if (uniqueCodes.size() != styleCodes.size()) {
-            throw new StyleDuplicateException();
+        for (MemberStyle memberStyle : memberStyles) {
+            Style style = memberStyle.getStyle();
+            String key = style.getName() + style.getCode();
+            if (!uniqueStyleKeys.add(key)) {
+                throw new MemberStyleDuplicateException();
+            }
         }
     }
 
-    private void validateHasInvalidCodes(final List<String> styleCodes) {
-        if (hasInvalidStyleCode(styleCodes)) {
-            throw new InvalidStyleException();
-        }
+    private void changeStyles(final List<MemberStyle> requestedMemberStyles) {
+        styles.removeIf(memberStyle -> !requestedMemberStyles.contains(memberStyle));
+        requestedMemberStyles.stream()
+                .filter(this::isNewStyle)
+                .forEach(requestedMemberStyle -> styles.add(requestedMemberStyle));
     }
 
-    private boolean hasInvalidStyleCode(final List<String> styleCodes) {
-        return styleCodes.stream()
-                .anyMatch(styleCode -> !Style.isValidCode(styleCode));
-    }
-
-    private void changeStyles(final List<String> styleCodes) {
-        styles.removeIf(memberStyle -> !memberStyle.hasMatchingStyleCodeOf(styleCodes));
-        styleCodes.stream()
-                .map(MemberStyle::createWith)
-                .filter(memberStyle -> !isAlreadyExist(memberStyle))
-                .forEach(memberStyle -> styles.add(memberStyle));
-    }
-
-    private boolean isAlreadyExist(final MemberStyle memberStyle) {
+    private boolean isNewStyle(final MemberStyle requestedMemberStyle) {
         return styles.stream()
-                .anyMatch(memberStyle::isSame);
+                .noneMatch(memberStyle -> memberStyle.isSame(requestedMemberStyle));
     }
 }

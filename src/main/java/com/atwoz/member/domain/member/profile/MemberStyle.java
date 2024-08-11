@@ -1,13 +1,12 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.profile.vo.Style;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.List;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 public class MemberStyle {
 
@@ -25,20 +24,17 @@ public class MemberStyle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "style_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Style style;
 
-    public static MemberStyle createWith(final String styleCode) {
+    public static MemberStyle createWith(final Style style) {
         return MemberStyle.builder()
-                .style(Style.findByCode(styleCode))
+                .style(style)
                 .build();
     }
 
-    public boolean hasMatchingStyleCodeOf(final List<String> styleCodes) {
-        return styleCodes.contains(style.getCode());
-    }
-
     public boolean isSame(final MemberStyle memberStyle) {
-        return this.style.equals(memberStyle.style);
+        return this.equals(memberStyle);
     }
 }
