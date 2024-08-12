@@ -12,8 +12,8 @@ public record InternalStylesInitializeRequest(
         return new InternalStylesInitializeRequest(convertToMemberStyles(styles));
     }
 
-    private static List<MemberStyle> convertToMemberStyles(final List<Style> hobbies) {
-        return hobbies.stream()
+    private static List<MemberStyle> convertToMemberStyles(final List<Style> styles) {
+        return styles.stream()
                 .map(MemberStyle::createWith)
                 .toList();
     }
