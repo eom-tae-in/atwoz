@@ -30,11 +30,13 @@ public class Hobby {
     @Column(nullable = false, unique = true)
     private String code;
 
+    private Hobby(final String name, final String code) {
+        this.name = name;
+        this.code = code;
+    }
+
     public static Hobby createWith(final String name, final String code) {
-        return Hobby.builder()
-                .name(name)
-                .code(code)
-                .build();
+        return new Hobby(name, code);
     }
 
     public void update(final String name, final String code) {

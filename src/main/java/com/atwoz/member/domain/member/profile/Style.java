@@ -30,16 +30,16 @@ public class Style {
     @Column(nullable = false)
     private String code;
 
-    public static Style createWith(final String name,
-                                   final String code) {
-        return Style.builder()
-                .name(name)
-                .code(code)
-                .build();
+    private Style(final String name, final String code) {
+        this.name = name;
+        this.code = code;
     }
 
-    public void update(final String name,
-                       final String code) {
+    public static Style createWith(final String name, final String code) {
+        return new Style(name, code);
+    }
+
+    public void update(final String name, final String code) {
         this.name = name;
         this.code = code;
     }
