@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-//@EqualsAndHashCode(of = "hobby")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
