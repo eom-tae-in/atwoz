@@ -3,8 +3,8 @@ package com.atwoz.member.ui.selfintro;
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.member.application.selfintro.dto.SelfIntroCreateRequest;
 import com.atwoz.member.application.selfintro.dto.SelfIntroFilterRequest;
+import com.atwoz.member.application.selfintro.dto.SelfIntroResponses;
 import com.atwoz.member.application.selfintro.dto.SelfIntroUpdateRequest;
-import com.atwoz.member.application.selfintro.dto.SelfIntrosResponse;
 import com.atwoz.member.domain.selfintro.SelfIntro;
 import com.atwoz.member.infrastructure.selfintro.dto.SelfIntroResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,7 +84,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
         // given
         List<SelfIntroResponse> selfIntroResponses = List.of(셀프_소개글_응답());
         when(selfIntroQueryService.findAllSelfIntrosWithPaging(any(Pageable.class)))
-                .thenReturn(new SelfIntrosResponse(selfIntroResponses, 0, 1, 2, 1));
+                .thenReturn(new SelfIntroResponses(selfIntroResponses, 0, 1, 2, 1));
 
         // when & then
         mockMvc.perform(get("/api/members/self-intros")
@@ -122,7 +122,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
         List<SelfIntroResponse> selfIntroResponses = List.of(셀프_소개글_응답());
         when(selfIntroQueryService.findAllSelfIntrosWithPagingAndFiltering(
                 any(Pageable.class), any(SelfIntroFilterRequest.class), any())
-        ).thenReturn(new SelfIntrosResponse(selfIntroResponses, 0, 1, 2, 1));
+        ).thenReturn(new SelfIntroResponses(selfIntroResponses, 0, 1, 2, 1));
 
         // when & then
         mockMvc.perform(get("/api/members/self-intros/filter")

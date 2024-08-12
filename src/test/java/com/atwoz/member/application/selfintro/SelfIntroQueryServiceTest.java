@@ -1,7 +1,7 @@
 package com.atwoz.member.application.selfintro;
 
 import com.atwoz.member.application.selfintro.dto.SelfIntroFilterRequest;
-import com.atwoz.member.application.selfintro.dto.SelfIntrosResponse;
+import com.atwoz.member.application.selfintro.dto.SelfIntroResponses;
 import com.atwoz.member.domain.selfintro.SelfIntro;
 import com.atwoz.member.domain.selfintro.SelfIntroRepository;
 import com.atwoz.member.infrastructure.selfintro.SelfIntroFakeRepository;
@@ -37,7 +37,7 @@ class SelfIntroQueryServiceTest {
         selfIntroRepository.save(selfIntro);
 
         // when
-        SelfIntrosResponse result = selfIntroQueryService.findAllSelfIntrosWithPaging(pageRequest);
+        SelfIntroResponses result = selfIntroQueryService.findAllSelfIntrosWithPaging(pageRequest);
 
         // then
         assertSoftly(softly -> {
@@ -60,7 +60,7 @@ class SelfIntroQueryServiceTest {
         selfIntroRepository.save(selfIntro);
 
         // when
-        SelfIntrosResponse result = selfIntroQueryService.findAllSelfIntrosWithPagingAndFiltering(pageRequest,
+        SelfIntroResponses result = selfIntroQueryService.findAllSelfIntrosWithPagingAndFiltering(pageRequest,
                 selfIntroFilterRequest, selfIntro.getMemberId());
 
         // then
