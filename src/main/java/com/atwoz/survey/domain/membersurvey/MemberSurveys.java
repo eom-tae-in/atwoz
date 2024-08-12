@@ -38,11 +38,13 @@ public class MemberSurveys {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MemberSurvey> memberSurveys = new ArrayList<>();
 
+    private MemberSurveys(final Long memberId, final List<MemberSurvey> memberSurveys) {
+        this.memberId = memberId;
+        this.memberSurveys = memberSurveys;
+    }
+
     public static MemberSurveys createWithMemberId(final Long memberId) {
-        return MemberSurveys.builder()
-                .memberId(memberId)
-                .memberSurveys(new ArrayList<>())
-                .build();
+        return new MemberSurveys(memberId, new ArrayList<>());
     }
 
     public void submitSurveys(final List<SurveySubmitCreateDto> requests) {
