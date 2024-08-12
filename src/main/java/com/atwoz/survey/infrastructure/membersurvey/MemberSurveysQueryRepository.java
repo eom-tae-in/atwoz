@@ -17,6 +17,7 @@ import static com.atwoz.member.domain.member.QMemberProfile.memberProfile;
 import static com.atwoz.member.domain.member.profile.QProfile.profile;
 import static com.atwoz.member.domain.member.profile.physical.QPhysicalProfile.physicalProfile;
 import static com.atwoz.member.domain.member.profile.vo.QLocation.location;
+
 import static com.atwoz.survey.domain.membersurvey.QMemberSurvey.memberSurvey;
 import static com.atwoz.survey.domain.membersurvey.QMemberSurveys.memberSurveys1;
 import static com.querydsl.core.types.Projections.constructor;
