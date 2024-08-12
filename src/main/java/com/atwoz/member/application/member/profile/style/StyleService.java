@@ -7,7 +7,6 @@ import com.atwoz.member.domain.member.profile.StyleRepository;
 import com.atwoz.member.exception.exceptions.member.profile.style.StyleCodeAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.profile.style.StyleNameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.profile.style.StyleNotFoundException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,19 +30,17 @@ public class StyleService {
     }
 
     private void validateAlreadyExistedStyleName(final String styleName) {
-        Optional<Style> foundStyle = styleRepository.findStyleByName(styleName);
-
-        if (foundStyle.isPresent()) {
-            throw new StyleNameAlreadyExistedException();
-        }
+        styleRepository.findStyleByName(styleName)
+                .ifPresent(style -> {
+                    throw new StyleNameAlreadyExistedException();
+                });
     }
 
     private void validateAlreadyExistedStyleCode(final String styleCode) {
-        Optional<Style> foundStyle = styleRepository.findStyleByCode(styleCode);
-
-        if (foundStyle.isPresent()) {
-            throw new StyleCodeAlreadyExistedException();
-        }
+        styleRepository.findStyleByCode(styleCode)
+                .ifPresent(style -> {
+                    throw new StyleCodeAlreadyExistedException();
+                });
     }
 
     public void updateStyle(final Long styleId,

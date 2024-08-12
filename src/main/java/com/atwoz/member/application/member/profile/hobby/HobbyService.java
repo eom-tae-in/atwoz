@@ -7,7 +7,6 @@ import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.exception.exceptions.member.profile.hobby.HobbyCodeAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.profile.hobby.HobbyNameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.profile.hobby.HobbyNotFoundException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,19 +30,17 @@ public class HobbyService {
     }
 
     private void validateAlreadyExistedHobbyName(final String hobbyName) {
-        Optional<Hobby> foundHobby = hobbyRepository.findHobbyByName(hobbyName);
-
-        if (foundHobby.isPresent()) {
-            throw new HobbyNameAlreadyExistedException();
-        }
+        hobbyRepository.findHobbyByName(hobbyName)
+                .ifPresent(hobby -> {
+                    throw new HobbyNameAlreadyExistedException();
+                });
     }
 
     private void validateAlreadyExitedHobbyCode(final String hobbyCode) {
-        Optional<Hobby> foundHobby = hobbyRepository.findHobbyByCode(hobbyCode);
-
-        if (foundHobby.isPresent()) {
-            throw new HobbyCodeAlreadyExistedException();
-        }
+        hobbyRepository.findHobbyByCode(hobbyCode)
+                .ifPresent(hobby -> {
+                    throw new HobbyCodeAlreadyExistedException();
+                });
     }
 
     public void updateHobby(final Long hobbyId,
