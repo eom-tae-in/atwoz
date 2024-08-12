@@ -5,7 +5,6 @@ import com.atwoz.member.application.member.dto.ProfileCityFilterRequest;
 import com.atwoz.member.application.member.dto.ProfileFilterRequest;
 import com.atwoz.member.application.member.dto.initial.MemberInitializeRequest;
 import com.atwoz.member.application.member.dto.update.MemberUpdateRequest;
-import com.atwoz.member.fixture.member.domain.MemberFixture;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.atwoz.helper.RestDocsHelper.customDocument;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성;
 import static com.atwoz.member.fixture.member.dto.request.MemberInitializeRequestFixture.회원_초기화_요청;
 import static com.atwoz.member.fixture.member.dto.request.MemberUpdateRequestFixture.회원_업데이트_요청;
 import static com.atwoz.member.fixture.member.dto.request.ProfileFilterRequestFixture.프로필_필터_요청서_생성;
@@ -52,6 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerWebMvcTest extends MockBeanInjection {
 
     private static final String BEARER_TOKEN = "Bearer token";
+    private static final String COMMA = ",";
 
     @Autowired
     private MockMvc mockMvc;
@@ -127,7 +128,7 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
     void 회원_정보를_조회한다() throws Exception {
         // given
         Long memberId = 1L;
-        MemberResponse memberResponse = 회원_정보_응답서_요청(MemberFixture.회원_생성());
+        MemberResponse memberResponse = 회원_정보_응답서_요청(회원_생성());
         given(memberQueryService.findMember(any())).willReturn(memberResponse);
 
         // when & then
@@ -179,7 +180,7 @@ class MemberControllerWebMvcTest extends MockBeanInjection {
                         .param("profileCityRequests", profileFilterRequest.profileCityFilterRequests()
                                 .stream()
                                 .map(ProfileCityFilterRequest::city)
-                                .collect(Collectors.joining(",")))
+                                .collect(Collectors.joining(COMMA)))
                         .header(AUTHORIZATION, BEARER_TOKEN))
                 .andExpect(status().isOk())
                 .andDo(customDocument("오늘의_이성_추천_프로필_조회",

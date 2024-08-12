@@ -16,7 +16,7 @@ class StyleControllerAcceptanceTest extends StyleControllerAcceptanceTestFixture
     private static final String 스타일_단건_조회_URL = "/api/members/styles/1";
     private static final String 스타일_페이징_조회_URL = "/api/members/styles";
     private static final String 스타일_수정_URL = "/api/members/styles/1";
-    private static final String 스타일_삭제_URI = "/api/members/styles/2";
+    private static final String 스타일_삭제_URL = "/api/members/styles/2";
 
     private String 토큰;
 
@@ -73,7 +73,7 @@ class StyleControllerAcceptanceTest extends StyleControllerAcceptanceTestFixture
         새로운_스타일_생성();
 
         // when
-        var 스타일_삭제_요청_결과 = 스타일_삭제_요청(스타일_삭제_URI, 토큰);
+        var 스타일_삭제_요청_결과 = 스타일_삭제_요청(스타일_삭제_URL, 토큰);
 
         // then
         스타일_삭제_요청_검증(스타일_삭제_요청_결과);

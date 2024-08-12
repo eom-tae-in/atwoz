@@ -16,7 +16,6 @@ import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.domain.member.profile.vo.Location;
 import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
 import com.atwoz.member.domain.member.vo.MemberGrade;
-import com.atwoz.member.fixture.member.domain.MemberFixture;
 import com.atwoz.member.fixture.member.generator.UniqueMemberFieldsGenerator;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
@@ -125,7 +124,7 @@ public class MemberControllerAcceptanceFixture extends IntegrationHelper {
     protected Member 인기있는_회원_생성(final Member sender) {
         String nickname = uniqueMemberFieldsGenerator.generateNickname();
         String phoneNumber = uniqueMemberFieldsGenerator.generatePhoneNumber();
-        Member receiver = MemberFixture.회원_생성_닉네임_전화번호_회원프로필접근상태_프로필접근상태_성별_취미목록_스타일목록(
+        Member receiver = 회원_생성_닉네임_전화번호_회원프로필접근상태_프로필접근상태_성별_취미목록_스타일목록(
                 nickname,
                 phoneNumber,
                 ProfileAccessStatus.PUBLIC,

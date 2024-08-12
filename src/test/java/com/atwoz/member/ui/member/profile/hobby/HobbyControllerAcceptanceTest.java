@@ -16,7 +16,7 @@ class HobbyControllerAcceptanceTest extends HobbyControllerAcceptanceTestFixture
     private static final String 취미_단건_조회_URL = "/api/members/hobbies/1";
     private static final String 취미_페이징_조회_URL = "/api/members/hobbies";
     private static final String 취미_수정_URL = "/api/members/hobbies/1";
-    private static final String 취미_삭제_URI = "/api/members/hobbies/2";
+    private static final String 취미_삭제_URL = "/api/members/hobbies/2";
 
     private String 토큰;
 
@@ -73,7 +73,7 @@ class HobbyControllerAcceptanceTest extends HobbyControllerAcceptanceTestFixture
         새로운_취미_생성();
 
         // when
-        var 취미_삭제_요청_결과 = 취미_삭제_요청(취미_삭제_URI, 토큰);
+        var 취미_삭제_요청_결과 = 취미_삭제_요청(취미_삭제_URL, 토큰);
 
         // then
         취미_삭제_요청_검증(취미_삭제_요청_결과);

@@ -66,18 +66,8 @@ class MemberJdbcRepositoryTest extends IntegrationHelper {
     @Test
     void 필터링_조건에_맞는_골드_등급_회원_최대_2명과_다이아_등급_회원_최대_1명을_조회한다() {
         // given
-        List<Member> goldMembers = new ArrayList<>();
-        IntStream.range(0, 5)
-                .forEach(index -> {
-                    Member savedMember = memberRepository.save(이성_회원_생성_등급(MemberGrade.GOLD));
-                    goldMembers.add(savedMember);
-                });
-        List<Member> diamondMembers = new ArrayList<>();
-        IntStream.range(0, 4)
-                .forEach(index -> {
-                    Member savedMember = memberRepository.save(이성_회원_생성_등급(MemberGrade.DIAMOND));
-                    diamondMembers.add(savedMember);
-                });
+        List<Member> goldMembers = saveMembers(MemberGrade.GOLD, 5);
+        List<Member> diamondMembers = saveMembers(MemberGrade.DIAMOND, 4);
         InternalProfileFilterRequest filterRequest = 내부_프로필_필터_요청_생성();
         Long memberId = member.getId();
 
@@ -108,16 +98,24 @@ class MemberJdbcRepositoryTest extends IntegrationHelper {
         });
     }
 
-    private Member 이성_회원_생성_등급(final MemberGrade memberGrade) {
-        return 회원_생성_닉네임_전화번호_회원등급_회원프로필접근상태_프로필접근상태_성별_취미목록_스타일목록(
-                uniqueMemberFieldsGenerator.generateNickname(),
-                uniqueMemberFieldsGenerator.generatePhoneNumber(),
-                memberGrade,
-                ProfileAccessStatus.PUBLIC,
-                ProfileAccessStatus.PUBLIC,
-                Gender.FEMALE,
-                hobbies,
-                styles
-        );
+    private List<Member> saveMembers(final MemberGrade memberGrade, final int size) {
+        List<Member> members = new ArrayList<>();
+        IntStream.range(0, size)
+                .forEach(index -> {
+                    Member savedMember = memberRepository.save(
+                            회원_생성_닉네임_전화번호_회원등급_회원프로필접근상태_프로필접근상태_성별_취미목록_스타일목록(
+                                    uniqueMemberFieldsGenerator.generateNickname(),
+                                    uniqueMemberFieldsGenerator.generatePhoneNumber(),
+                                    memberGrade,
+                                    ProfileAccessStatus.PUBLIC,
+                                    ProfileAccessStatus.PUBLIC,
+                                    Gender.FEMALE,
+                                    hobbies,
+                                    styles
+                            ));
+                    members.add(savedMember);
+                });
+
+        return members;
     }
 }
