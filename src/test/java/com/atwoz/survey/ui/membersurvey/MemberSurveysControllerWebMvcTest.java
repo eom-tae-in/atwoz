@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.survey.fixture.MemberSurveyResponseFixture.회원_연애고사_응시_조회;
+import static com.atwoz.survey.fixture.SurveySoulmateResponseFixture.소울메이트_응답;
 import static com.atwoz.survey.fixture.SurveySubmitRequestFixture.필수_과목_질문_두개_제출_요청;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -108,9 +109,8 @@ class MemberSurveysControllerWebMvcTest extends MockBeanInjection {
     void 회원과_답변이_30개_이상_같은_다른_회원을_조회한다() throws Exception {
         // given
         String bearerToken = "Bearer token";
-
-        when(memberSurveysQueryService.findMatchMembers(any()))
-                .thenReturn(List.of(2L));
+        when(memberSurveysQueryService.findSoulmates(any()))
+                .thenReturn(List.of(소울메이트_응답()));
 
         // when & then
         mockMvc.perform(get("/api/members/me/surveys/match")
@@ -124,7 +124,12 @@ class MemberSurveysControllerWebMvcTest extends MockBeanInjection {
                                         .description("유저 토큰 정보")
                         ),
                         responseFields(
-                                fieldWithPath("members").description("매칭된 회원들의 id")
+                                fieldWithPath("soulmates").description("결과가 같은 회원들의 정보"),
+                                fieldWithPath("soulmates[].id").description("회원의 id"),
+                                fieldWithPath("soulmates[].nickname").description("회원의 닉네임"),
+                                fieldWithPath("soulmates[].city").description("회원의 광역시/도"),
+                                fieldWithPath("soulmates[].sector").description("회원의 구/동"),
+                                fieldWithPath("soulmates[].age").description("회원의 나이")
                         )
                 ));
     }

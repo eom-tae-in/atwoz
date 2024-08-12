@@ -3,6 +3,7 @@ package com.atwoz.survey.infrastructure.membersurvey;
 import com.atwoz.survey.domain.membersurvey.MemberSurveys;
 import com.atwoz.survey.domain.membersurvey.MemberSurveysRepository;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
+import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,8 +28,8 @@ public class MemberSurveysRepositoryImpl implements MemberSurveysRepository {
     }
 
     @Override
-    public List<Long> findMatchMembers(final Long memberId) {
-        return memberSurveysQueryRepository.findMatchMembers(memberId);
+    public List<SurveySoulmateResponse> findSoulmates(final Long memberId) {
+        return memberSurveysQueryRepository.findSoulmates(memberId);
     }
 
     @Override
