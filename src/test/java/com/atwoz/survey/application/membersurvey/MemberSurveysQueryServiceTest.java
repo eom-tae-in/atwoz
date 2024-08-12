@@ -41,7 +41,6 @@ class MemberSurveysQueryServiceTest {
     private MemberRepository memberRepository;
     private SurveyRepository surveyRepository;
     private MemberSurveysRepository memberSurveysRepository;
-    private SoulmatePolicy soulmatePolicy;
     private MemberSurveysQueryService memberSurveysQueryService;
 
     @BeforeEach
@@ -49,8 +48,7 @@ class MemberSurveysQueryServiceTest {
         memberRepository = new MemberFakeRepository();
         surveyRepository = new SurveyFakeRepository();
         memberSurveysRepository = new MemberSurveysFakeRepository(memberRepository);
-        soulmatePolicy = new ZeroIndexFixSoulmatePolicy();
-        memberSurveysQueryService = new MemberSurveysQueryService(memberSurveysRepository, soulmatePolicy);
+        memberSurveysQueryService = new MemberSurveysQueryService(memberSurveysRepository, new ZeroIndexFixSoulmatePolicy());
     }
 
     @Test
