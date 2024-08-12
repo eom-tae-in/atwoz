@@ -1,6 +1,5 @@
 package com.atwoz.survey.application.membersurvey;
 
-import com.atwoz.survey.application.membersurvey.soulmatepolicy.SoulmatePolicy;
 import com.atwoz.survey.domain.membersurvey.MemberSurveysRepository;
 import com.atwoz.survey.exception.membersurvey.exceptions.MemberSurveysNotFoundException;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;

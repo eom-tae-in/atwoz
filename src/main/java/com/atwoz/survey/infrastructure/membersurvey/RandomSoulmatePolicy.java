@@ -1,6 +1,6 @@
-package com.atwoz.survey.infrastructure.membersurvey.soulmatepolicy;
+package com.atwoz.survey.infrastructure.membersurvey;
 
-import com.atwoz.survey.application.membersurvey.soulmatepolicy.SoulmatePolicy;
+import com.atwoz.survey.application.membersurvey.SoulmatePolicy;
 import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
 import org.springframework.stereotype.Component;
 

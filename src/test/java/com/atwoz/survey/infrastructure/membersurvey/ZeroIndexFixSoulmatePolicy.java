@@ -1,5 +1,6 @@
-package com.atwoz.survey.application.membersurvey.soulmatepolicy;
+package com.atwoz.survey.infrastructure.membersurvey;
 
+import com.atwoz.survey.application.membersurvey.SoulmatePolicy;
 import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
 
 import java.util.List;
