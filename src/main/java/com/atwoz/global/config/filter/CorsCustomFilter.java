@@ -11,11 +11,13 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 public class CorsCustomFilter extends OncePerRequestFilter {
 
+    private static final String ALLOWED_ORIGIN_ADDRESS = "https://admin.atwoz.kr";
+
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "https://admin.atwoz.kr");
+        response.setHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN_ADDRESS);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
