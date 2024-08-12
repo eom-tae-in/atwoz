@@ -2,7 +2,6 @@ package com.atwoz.member.application.member;
 
 import com.atwoz.member.application.member.dto.ProfileFilterRequest;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.exception.exceptions.member.MemberNicknameAlreadyExistedException;
 import com.atwoz.member.exception.exceptions.member.profile.hobby.HobbyNotFoundException;
@@ -10,7 +9,6 @@ import com.atwoz.member.infrastructure.member.dto.InternalProfileFilterRequest;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,9 +86,7 @@ public class MemberQueryService {
         if (hobbyCode == null || hobbyCode.isEmpty()) {
             return;
         }
-        Optional<Hobby> foundHobby = hobbyRepository.findHobbyByCode(hobbyCode);
-        if (foundHobby.isEmpty()) {
-            throw new HobbyNotFoundException();
-        }
+        hobbyRepository.findHobbyByCode(hobbyCode)
+                .orElseThrow(HobbyNotFoundException::new);
     }
 }
