@@ -64,11 +64,11 @@ class MemberQueryServiceTest {
         HobbyRepository hobbyRepository = new HobbyFakeRepository();
         memberRepository = new MemberFakeRepository();
         memberQueryService = new MemberQueryService(memberRepository, hobbyRepository);
-        취미_목록_생성(hobbyRepository);
-        스타일_목록_생성(new StyleFakeRepository());
         memberLikeRepository = new MemberLikeFakeRepository();
         member = memberRepository.save(회원_생성());
         uniqueMemberFieldsGenerator = new UniqueMemberFieldsGenerator();
+        취미_목록_생성(hobbyRepository);
+        스타일_목록_생성(new StyleFakeRepository());
     }
 
     @Nested
