@@ -17,18 +17,18 @@ import com.atwoz.survey.ui.membersurvey.dto.SurveySoulmateResponses;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_성별;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
-import static com.atwoz.member.fixture.member.MemberFixture.일반_유저_생성;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_선택_과목_질문_두개씩;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_30개씩;
 import static io.restassured.http.ContentType.JSON;
@@ -79,7 +79,7 @@ class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected Member 회원_생성_성별(final String nickname, final String phoneNumber, final Gender gender) {
-        return memberRepository.save(일반_유저_생성(nickname, phoneNumber, gender));
+        return memberRepository.save(회원_생성_닉네임_전화번호_성별(nickname, phoneNumber, gender));
     }
 
     protected String 토큰_생성(final Member member) {
