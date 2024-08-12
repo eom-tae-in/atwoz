@@ -25,7 +25,7 @@ import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
 import static com.atwoz.survey.fixture.MemberSurveysFixture.회원_연애고사_필수_과목_질문_30개_응시_저장_id;
-import static com.atwoz.survey.fixture.MemberSurveysFixture.회원_연애고사_필수_과목_질문_30개_응시_저장_id_번호;
+import static com.atwoz.survey.fixture.MemberSurveysFixture.회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_30개씩;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -65,17 +65,17 @@ class MemberSurveysQueryRepositoryTest extends IntegrationHelper {
     @Test
     void 연애고사_매칭_결과가_30개_이상_같고_성별이_다른_회원을_조회한다() {
         // given
-        surveyRepository.save(연애고사_필수_과목_질문_30개씩());
+        Survey survey = surveyRepository.save(연애고사_필수_과목_질문_30개씩());
 
         Member loginMember = memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록("LoginMember", "000-0000-0000", Gender.MALE, hobbies, styles));
         Member notVisibleMaleMember = memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록("maleMember", "000-0000-0001", Gender.MALE, hobbies, styles));
         Member notVisibleFemaleMember = memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록("femaleMember1", "000-0000-0002", Gender.FEMALE, hobbies, styles));
         Member visibleFemaleMember = memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록("femaleMember2", "000-0000-0003", Gender.FEMALE, hobbies, styles));
 
-        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_번호(loginMember.getId(), 1));
-        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_번호(notVisibleMaleMember.getId(), 1));
-        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_번호(notVisibleFemaleMember.getId(), 2));
-        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_번호(visibleFemaleMember.getId(), 1));
+        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안(loginMember.getId(), survey.getId(), 1));
+        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안(notVisibleMaleMember.getId(), survey.getId(), 1));
+        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안(notVisibleFemaleMember.getId(), survey.getId(), 2));
+        memberSurveysRepository.save(회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안(visibleFemaleMember.getId(), survey.getId(), 1));
 
         // when
         List<SurveySoulmateResponse> soulmates = memberSurveysQueryRepository.findSoulmates(loginMember.getId());
