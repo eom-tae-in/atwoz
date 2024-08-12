@@ -7,7 +7,6 @@ import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.fixture.member.domain.MemberFixture;
 import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.survey.application.survey.dto.SurveyCreateRequest;
 import com.atwoz.survey.ui.survey.dto.SurveyCreateResponse;
@@ -21,6 +20,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
 import static io.restassured.http.ContentType.JSON;
@@ -54,7 +54,7 @@ class SurveyControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected Member 회원_생성() {
-        return memberRepository.save(MemberFixture.회원_생성_취미목록_스타일목록(hobbies, styles));
+        return memberRepository.save(회원_생성_취미목록_스타일목록(hobbies, styles));
     }
 
     protected String 토큰_생성(final Member member) {

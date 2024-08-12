@@ -8,7 +8,6 @@ import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
 import com.atwoz.member.domain.member.profile.physical.vo.Gender;
-import com.atwoz.member.fixture.member.domain.MemberFixture;
 import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
@@ -27,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
 import static com.atwoz.mission.fixture.MemberMissionFixture.멤버_미션_생성_완료_보상_수령_안함_데일리_미션_시간있음;
@@ -67,7 +67,7 @@ class MemberMissionsControllerAcceptanceFixture extends IntegrationHelper {
     }
 
     protected Member 회원_생성() {
-        return memberRepository.save(MemberFixture.회원_생성_취미목록_스타일목록(hobbies, styles));
+        return memberRepository.save(회원_생성_취미목록_스타일목록(hobbies, styles));
     }
 
     protected String 토큰_생성(final Member member) {
