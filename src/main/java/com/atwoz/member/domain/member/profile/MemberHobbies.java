@@ -1,9 +1,9 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.profile.vo.Hobby;
-import com.atwoz.member.exception.exceptions.member.profile.HobbyDuplicateException;
-import com.atwoz.member.exception.exceptions.member.profile.HobbySizeException;
-import com.atwoz.member.exception.exceptions.member.profile.InvalidHobbyException;
+import com.atwoz.member.domain.member.dto.initial.InternalHobbiesInitializeRequest;
+import com.atwoz.member.domain.member.dto.update.InternalHobbiesUpdateRequest;
+import com.atwoz.member.exception.exceptions.member.profile.hobby.MemberHobbyDuplicateException;
+import com.atwoz.member.exception.exceptions.member.profile.hobby.MemberHobbySizeException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,54 +39,52 @@ public class MemberHobbies {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MemberHobby> hobbies = new HashSet<>();
 
-    public void change(final List<String> hobbyCodes) {
-        validateHobbyCodes(hobbyCodes);
-        changeHobbies(hobbyCodes);
+    public void initialize(final InternalHobbiesInitializeRequest request) {
+        List<MemberHobby> requestedMemberHobbies = request.memberHobbies();
+        validateHobbyCodes(requestedMemberHobbies);
+        changeHobbies(requestedMemberHobbies);
     }
 
-    private void validateHobbyCodes(final List<String> hobbyCodes) {
-        validateSize(hobbyCodes);
-        validateDuplicates(hobbyCodes);
-        validateHasInvalidCodes(hobbyCodes);
+    public void update(final InternalHobbiesUpdateRequest request) {
+        List<MemberHobby> requestedHobbies = request.hobbies();
+        validateHobbyCodes(requestedHobbies);
+        changeHobbies(requestedHobbies);
     }
 
-    private void validateSize(final List<String> hobbyCodes) {
-        int size = hobbyCodes.size();
+    private void validateHobbyCodes(final List<MemberHobby> memberHobbies) {
+        validateSize(memberHobbies);
+        validateDuplicates(memberHobbies);
+    }
+
+    private void validateSize(final List<MemberHobby> memberHobbies) {
+        int size = memberHobbies.size();
 
         if (size < MIN_HOBBY_SIZE || MAX_HOBBY_SIZE < size) {
-            throw new HobbySizeException();
+            throw new MemberHobbySizeException();
         }
     }
 
-    private void validateDuplicates(final List<String> hobbyCodes) {
-        HashSet<String> uniqueCodes = new HashSet<>(hobbyCodes);
+    private void validateDuplicates(final List<MemberHobby> memberHobbies) {
+        Set<String> uniqueHobbyKeys = new HashSet<>();
 
-        if (uniqueCodes.size() != hobbyCodes.size()) {
-            throw new HobbyDuplicateException();
+        for (MemberHobby memberHobby : memberHobbies) {
+            Hobby hobby = memberHobby.getHobby();
+            String key = hobby.getName() + hobby.getCode();
+            if (!uniqueHobbyKeys.add(key)) {
+                throw new MemberHobbyDuplicateException();
+            }
         }
     }
 
-    private void validateHasInvalidCodes(final List<String> hobbyCodes) {
-        if (hasInvalidHobbyCode(hobbyCodes)) {
-            throw new InvalidHobbyException();
-        }
+    private void changeHobbies(final List<MemberHobby> requestedMemberHobbies) {
+        hobbies.removeIf(memberHobby -> !requestedMemberHobbies.contains(memberHobby));
+        requestedMemberHobbies.stream()
+                .filter(this::isNewHobby)
+                .forEach(requestedMemberHobby -> hobbies.add(requestedMemberHobby));
     }
 
-    private boolean hasInvalidHobbyCode(final List<String> hobbyCodes) {
-        return hobbyCodes.stream()
-                .anyMatch(hobbyCode -> !Hobby.isValidCode(hobbyCode));
-    }
-
-    private void changeHobbies(final List<String> hobbyCodes) {
-        hobbies.removeIf(memberHobby -> !memberHobby.hasMatchingHobbyCodeOf(hobbyCodes));
-        hobbyCodes.stream()
-                .map(MemberHobby::createWith)
-                .filter(memberHobby -> !isAlreadyExist(memberHobby))
-                .forEach(memberHobby -> hobbies.add(memberHobby));
-    }
-
-    private boolean isAlreadyExist(final MemberHobby memberHobby) {
+    private boolean isNewHobby(final MemberHobby requestedMemberHobby) {
         return hobbies.stream()
-                .anyMatch(memberHobby::isSame);
+                .noneMatch(memberHobby -> memberHobby.isSame(requestedMemberHobby));
     }
 }

@@ -3,8 +3,8 @@ package com.atwoz.member.ui.selfintro;
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.member.application.selfintro.dto.SelfIntroCreateRequest;
 import com.atwoz.member.application.selfintro.dto.SelfIntroFilterRequest;
+import com.atwoz.member.application.selfintro.dto.SelfIntroResponses;
 import com.atwoz.member.application.selfintro.dto.SelfIntroUpdateRequest;
-import com.atwoz.member.application.selfintro.dto.SelfIntrosResponse;
 import com.atwoz.member.domain.selfintro.SelfIntro;
 import com.atwoz.member.infrastructure.selfintro.dto.SelfIntroResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -83,8 +83,8 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
     void 셀프_소개글을_페이징으로_조회한다() throws Exception {
         // given
         List<SelfIntroResponse> selfIntroResponses = List.of(셀프_소개글_응답());
-        when(selfIntroQueryService.findAllSelfIntrosWithPaging(any(Pageable.class), any()))
-                .thenReturn(new SelfIntrosResponse(selfIntroResponses, 0, 1, 2));
+        when(selfIntroQueryService.findAllSelfIntrosWithPaging(any(Pageable.class)))
+                .thenReturn(new SelfIntroResponses(selfIntroResponses, 0, 1, 2, 1));
 
         // when & then
         mockMvc.perform(get("/api/members/self-intros")
@@ -110,7 +110,8 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("selfIntros[].height").description("작성자의 키"),
                                 fieldWithPath("nowPage").description("현재 페이지"),
                                 fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
-                                fieldWithPath("totalPages").description("전체 페이지 수")
+                                fieldWithPath("totalPages").description("전체 페이지 수"),
+                                fieldWithPath("totalElements").description("전체 조회된 데이터 수")
                         )
                 ));
     }
@@ -121,7 +122,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
         List<SelfIntroResponse> selfIntroResponses = List.of(셀프_소개글_응답());
         when(selfIntroQueryService.findAllSelfIntrosWithPagingAndFiltering(
                 any(Pageable.class), any(SelfIntroFilterRequest.class), any())
-        ).thenReturn(new SelfIntrosResponse(selfIntroResponses, 0, 1, 2));
+        ).thenReturn(new SelfIntroResponses(selfIntroResponses, 0, 1, 2, 1));
 
         // when & then
         mockMvc.perform(get("/api/members/self-intros/filter")
@@ -155,7 +156,8 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
                                 fieldWithPath("selfIntros[].height").description("작성자의 키"),
                                 fieldWithPath("nowPage").description("현재 페이지"),
                                 fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
-                                fieldWithPath("totalPages").description("전체 페이지 수")
+                                fieldWithPath("totalPages").description("전체 페이지 수"),
+                                fieldWithPath("totalElements").description("전체 조회된 데이터 수")
                         )
                 ));
     }

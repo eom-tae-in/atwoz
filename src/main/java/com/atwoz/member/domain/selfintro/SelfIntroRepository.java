@@ -14,9 +14,14 @@ public interface SelfIntroRepository {
 
     void deleteById(Long id);
 
-    Page<SelfIntroResponse> findAllSelfIntrosWithPaging(Pageable pageable, Long memberId);
+    Page<SelfIntroResponse> findAllSelfIntrosWithPaging(Pageable pageable);
 
-    Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(Pageable pageable, int minAge, int maxAge,
-                                                                    boolean isOnlyOppositeGender, List<String> cities,
-                                                                    Long memberId);
+    Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(
+            Pageable pageable,
+            int minAge,
+            int maxAge,
+            boolean isOnlyOppositeGender,
+            List<String> cities,
+            Long memberId
+    );
 }

@@ -31,6 +31,7 @@ public class MemberAuthService {
         MemberInfoResponse memberInfoResponse = oAuthRequester.getMemberInfo(accessToken, provider);
         Member createdMember = Member.createWithOAuth(DEFAULT_PHONE_NUMBER);
         memberRepository.save(createdMember);
+        createdMember.updateVisitStatus();
         Events.raise(new AlertTokenCreatedEvent(createdMember.getId(), request.token()));
 
         return memberTokenProvider.createAccessToken(createdMember.getId());

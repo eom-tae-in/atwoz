@@ -2,15 +2,14 @@ package com.atwoz.member.infrastructure.selfintro;
 
 import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.infrastructure.selfintro.dto.SelfIntroResponse;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import static com.atwoz.member.domain.member.QMember.member;
@@ -26,21 +25,26 @@ public class SelfIntroQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<SelfIntroResponse> findAllSelfIntroWithPaging(final Pageable pageable,
-                                                              final Long memberId) {
-        QueryResults<SelfIntroResponse> result = selectSelfIntroResponse()
+    public Page<SelfIntroResponse> findAllSelfIntroWithPaging(final Pageable pageable) {
+        List<SelfIntroResponse> fetch = selectSelfIntroResponse()
                 .from(member)
                 .leftJoin(member.memberProfile, memberProfile)
                 .leftJoin(memberProfile.profile, profile)
                 .leftJoin(profile.physicalProfile, physicalProfile)
                 .leftJoin(selfIntro).on(member.id.eq(selfIntro.memberId))
                 .orderBy(selfIntro.createdAt.desc())
-                .where(selfIntro.memberId.eq(memberId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetchResults();
+                .fetch();
 
-        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+        JPAQuery<Long> count = jpaQueryFactory.select(member.count())
+                .from(member)
+                .leftJoin(member.memberProfile, memberProfile)
+                .leftJoin(memberProfile.profile, profile)
+                .leftJoin(profile.physicalProfile, physicalProfile)
+                .leftJoin(selfIntro).on(member.id.eq(selfIntro.memberId));
+
+        return PageableExecutionUtils.getPage(fetch, pageable, count::fetchOne);
     }
 
     private JPAQuery<SelfIntroResponse> selectSelfIntroResponse() {
@@ -73,24 +77,35 @@ public class SelfIntroQueryRepository {
                                                                            final List<String> cities,
                                                                            final Long memberId) {
         Gender memberGender = findMemberGender(memberId);
-        QueryResults<SelfIntroResponse> result = selectSelfIntroResponse()
-                .from(member)
+        List<SelfIntroResponse> fetch = selectSelfIntroResponse()
+                .from(selfIntro)
+                .leftJoin(member).on(selfIntro.memberId.eq(member.id))
                 .leftJoin(member.memberProfile, memberProfile)
                 .leftJoin(memberProfile.profile, profile)
                 .leftJoin(profile.physicalProfile, physicalProfile)
-                .leftJoin(selfIntro).on(member.id.eq(selfIntro.memberId))
                 .orderBy(selfIntro.createdAt.desc())
                 .where(
                         applyGenderCondition(isOnlyOppositeGender, memberGender),
                         ageBetween(minAge, maxAge),
-                        locationIn(cities),
-                        selfIntro.memberId.eq(memberId)
+                        locationIn(cities)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetchResults();
+                .fetch();
 
-        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+        JPAQuery<Long> count = jpaQueryFactory.select(selfIntro.count())
+                .from(selfIntro)
+                .leftJoin(member).on(selfIntro.memberId.eq(member.id))
+                .leftJoin(member.memberProfile, memberProfile)
+                .leftJoin(memberProfile.profile, profile)
+                .leftJoin(profile.physicalProfile, physicalProfile)
+                .where(
+                        applyGenderCondition(isOnlyOppositeGender, memberGender),
+                        ageBetween(minAge, maxAge),
+                        locationIn(cities)
+                );
+
+        return PageableExecutionUtils.getPage(fetch, pageable, count::fetchOne);
     }
 
     private BooleanExpression applyGenderCondition(final boolean isOnlyOppositeGender, final Gender gender) {

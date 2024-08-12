@@ -12,7 +12,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static com.atwoz.global.config.interceptor.support.HttpMethod.DELETE;
+import static com.atwoz.global.config.interceptor.support.HttpMethod.GET;
 import static com.atwoz.global.config.interceptor.support.HttpMethod.OPTIONS;
+import static com.atwoz.global.config.interceptor.support.HttpMethod.PATCH;
+import static com.atwoz.global.config.interceptor.support.HttpMethod.POST;
 
 @RequiredArgsConstructor
 @Configuration
@@ -29,7 +33,9 @@ public class AdminAuthConfig implements WebMvcConfigurer {
 
     private HandlerInterceptor adminLoginValidCheckerInterceptor() {
         return new PathMatcherInterceptor(adminLoginValidCheckerInterceptor)
-                .excludePathPattern("/**", OPTIONS);
+                .excludePathPattern("/**", OPTIONS)
+                .addPathPatterns("/api/members/hobbies", GET, POST, PATCH, DELETE)
+                .addPathPatterns("/api/members/styles", GET, POST, PATCH, DELETE);
     }
 
     @Override

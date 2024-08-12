@@ -1,13 +1,12 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.domain.member.profile.vo.Hobby;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.List;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 public class MemberHobby {
 
@@ -25,20 +24,17 @@ public class MemberHobby {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "hobby_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Hobby hobby;
 
-    public static MemberHobby createWith(final String hobbyCode) {
+    public static MemberHobby createWith(final Hobby hobby) {
         return MemberHobby.builder()
-                .hobby(Hobby.findByCode(hobbyCode))
+                .hobby(hobby)
                 .build();
     }
 
-    public boolean hasMatchingHobbyCodeOf(final List<String> hobbyCodes) {
-        return hobbyCodes.contains(hobby.getCode());
-    }
-
     public boolean isSame(final MemberHobby memberHobby) {
-        return this.hobby.equals(memberHobby.hobby);
+        return this.equals(memberHobby);
     }
 }

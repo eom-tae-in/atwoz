@@ -5,8 +5,8 @@ import com.atwoz.member.application.selfintro.SelfIntroQueryService;
 import com.atwoz.member.application.selfintro.SelfIntroService;
 import com.atwoz.member.application.selfintro.dto.SelfIntroCreateRequest;
 import com.atwoz.member.application.selfintro.dto.SelfIntroFilterRequest;
+import com.atwoz.member.application.selfintro.dto.SelfIntroResponses;
 import com.atwoz.member.application.selfintro.dto.SelfIntroUpdateRequest;
-import com.atwoz.member.application.selfintro.dto.SelfIntrosResponse;
 import com.atwoz.member.ui.auth.support.AuthMember;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,15 +44,13 @@ public class SelfIntroController {
     }
 
     @GetMapping
-    public ResponseEntity<SelfIntrosResponse> findAllSelfIntrosWithPaging(
-            @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable,
-            @AuthMember final Long memberId
-    ) {
-        return ResponseEntity.ok(selfIntroQueryService.findAllSelfIntrosWithPaging(pageable, memberId));
+    public ResponseEntity<SelfIntroResponses> findAllSelfIntrosWithPaging(
+            @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable) {
+        return ResponseEntity.ok(selfIntroQueryService.findAllSelfIntrosWithPaging(pageable));
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<SelfIntrosResponse> findAllSelfIntrosWithPagingAndFiltering(
+    public ResponseEntity<SelfIntroResponses> findAllSelfIntrosWithPagingAndFiltering(
             @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable,
             @ModelAttribute @Valid final SelfIntroFilterRequest selfIntroFilterRequest,
             @AuthMember final Long memberId

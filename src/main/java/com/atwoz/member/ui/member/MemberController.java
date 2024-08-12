@@ -2,15 +2,20 @@ package com.atwoz.member.ui.member;
 
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
-import com.atwoz.member.application.member.dto.MemberInitializeRequest;
-import com.atwoz.member.application.member.dto.MemberUpdateRequest;
+import com.atwoz.member.application.member.dto.ProfileFilterRequest;
+import com.atwoz.member.application.member.dto.initial.MemberInitializeRequest;
+import com.atwoz.member.application.member.dto.update.MemberUpdateRequest;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
+import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
 import com.atwoz.member.ui.auth.support.AuthMember;
+import com.atwoz.member.ui.member.dto.TodayProfilesResponse;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +51,56 @@ public class MemberController {
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberResponse> findMember(@PathVariable final Long memberId) {
         return ResponseEntity.ok(memberQueryService.findMember(memberId));
+    }
+
+    @GetMapping("/profiles/today")
+    public ResponseEntity<TodayProfilesResponse> findTodayProfiles(
+            @ModelAttribute final ProfileFilterRequest profileFilterRequest,
+            @AuthMember final Long memberId) {
+        List<ProfileResponse> todayProfiles = memberQueryService.findTodayProfiles(profileFilterRequest, memberId);
+        return ResponseEntity.ok(new TodayProfilesResponse(todayProfiles));
+    }
+
+    @GetMapping("/profiles/popularity")
+    public ResponseEntity<ProfileResponse> findProfileByPopularity(
+            @ModelAttribute final ProfileFilterRequest profileFilterRequest,
+            @AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findProfileByPopularity(profileFilterRequest, memberId));
+    }
+
+    @GetMapping("/profiles/today-visit")
+    public ResponseEntity<ProfileResponse> findProfileByTodayVisit(
+            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
+            @AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findProfileByTodayVisit(profileFilterRequest, memberId));
+    }
+
+    @GetMapping("/profiles/nearby")
+    public ResponseEntity<ProfileResponse> findNearbyProfile(
+            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
+            @AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findNearbyProfile(profileFilterRequest, memberId));
+    }
+
+    @GetMapping("/profiles/recency")
+    public ResponseEntity<ProfileResponse> findRecentProfile(
+            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
+            @AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findRecentProfile(profileFilterRequest, memberId));
+    }
+
+    @GetMapping("/profiles/religion")
+    public ResponseEntity<ProfileResponse> findProfileByReligion(
+            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
+            @AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findProfileByReligion(profileFilterRequest, memberId));
+    }
+
+    @GetMapping("/profiles/hobbies")
+    public ResponseEntity<ProfileResponse> findProfileByHobbies(
+            @ModelAttribute @Valid final ProfileFilterRequest request,
+            @AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findProfileByHobbies(request, memberId));
     }
 
     @PatchMapping("/me")

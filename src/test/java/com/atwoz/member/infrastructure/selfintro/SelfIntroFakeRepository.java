@@ -47,8 +47,7 @@ public class SelfIntroFakeRepository implements SelfIntroRepository {
     }
 
     @Override
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPaging(final Pageable pageable,
-                                                               final Long memberId) {
+    public Page<SelfIntroResponse> findAllSelfIntrosWithPaging(final Pageable pageable) {
         List<SelfIntroResponse> introResponses = map.values().stream()
                 .sorted(Comparator.comparing(SelfIntro::getCreatedAt).reversed())
                 .limit(SIZE_PER_PAGE)
@@ -59,12 +58,14 @@ public class SelfIntroFakeRepository implements SelfIntroRepository {
     }
 
     @Override
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(final Pageable pageable,
-                                                                           final int minAge,
-                                                                           final int maxAge,
-                                                                           final boolean isOnlyOppositeGender,
-                                                                           final List<String> cities,
-                                                                           final Long memberId) {
+    public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(
+            final Pageable pageable,
+            final int minAge,
+            final int maxAge,
+            final boolean isOnlyOppositeGender,
+            final List<String> cities,
+            final Long memberId
+    ) {
         List<SelfIntroResponse> introResponses = map.values().stream()
                 .filter(selfIntro -> isBetween(minAge, maxAge))
                 .filter(selfIntro -> isBelongTo(cities))
