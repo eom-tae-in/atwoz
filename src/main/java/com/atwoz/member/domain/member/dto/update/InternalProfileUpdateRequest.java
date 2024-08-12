@@ -33,7 +33,7 @@ public record InternalProfileUpdateRequest(
 
         return InternalProfileUpdateRequest.builder()
                 .internalPhysicalProfileUpdateRequest(InternalPhysicalProfileUpdateRequest.of(
-                        memberUpdateRequest.getPhysicalProfileInitialRequest(),
+                        memberUpdateRequest.getPhysicalProfileUpdateRequest(),
                         yearManager
                 ))
                 .internalHobbiesUpdateRequest(InternalHobbiesUpdateRequest.from(hobbies))

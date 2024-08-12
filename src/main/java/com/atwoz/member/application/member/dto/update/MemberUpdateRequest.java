@@ -16,7 +16,7 @@ public record MemberUpdateRequest(
 ) {
 
     @JsonIgnore
-    public PhysicalProfileUpdateRequest getPhysicalProfileInitialRequest() {
+    public PhysicalProfileUpdateRequest getPhysicalProfileUpdateRequest() {
         return profileUpdateRequest.physicalProfileUpdateRequest();
     }
 
