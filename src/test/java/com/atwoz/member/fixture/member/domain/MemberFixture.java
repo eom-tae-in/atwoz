@@ -16,6 +16,7 @@ import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원
 import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_생년월일_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_성별;
 import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_성별_취미목록;
+import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_성별_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_종교_성별;
 import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberProfileFixture.회원_프로필_생성_회원프로필접근상태_프로필접근상태_성별_도시_구역_취미목록_스타일목록;
@@ -175,6 +176,23 @@ public class MemberFixture {
                 .memberStatus(DEFAULT_MEMBER_STATUS)
                 .memberGrade(DEFAULT_MEMBER_GRADE)
                 .memberProfile(회원_프로필_생성_생년월일_취미목록_스타일목록(birthYear, hobbies, styles))
+                .latestVisitDate(DEFAULT_LATEST_VISIT_DATE)
+                .build();
+    }
+
+    public static Member 회원_생성_닉네임_전화번호_성별_취미목록_스타일목록(
+            final String nickname,
+            final String phoneNumber,
+            final Gender gender,
+            final List<Hobby> hobbies,
+            final List<Style> styles
+    ) {
+        return Member.builder()
+                .nickname(nickname)
+                .phoneNumber(phoneNumber)
+                .memberStatus(DEFAULT_MEMBER_STATUS)
+                .memberGrade(DEFAULT_MEMBER_GRADE)
+                .memberProfile(회원_프로필_생성_성별_취미목록_스타일목록(gender, hobbies, styles))
                 .latestVisitDate(DEFAULT_LATEST_VISIT_DATE)
                 .build();
     }

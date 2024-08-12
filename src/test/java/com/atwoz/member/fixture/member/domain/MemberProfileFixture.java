@@ -13,6 +13,7 @@ import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_�
 import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_생년월일_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_성별;
 import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_성별_취미_목록;
+import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_성별_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_종교_성별;
 import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.ProfileFixture.프로필_생성_프로필접근상태_성별_도시_구역_취미목록_스타일목록;
@@ -56,9 +57,16 @@ public class MemberProfileFixture {
                 .build();
     }
 
-    public static MemberProfile 회원_프로필_생성_성별_취미목록(final Gender gender, final List<Hobby> hobbyCodes) {
+    public static MemberProfile 회원_프로필_생성_성별_취미목록_스타일목록(final Gender gender, final List<Hobby> hobbies, final List<Style> styles) {
         return MemberProfile.builder()
-                .profile(프로필_생성_성별_취미_목록(gender, hobbyCodes))
+                .profile(프로필_생성_성별_취미목록_스타일목록(gender, hobbies, styles))
+                .profileAccessStatus(DEFAULT_PROFILE_ACCESS_STATUS)
+                .build();
+    }
+
+    public static MemberProfile 회원_프로필_생성_성별_취미목록(final Gender gender, final List<Hobby> hobbies) {
+        return MemberProfile.builder()
+                .profile(프로필_생성_성별_취미_목록(gender, hobbies))
                 .profileAccessStatus(DEFAULT_PROFILE_ACCESS_STATUS)
                 .build();
     }

@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_성별;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_성별_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
@@ -78,8 +78,14 @@ class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
         ));
     }
 
-    protected Member 회원_생성_성별(final String nickname, final String phoneNumber, final Gender gender) {
-        return memberRepository.save(회원_생성_닉네임_전화번호_성별(nickname, phoneNumber, gender));
+    protected Member 회원_생성(final String nickname, final String phoneNumber, final Gender gender) {
+        return memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록(
+                nickname,
+                phoneNumber,
+                gender,
+                hobbies,
+                styles
+        ));
     }
 
     protected String 토큰_생성(final Member member) {
