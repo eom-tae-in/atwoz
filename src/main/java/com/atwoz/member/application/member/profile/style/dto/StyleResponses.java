@@ -18,23 +18,17 @@ public record StyleResponses(
     private static final int NEXT_PAGE = 1;
     private static final int NO_MORE_PAGE = -1;
 
-    public static StyleResponses of(final Page<StyleResponse> styleResponses,
-                                    final Pageable pageable) {
+    public static StyleResponses of(
+            final Page<StyleResponse> styleResponses,
+            final Pageable pageable,
+            final int nextPage
+    ) {
         return StyleResponses.builder()
                 .styleResponses(styleResponses.getContent())
                 .nowPage(pageable.getPageNumber())
-                .nextPage(getNextPage(styleResponses.hasNext(), pageable.getPageNumber()))
+                .nextPage(nextPage)
                 .totalPages(styleResponses.getTotalPages())
                 .totalElements(styleResponses.getTotalElements())
                 .build();
-    }
-
-    private static int getNextPage(final boolean hasNextPage,
-                                   final int nowPage) {
-        if (hasNextPage) {
-            return nowPage + NEXT_PAGE;
-        }
-
-        return NO_MORE_PAGE;
     }
 }

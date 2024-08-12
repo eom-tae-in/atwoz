@@ -1,5 +1,6 @@
 package com.atwoz.member.application.member.profile.style;
 
+import com.atwoz.global.application.BaseQueryService;
 import com.atwoz.member.application.member.profile.style.dto.StyleResponses;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class StyleQueryService {
+public class StyleQueryService extends BaseQueryService<StyleResponse> {
 
     private final StyleRepository styleRepository;
 
@@ -30,6 +31,7 @@ public class StyleQueryService {
 
     public StyleResponses findStylesWithPaging(final Pageable pageable) {
         Page<StyleResponse> styleResponses = styleRepository.findStylesWithPaging(pageable);
-        return StyleResponses.of(styleResponses, pageable);
+        int nextPage = getNextPage(pageable.getPageNumber(), styleResponses);
+        return StyleResponses.of(styleResponses, pageable, nextPage);
     }
 }

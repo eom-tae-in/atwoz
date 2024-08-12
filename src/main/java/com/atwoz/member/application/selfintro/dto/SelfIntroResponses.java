@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @Builder
-public record SelfIntrosResponse(
+public record SelfIntroResponses(
         List<SelfIntroResponse> selfIntros,
         int nowPage,
         int nextPage,
@@ -18,22 +18,17 @@ public record SelfIntrosResponse(
     private static final int NEXT_PAGE_INDEX = 1;
     private static final int NO_MORE_PAGE = -1;
 
-    public static SelfIntrosResponse of(final Page<SelfIntroResponse> selfIntros,
-                                        final Pageable pageable) {
-        return SelfIntrosResponse.builder()
+    public static SelfIntroResponses of(
+            final Page<SelfIntroResponse> selfIntros,
+            final Pageable pageable,
+            final int nextPage
+    ) {
+        return SelfIntroResponses.builder()
                 .selfIntros(selfIntros.getContent())
                 .nowPage(pageable.getPageNumber())
-                .nextPage(getNextPage(pageable.getPageNumber(), selfIntros))
+                .nextPage(nextPage)
                 .totalPages(selfIntros.getTotalPages())
                 .totalElements(selfIntros.getTotalElements())
                 .build();
-    }
-
-    private static int getNextPage(final int pageNumber, final Page<SelfIntroResponse> selfIntros) {
-        if (selfIntros.hasNext()) {
-            return pageNumber + NEXT_PAGE_INDEX;
-        }
-
-        return NO_MORE_PAGE;
     }
 }

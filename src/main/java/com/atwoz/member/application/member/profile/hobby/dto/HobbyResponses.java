@@ -18,23 +18,17 @@ public record HobbyResponses(
     private static final int NEXT_PAGE = 1;
     private static final int NO_MORE_PAGE = -1;
 
-    public static HobbyResponses of(final Page<HobbyResponse> hobbyResponses,
-                                    final Pageable pageable) {
+    public static HobbyResponses of(
+            final Page<HobbyResponse> hobbyResponses,
+            final Pageable pageable,
+            final int nextPage
+    ) {
         return HobbyResponses.builder()
                 .hobbyResponses(hobbyResponses.getContent())
                 .nowPage(pageable.getPageNumber())
-                .nextPage(getNextPage(hobbyResponses.hasNext(), pageable.getPageNumber()))
+                .nextPage(nextPage)
                 .totalPages(hobbyResponses.getTotalPages())
                 .totalElements(hobbyResponses.getTotalElements())
                 .build();
-    }
-
-    private static int getNextPage(final boolean hasNextPage,
-                                   final int nowPage) {
-        if (hasNextPage) {
-            return nowPage + NEXT_PAGE;
-        }
-
-        return NO_MORE_PAGE;
     }
 }

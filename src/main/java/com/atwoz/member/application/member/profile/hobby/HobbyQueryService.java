@@ -1,5 +1,6 @@
 package com.atwoz.member.application.member.profile.hobby;
 
+import com.atwoz.global.application.BaseQueryService;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyResponses;
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class HobbyQueryService {
+public class HobbyQueryService extends BaseQueryService<HobbyResponse> {
 
     private final HobbyRepository hobbyRepository;
 
@@ -30,6 +31,8 @@ public class HobbyQueryService {
 
     public HobbyResponses findHobbiesWithPaging(final Pageable pageable) {
         Page<HobbyResponse> hobbyResponses = hobbyRepository.findHobbiesWithPaging(pageable);
-        return HobbyResponses.of(hobbyResponses, pageable);
+        int nextPage = getNextPage(pageable.getPageNumber(), hobbyResponses);
+
+        return HobbyResponses.of(hobbyResponses, pageable, nextPage);
     }
 }
