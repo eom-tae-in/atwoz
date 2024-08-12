@@ -27,4 +27,12 @@ public class MemberSurveyFixture {
         }
         return memberSurveys;
     }
+
+    public static List<MemberSurvey> 회원_연애고사_응시_필수_과목_30개_번호(final Integer number) {
+        List<MemberSurvey> memberSurveys = new ArrayList<>();
+        for (long id = 1; id <= 30; id++) {
+            memberSurveys.add(MemberSurvey.of(id, id, number));
+        }
+        return memberSurveys;
+    }
 }
