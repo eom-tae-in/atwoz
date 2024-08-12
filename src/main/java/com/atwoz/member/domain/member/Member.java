@@ -72,18 +72,6 @@ public class Member extends SoftDeleteBaseEntity {
                 .build();
     }
 
-    // 테스트를 위해서 새로 만든 메서드
-    public static Member createWithOAuth(final String phoneNumber,
-                                         final MemberGrade memberGrade,
-                                         final String Gender) {
-        return Member.builder()
-                .phoneNumber(phoneNumber)
-                .memberProfile(MemberProfile.createWith(Gender))
-                .memberGrade(memberGrade)
-                .memberStatus(ACTIVE)
-                .build();
-    }
-
     public static Member createWithPass(final String gender,
                                         final String phoneNumber) {
         return Member.builder()
