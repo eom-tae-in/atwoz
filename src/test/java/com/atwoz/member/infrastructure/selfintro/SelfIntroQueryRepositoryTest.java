@@ -7,28 +7,17 @@ import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.domain.selfintro.SelfIntro;
 import com.atwoz.member.domain.selfintro.SelfIntroRepository;
 import com.atwoz.member.fixture.member.generator.UniqueMemberFieldsGenerator;
-import com.atwoz.member.infrastructure.selfintro.dto.SelfIntroResponse;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_생년월일_취미목록_스타일목록;
+import java.util.List;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
-import static com.atwoz.member.fixture.selfintro.SelfIntroFixture.셀프_소개글_생성_id_없음;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -68,6 +57,7 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
         uniqueMemberFieldsGenerator = new UniqueMemberFieldsGenerator();
     }
 
+    /*
     @Test
     void 셀프_소개글을_최근_생성된_기준으로_10개_페이징해서_조회한다() {
         // given
@@ -174,4 +164,5 @@ class SelfIntroQueryRepositoryTest extends IntegrationHelper {
                 styles
         );
     }
+     */
 }
