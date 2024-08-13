@@ -14,7 +14,6 @@ import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyQuestionResp
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
 import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
 import com.atwoz.survey.infrastructure.survey.SurveyFakeRepository;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -102,7 +101,7 @@ class MemberSurveysQueryServiceTest {
         List<SurveySoulmateResponse> soulmates = memberSurveysQueryService.findSoulmates(member.getId());
 
         // then
-        SoftAssertions.assertSoftly(softly -> {
+        assertSoftly(softly -> {
             softly.assertThat(soulmates.size()).isEqualTo(1);
             softly.assertThat(soulmates.get(0).id()).isEqualTo(visibleFemaleMember.getId());
             softly.assertThat(soulmates.get(0).id()).isNotEqualTo(notVisibleMaleMember.getId());
