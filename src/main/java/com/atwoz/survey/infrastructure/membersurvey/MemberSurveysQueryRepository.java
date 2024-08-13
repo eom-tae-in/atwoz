@@ -121,10 +121,7 @@ public class MemberSurveysQueryRepository {
                 )
                 .from(memberSurveys1)
                 .join(memberSurveys1.memberSurveys, memberSurvey)
-                .where(
-                        memberSurveys1.memberId.eq(memberId)
-                                .and(memberSurvey.surveyId.eq(memberId))
-                )
+                .where(memberSurveys1.memberId.eq(memberId), memberSurvey.surveyId.eq(surveyId))
                 .fetch();
         return Optional.of(new MemberSurveyResponse(surveyId, questions));
     }
