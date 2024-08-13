@@ -12,6 +12,7 @@ import com.atwoz.member.fixture.member.dto.response.ProfileResponseFixture;
 import com.atwoz.member.infrastructure.member.dto.InternalProfileFilterRequest;
 import com.atwoz.member.infrastructure.member.dto.MemberResponse;
 import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
+import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.infrastructure.MemberLikeFakeRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,7 +33,15 @@ public class MemberFakeRepository implements MemberRepository {
 
     private final Map<Long, Member> map = new HashMap<>();
     private Long id = 1L;
-    private final MemberLikeFakeRepository memberLikeFakeRepository = new MemberLikeFakeRepository();
+    private final MemberLikeRepository memberLikeFakeRepository;
+
+    public MemberFakeRepository(final MemberLikeRepository memberLikeFakeRepository) {
+        this.memberLikeFakeRepository = memberLikeFakeRepository;
+    }
+
+    public MemberFakeRepository() {
+        this.memberLikeFakeRepository = new MemberLikeFakeRepository();
+    }
 
     @Override
     public Optional<Member> findById(final Long id) {
@@ -93,7 +102,7 @@ public class MemberFakeRepository implements MemberRepository {
                 .filter(member -> applyFilterConditions(internalProfileFilterRequest, member))
                 .filter(member -> isDifferentGender(member, foundMember))
                 .sorted(Comparator.comparing(member ->
-                        memberLikeFakeRepository.findReceivedLikesWithPaging(memberId, pageable)
+                        memberLikeFakeRepository.findReceivedLikesWithPaging(member.getId(), pageable)
                                 .getTotalElements()
                 ))
                 .map(ProfileResponseFixture::프로필_응답서_생성_회원)
