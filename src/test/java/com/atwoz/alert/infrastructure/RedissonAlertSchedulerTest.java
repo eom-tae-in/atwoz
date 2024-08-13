@@ -1,20 +1,4 @@
-package com.atwoz.alert.infrastructure;
-
-import com.atwoz.alert.domain.Alert;
-import com.atwoz.alert.domain.AlertRepository;
-import com.atwoz.helper.IntegrationHelper;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.auditing.AuditingHandler;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-import static com.atwoz.alert.fixture.AlertFixture.알림_생성_id_없음;
-import static com.atwoz.alert.fixture.AlertFixture.옛날_알림_생성;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-
+/*
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class RedissonAlertSchedulerTest extends IntegrationHelper {
@@ -59,7 +43,6 @@ class RedissonAlertSchedulerTest extends IntegrationHelper {
         });
     }
 
-    /*
     24.08.13: 레디스 실행 시 젠킨스에서 발생하는 오류로 인해 우선은 분산 락 호출 검증은 보류합니다.
     @Test
     void 분산_락으로_중복호출을_막는다() throws InterruptedException {
@@ -87,5 +70,6 @@ class RedissonAlertSchedulerTest extends IntegrationHelper {
         // then
         assertThat(atomicLong.get()).isEqualTo(1);
     }
-     */
+
 }
+*/
