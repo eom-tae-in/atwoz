@@ -6,6 +6,7 @@ import static com.atwoz.survey.fixture.MemberSurveyFixture.회원_연애고사_�
 import static com.atwoz.survey.fixture.MemberSurveyFixture.회원_연애고사_응시_필수_과목_30개_과목_문제_답안;
 import static com.atwoz.survey.fixture.MemberSurveyFixture.회원_연애고사_응시_필수_과목_두개;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class MemberSurveysFixture {
 
     public static MemberSurveys 회원_연애고사_필수_과목_질문_두개_응시_저장() {
