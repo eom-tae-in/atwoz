@@ -117,7 +117,9 @@ public class MemberSurveysFakeRepository implements MemberSurveysRepository {
 
     private Gender extractMemberGender(final Member member) {
         MemberProfile memberProfile = member.getMemberProfile();
-        return memberProfile.getProfile().getPhysicalProfile().getGender();
+        return memberProfile.getProfile()
+                .getPhysicalProfile()
+                .getGender();
     }
 
     @Override
