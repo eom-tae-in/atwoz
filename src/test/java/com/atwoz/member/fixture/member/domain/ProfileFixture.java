@@ -119,7 +119,7 @@ public class ProfileFixture {
                 .build();
     }
 
-    public static Profile 프로필_생성_성별_취미_목록(final Gender gender, final List<Hobby> hobbyCodes) {
+    public static Profile 프로필_생성_성별_취미목록_스타일목록(final Gender gender, final List<Hobby> hobbies, final List<Style> styles) {
         return Profile.builder()
                 .job(DEFAULT_JOB)
                 .graduate(DEFAULT_GRADUATE)
@@ -129,7 +129,23 @@ public class ProfileFixture {
                 .mbti(DEFAULT_MBTI)
                 .profileAccessStatus(DEFAULT_PROFILE_ACCESS_STATUS)
                 .physicalProfile(신체_프로필_생성_성별(gender))
-                .memberHobbies(회원_취미_목록_생성_취미목록(hobbyCodes))
+                .memberHobbies(회원_취미_목록_생성_취미목록(hobbies))
+                .memberStyles(회원_스타일_목록_생성_스타일목록(styles))
+                .location(new Location(DEFAULT_CITY, DEFAULT_SECTOR))
+                .build();
+    }
+
+    public static Profile 프로필_생성_성별_취미_목록(final Gender gender, final List<Hobby> hobbies) {
+        return Profile.builder()
+                .job(DEFAULT_JOB)
+                .graduate(DEFAULT_GRADUATE)
+                .smoke(DEFAULT_SMOKE)
+                .drink(DEFAULT_DRINK)
+                .religion(DEFAULT_RELIGION)
+                .mbti(DEFAULT_MBTI)
+                .profileAccessStatus(DEFAULT_PROFILE_ACCESS_STATUS)
+                .physicalProfile(신체_프로필_생성_성별(gender))
+                .memberHobbies(회원_취미_목록_생성_취미목록(hobbies))
                 .memberStyles(회원_스타일_목록_생성())
                 .location(new Location(DEFAULT_CITY, DEFAULT_SECTOR))
                 .build();

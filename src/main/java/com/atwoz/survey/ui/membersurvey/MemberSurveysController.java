@@ -5,9 +5,9 @@ import com.atwoz.survey.application.membersurvey.MemberSurveysQueryService;
 import com.atwoz.survey.application.membersurvey.MemberSurveysService;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
-import com.atwoz.survey.ui.membersurvey.dto.MatchMemberSearchResponse;
+import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
+import com.atwoz.survey.ui.membersurvey.dto.SurveySoulmateResponses;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/members/me/surveys")
@@ -43,10 +45,10 @@ public class MemberSurveysController {
     }
 
     @GetMapping("/match")
-    public ResponseEntity<MatchMemberSearchResponse> findMatchMembers(@AuthMember final Long memberId) {
-        List<Long> members = memberSurveysQueryService.findMatchMembers(memberId);
+    public ResponseEntity<SurveySoulmateResponses> findSoulmates(@AuthMember final Long memberId) {
+        List<SurveySoulmateResponse> soulmates = memberSurveysQueryService.findSoulmates(memberId);
 
         return ResponseEntity.ok()
-                .body(new MatchMemberSearchResponse(members));
+                .body(SurveySoulmateResponses.from(soulmates));
     }
 }

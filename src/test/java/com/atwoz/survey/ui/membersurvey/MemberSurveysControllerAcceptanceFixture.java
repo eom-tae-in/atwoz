@@ -7,21 +7,24 @@ import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
+import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
-import com.atwoz.survey.ui.membersurvey.dto.MatchMemberSearchResponse;
+import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
+import com.atwoz.survey.ui.membersurvey.dto.SurveySoulmateResponses;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_성별_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
@@ -70,6 +73,16 @@ class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
         return memberRepository.save(회원_생성_닉네임_전화번호_취미목록_스타일목록(
                 nickname,
                 phoneNumber,
+                hobbies,
+                styles
+        ));
+    }
+
+    protected Member 회원_생성(final String nickname, final String phoneNumber, final Gender gender) {
+        return memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록(
+                nickname,
+                phoneNumber,
+                gender,
                 hobbies,
                 styles
         ));
@@ -131,12 +144,16 @@ class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
                 .extract();
     }
 
-    protected void 연애고사_매칭_검증(final ExtractableResponse<Response> response, final Long memberOneId, final Long memberTwoId) {
-        MatchMemberSearchResponse match = response.as(MatchMemberSearchResponse.class);
+    protected void 연애고사_매칭_검증(final ExtractableResponse<Response> response, final Long notOneId, final Long notTwoId, final Long findId) {
+        SurveySoulmateResponses responses = response.as(SurveySoulmateResponses.class);
+        List<SurveySoulmateResponse> soulmates = responses.soulmates();
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-            softly.assertThat(match.members()).contains(memberOneId);
-            softly.assertThat(match.members()).doesNotContain(memberTwoId);
+            softly.assertThat(soulmates.size()).isEqualTo(1);
+            SurveySoulmateResponse answer = soulmates.get(0);
+            softly.assertThat(answer.id()).isNotEqualTo(notOneId);
+            softly.assertThat(answer.id()).isNotEqualTo(notTwoId);
+            softly.assertThat(answer.id()).isEqualTo(findId);
         });
     }
 }

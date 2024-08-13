@@ -33,13 +33,11 @@ public class MemberSurvey {
     @Column(nullable = false)
     private Integer answerNumber;
 
-    private MemberSurvey(final Long surveyId, final Long questionId, final Integer answerNumber) {
-        this.surveyId = surveyId;
-        this.questionId = questionId;
-        this.answerNumber = answerNumber;
-    }
-
     public static MemberSurvey of(final Long surveyId, final Long questionId, final Integer answerNumber) {
-        return new MemberSurvey(surveyId, questionId, answerNumber);
+        return MemberSurvey.builder()
+                .surveyId(surveyId)
+                .questionId(questionId)
+                .answerNumber(answerNumber)
+                .build();
     }
 }
