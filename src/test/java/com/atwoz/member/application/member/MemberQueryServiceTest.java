@@ -62,9 +62,9 @@ class MemberQueryServiceTest {
     @BeforeEach
     void setup() {
         HobbyRepository hobbyRepository = new HobbyFakeRepository();
-        memberRepository = new MemberFakeRepository();
-        memberQueryService = new MemberQueryService(memberRepository, hobbyRepository);
         memberLikeRepository = new MemberLikeFakeRepository();
+        memberRepository = new MemberFakeRepository(memberLikeRepository);
+        memberQueryService = new MemberQueryService(memberRepository, hobbyRepository);
         member = memberRepository.save(회원_생성());
         uniqueMemberFieldsGenerator = new UniqueMemberFieldsGenerator();
         취미_목록_생성(hobbyRepository);
@@ -152,7 +152,7 @@ class MemberQueryServiceTest {
         ProfileFilterRequest profileFilterRequest = 프로필_필터_요청서_생성();
         Long memberId = member.getId();
         Member newMember = memberRepository.save(새로운_이성_회원_생성());
-        memberLikeRepository.save(호감_생성_id_주입(newMember.getId(), memberId));
+        memberLikeRepository.save(호감_생성_id_주입(memberId, newMember.getId()));
 
         // when
         ProfileResponse profileResponse = memberQueryService.findProfileByPopularity(profileFilterRequest, memberId);
