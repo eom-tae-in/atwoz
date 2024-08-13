@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import static com.atwoz.survey.fixture.SurveySoulmateResponseFixture.소울메이트_응답_회원;
 
 public class MemberSurveysFakeRepository implements MemberSurveysRepository {
 
@@ -79,7 +80,8 @@ public class MemberSurveysFakeRepository implements MemberSurveysRepository {
         for (MemberSurveys otherMemberSurveys : otherMembers) {
             if (isSameAnswer(memberSurveys, otherMemberSurveys)) {
                 Member otherMember = findMemberById(otherMemberSurveys.getMemberId());
-                result.add(convertSurveySoulmateResponse(otherMember));
+                SurveySoulmateResponse response = 소울메이트_응답_회원(otherMember);
+                result.add(response);
             }
         }
 
@@ -98,16 +100,6 @@ public class MemberSurveysFakeRepository implements MemberSurveysRepository {
             }
         }
         return same >= MINIMUM_MATCH_SIZE;
-    }
-
-    private SurveySoulmateResponse convertSurveySoulmateResponse(final Member member) {
-        return new SurveySoulmateResponse(
-                member.getId(),
-                member.getNickname(),
-                member.getMemberProfile().getProfile().getLocation().getCity(),
-                member.getMemberProfile().getProfile().getLocation().getSector(),
-                member.getMemberProfile().getProfile().getPhysicalProfile().getAge()
-        );
     }
 
     private Member findMemberById(final Long memberId) {
