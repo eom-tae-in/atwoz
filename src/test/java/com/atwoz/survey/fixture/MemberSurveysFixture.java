@@ -24,7 +24,11 @@ public class MemberSurveysFixture {
                 .build();
     }
 
-    public static MemberSurveys 회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안(final Long memberId, final Long surveyId, final Integer answer) {
+    public static MemberSurveys 회원_연애고사_필수_과목_질문_30개_응시_저장_id_과목_답안(
+            final Long memberId,
+            final Long surveyId,
+            final Integer answer
+    ) {
         return MemberSurveys.builder()
                 .memberId(memberId)
                 .memberSurveys(회원_연애고사_응시_필수_과목_30개_과목_문제_답안(surveyId, answer))
