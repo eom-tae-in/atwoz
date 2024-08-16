@@ -26,6 +26,7 @@ public class AdminAuthController {
     private static final String COOKIE_NAME = "refreshToken";
     private static final String ANY_WAY = "/";
     private static final String NONE = "none";
+    private static final String SUB_DOMAIN = ".atwoz.kr";
 
     @Value("${cookie.max-age}")
     private int maxAge;
@@ -74,6 +75,7 @@ public class AdminAuthController {
                 .path(ANY_WAY)
                 .maxAge(maxAge)
                 .sameSite(NONE)
+                .domain(SUB_DOMAIN)
                 .build();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
