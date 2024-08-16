@@ -25,7 +25,6 @@ public class AdminAuthController {
 
     private static final String COOKIE_NAME = "refreshToken";
     private static final String ANY_WAY = "/";
-    private static final String DOMAIN = ".atwoz";
     private static final String NONE = "none";
 
     @Value("${cookie.max-age}")
@@ -74,7 +73,6 @@ public class AdminAuthController {
                 .secure(true)
                 .path(ANY_WAY)
                 .maxAge(maxAge)
-                .domain(DOMAIN)
                 .sameSite(NONE)
                 .build();
         HttpHeaders httpHeaders = new HttpHeaders();
