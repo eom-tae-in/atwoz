@@ -2,7 +2,6 @@ package com.atwoz.admin.ui.auth.interceptor;
 
 import com.atwoz.admin.exception.exceptions.AdminLoginInvalidException;
 import com.atwoz.admin.ui.auth.support.AdminAuthenticationContext;
-import com.atwoz.admin.ui.auth.support.AdminAuthenticationExtractor;
 import com.atwoz.admin.ui.auth.support.AdminTokenExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +20,6 @@ class AdminLoginValidCheckerInterceptorTest {
     private final HttpServletRequest req = mock(HttpServletRequest.class);
     private final HttpServletResponse res = mock(HttpServletResponse.class);
     private final AdminAuthenticationContext adminAuthenticationContext = mock(AdminAuthenticationContext.class);
-    private final AdminAuthenticationExtractor adminAuthenticationExtractor = mock(AdminAuthenticationExtractor.class);
     private final AdminTokenExtractor adminTokenExtractor = mock(AdminTokenExtractor.class);
 
     @Test
@@ -29,7 +27,6 @@ class AdminLoginValidCheckerInterceptorTest {
         // given
         AdminLoginValidCheckerInterceptor adminLoginValidCheckerInterceptor = new AdminLoginValidCheckerInterceptor(
                 adminAuthenticationContext,
-                adminAuthenticationExtractor,
                 adminTokenExtractor
         );
         when(req.getHeader("any")).thenReturn(null);

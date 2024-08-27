@@ -1,7 +1,5 @@
 package com.atwoz.member.ui.auth.interceptor;
 
-import com.atwoz.member.domain.auth.MemberTokenProvider;
-import com.atwoz.member.exception.exceptions.auth.MemberLoginInvalidException;
 import com.atwoz.member.ui.auth.support.MemberAuthenticationContext;
 import com.atwoz.member.ui.auth.support.MemberAuthenticationExtractor;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,22 +10,20 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @RequiredArgsConstructor
 @Component
-public class MemberLoginValidCheckerInterceptor implements HandlerInterceptor {
+public class ParseMemberIdFromTokenInterceptor implements HandlerInterceptor {
 
-    private static final String MEMBER_ID = "id";
-
+    private final MemberLoginValidCheckerInterceptor memberLoginValidCheckerInterceptor;
     private final MemberAuthenticationContext memberAuthenticationContext;
-    private final MemberTokenProvider memberTokenProvider;
 
     @Override
     public boolean preHandle(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Object handler) throws Exception {
-        String token = MemberAuthenticationExtractor.extractFromRequest(request)
-                .orElseThrow(MemberLoginInvalidException::new);
-        Long extractedId = memberTokenProvider.extract(token, MEMBER_ID, Long.class);
-        memberAuthenticationContext.setAuthentication(extractedId);
+        if (MemberAuthenticationExtractor.extractFromRequest(request).isEmpty()) {
+            memberAuthenticationContext.setAnonymous();
+            return true;
+        }
 
-        return true;
+        return memberLoginValidCheckerInterceptor.preHandle(request, response, handler);
     }
 }
