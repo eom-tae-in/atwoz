@@ -1,6 +1,7 @@
 package com.atwoz.admin.config;
 
 import com.atwoz.admin.ui.auth.interceptor.AdminLoginValidCheckerInterceptor;
+import com.atwoz.admin.ui.auth.interceptor.ParseAdminIdFromTokenInterceptor;
 import com.atwoz.admin.ui.auth.support.resolver.AdminAuthArgumentResolver;
 import com.atwoz.admin.ui.auth.support.resolver.AdminRefreshTokenExtractionArgumentResolver;
 import com.atwoz.global.config.interceptor.PathMatcherInterceptor;
@@ -24,18 +25,25 @@ public class AdminAuthConfig implements WebMvcConfigurer {
 
     private final AdminAuthArgumentResolver adminAuthArgumentResolver;
     private final AdminRefreshTokenExtractionArgumentResolver adminRefreshTokenExtractionArgumentResolver;
+    private final ParseAdminIdFromTokenInterceptor parseAdminIdFromTokenInterceptor;
     private final AdminLoginValidCheckerInterceptor adminLoginValidCheckerInterceptor;
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
+        registry.addInterceptor(parseAdminIdFromTokenInterceptor());
         registry.addInterceptor(adminLoginValidCheckerInterceptor());
+    }
+
+    private HandlerInterceptor parseAdminIdFromTokenInterceptor() {
+        return new PathMatcherInterceptor(parseAdminIdFromTokenInterceptor)
+                .excludePathPattern("/**", OPTIONS);
     }
 
     private HandlerInterceptor adminLoginValidCheckerInterceptor() {
         return new PathMatcherInterceptor(adminLoginValidCheckerInterceptor)
                 .excludePathPattern("/**", OPTIONS)
-                .addPathPatterns("/api/members/hobbies", GET, POST, PATCH, DELETE)
-                .addPathPatterns("/api/members/styles", GET, POST, PATCH, DELETE);
+                .addPathPatterns("/api/members/hobbies/**", GET, POST, PATCH, DELETE)
+                .addPathPatterns("/api/members/styles/**", GET, POST, PATCH, DELETE);
     }
 
     @Override

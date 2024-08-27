@@ -2,6 +2,7 @@ package com.atwoz.member.config;
 
 import com.atwoz.global.config.interceptor.PathMatcherInterceptor;
 import com.atwoz.member.ui.auth.interceptor.MemberLoginValidCheckerInterceptor;
+import com.atwoz.member.ui.auth.interceptor.ParseMemberIdFromTokenInterceptor;
 import com.atwoz.member.ui.auth.support.resolver.MemberAuthArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +23,18 @@ import static com.atwoz.global.config.interceptor.support.HttpMethod.POST;
 public class MemberAuthConfig implements WebMvcConfigurer {
 
     private final MemberAuthArgumentResolver memberAuthArgumentResolver;
+    private final ParseMemberIdFromTokenInterceptor parseMemberIdFromTokenInterceptor;
     private final MemberLoginValidCheckerInterceptor memberLoginValidCheckerInterceptor;
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
+        registry.addInterceptor(parseMemberIdFromTokenInterceptor());
         registry.addInterceptor(loginValidCheckerInterceptor());
+    }
+
+    private HandlerInterceptor parseMemberIdFromTokenInterceptor() {
+        return new PathMatcherInterceptor(parseMemberIdFromTokenInterceptor)
+                .excludePathPattern("/**", OPTIONS);
     }
 
     /**

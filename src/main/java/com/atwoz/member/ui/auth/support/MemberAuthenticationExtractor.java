@@ -2,12 +2,8 @@ package com.atwoz.member.ui.auth.support;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-@RequiredArgsConstructor
-@Component
 public class MemberAuthenticationExtractor {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
@@ -17,7 +13,7 @@ public class MemberAuthenticationExtractor {
     private static final int TOKEN_VALUE_INDEX = 1;
     private static final int VALID_HEADER_SPLIT_LENGTH = 2;
 
-    public Optional<String> extractFromRequest(final HttpServletRequest request) {
+    public static Optional<String> extractFromRequest(final HttpServletRequest request) {
         String header = request.getHeader(AUTHORIZATION_HEADER);
 
         if (!StringUtils.hasText(header)) {
@@ -27,7 +23,7 @@ public class MemberAuthenticationExtractor {
         return extractFromHeader(header.split(HEADER_SPLIT_DELIMITER));
     }
 
-    private Optional<String> extractFromHeader(final String[] headerParts) {
+    private static Optional<String> extractFromHeader(final String[] headerParts) {
         if (headerParts.length == VALID_HEADER_SPLIT_LENGTH &&
                 headerParts[TOKEN_TYPE_INDEX].equals(BEARER)) {
             return Optional.ofNullable(headerParts[TOKEN_VALUE_INDEX]);
