@@ -1,4 +1,4 @@
-package com.atwoz.interview.domain.vo;
+package com.atwoz.interview.domain.interview.vo;
 
 import com.atwoz.interview.exception.exceptions.InterviewTypeNotFoundException;
 import lombok.Getter;

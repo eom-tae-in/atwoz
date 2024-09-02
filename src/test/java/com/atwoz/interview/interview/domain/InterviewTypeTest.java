@@ -1,6 +1,6 @@
-package com.atwoz.interview.domain;
+package com.atwoz.interview.interview.domain;
 
-import com.atwoz.interview.domain.vo.InterviewType;
+import com.atwoz.interview.domain.interview.vo.InterviewType;
 import com.atwoz.interview.exception.exceptions.InterviewTypeNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
