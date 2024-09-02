@@ -9,4 +9,5 @@ public interface InterviewJpaRepository extends JpaRepository<Interview, Long> {
 
     Interview save(Interview interview);
     Optional<Interview> findById(Long id);
+    boolean existsByQuestion(String question);
 }

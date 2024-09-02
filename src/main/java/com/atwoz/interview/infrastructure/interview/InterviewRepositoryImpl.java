@@ -22,4 +22,9 @@ public class InterviewRepositoryImpl implements InterviewRepository {
     public Optional<Interview> findById(final Long id) {
         return interviewJpaRepository.findById(id);
     }
+
+    @Override
+    public boolean existsByQuestion(final String question) {
+        return interviewJpaRepository.existsByQuestion(question);
+    }
 }
