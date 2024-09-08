@@ -1,5 +1,6 @@
 package com.atwoz.interview.domain.interview;
 
+import com.atwoz.global.domain.BaseEntity;
 import com.atwoz.interview.domain.interview.vo.InterviewType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,13 +10,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@EqualsAndHashCode(of = "id", callSuper = false)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Entity
-public class Interview {
+public class Interview extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

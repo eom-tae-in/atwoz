@@ -1,4 +1,4 @@
-package com.atwoz.interview.interview.domain;
+package com.atwoz.interview.domain.interview;
 
 import com.atwoz.interview.domain.interview.vo.InterviewType;
 import com.atwoz.interview.exception.exceptions.InterviewTypeNotFoundException;
