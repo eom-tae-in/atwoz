@@ -2,10 +2,13 @@ package com.atwoz.interview.infrastructure.interview;
 
 import com.atwoz.interview.domain.interview.Interview;
 import com.atwoz.interview.domain.interview.InterviewRepository;
+import com.atwoz.interview.domain.interview.vo.InterviewType;
+import com.atwoz.interview.infrastructure.interview.dto.InterviewResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,5 +46,14 @@ public class InterviewFakeRepository implements InterviewRepository {
         return map.values()
                 .stream()
                 .anyMatch(interview -> question.equals(interview.getQuestion()));
+    }
+
+    @Override
+    public List<InterviewResponse> findByInterviewType(final InterviewType interviewType) {
+        return map.values()
+                .stream()
+                .filter(interview -> interview.isSameType(interviewType))
+                .map(interview -> new InterviewResponse(interview.getId(), interview.getQuestion(), interviewType.getName()))
+                .toList();
     }
 }
