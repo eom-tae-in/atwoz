@@ -48,4 +48,8 @@ public class Interview extends BaseEntity {
         this.question = question;
         this.interviewType = InterviewType.findByName(type);
     }
+
+    public boolean isSameType(final InterviewType interviewType) {
+        return interviewType.equals(this.interviewType);
+    }
 }
