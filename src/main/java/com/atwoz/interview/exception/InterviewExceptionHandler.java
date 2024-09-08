@@ -1,6 +1,7 @@
 package com.atwoz.interview.exception;
 
 import com.atwoz.interview.exception.exceptions.AlreadyExistedInterviewQuestionException;
+import com.atwoz.interview.exception.exceptions.InterviewNotFoundException;
 import com.atwoz.interview.exception.exceptions.InterviewTypeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,11 @@ public class InterviewExceptionHandler {
 
     @ExceptionHandler(InterviewTypeNotFoundException.class)
     public ResponseEntity<String> handleInterviewTypeNotFoundException(final InterviewTypeNotFoundException e) {
+        return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InterviewNotFoundException.class)
+    public ResponseEntity<String> handleInterviewNotFoundException(final InterviewNotFoundException e) {
         return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
     }
 

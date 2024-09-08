@@ -43,4 +43,9 @@ public class Interview extends BaseEntity {
         InterviewType interviewType = InterviewType.findByName(type);
         return new Interview(question, interviewType);
     }
+
+    public void updateInterview(final String question, final String type) {
+        this.question = question;
+        this.interviewType = InterviewType.findByName(type);
+    }
 }

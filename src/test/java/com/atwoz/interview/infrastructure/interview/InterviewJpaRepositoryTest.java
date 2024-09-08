@@ -61,12 +61,27 @@ class InterviewJpaRepositoryTest {
             // given
             Interview interview = 인터뷰_나_일반_질문();
             String question = interview.getQuestion();
+            interviewJpaRepository.save(interview);
 
             // when
             boolean existence = interviewJpaRepository.existsByQuestion(question);
 
             // then
             assertThat(existence).isTrue();
+        }
+
+        @Test
+        void 인터뷰_질문_수정_시_조회_결과가_달라진다() {
+            // given
+            Interview interview = 인터뷰_나_일반_질문();
+            interviewJpaRepository.save(interview);
+            String question = interview.getQuestion();
+
+            // when
+            interview.updateInterview("변경 질문", "연인");
+
+            // then
+            assertThat(interviewJpaRepository.existsByQuestion(question)).isFalse();
         }
     }
 
