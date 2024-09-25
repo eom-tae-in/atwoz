@@ -82,9 +82,11 @@ public class Member extends SoftDeleteBaseEntity {
                 .build();
     }
 
-    public void initializeWith(final String nickname,
-                               final Long recommenderId,
-                               final InternalProfileInitializeRequest internalProfileInitializeRequest) {
+    public void initializeWith(
+            final String nickname,
+            final Long recommenderId,
+            final InternalProfileInitializeRequest internalProfileInitializeRequest
+    ) {
         this.nickname = nickname;
         initializeRecommenderId(recommenderId);
         memberProfile.initialize(internalProfileInitializeRequest);
