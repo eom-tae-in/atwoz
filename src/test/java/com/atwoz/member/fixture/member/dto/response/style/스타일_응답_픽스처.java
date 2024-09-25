@@ -29,7 +29,6 @@ public class 스타일_응답_픽스처 {
         }
     }
 
-
     public static class 스타일_페이징_조회_응답_픽스처 {
 
         private static final long DEFAULT_HOBBY_ID = 1L;
