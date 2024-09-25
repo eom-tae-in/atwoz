@@ -30,28 +30,6 @@ class SelfIntroQueryServiceTest {
     }
 
     @Test
-    void 셀프_소개글을_페이징으로_조회한다() {
-        // given
-        SelfIntro selfIntro = 셀프_소개글_생성_id_있음(1L);
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        selfIntroRepository.save(selfIntro);
-
-        // when
-        SelfIntroResponses result = selfIntroQueryService.findAllSelfIntrosWithPaging(pageRequest);
-
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(result.nowPage()).isEqualTo(0);
-            softly.assertThat(result.nextPage()).isEqualTo(-1);
-            softly.assertThat(result.totalPages()).isEqualTo(1);
-            softly.assertThat(result.totalElements()).isEqualTo(1);
-            SelfIntroResponse selfIntroResponse = result.selfIntros().get(0);
-            softly.assertThat(selfIntroResponse.selfIntroId()).isEqualTo(selfIntro.getId());
-            softly.assertThat(selfIntroResponse.selfIntroContent()).isEqualTo(selfIntro.getContent());
-        });
-    }
-
-    @Test
     void 필터를_적용한_셀프_소개글을_페이징으로_조회한다() {
         // given
         SelfIntro selfIntro = 셀프_소개글_생성_id_있음(1L);

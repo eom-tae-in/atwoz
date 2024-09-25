@@ -80,43 +80,6 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
     }
 
     @Test
-    void 셀프_소개글을_페이징으로_조회한다() throws Exception {
-        // given
-        List<SelfIntroResponse> selfIntroResponses = List.of(셀프_소개글_응답());
-        when(selfIntroQueryService.findAllSelfIntrosWithPaging(any(Pageable.class)))
-                .thenReturn(new SelfIntroResponses(selfIntroResponses, 0, 1, 2, 1));
-
-        // when & then
-        mockMvc.perform(get("/api/members/self-intros")
-                        .param("page", "0")
-                        .param("size", "10")
-                        .header(AUTHORIZATION, BEARER_TOKEN))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(customDocument("셀프_소개글_페이징_조회",
-                        requestHeaders(
-                                headerWithName(AUTHORIZATION).description("유저 토큰 정보")
-                        ),
-                        requestParts(
-                                partWithName("page").description("페이지 번호").optional(),
-                                partWithName("size").description("조회되는 데이터 수, 한 페이지당 조회되는 데이터 수입니다.").optional()
-                        ),
-                        responseFields(
-                                fieldWithPath("selfIntros[].selfIntroId").description("셀프 소개글 id"),
-                                fieldWithPath("selfIntros[].selfIntroContent").description("셀프 소개글"),
-                                fieldWithPath("selfIntros[].nickname").description("작성자 닉네임"),
-                                fieldWithPath("selfIntros[].city").description("작성자가 사는 도시"),
-                                fieldWithPath("selfIntros[].age").description("작성자의 나이"),
-                                fieldWithPath("selfIntros[].height").description("작성자의 키"),
-                                fieldWithPath("nowPage").description("현재 페이지"),
-                                fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
-                                fieldWithPath("totalPages").description("전체 페이지 수"),
-                                fieldWithPath("totalElements").description("전체 조회된 데이터 수")
-                        )
-                ));
-    }
-
-    @Test
     void 셀프_소개글을_필터와_페이징으로_조회한다() throws Exception {
         // given
         List<SelfIntroResponse> selfIntroResponses = List.of(셀프_소개글_응답());
@@ -131,7 +94,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
                         .param("minAge", "20")
                         .param("maxAge", "30")
                         .param("isOnlyOppositeGender", "false")
-                        .param("cityRequests", "서울시,경기도")
+                        .param("cities", "서울시,경기도")
                         .header(AUTHORIZATION, BEARER_TOKEN))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -145,7 +108,7 @@ class SelfIntroControllerWebMvcTest extends MockBeanInjection {
                                 partWithName("minAge").description("최소 나이(필터)").optional(),
                                 partWithName("maxAge").description("최대 나이(필터)").optional(),
                                 partWithName("isOnlyOppositeGender").description("성별 설정(필터), 이 값이 true일 경우 이성만 조회됩니다.").optional(),
-                                partWithName("cityRequests").description("선호 지역(필터), 지역명을 문자열로 제공해주시면 됩니다.").optional()
+                                partWithName("cities").description("선호 지역(필터), 지역명을 문자열로 제공해주시면 됩니다.").optional()
                         ),
                         responseFields(
                                 fieldWithPath("selfIntros[].selfIntroId").description("셀프 소개글 id"),
