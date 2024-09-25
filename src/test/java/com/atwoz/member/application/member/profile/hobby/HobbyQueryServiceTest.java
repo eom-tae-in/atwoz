@@ -1,11 +1,12 @@
 package com.atwoz.member.application.member.profile.hobby;
 
-import com.atwoz.member.application.member.profile.hobby.dto.HobbyResponses;
+import com.atwoz.member.application.member.profile.hobby.dto.HobbyPagingResponses;
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.exception.exceptions.member.profile.hobby.HobbyNotFoundException;
 import com.atwoz.member.infrastructure.member.profile.hobby.HobbyFakeRepository;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbySingleResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -15,7 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import static com.atwoz.member.fixture.member.domain.HobbyFixture.취미_생성;
-import static com.atwoz.member.fixture.member.dto.response.HobbyResponseFixture.취미_응답_생성_취미;
+import static com.atwoz.member.fixture.member.dto.response.hobby.취미_응답_픽스처.취미_단건_조회_응답_픽스처.취미_단건_조회_응답_생성_취미;
+import static com.atwoz.member.fixture.member.dto.response.hobby.취미_응답_픽스처.취미_페이징_조회_응답_픽스처.취미_페이징_조회_응답_생성_취미;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -43,12 +45,12 @@ class HobbyQueryServiceTest {
             Long hobbyId = savedHobby.getId();
 
             // when
-            HobbyResponse hobbyResponse = hobbyQueryService.findHobby(hobbyId);
+            HobbySingleResponse response = hobbyQueryService.findHobby(hobbyId);
 
             // then
-            HobbyResponse expectedHobbyResponse = 취미_응답_생성_취미(savedHobby);
-            assertThat(hobbyResponse).usingRecursiveComparison()
-                    .isEqualTo(expectedHobbyResponse);
+            HobbySingleResponse expectedResponse = 취미_단건_조회_응답_생성_취미(savedHobby);
+            assertThat(response).usingRecursiveComparison()
+                    .isEqualTo(expectedResponse);
         }
 
         @Test
@@ -69,19 +71,19 @@ class HobbyQueryServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         // when
-        HobbyResponses hobbyResponses = hobbyQueryService.findHobbiesWithPaging(pageable);
+        HobbyPagingResponses hobbyPagingResponses = hobbyQueryService.findHobbiesWithPaging(pageable);
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(hobbyResponses.nowPage()).isEqualTo(0);
-            softly.assertThat(hobbyResponses.nextPage()).isEqualTo(-1);
-            softly.assertThat(hobbyResponses.totalPages()).isEqualTo(1);
-            softly.assertThat(hobbyResponses.totalElements()).isEqualTo(1);
-            HobbyResponse hobbyResponse = hobbyResponses.hobbyResponses().get(0);
-            HobbyResponse expectedHobbyResponse = 취미_응답_생성_취미(savedHobby);
-            softly.assertThat(hobbyResponse)
+            softly.assertThat(hobbyPagingResponses.nowPage()).isEqualTo(0);
+            softly.assertThat(hobbyPagingResponses.nextPage()).isEqualTo(-1);
+            softly.assertThat(hobbyPagingResponses.totalPages()).isEqualTo(1);
+            softly.assertThat(hobbyPagingResponses.totalElements()).isEqualTo(1);
+            HobbyPagingResponse hobbyPagingResponse = hobbyPagingResponses.hobbyPagingResponses().get(0);
+            HobbyPagingResponse expectedResponse = 취미_페이징_조회_응답_생성_취미(savedHobby);
+            softly.assertThat(hobbyPagingResponse)
                     .usingRecursiveComparison()
-                    .isEqualTo(expectedHobbyResponse);
+                    .isEqualTo(expectedResponse);
         });
     }
 }

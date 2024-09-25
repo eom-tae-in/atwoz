@@ -2,7 +2,7 @@ package com.atwoz.member.infrastructure.member.profile.hobby;
 
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -51,16 +51,16 @@ public class HobbyFakeRepository implements HobbyRepository {
     }
 
     @Override
-    public Page<HobbyResponse> findHobbiesWithPaging(final Pageable pageable) {
-        List<HobbyResponse> hobbyResponses = map.values()
+    public Page<HobbyPagingResponse> findHobbiesWithPaging(final Pageable pageable) {
+        List<HobbyPagingResponse> hobbyPagingRespons = map.values()
                 .stream()
                 .sorted(Comparator.comparing(Hobby::getId))
                 .skip(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .map(HobbyResponse::from)
+                .map(HobbyPagingResponse::from)
                 .toList();
 
-        return new PageImpl<>(hobbyResponses);
+        return new PageImpl<>(hobbyPagingRespons);
     }
 
     @Override
