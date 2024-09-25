@@ -1,29 +1,37 @@
 package com.atwoz.member.application.selfintro.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.List;
 
 public record SelfIntroFilterRequest(
-
-        @NotNull(message = "최소 나이를 입력해주세요")
         Integer minAge,
-
-        @NotNull(message = "최대 나이를 입력해주세요")
         Integer maxAge,
-
-        @NotNull(message = "성별을 선택해주세요")
         Boolean isOnlyOppositeGender,
-
-        @Valid
-        @NotEmpty(message = "선호 지역을 하나 이상 입력해주세요.")
-        List<CityRequest> cityRequests
+        List<String> cities
 ) {
 
-    public List<String> getCities() {
-        return cityRequests.stream()
-                .map(CityRequest::city)
-                .toList();
+    public SelfIntroFilterRequest(
+            final Integer minAge,
+            final Integer maxAge,
+            final Boolean isOnlyOppositeGender,
+            final List<String> cities
+    ) {
+        this.minAge = minAge;
+        this.maxAge = maxAge;
+        this.isOnlyOppositeGender = isOnlyOppositeGender;
+        this.cities = ensureCities(cities);
+    }
+
+    private List<String> ensureCities(final List<String> cities) {
+        if (isInvalidCase(cities)) {
+            return Collections.emptyList();
+        }
+        return cities;
+    }
+
+    private boolean isInvalidCase(final List<String> cities) {
+        return cities == null ||
+                cities.stream()
+                        .allMatch(city -> city == null || city.isBlank());
     }
 }

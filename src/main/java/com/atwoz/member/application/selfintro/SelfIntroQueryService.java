@@ -18,12 +18,6 @@ public class SelfIntroQueryService extends BaseQueryService<SelfIntroResponse> {
 
     private final SelfIntroRepository selfIntroRepository;
 
-    public SelfIntroResponses findAllSelfIntrosWithPaging(final Pageable pageable) {
-        Page<SelfIntroResponse> selfIntroResponses = selfIntroRepository.findAllSelfIntrosWithPaging(pageable);
-        int nextPage = getNextPage(pageable.getPageNumber(), selfIntroResponses);
-        return SelfIntroResponses.of(selfIntroResponses, pageable, nextPage);
-    }
-
     public SelfIntroResponses findAllSelfIntrosWithPagingAndFiltering(
             final Pageable pageable,
             final SelfIntroFilterRequest selfIntroFilterRequest,
@@ -34,7 +28,7 @@ public class SelfIntroQueryService extends BaseQueryService<SelfIntroResponse> {
                 selfIntroFilterRequest.minAge(),
                 selfIntroFilterRequest.maxAge(),
                 selfIntroFilterRequest.isOnlyOppositeGender(),
-                selfIntroFilterRequest.getCities(),
+                selfIntroFilterRequest.cities(),
                 memberId
         );
         int nextPage = getNextPage(pageable.getPageNumber(), selfIntroResponses);

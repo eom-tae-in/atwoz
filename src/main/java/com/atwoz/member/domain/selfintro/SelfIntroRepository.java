@@ -14,13 +14,11 @@ public interface SelfIntroRepository {
 
     void deleteById(Long id);
 
-    Page<SelfIntroResponse> findAllSelfIntrosWithPaging(Pageable pageable);
-
     Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(
             Pageable pageable,
-            int minAge,
-            int maxAge,
-            boolean isOnlyOppositeGender,
+            Integer minAge,
+            Integer maxAge,
+            Boolean isOnlyOppositeGender,
             List<String> cities,
             Long memberId
     );

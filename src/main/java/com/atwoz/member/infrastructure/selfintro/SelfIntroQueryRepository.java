@@ -2,6 +2,7 @@ package com.atwoz.member.infrastructure.selfintro;
 
 import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.infrastructure.selfintro.dto.SelfIntroResponse;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -24,28 +25,6 @@ import static com.querydsl.core.types.Projections.constructor;
 public class SelfIntroQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-
-    public Page<SelfIntroResponse> findAllSelfIntroWithPaging(final Pageable pageable) {
-        List<SelfIntroResponse> fetch = selectSelfIntroResponse()
-                .from(member)
-                .leftJoin(member.memberProfile, memberProfile)
-                .leftJoin(memberProfile.profile, profile)
-                .leftJoin(profile.physicalProfile, physicalProfile)
-                .leftJoin(selfIntro).on(member.id.eq(selfIntro.memberId))
-                .orderBy(selfIntro.createdAt.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        JPAQuery<Long> count = jpaQueryFactory.select(member.count())
-                .from(member)
-                .leftJoin(member.memberProfile, memberProfile)
-                .leftJoin(memberProfile.profile, profile)
-                .leftJoin(profile.physicalProfile, physicalProfile)
-                .leftJoin(selfIntro).on(member.id.eq(selfIntro.memberId));
-
-        return PageableExecutionUtils.getPage(fetch, pageable, count::fetchOne);
-    }
 
     private JPAQuery<SelfIntroResponse> selectSelfIntroResponse() {
         return jpaQueryFactory.select(
@@ -70,12 +49,14 @@ public class SelfIntroQueryRepository {
                 .fetchFirst();
     }
 
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(final Pageable pageable,
-                                                                           final int minAge,
-                                                                           final int maxAge,
-                                                                           final boolean isOnlyOppositeGender,
-                                                                           final List<String> cities,
-                                                                           final Long memberId) {
+    public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(
+            final Pageable pageable,
+            final Integer minAge,
+            final Integer maxAge,
+            final Boolean isOnlyOppositeGender,
+            final List<String> cities,
+            final Long memberId
+    ) {
         Gender memberGender = findMemberGender(memberId);
         List<SelfIntroResponse> fetch = selectSelfIntroResponse()
                 .from(selfIntro)
@@ -86,8 +67,8 @@ public class SelfIntroQueryRepository {
                 .orderBy(selfIntro.createdAt.desc())
                 .where(
                         applyGenderCondition(isOnlyOppositeGender, memberGender),
-                        ageBetween(minAge, maxAge),
-                        locationIn(cities)
+                        applyAgeCondition(minAge, maxAge),
+                        applyLocationCondition(cities)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -101,27 +82,38 @@ public class SelfIntroQueryRepository {
                 .leftJoin(profile.physicalProfile, physicalProfile)
                 .where(
                         applyGenderCondition(isOnlyOppositeGender, memberGender),
-                        ageBetween(minAge, maxAge),
-                        locationIn(cities)
+                        applyAgeCondition(minAge, maxAge),
+                        applyLocationCondition(cities)
                 );
 
         return PageableExecutionUtils.getPage(fetch, pageable, count::fetchOne);
     }
 
-    private BooleanExpression applyGenderCondition(final boolean isOnlyOppositeGender, final Gender gender) {
-        if (!isOnlyOppositeGender) {
+    private BooleanExpression applyGenderCondition(final Boolean isOnlyOppositeGender, final Gender gender) {
+        if (isOnlyOppositeGender == null || !isOnlyOppositeGender) {
             return null;
         }
 
         return physicalProfile.gender.ne(gender);
     }
 
-    private BooleanExpression ageBetween(final int minAge, final int maxAge) {
-        return physicalProfile.age.goe(minAge)
-                .and(physicalProfile.age.loe(maxAge));
+    private BooleanBuilder applyAgeCondition(final Integer minAge, final Integer maxAge) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        if (minAge != null) {
+            booleanBuilder.and(physicalProfile.age.goe(minAge));
+        }
+        if (maxAge != null) {
+            booleanBuilder.and(physicalProfile.age.loe(maxAge));
+        }
+
+        return booleanBuilder;
     }
 
-    private BooleanExpression locationIn(final List<String> cities) {
+    private BooleanExpression applyLocationCondition(final List<String> cities) {
+        if (cities.isEmpty()) {
+            return null;
+        }
+
         return profile.location.city.in(cities);
     }
 }
