@@ -1,6 +1,6 @@
 package com.atwoz.member.infrastructure.member.profile.hobby;
 
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -19,10 +19,11 @@ public class HobbyQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<HobbyResponse> findHobbiesWithPaging(final Pageable pageable) {
-        List<HobbyResponse> fetch = jpaQueryFactory.select(
+    public Page<HobbyPagingResponse> findHobbiesWithPaging(final Pageable pageable) {
+        List<HobbyPagingResponse> fetch = jpaQueryFactory.select(
                         constructor(
-                                HobbyResponse.class,
+                                HobbyPagingResponse.class,
+                                hobby.id,
                                 hobby.name,
                                 hobby.code
                         )

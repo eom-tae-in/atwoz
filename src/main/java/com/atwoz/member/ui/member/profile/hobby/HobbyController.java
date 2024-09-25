@@ -3,9 +3,9 @@ package com.atwoz.member.ui.member.profile.hobby;
 import com.atwoz.member.application.member.profile.hobby.HobbyQueryService;
 import com.atwoz.member.application.member.profile.hobby.HobbyService;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyCreateRequest;
-import com.atwoz.member.application.member.profile.hobby.dto.HobbyResponses;
+import com.atwoz.member.application.member.profile.hobby.dto.HobbyPagingResponses;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyUpdateRequest;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbySingleResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -36,12 +36,12 @@ public class HobbyController {
     }
 
     @GetMapping("/{hobbyId}")
-    public ResponseEntity<HobbyResponse> findHobby(@PathVariable("hobbyId") final Long hobbyId) {
+    public ResponseEntity<HobbySingleResponse> findHobby(@PathVariable("hobbyId") final Long hobbyId) {
         return ResponseEntity.ok(hobbyQueryService.findHobby(hobbyId));
     }
 
     @GetMapping
-    public ResponseEntity<HobbyResponses> findHobbiesWithPaging(@PageableDefault(sort = "id") final Pageable pageable) {
+    public ResponseEntity<HobbyPagingResponses> findHobbiesWithPaging(@PageableDefault(sort = "id") final Pageable pageable) {
         return ResponseEntity.ok(hobbyQueryService.findHobbiesWithPaging(pageable));
     }
 
