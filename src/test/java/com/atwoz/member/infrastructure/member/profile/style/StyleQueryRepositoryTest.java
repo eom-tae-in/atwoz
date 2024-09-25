@@ -3,7 +3,7 @@ package com.atwoz.member.infrastructure.member.profile.style;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -17,7 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import static com.atwoz.member.fixture.member.domain.StyleFixture.스타일_생성_이름_코드;
-import static com.atwoz.member.fixture.member.dto.response.StyleResponseFixture.스타일_응답_생성_스타일;
+import static com.atwoz.member.fixture.member.dto.response.style.스타일_응답_픽스처.스타일_페이징_조회_응답_픽스처.스타일_페이징_조회_응답_생성_스타일;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -43,10 +43,10 @@ class StyleQueryRepositoryTest extends IntegrationHelper {
         Pageable pageable = PageRequest.of(0, 10);
 
         // when
-        Page<StyleResponse> result = styleQueryRepository.findStylesWithPaging(pageable);
+        Page<StylePagingResponse> result = styleQueryRepository.findStylesWithPaging(pageable);
 
         // then
-        List<StyleResponse> styleResponses = result.getContent();
+        List<StylePagingResponse> stylePagingRespons = result.getContent();
         assertSoftly(softly -> {
             softly.assertThat(result.hasNext()).isTrue();
             softly.assertThat(result.getTotalElements()).isEqualTo(15);
@@ -55,10 +55,10 @@ class StyleQueryRepositoryTest extends IntegrationHelper {
             softly.assertThat(result).hasSize(10);
             IntStream.range(0, 10)
                     .forEach(index -> {
-                        StyleResponse styleResponse = styleResponses.get(index);
-                        softly.assertThat(styleResponse)
+                        StylePagingResponse stylePagingResponse = stylePagingRespons.get(index);
+                        softly.assertThat(stylePagingResponse)
                                 .usingRecursiveComparison()
-                                .isEqualTo(스타일_응답_생성_스타일(styles.get(index)));
+                                .isEqualTo(스타일_페이징_조회_응답_생성_스타일(styles.get(index)));
                     });
         });
     }

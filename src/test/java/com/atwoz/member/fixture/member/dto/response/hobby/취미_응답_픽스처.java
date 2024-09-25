@@ -9,6 +9,26 @@ import java.util.List;
 @SuppressWarnings("NonAsciiCharacters")
 public class 취미_응답_픽스처 {
 
+    public static class 취미_단건_조회_응답_픽스처 {
+
+        private static final String DEFAULT_HOBBY_NAME = "hobby";
+        private static final String DEFAULT_HOBBY_CODE = "code";
+
+        public static HobbySingleResponse 취미_단건_조회_응답_생성() {
+            return new HobbySingleResponse(
+                    DEFAULT_HOBBY_NAME,
+                    DEFAULT_HOBBY_CODE
+            );
+        }
+
+        public static HobbySingleResponse 취미_단건_조회_응답_생성_취미(final Hobby hobby) {
+            return new HobbySingleResponse(
+                    hobby.getName(),
+                    hobby.getCode()
+            );
+        }
+    }
+
     public static class 취미_페이징_조회_응답_픽스처 {
 
         private static final long DEFAULT_HOBBY_ID = 1L;
@@ -43,26 +63,6 @@ public class 취미_응답_픽스처 {
                     .totalPages(DEFAULT_TOTAL_PAGES)
                     .totalElements(DEFAULT_TOTAL_ELEMENTS)
                     .build();
-        }
-    }
-
-    public static class 취미_단건_조회_응답_픽스처 {
-
-        private static final String DEFAULT_HOBBY_NAME = "hobby";
-        private static final String DEFAULT_HOBBY_CODE = "code";
-
-        public static HobbySingleResponse 취미_단건_조회_응답_생성() {
-            return new HobbySingleResponse(
-                    DEFAULT_HOBBY_NAME,
-                    DEFAULT_HOBBY_CODE
-            );
-        }
-
-        public static HobbySingleResponse 취미_단건_조회_응답_생성_취미(final Hobby hobby) {
-            return new HobbySingleResponse(
-                    hobby.getName(),
-                    hobby.getCode()
-            );
         }
     }
 }

@@ -1,11 +1,12 @@
 package com.atwoz.member.application.member.profile.style;
 
-import com.atwoz.member.application.member.profile.style.dto.StyleResponses;
+import com.atwoz.member.application.member.profile.style.dto.StylePagingResponses;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
 import com.atwoz.member.exception.exceptions.member.profile.style.StyleNotFoundException;
 import com.atwoz.member.infrastructure.member.profile.style.StyleFakeRepository;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StyleSingleResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -15,7 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import static com.atwoz.member.fixture.member.domain.StyleFixture.스타일_생성;
-import static com.atwoz.member.fixture.member.dto.response.StyleResponseFixture.스타일_응답_생성_스타일;
+import static com.atwoz.member.fixture.member.dto.response.style.스타일_응답_픽스처.스타일_단건_조회_응답_픽스처.스타일_단건_조회_응답_생성_스타일;
+import static com.atwoz.member.fixture.member.dto.response.style.스타일_응답_픽스처.스타일_페이징_조회_응답_픽스처.스타일_페이징_조회_응답_생성_스타일;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -43,12 +45,12 @@ class StyleQueryServiceTest {
             Long styleId = savedStyle.getId();
 
             // when
-            StyleResponse styleResponse = styleQueryService.findStyle(styleId);
+            StyleSingleResponse response = styleQueryService.findStyle(styleId);
 
             // then
-            StyleResponse expectedStyleResponse = 스타일_응답_생성_스타일(savedStyle);
-            assertThat(styleResponse).usingRecursiveComparison()
-                    .isEqualTo(expectedStyleResponse);
+            StyleSingleResponse expectedResponse = 스타일_단건_조회_응답_생성_스타일(savedStyle);
+            assertThat(response).usingRecursiveComparison()
+                    .isEqualTo(expectedResponse);
         }
 
         @Test
@@ -69,19 +71,19 @@ class StyleQueryServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         // when
-        StyleResponses styleResponses = styleQueryService.findStylesWithPaging(pageable);
+        StylePagingResponses stylePagingResponses = styleQueryService.findStylesWithPaging(pageable);
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(styleResponses.nowPage()).isEqualTo(0);
-            softly.assertThat(styleResponses.nextPage()).isEqualTo(-1);
-            softly.assertThat(styleResponses.totalPages()).isEqualTo(1);
-            softly.assertThat(styleResponses.totalElements()).isEqualTo(1);
-            StyleResponse styleResponse = styleResponses.styleResponses().get(0);
-            StyleResponse expectedStyleResponse = 스타일_응답_생성_스타일(savedStyle);
-            softly.assertThat(styleResponse)
+            softly.assertThat(stylePagingResponses.nowPage()).isEqualTo(0);
+            softly.assertThat(stylePagingResponses.nextPage()).isEqualTo(-1);
+            softly.assertThat(stylePagingResponses.totalPages()).isEqualTo(1);
+            softly.assertThat(stylePagingResponses.totalElements()).isEqualTo(1);
+            StylePagingResponse stylePagingResponse = stylePagingResponses.stylePagingResponses().get(0);
+            StylePagingResponse expectedStylePagingResponse = 스타일_페이징_조회_응답_생성_스타일(savedStyle);
+            softly.assertThat(stylePagingResponse)
                     .usingRecursiveComparison()
-                    .isEqualTo(expectedStyleResponse);
+                    .isEqualTo(expectedStylePagingResponse);
         });
     }
 }

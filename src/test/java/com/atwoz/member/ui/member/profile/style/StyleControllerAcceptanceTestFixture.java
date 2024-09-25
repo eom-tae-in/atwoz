@@ -3,7 +3,7 @@ package com.atwoz.member.ui.member.profile.style;
 import com.atwoz.admin.application.auth.AdminAccessTokenProvider;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.application.member.profile.style.dto.StyleCreateRequest;
-import com.atwoz.member.application.member.profile.style.dto.StyleResponses;
+import com.atwoz.member.application.member.profile.style.dto.StylePagingResponses;
 import com.atwoz.member.application.member.profile.style.dto.StyleUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
@@ -11,7 +11,7 @@ import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -98,11 +98,11 @@ public class StyleControllerAcceptanceTestFixture extends IntegrationHelper {
     }
 
     protected void 스타일_단건_조회_요청_검증(final ExtractableResponse<Response> response) {
-        StyleResponse styleResponse = response.as(StyleResponse.class);
+        StylePagingResponse stylePagingResponse = response.as(StylePagingResponse.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-            softly.assertThat(styleResponse.name()).isEqualTo("style1");
-            softly.assertThat(styleResponse.code()).isEqualTo("code1");
+            softly.assertThat(stylePagingResponse.name()).isEqualTo("style1");
+            softly.assertThat(stylePagingResponse.code()).isEqualTo("code1");
         });
     }
 
@@ -118,13 +118,13 @@ public class StyleControllerAcceptanceTestFixture extends IntegrationHelper {
     }
 
     protected void 스타일_페이징_조회_요청_검증(final ExtractableResponse<Response> response) {
-        StyleResponses styleResponses = response.as(StyleResponses.class);
+        StylePagingResponses stylePagingResponses = response.as(StylePagingResponses.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-            softly.assertThat(styleResponses.nowPage()).isEqualTo(0);
-            softly.assertThat(styleResponses.nextPage()).isEqualTo(-1);
-            softly.assertThat(styleResponses.totalPages()).isEqualTo(1);
-            softly.assertThat(styleResponses.totalElements()).isEqualTo(1);
+            softly.assertThat(stylePagingResponses.nowPage()).isEqualTo(0);
+            softly.assertThat(stylePagingResponses.nextPage()).isEqualTo(-1);
+            softly.assertThat(stylePagingResponses.totalPages()).isEqualTo(1);
+            softly.assertThat(stylePagingResponses.totalElements()).isEqualTo(1);
         });
     }
 
