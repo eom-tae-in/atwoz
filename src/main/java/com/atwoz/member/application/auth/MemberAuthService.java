@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Service
 @Transactional
+@Service
 public class MemberAuthService {
 
     private static final String DEFAULT_PHONE_NUMBER = "01011111111";
