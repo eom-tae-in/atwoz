@@ -44,18 +44,6 @@ class SelfIntroControllerAcceptanceTest extends SelfIntroControllerAcceptanceTes
     }
 
     @Test
-    void 셀프_소개글_페이징_조회() {
-        // given
-        셀프_소개글_저장(셀프_소개글);
-
-        // when
-        var 셀프_소개글_페이징_조회_요청_결과 = 셀프_소개글_페이징_조회_요청(셀프_소개글_조회_URL, 토큰);
-
-        // then
-        셀프_소개글_페이징_조회_요청_검증(셀프_소개글_페이징_조회_요청_결과);
-    }
-
-    @Test
     void 필터_적용한_셀프_소개글_페이징_조회() {
         // given
         셀프_소개글_저장(셀프_소개글);

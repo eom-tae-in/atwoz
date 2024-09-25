@@ -2,7 +2,7 @@ package com.atwoz.member.infrastructure.member.profile.hobby;
 
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class HobbyRepositoryImpl implements HobbyRepository {
     }
 
     @Override
-    public Page<HobbyResponse> findHobbiesWithPaging(final Pageable pageable) {
+    public Page<HobbyPagingResponse> findHobbiesWithPaging(final Pageable pageable) {
         return hobbyQueryRepository.findHobbiesWithPaging(pageable);
     }
 

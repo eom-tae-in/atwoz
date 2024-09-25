@@ -1,11 +1,12 @@
 package com.atwoz.member.application.member.profile.style;
 
 import com.atwoz.global.application.BaseQueryService;
-import com.atwoz.member.application.member.profile.style.dto.StyleResponses;
+import com.atwoz.member.application.member.profile.style.dto.StylePagingResponses;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
 import com.atwoz.member.exception.exceptions.member.profile.style.StyleNotFoundException;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StyleSingleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class StyleQueryService extends BaseQueryService<StyleResponse> {
+public class StyleQueryService extends BaseQueryService<StylePagingResponse> {
 
     private final StyleRepository styleRepository;
 
-    public StyleResponse findStyle(final Long styleId) {
+    public StyleSingleResponse findStyle(final Long styleId) {
         Style foundStyle = findStyleById(styleId);
-        return StyleResponse.from(foundStyle);
+        return StyleSingleResponse.from(foundStyle);
     }
 
     private Style findStyleById(final Long styleId) {
@@ -29,9 +30,9 @@ public class StyleQueryService extends BaseQueryService<StyleResponse> {
                 .orElseThrow(StyleNotFoundException::new);
     }
 
-    public StyleResponses findStylesWithPaging(final Pageable pageable) {
-        Page<StyleResponse> styleResponses = styleRepository.findStylesWithPaging(pageable);
+    public StylePagingResponses findStylesWithPaging(final Pageable pageable) {
+        Page<StylePagingResponse> styleResponses = styleRepository.findStylesWithPaging(pageable);
         int nextPage = getNextPage(pageable.getPageNumber(), styleResponses);
-        return StyleResponses.of(styleResponses, pageable, nextPage);
+        return StylePagingResponses.of(styleResponses, pageable, nextPage);
     }
 }

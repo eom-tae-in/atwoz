@@ -35,35 +35,34 @@ public class SelfIntroController {
     private final SelfIntroQueryService selfIntroQueryService;
 
     @PostMapping("/me")
-    public ResponseEntity<Void> saveSelfIntro(@RequestBody @Valid final SelfIntroCreateRequest selfIntroCreateRequest,
-                                              @AuthMember final Long memberId) {
+    public ResponseEntity<Void> saveSelfIntro(
+            @RequestBody @Valid final SelfIntroCreateRequest selfIntroCreateRequest,
+            @AuthMember final Long memberId
+    ) {
         selfIntroService.saveSelfIntro(selfIntroCreateRequest, memberId);
 
         return ResponseEntity.ok()
                 .build();
     }
 
-    @GetMapping
-    public ResponseEntity<SelfIntroResponses> findAllSelfIntrosWithPaging(
-            @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable) {
-        return ResponseEntity.ok(selfIntroQueryService.findAllSelfIntrosWithPaging(pageable));
-    }
-
     @GetMapping("/filter")
     public ResponseEntity<SelfIntroResponses> findAllSelfIntrosWithPagingAndFiltering(
             @PageableDefault(sort = CREATION_TIME, direction = Direction.DESC) final Pageable pageable,
-            @ModelAttribute @Valid final SelfIntroFilterRequest selfIntroFilterRequest,
+            @ModelAttribute final SelfIntroFilterRequest selfIntroFilterRequest,
             @AuthMember final Long memberId
     ) {
-        return ResponseEntity.ok(
-                selfIntroQueryService.findAllSelfIntrosWithPagingAndFiltering(pageable, selfIntroFilterRequest,
-                        memberId));
+        return ResponseEntity.ok(selfIntroQueryService.findAllSelfIntrosWithPagingAndFiltering(
+                pageable,
+                selfIntroFilterRequest,
+                memberId
+        ));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateSelfIntro(@PathVariable("id") final Long selfIntroId,
-                                                @RequestBody @Valid final SelfIntroUpdateRequest selfIntroUpdateRequest,
-                                                @AuthMember final Long memberId
+    public ResponseEntity<Void> updateSelfIntro(
+            @PathVariable("id") final Long selfIntroId,
+            @RequestBody @Valid final SelfIntroUpdateRequest selfIntroUpdateRequest,
+            @AuthMember final Long memberId
     ) {
         selfIntroService.updateSelfIntro(selfIntroUpdateRequest, selfIntroId, memberId);
 
@@ -72,8 +71,10 @@ public class SelfIntroController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSelfIntro(@PathVariable("id") final Long selfIntroId,
-                                                @AuthMember final Long memberId) {
+    public ResponseEntity<Void> deleteSelfIntro(
+            @PathVariable("id") final Long selfIntroId,
+            @AuthMember final Long memberId
+    ) {
         selfIntroService.deleteSelfIntro(selfIntroId, memberId);
 
         return ResponseEntity.noContent()

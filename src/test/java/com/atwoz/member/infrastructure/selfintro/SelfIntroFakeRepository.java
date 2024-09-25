@@ -47,32 +47,22 @@ public class SelfIntroFakeRepository implements SelfIntroRepository {
     }
 
     @Override
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPaging(final Pageable pageable) {
-        List<SelfIntroResponse> introResponses = map.values().stream()
-                .sorted(Comparator.comparing(SelfIntro::getCreatedAt).reversed())
-                .limit(SIZE_PER_PAGE)
-                .map(selfIntro -> 셀프_소개글_응답(selfIntro.getId(), selfIntro.getContent()
-                )).toList();
-
-        return new PageImpl<>(introResponses);
-    }
-
-    @Override
     public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(
             final Pageable pageable,
-            final int minAge,
-            final int maxAge,
-            final boolean isOnlyOppositeGender,
+            final Integer minAge,
+            final Integer maxAge,
+            final Boolean isOnlyOppositeGender,
             final List<String> cities,
             final Long memberId
     ) {
-        List<SelfIntroResponse> introResponses = map.values().stream()
+        List<SelfIntroResponse> introResponses = map.values()
+                .stream()
                 .filter(selfIntro -> isBetween(minAge, maxAge))
                 .filter(selfIntro -> isBelongTo(cities))
                 .sorted(Comparator.comparing(SelfIntro::getCreatedAt).reversed())
                 .limit(SIZE_PER_PAGE)
-                .map(selfIntro -> 셀프_소개글_응답(selfIntro.getId(), selfIntro.getContent()
-                )).toList();
+                .map(selfIntro -> 셀프_소개글_응답(selfIntro.getId(), selfIntro.getContent()))
+                .toList();
 
         return new PageImpl<>(introResponses);
     }

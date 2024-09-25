@@ -33,17 +33,14 @@ public class SelfIntroRepositoryImpl implements SelfIntroRepository {
     }
 
     @Override
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPaging(final Pageable pageable) {
-        return selfIntroQueryRepository.findAllSelfIntroWithPaging(pageable);
-    }
-
-    @Override
-    public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(final Pageable pageable,
-                                                                           final int minAge,
-                                                                           final int maxAge,
-                                                                           final boolean isOnlyOppositeGender,
-                                                                           final List<String> cities,
-                                                                           final Long memberId) {
+    public Page<SelfIntroResponse> findAllSelfIntrosWithPagingAndFiltering(
+            final Pageable pageable,
+            final Integer minAge,
+            final Integer maxAge,
+            final Boolean isOnlyOppositeGender,
+            final List<String> cities,
+            final Long memberId
+    ) {
         return selfIntroQueryRepository.findAllSelfIntrosWithPagingAndFiltering(
                 pageable,
                 minAge,

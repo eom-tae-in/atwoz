@@ -1,6 +1,5 @@
 package com.atwoz.member.fixture.selfintro;
 
-import com.atwoz.member.application.selfintro.dto.CityRequest;
 import com.atwoz.member.application.selfintro.dto.SelfIntroCreateRequest;
 import com.atwoz.member.application.selfintro.dto.SelfIntroFilterRequest;
 import com.atwoz.member.application.selfintro.dto.SelfIntroUpdateRequest;
@@ -25,7 +24,7 @@ public class SelfIntroRequestFixture {
                 MIN_AGE,
                 MAX_AGE,
                 IS_ONLY_OPPOSITE_GENDER,
-                List.of(new CityRequest(CITY))
+                List.of(CITY)
         );
     }
 

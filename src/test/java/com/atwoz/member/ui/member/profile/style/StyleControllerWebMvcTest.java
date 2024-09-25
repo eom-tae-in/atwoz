@@ -3,7 +3,8 @@ package com.atwoz.member.ui.member.profile.style;
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.member.application.member.profile.style.dto.StyleCreateRequest;
 import com.atwoz.member.application.member.profile.style.dto.StyleUpdateRequest;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StyleSingleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -18,8 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.member.fixture.member.dto.request.StyleCreateRequestFixture.스타일_생성_요청_생성;
 import static com.atwoz.member.fixture.member.dto.request.StyleUpdateRequestFixture.스타일_업데이트_요청_생성;
-import static com.atwoz.member.fixture.member.dto.response.StyleResponseFixture.스타일_응답_생성;
-import static com.atwoz.member.fixture.member.dto.response.StyleResponsesFixture.스타일_응답_목록_생성_스타일응답목록;
+import static com.atwoz.member.fixture.member.dto.response.style.스타일_응답_픽스처.스타일_단건_조회_응답_픽스처.스타일_단건_조회_응답_생성;
+import static com.atwoz.member.fixture.member.dto.response.style.스타일_응답_픽스처.스타일_페이징_조회_응답_픽스처.스타일_페이징_조회_목록_응답_생성_스타일페이징목록응답;
+import static com.atwoz.member.fixture.member.dto.response.style.스타일_응답_픽스처.스타일_페이징_조회_응답_픽스처.스타일_페이징_조회_응답_생성;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -83,8 +85,8 @@ class StyleControllerWebMvcTest extends MockBeanInjection {
     void 스타일을_단건_조회한다() throws Exception {
         // given
         Long styleId = 1L;
-        StyleResponse styleResponse = 스타일_응답_생성();
-        when(styleQueryService.findStyle(anyLong())).thenReturn(styleResponse);
+        StyleSingleResponse response = 스타일_단건_조회_응답_생성();
+        when(styleQueryService.findStyle(anyLong())).thenReturn(response);
 
         // when
         mockMvc.perform(get("/api/members/styles/{styleId}", styleId)
@@ -107,9 +109,9 @@ class StyleControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 스타일을_페이징_조회한다() throws Exception {
         // given
-        List<StyleResponse> styleResponses = List.of(스타일_응답_생성());
+        List<StylePagingResponse> stylePagingResponses = List.of(스타일_페이징_조회_응답_생성());
         when(styleQueryService.findStylesWithPaging(any(Pageable.class)))
-                .thenReturn(스타일_응답_목록_생성_스타일응답목록(styleResponses));
+                .thenReturn(스타일_페이징_조회_목록_응답_생성_스타일페이징목록응답(stylePagingResponses));
 
         // when & then
         mockMvc.perform(get("/api/members/styles")
@@ -126,9 +128,10 @@ class StyleControllerWebMvcTest extends MockBeanInjection {
                                 partWithName("size").description("조회되는 데이터 수, 한 페이지당 조회되는 데이터 수입니다.").optional()
                         ),
                         responseFields(
-                                fieldWithPath("styleResponses").description("조회된 스타일 목록"),
-                                fieldWithPath("styleResponses[].name").description("조회된 스타일의 이름"),
-                                fieldWithPath("styleResponses[].code").description("조회된 스타일의 코드"),
+                                fieldWithPath("stylePagingResponses").description("스타일 페이징 조회 결과 목록"),
+                                fieldWithPath("stylePagingResponses[].styleId").description("조회된 스타일의 id"),
+                                fieldWithPath("stylePagingResponses[].name").description("조회된 스타일의 이름"),
+                                fieldWithPath("stylePagingResponses[].code").description("조회된 스타일의 코드"),
                                 fieldWithPath("nowPage").description("현재 페이지"),
                                 fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
                                 fieldWithPath("totalPages").description("전체 페이지 수"),

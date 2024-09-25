@@ -1,6 +1,6 @@
 package com.atwoz.member.infrastructure.member.profile.style;
 
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -19,10 +19,11 @@ public class StyleQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<StyleResponse> findStylesWithPaging(final Pageable pageable) {
-        List<StyleResponse> fetch = jpaQueryFactory.select(
+    public Page<StylePagingResponse> findStylesWithPaging(final Pageable pageable) {
+        List<StylePagingResponse> fetch = jpaQueryFactory.select(
                         constructor(
-                                StyleResponse.class,
+                                StylePagingResponse.class,
+                                style.id,
                                 style.name,
                                 style.code
                         )

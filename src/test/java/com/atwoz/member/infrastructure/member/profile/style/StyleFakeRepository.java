@@ -2,7 +2,7 @@ package com.atwoz.member.infrastructure.member.profile.style;
 
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -51,16 +51,16 @@ public class StyleFakeRepository implements StyleRepository {
     }
 
     @Override
-    public Page<StyleResponse> findStylesWithPaging(final Pageable pageable) {
-        List<StyleResponse> styleResponses = map.values()
+    public Page<StylePagingResponse> findStylesWithPaging(final Pageable pageable) {
+        List<StylePagingResponse> stylePagingResponses = map.values()
                 .stream()
                 .sorted(Comparator.comparing(Style::getId))
                 .skip(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .map(StyleResponse::from)
+                .map(StylePagingResponse::from)
                 .toList();
 
-        return new PageImpl<>(styleResponses);
+        return new PageImpl<>(stylePagingResponses);
     }
 
     @Override

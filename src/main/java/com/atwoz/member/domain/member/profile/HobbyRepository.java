@@ -1,6 +1,6 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ public interface HobbyRepository {
 
     Optional<Hobby> findHobbyByCode(String hobbyCode);
 
-    Page<HobbyResponse> findHobbiesWithPaging(Pageable pageable);
+    Page<HobbyPagingResponse> findHobbiesWithPaging(Pageable pageable);
 
     void deleteById(Long hobbyId);
 }

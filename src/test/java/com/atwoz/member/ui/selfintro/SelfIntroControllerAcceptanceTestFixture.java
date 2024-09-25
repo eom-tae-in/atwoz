@@ -117,7 +117,7 @@ class SelfIntroControllerAcceptanceTestFixture extends IntegrationHelper {
                 .param("minAge", "20")
                 .param("maxAge", "30")
                 .param("isOnlyOppositeGender", "false")
-                .param("cityRequests", "서울시,경기도")
+                .param("cities", "서울시,경기도")
                 .when()
                 .get(url)
                 .then().log().all()

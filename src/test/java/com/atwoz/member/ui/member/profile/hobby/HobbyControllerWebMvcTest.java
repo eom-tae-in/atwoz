@@ -3,7 +3,8 @@ package com.atwoz.member.ui.member.profile.hobby;
 import com.atwoz.helper.MockBeanInjection;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyCreateRequest;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyUpdateRequest;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbySingleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -18,8 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
 import static com.atwoz.member.fixture.member.dto.request.HobbyCreateRequestFixture.취미_생성_요청_생성;
 import static com.atwoz.member.fixture.member.dto.request.HobbyUpdateRequestFixture.취미_업데이트_요청_생성;
-import static com.atwoz.member.fixture.member.dto.response.HobbyResponseFixture.취미_응답_생성;
-import static com.atwoz.member.fixture.member.dto.response.HobbyResponsesFixture.취미_응답_목록_생성_취미응답목록;
+import static com.atwoz.member.fixture.member.dto.response.hobby.취미_응답_픽스처.취미_단건_조회_응답_픽스처.취미_단건_조회_응답_생성;
+import static com.atwoz.member.fixture.member.dto.response.hobby.취미_응답_픽스처.취미_페이징_조회_응답_픽스처.취미_페이징_조회_목록_응답_생성_취미페이징목록응답;
+import static com.atwoz.member.fixture.member.dto.response.hobby.취미_응답_픽스처.취미_페이징_조회_응답_픽스처.취미_페이징_조회_응답_생성;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -83,8 +85,8 @@ class HobbyControllerWebMvcTest extends MockBeanInjection {
     void 취미를_단건_조회한다() throws Exception {
         // given
         Long hobbyId = 1L;
-        HobbyResponse hobbyResponse = 취미_응답_생성();
-        when(hobbyQueryService.findHobby(anyLong())).thenReturn(hobbyResponse);
+        HobbySingleResponse hobbySingleResponse = 취미_단건_조회_응답_생성();
+        when(hobbyQueryService.findHobby(anyLong())).thenReturn(hobbySingleResponse);
 
         // when
         mockMvc.perform(get("/api/members/hobbies/{hobbyId}", hobbyId)
@@ -107,9 +109,9 @@ class HobbyControllerWebMvcTest extends MockBeanInjection {
     @Test
     void 취미를_페이징_조회한다() throws Exception {
         // given
-        List<HobbyResponse> hobbyResponses = List.of(취미_응답_생성());
+        List<HobbyPagingResponse> hobbyPagingResponse = List.of(취미_페이징_조회_응답_생성());
         when(hobbyQueryService.findHobbiesWithPaging(any(Pageable.class)))
-                .thenReturn(취미_응답_목록_생성_취미응답목록(hobbyResponses));
+                .thenReturn(취미_페이징_조회_목록_응답_생성_취미페이징목록응답(hobbyPagingResponse));
 
         // when & then
         mockMvc.perform(get("/api/members/hobbies")
@@ -126,9 +128,10 @@ class HobbyControllerWebMvcTest extends MockBeanInjection {
                                 partWithName("size").description("조회되는 데이터 수, 한 페이지당 조회되는 데이터 수입니다.").optional()
                         ),
                         responseFields(
-                                fieldWithPath("hobbyResponses").description("조회된 취미 목록"),
-                                fieldWithPath("hobbyResponses[].name").description("조회된 취미의 이름"),
-                                fieldWithPath("hobbyResponses[].code").description("조회된 취미의 코드"),
+                                fieldWithPath("hobbyPagingResponses").description("취미 페이징 조회 결과 목록"),
+                                fieldWithPath("hobbyPagingResponses[].hobbyId").description("조회된 취미의 id"),
+                                fieldWithPath("hobbyPagingResponses[].name").description("조회된 취미의 이름"),
+                                fieldWithPath("hobbyPagingResponses[].code").description("조회된 취미의 코드"),
                                 fieldWithPath("nowPage").description("현재 페이지"),
                                 fieldWithPath("nextPage").description("다음 페이지, 다음 페이지가 없을 경우 -1을 반환합니다."),
                                 fieldWithPath("totalPages").description("전체 페이지 수"),

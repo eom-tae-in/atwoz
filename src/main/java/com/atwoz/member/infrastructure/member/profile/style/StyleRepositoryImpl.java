@@ -2,7 +2,7 @@ package com.atwoz.member.infrastructure.member.profile.style;
 
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class StyleRepositoryImpl implements StyleRepository {
     }
 
     @Override
-    public Page<StyleResponse> findStylesWithPaging(final Pageable pageable) {
+    public Page<StylePagingResponse> findStylesWithPaging(final Pageable pageable) {
         return styleQueryRepository.findStylesWithPaging(pageable);
     }
 

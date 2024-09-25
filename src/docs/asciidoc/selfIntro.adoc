@@ -17,19 +17,6 @@ include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_저장/r
 ==== 응답
 include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_저장/http-response.adoc[]
 
-
-=== 셀프 소개글 페이징 조회 (GET /api/members/self-intros)
-
-==== 요청
-include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/http-request.adoc[]
-include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/request-headers.adoc[]
-include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/request-parts.adoc[]
-
-==== 응답
-include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/http-response.adoc[]
-include::{snippets}/self-intro-controller-web-mvc-test/셀프_소개글_페이징_조회/response-fields.adoc[]
-
-
 === 셀프 소개글 페이징 조회 (필터 적용) (Get /api/members/self-intros/filter)
 
 ==== 요청

@@ -3,7 +3,7 @@ package com.atwoz.member.infrastructure.member.profile.hobby;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -17,7 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import static com.atwoz.member.fixture.member.domain.HobbyFixture.취미_생성_이름_코드;
-import static com.atwoz.member.fixture.member.dto.response.HobbyResponseFixture.취미_응답_생성_취미;
+import static com.atwoz.member.fixture.member.dto.response.hobby.취미_응답_픽스처.취미_페이징_조회_응답_픽스처.취미_페이징_조회_응답_생성_취미;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -43,10 +43,10 @@ class HobbyQueryRepositoryTest extends IntegrationHelper {
         Pageable pageable = PageRequest.of(0, 10);
 
         // when
-        Page<HobbyResponse> result = hobbyQueryRepository.findHobbiesWithPaging(pageable);
+        Page<HobbyPagingResponse> result = hobbyQueryRepository.findHobbiesWithPaging(pageable);
 
         // then
-        List<HobbyResponse> hobbyResponses = result.getContent();
+        List<HobbyPagingResponse> hobbyPagingRespons = result.getContent();
         assertSoftly(softly -> {
             softly.assertThat(result.hasNext()).isTrue();
             softly.assertThat(result.getTotalElements()).isEqualTo(15);
@@ -55,10 +55,10 @@ class HobbyQueryRepositoryTest extends IntegrationHelper {
             softly.assertThat(result).hasSize(10);
             IntStream.range(0, 10)
                     .forEach(index -> {
-                        HobbyResponse hobbyResponse = hobbyResponses.get(index);
-                        softly.assertThat(hobbyResponse)
+                        HobbyPagingResponse hobbyPagingResponse = hobbyPagingRespons.get(index);
+                        softly.assertThat(hobbyPagingResponse)
                                 .usingRecursiveComparison()
-                                .isEqualTo(취미_응답_생성_취미(hobbies.get(index)));
+                                .isEqualTo(취미_페이징_조회_응답_생성_취미(hobbies.get(index)));
                     });
         });
     }

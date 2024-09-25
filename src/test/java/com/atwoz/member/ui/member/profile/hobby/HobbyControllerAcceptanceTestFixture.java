@@ -3,7 +3,7 @@ package com.atwoz.member.ui.member.profile.hobby;
 import com.atwoz.admin.application.auth.AdminAccessTokenProvider;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyCreateRequest;
-import com.atwoz.member.application.member.profile.hobby.dto.HobbyResponses;
+import com.atwoz.member.application.member.profile.hobby.dto.HobbyPagingResponses;
 import com.atwoz.member.application.member.profile.hobby.dto.HobbyUpdateRequest;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
@@ -11,7 +11,7 @@ import com.atwoz.member.domain.member.profile.Hobby;
 import com.atwoz.member.domain.member.profile.HobbyRepository;
 import com.atwoz.member.domain.member.profile.Style;
 import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyResponse;
+import com.atwoz.member.infrastructure.member.profile.hobby.dto.HobbyPagingResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -95,11 +95,11 @@ public class HobbyControllerAcceptanceTestFixture extends IntegrationHelper {
     }
 
     protected void 취미_단건_조회_요청_검증(final ExtractableResponse<Response> response) {
-        HobbyResponse hobbyResponse = response.as(HobbyResponse.class);
+        HobbyPagingResponse hobbyPagingResponse = response.as(HobbyPagingResponse.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-            softly.assertThat(hobbyResponse.name()).isEqualTo("hobby1");
-            softly.assertThat(hobbyResponse.code()).isEqualTo("code1");
+            softly.assertThat(hobbyPagingResponse.name()).isEqualTo("hobby1");
+            softly.assertThat(hobbyPagingResponse.code()).isEqualTo("code1");
         });
     }
 
@@ -115,13 +115,13 @@ public class HobbyControllerAcceptanceTestFixture extends IntegrationHelper {
     }
 
     protected void 취미_페이징_조회_요청_검증(final ExtractableResponse<Response> response) {
-        HobbyResponses hobbyResponses = response.as(HobbyResponses.class);
+        HobbyPagingResponses hobbyPagingResponses = response.as(HobbyPagingResponses.class);
         assertSoftly(softly -> {
             softly.assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
-            softly.assertThat(hobbyResponses.nowPage()).isEqualTo(0);
-            softly.assertThat(hobbyResponses.nextPage()).isEqualTo(-1);
-            softly.assertThat(hobbyResponses.totalPages()).isEqualTo(1);
-            softly.assertThat(hobbyResponses.totalElements()).isEqualTo(1);
+            softly.assertThat(hobbyPagingResponses.nowPage()).isEqualTo(0);
+            softly.assertThat(hobbyPagingResponses.nextPage()).isEqualTo(-1);
+            softly.assertThat(hobbyPagingResponses.totalPages()).isEqualTo(1);
+            softly.assertThat(hobbyPagingResponses.totalElements()).isEqualTo(1);
         });
     }
 
