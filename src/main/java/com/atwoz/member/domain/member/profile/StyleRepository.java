@@ -1,6 +1,6 @@
 package com.atwoz.member.domain.member.profile;
 
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StylePagingResponse;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ public interface StyleRepository {
 
     Optional<Style> findStyleByCode(String styleCode);
 
-    Page<StyleResponse> findStylesWithPaging(Pageable pageable);
+    Page<StylePagingResponse> findStylesWithPaging(Pageable pageable);
 
     void deleteStyleById(Long styleId);
 }

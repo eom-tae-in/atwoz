@@ -3,9 +3,9 @@ package com.atwoz.member.ui.member.profile.style;
 import com.atwoz.member.application.member.profile.style.StyleQueryService;
 import com.atwoz.member.application.member.profile.style.StyleService;
 import com.atwoz.member.application.member.profile.style.dto.StyleCreateRequest;
-import com.atwoz.member.application.member.profile.style.dto.StyleResponses;
+import com.atwoz.member.application.member.profile.style.dto.StylePagingResponses;
 import com.atwoz.member.application.member.profile.style.dto.StyleUpdateRequest;
-import com.atwoz.member.infrastructure.member.profile.style.dto.StyleResponse;
+import com.atwoz.member.infrastructure.member.profile.style.dto.StyleSingleResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -36,12 +36,12 @@ public class StyleController {
     }
 
     @GetMapping("/{styleId}")
-    public ResponseEntity<StyleResponse> findStyle(@PathVariable("styleId") final Long styleId) {
+    public ResponseEntity<StyleSingleResponse> findStyle(@PathVariable("styleId") final Long styleId) {
         return ResponseEntity.ok(styleQueryService.findStyle(styleId));
     }
 
     @GetMapping
-    public ResponseEntity<StyleResponses> findStylesWithPaging(@PageableDefault(sort = "id") final Pageable pageable) {
+    public ResponseEntity<StylePagingResponses> findStylesWithPaging(@PageableDefault(sort = "id") final Pageable pageable) {
         return ResponseEntity.ok(styleQueryService.findStylesWithPaging(pageable));
     }
 
