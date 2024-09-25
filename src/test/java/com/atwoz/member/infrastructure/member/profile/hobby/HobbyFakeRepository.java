@@ -52,7 +52,7 @@ public class HobbyFakeRepository implements HobbyRepository {
 
     @Override
     public Page<HobbyPagingResponse> findHobbiesWithPaging(final Pageable pageable) {
-        List<HobbyPagingResponse> hobbyPagingRespons = map.values()
+        List<HobbyPagingResponse> hobbyPagingResponses = map.values()
                 .stream()
                 .sorted(Comparator.comparing(Hobby::getId))
                 .skip(pageable.getOffset())
@@ -60,7 +60,7 @@ public class HobbyFakeRepository implements HobbyRepository {
                 .map(HobbyPagingResponse::from)
                 .toList();
 
-        return new PageImpl<>(hobbyPagingRespons);
+        return new PageImpl<>(hobbyPagingResponses);
     }
 
     @Override
