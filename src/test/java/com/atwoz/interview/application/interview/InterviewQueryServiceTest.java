@@ -8,6 +8,7 @@ import com.atwoz.interview.infrastructure.interview.dto.InterviewResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -28,8 +29,11 @@ class InterviewQueryServiceTest {
         interviewQueryService = new InterviewQueryService(interviewRepository);
     }
 
-    @Test
-    void 인터뷰_목록을_타입으로_조회한다() {
+    @Nested
+    class 인터뷰_목록_타입_조회 {
+
+        @Test
+        void 인터뷰_목록을_타입으로_조회한다() {
         // given
         String type = "나";
 
@@ -62,8 +66,8 @@ class InterviewQueryServiceTest {
         });
     }
 
-    @Test
-    void 없는_인터뷰_타입이면_예외가_발생한다() {
+        @Test
+        void 없는_인터뷰_타입이면_예외가_발생한다() {
         // given
         String type = "abc";
 
@@ -82,5 +86,6 @@ class InterviewQueryServiceTest {
         // when & then
         assertThatThrownBy(() -> interviewQueryService.findInterviewsByType(type))
                 .isInstanceOf(InterviewTypeNotFoundException.class);
+    }
     }
 }
