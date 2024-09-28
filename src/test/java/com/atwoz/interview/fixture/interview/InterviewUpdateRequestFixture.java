@@ -1,4 +1,4 @@
-package com.atwoz.interview.fixture;
+package com.atwoz.interview.fixture.interview;
 
 import com.atwoz.interview.application.interview.dto.InterviewUpdateRequest;
 

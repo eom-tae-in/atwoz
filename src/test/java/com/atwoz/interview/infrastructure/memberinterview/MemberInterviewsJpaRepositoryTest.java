@@ -42,7 +42,7 @@ class MemberInterviewsJpaRepositoryTest {
         MemberInterviews savedMemberInterviews = memberInterviewsJpaRepository.save(memberInterviews);
 
         // when
-        Optional<MemberInterviews> result = memberInterviewsJpaRepository.findById(memberId);
+        Optional<MemberInterviews> result = memberInterviewsJpaRepository.findById(savedMemberInterviews.getId());
 
         // then
         assertSoftly(softly -> {

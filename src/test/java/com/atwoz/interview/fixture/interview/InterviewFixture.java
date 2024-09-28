@@ -1,4 +1,4 @@
-package com.atwoz.interview.fixture;
+package com.atwoz.interview.fixture.interview;
 
 import com.atwoz.interview.domain.interview.Interview;
 import com.atwoz.interview.domain.interview.vo.InterviewType;
