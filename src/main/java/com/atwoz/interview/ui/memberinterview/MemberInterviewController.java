@@ -34,9 +34,10 @@ public class MemberInterviewController {
     private final MemberInterviewsQueryService memberInterviewsQueryService;
 
     @PostMapping("/{interviewId}")
-    public ResponseEntity<Void> submitInterview(@PathVariable final Long interviewId,
-                                                @AuthMember final Long memberId,
-                                                @RequestBody @Valid final MemberInterviewSubmitRequest request) {
+    public ResponseEntity<Void> submitInterview(
+            @PathVariable final Long interviewId,
+            @AuthMember final Long memberId,
+            @RequestBody @Valid final MemberInterviewSubmitRequest request) {
         memberInterviewsService.submitInterview(interviewId, memberId, request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
