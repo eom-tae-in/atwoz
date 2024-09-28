@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static com.atwoz.interview.fixture.memberinterview.MemberInterviewSubmitRequestFixture.회원_인터뷰_응시_요청;
+import static com.atwoz.interview.fixture.memberinterview.MemberInterviewUpdateRequestFixture.회원_인터뷰_수정_요청;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -40,12 +41,11 @@ class MemberInterviewsControllerAcceptanceTest extends MemberInterviewsControlle
         인터뷰_응시_검증(인터뷰_응시_결과);
     }
 
-    // TODO: response.as 부분 문제
-    /*
     @Test
     void 인터뷰_답변을_수정한다() {
         // given
         인터뷰_생성();
+        인터뷰_응시(회원.getId());
         var 인터뷰_id = 1L;
         var 인터뷰_수정_요청서 = 회원_인터뷰_수정_요청();
 
@@ -55,7 +55,6 @@ class MemberInterviewsControllerAcceptanceTest extends MemberInterviewsControlle
         // then
         인터뷰_수정_검증(인터뷰_수정_결과);
     }
-     */
 
     @Test
     void 인터뷰_답변을_조회한다() {
