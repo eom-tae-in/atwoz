@@ -29,6 +29,9 @@ import java.util.List;
 @RestController
 public class InterviewController {
 
+    private static final String INTERVIEW_PARAM_VALUE = "type";
+    private static final String INTERVIEW_DEFAULT_TYPE = "나";
+
     private final InterviewService interviewService;
     private final InterviewQueryService interviewQueryService;
 
@@ -42,7 +45,8 @@ public class InterviewController {
     @PatchMapping("/{id}")
     public ResponseEntity<InterviewUpdateResponse> updateInterview(
             @PathVariable final Long id,
-            @RequestBody @Valid final InterviewUpdateRequest request) {
+            @RequestBody @Valid final InterviewUpdateRequest request
+    ) {
         Interview updatedInterview = interviewService.updateInterview(id, request);
         return ResponseEntity.ok()
                 .body(InterviewUpdateResponse.from(updatedInterview));
@@ -50,7 +54,8 @@ public class InterviewController {
 
     @GetMapping
     public ResponseEntity<InterviewsResponse> findInterviewsByType(
-            @RequestParam(value = "type", defaultValue = "나") final String type) {
+            @RequestParam(value = INTERVIEW_PARAM_VALUE, defaultValue = INTERVIEW_DEFAULT_TYPE) final String type
+    ) {
         List<InterviewResponse> interviews = interviewQueryService.findInterviewsByType(type);
         return ResponseEntity.ok()
                 .body(new InterviewsResponse(interviews));

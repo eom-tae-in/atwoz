@@ -30,6 +30,9 @@ import java.util.List;
 @RestController
 public class MemberInterviewsController {
 
+    private static final String INTERVIEW_PARAM_VALUE = "type";
+    private static final String INTERVIEW_DEFAULT_TYPE = "나";
+
     private final MemberInterviewsService memberInterviewsService;
     private final MemberInterviewsQueryService memberInterviewsQueryService;
 
@@ -37,7 +40,8 @@ public class MemberInterviewsController {
     public ResponseEntity<Void> submitInterview(
             @PathVariable final Long interviewId,
             @AuthMember final Long memberId,
-            @RequestBody @Valid final MemberInterviewSubmitRequest request) {
+            @RequestBody @Valid final MemberInterviewSubmitRequest request
+    ) {
         memberInterviewsService.submitInterview(interviewId, memberId, request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -48,7 +52,8 @@ public class MemberInterviewsController {
     public ResponseEntity<MemberInterviewUpdateResponse> updateMemberInterviewAnswer(
             @PathVariable final Long interviewId,
             @AuthMember final Long memberId,
-            @RequestBody @Valid final MemberInterviewUpdateRequest request) {
+            @RequestBody @Valid final MemberInterviewUpdateRequest request
+    ) {
         MemberInterview memberInterview = memberInterviewsService.updateMemberInterviewAnswer(interviewId, memberId, request);
         return ResponseEntity.ok()
                 .body(new MemberInterviewUpdateResponse(interviewId, memberInterview.getAnswer()));
@@ -66,7 +71,8 @@ public class MemberInterviewsController {
     @GetMapping
     public ResponseEntity<MemberInterviewsResponse> findMemberInterviewsByType(
             @AuthMember final Long memberId,
-            @RequestParam(value = "type", defaultValue = "나") final String type) {
+            @RequestParam(value = INTERVIEW_PARAM_VALUE, defaultValue = INTERVIEW_DEFAULT_TYPE) final String type
+    ) {
         List<MemberInterviewSimpleResponse> interviews = memberInterviewsQueryService.findMemberInterviewsByType(memberId, type);
         return ResponseEntity.ok()
                 .body(new MemberInterviewsResponse(interviews));
