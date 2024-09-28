@@ -3,6 +3,7 @@ package com.atwoz.interview.infrastructure.memberinterview;
 import com.atwoz.interview.domain.memberinterview.MemberInterviews;
 import com.atwoz.interview.domain.memberinterview.MemberInterviewsRepository;
 import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
+import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,11 @@ public class MemberInterviewsRepositoryImpl implements MemberInterviewsRepositor
     @Override
     public Optional<MemberInterviews> findByMemberId(final Long memberId) {
         return memberInterviewsJpaRepository.findById(memberId);
+    }
+
+    @Override
+    public MemberInterviewDetailResponse findMemberInterviewAnswer(final Long interviewId, final Long memberId) {
+        return memberInterviewsQueryRepository.findMemberInterviewAnswer(interviewId, memberId);
     }
 
     @Override

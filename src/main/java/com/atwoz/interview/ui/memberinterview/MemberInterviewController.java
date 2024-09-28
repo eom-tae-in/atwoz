@@ -4,6 +4,7 @@ import com.atwoz.interview.application.memberinterview.MemberInterviewsQueryServ
 import com.atwoz.interview.application.memberinterview.MemberInterviewsService;
 import com.atwoz.interview.application.memberinterview.dto.MemberInterviewSubmitRequest;
 import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
+import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewDetailResponse;
 import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewsResponse;
 import com.atwoz.member.ui.auth.support.AuthMember;
 import jakarta.validation.Valid;
@@ -36,6 +37,15 @@ public class MemberInterviewController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
+    }
+
+    @GetMapping("/{interviewId}")
+    public ResponseEntity<MemberInterviewDetailResponse> findMemberInterviewAnswer(
+            @PathVariable final Long interviewId,
+            @AuthMember final Long memberId
+    ) {
+        return ResponseEntity.ok()
+                .body(memberInterviewsQueryService.findMemberInterviewAnswer(interviewId, memberId));
     }
 
     @GetMapping
