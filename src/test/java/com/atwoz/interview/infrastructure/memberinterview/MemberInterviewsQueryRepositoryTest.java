@@ -19,10 +19,9 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_나_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_나_질문;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_성별_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
@@ -60,7 +59,6 @@ class MemberInterviewsQueryRepositoryTest extends IntegrationHelper {
         styles = List.of(스타일_생성(styleRepository, "style1", "code1"));
     }
 
-    @Transactional
     @Test
     void 특정_인터뷰_답변을_조회한다() {
         // given
@@ -69,8 +67,9 @@ class MemberInterviewsQueryRepositoryTest extends IntegrationHelper {
         String answer = "답변";
 
         Interview interviewOne = interviewRepository.save(인터뷰_나_질문(question));
-        MemberInterviews memberInterviews = memberInterviewsRepository.save(MemberInterviews.createWithMemberId(member.getId()));
+        MemberInterviews memberInterviews = MemberInterviews.createWithMemberId(member.getId());
         memberInterviews.submitInterview(interviewOne, answer);
+        memberInterviewsRepository.save(memberInterviews);
 
         // when
         MemberInterviewDetailResponse response = memberInterviewsQueryRepository.findMemberInterviewAnswer(interviewOne.getId(), member.getId());
