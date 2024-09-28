@@ -2,7 +2,6 @@ package com.atwoz.interview.domain.memberinterview;
 
 import com.atwoz.global.domain.BaseEntity;
 import com.atwoz.interview.domain.interview.Interview;
-import com.atwoz.interview.domain.interview.vo.InterviewType;
 import com.atwoz.interview.exception.exceptions.MemberInterviewNotFoundException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -60,11 +59,5 @@ public class MemberInterviews extends BaseEntity {
                 .filter(memberInterview -> memberInterview.isSameInterview(interviewId))
                 .findAny()
                 .orElseThrow(MemberInterviewNotFoundException::new);
-    }
-
-    public List<MemberInterview> findMemberInterviewsByType(final InterviewType type) {
-        return this.memberInterviews.stream()
-                .filter(memberInterview -> memberInterview.isSameType(type))
-                .toList();
     }
 }
