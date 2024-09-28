@@ -53,7 +53,7 @@ public class InterviewFakeRepository implements InterviewRepository {
         return map.values()
                 .stream()
                 .filter(interview -> interview.isSameType(interviewType))
-                .map(interview -> new InterviewResponse(interview.getId(), interview.getQuestion(), interviewType.getName()))
+                .map(interview -> new InterviewResponse(interview.getId(), interview.getQuestion(), interviewType))
                 .toList();
     }
 }
