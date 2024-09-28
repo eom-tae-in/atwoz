@@ -3,7 +3,7 @@ package com.atwoz.interview.ui.memberinterview;
 import com.atwoz.interview.application.memberinterview.MemberInterviewsQueryService;
 import com.atwoz.interview.application.memberinterview.MemberInterviewsService;
 import com.atwoz.interview.application.memberinterview.dto.MemberInterviewSubmitRequest;
-import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewResponse;
+import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
 import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewsResponse;
 import com.atwoz.member.ui.auth.support.AuthMember;
 import jakarta.validation.Valid;
@@ -42,7 +42,7 @@ public class MemberInterviewController {
     public ResponseEntity<MemberInterviewsResponse> findMemberInterviewsByType(
             @AuthMember final Long memberId,
             @RequestParam(value = "type", defaultValue = "나") final String type) {
-        List<MemberInterviewResponse> interviews = memberInterviewsQueryService.findMemberInterviewsByType(memberId, type);
+        List<MemberInterviewSimpleResponse> interviews = memberInterviewsQueryService.findMemberInterviewsByType(memberId, type);
         return ResponseEntity.ok()
                 .body(new MemberInterviewsResponse(interviews));
     }

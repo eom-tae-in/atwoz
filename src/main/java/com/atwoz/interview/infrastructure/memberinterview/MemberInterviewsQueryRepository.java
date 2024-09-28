@@ -4,7 +4,7 @@ import com.atwoz.interview.domain.interview.Interview;
 import com.atwoz.interview.domain.interview.vo.InterviewType;
 import com.atwoz.interview.domain.memberinterview.MemberInterview;
 import com.atwoz.interview.domain.memberinterview.MemberInterviews;
-import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewResponse;
+import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class MemberInterviewsQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<MemberInterviewResponse> findMemberInterviewsByType(final Long memberId, final String type) {
+    public List<MemberInterviewSimpleResponse> findMemberInterviewsByType(final Long memberId, final String type) {
         InterviewType interviewType = InterviewType.findByName(type);
 
         List<Interview> interviews = jpaQueryFactory.select(interview)
@@ -43,7 +43,7 @@ public class MemberInterviewsQueryRepository {
                 .collect(Collectors.toSet());
 
         return interviews.stream()
-                .map(interview -> new MemberInterviewResponse(
+                .map(interview -> new MemberInterviewSimpleResponse(
                         interview.getId(),
                         interview.getQuestion(),
                         memberSubmittedInterviewIds.contains(interview.getId())

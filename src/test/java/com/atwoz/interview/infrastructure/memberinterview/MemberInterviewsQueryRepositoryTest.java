@@ -5,7 +5,7 @@ import com.atwoz.interview.domain.interview.Interview;
 import com.atwoz.interview.domain.interview.InterviewRepository;
 import com.atwoz.interview.domain.memberinterview.MemberInterviews;
 import com.atwoz.interview.domain.memberinterview.MemberInterviewsRepository;
-import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewResponse;
+import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
 import com.atwoz.member.domain.member.profile.Hobby;
@@ -74,14 +74,14 @@ class MemberInterviewsQueryRepositoryTest extends IntegrationHelper {
 
         memberInterviewsRepository.save(memberInterviews);
 
-        List<MemberInterviewResponse> expectedSubmittedResponses = List.of(
-                new MemberInterviewResponse(interviewOne.getId(), interviewOne.getQuestion(), true),
-                new MemberInterviewResponse(interviewThree.getId(), interviewThree.getQuestion(), true));
+        List<MemberInterviewSimpleResponse> expectedSubmittedResponses = List.of(
+                new MemberInterviewSimpleResponse(interviewOne.getId(), interviewOne.getQuestion(), true),
+                new MemberInterviewSimpleResponse(interviewThree.getId(), interviewThree.getQuestion(), true));
 
         // when
-        List<MemberInterviewResponse> interviews = memberInterviewsQueryRepository.findMemberInterviewsByType(member.getId(), type);
-        List<MemberInterviewResponse> submittedInterviews = interviews.stream()
-                .filter(MemberInterviewResponse::isSubmitted)
+        List<MemberInterviewSimpleResponse> interviews = memberInterviewsQueryRepository.findMemberInterviewsByType(member.getId(), type);
+        List<MemberInterviewSimpleResponse> submittedInterviews = interviews.stream()
+                .filter(MemberInterviewSimpleResponse::isSubmitted)
                 .toList();
 
         // then

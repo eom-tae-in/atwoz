@@ -2,7 +2,7 @@ package com.atwoz.interview.infrastructure.memberinterview;
 
 import com.atwoz.interview.domain.memberinterview.MemberInterviews;
 import com.atwoz.interview.domain.memberinterview.MemberInterviewsRepository;
-import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewResponse;
+import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +27,7 @@ public class MemberInterviewsRepositoryImpl implements MemberInterviewsRepositor
     }
 
     @Override
-    public List<MemberInterviewResponse> findMemberInterviewsByType(final Long memberId, final String type) {
+    public List<MemberInterviewSimpleResponse> findMemberInterviewsByType(final Long memberId, final String type) {
         return memberInterviewsQueryRepository.findMemberInterviewsByType(memberId, type);
     }
 }
