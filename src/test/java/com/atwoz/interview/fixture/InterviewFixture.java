@@ -21,4 +21,11 @@ public class InterviewFixture {
                 .question("나는 요즘 이런걸 배워보고 싶더라!")
                 .build();
     }
+
+    public static Interview 인터뷰_타입_질문(final InterviewType type, final String question) {
+        return Interview.builder()
+                .interviewType(type)
+                .question(question)
+                .build();
+    }
 }
