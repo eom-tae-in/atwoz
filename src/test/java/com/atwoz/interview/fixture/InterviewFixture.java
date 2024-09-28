@@ -16,7 +16,7 @@ public class InterviewFixture {
 
     public static Interview 인터뷰_나_일반_질문_id(final Long id) {
         return Interview.builder()
-                .id(1L)
+                .id(id)
                 .interviewType(InterviewType.ME)
                 .question("나는 요즘 이런걸 배워보고 싶더라!")
                 .build();
