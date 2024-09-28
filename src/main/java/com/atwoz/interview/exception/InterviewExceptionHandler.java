@@ -3,6 +3,8 @@ package com.atwoz.interview.exception;
 import com.atwoz.interview.exception.exceptions.AlreadyExistedInterviewQuestionException;
 import com.atwoz.interview.exception.exceptions.InterviewNotFoundException;
 import com.atwoz.interview.exception.exceptions.InterviewTypeNotFoundException;
+import com.atwoz.interview.exception.exceptions.MemberInterviewNotFoundException;
+import com.atwoz.interview.exception.exceptions.MemberInterviewNotSubmittedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +25,16 @@ public class InterviewExceptionHandler {
 
     @ExceptionHandler(InterviewNotFoundException.class)
     public ResponseEntity<String> handleInterviewNotFoundException(final InterviewNotFoundException e) {
+        return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MemberInterviewNotSubmittedException.class)
+    public ResponseEntity<String> handleMemberInterviewNotSubmittedException(final MemberInterviewNotSubmittedException e) {
+        return getExceptionWithStatus(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MemberInterviewNotFoundException.class)
+    public ResponseEntity<String> handleMemberInterviewNotFoundException(final MemberInterviewNotFoundException e) {
         return getExceptionWithStatus(e, HttpStatus.NOT_FOUND);
     }
 

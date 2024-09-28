@@ -49,6 +49,10 @@ public class Interview extends BaseEntity {
         this.interviewType = InterviewType.findByName(type);
     }
 
+    public boolean isSameId(final Long id) {
+        return id.equals(this.id);
+    }
+
     public boolean isSameType(final InterviewType interviewType) {
         return interviewType.equals(this.interviewType);
     }

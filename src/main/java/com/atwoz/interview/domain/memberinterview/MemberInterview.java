@@ -41,6 +41,14 @@ public class MemberInterview extends BaseEntity {
         return new MemberInterview(interview, answer);
     }
 
+    public void updateAnswer(final String answer) {
+        this.answer = answer;
+    }
+
+    public boolean isSameInterview(final Long interviewId) {
+        return this.interview.isSameId(interviewId);
+    }
+
     public boolean isSameType(final InterviewType interviewType) {
         return this.interview.isSameType(interviewType);
     }
