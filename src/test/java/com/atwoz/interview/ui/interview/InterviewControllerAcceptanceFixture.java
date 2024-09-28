@@ -26,8 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_나_일반_질문;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_타입_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_나_일반_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_타입_질문;
 import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
 import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
 import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;

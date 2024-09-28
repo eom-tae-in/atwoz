@@ -14,9 +14,9 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.interview.fixture.InterviewCreateRequestFixture.인터뷰_나_질문_요청;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_나_일반_질문;
-import static com.atwoz.interview.fixture.InterviewUpdateRequestFixture.인터뷰_나_수정_질문_중복_요청;
+import static com.atwoz.interview.fixture.interview.InterviewCreateRequestFixture.인터뷰_나_질문_요청;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_나_일반_질문;
+import static com.atwoz.interview.fixture.interview.InterviewUpdateRequestFixture.인터뷰_나_수정_질문_중복_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;

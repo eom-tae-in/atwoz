@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import static com.atwoz.helper.RestDocsHelper.customDocument;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_타입_질문_id;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_타입_질문_id;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.LOCATION;

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_타입_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_타입_질문;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 

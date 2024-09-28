@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_나_일반_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_나_일반_질문;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;

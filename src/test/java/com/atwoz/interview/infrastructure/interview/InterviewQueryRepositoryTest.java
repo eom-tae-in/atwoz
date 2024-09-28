@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_타입_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_타입_질문;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

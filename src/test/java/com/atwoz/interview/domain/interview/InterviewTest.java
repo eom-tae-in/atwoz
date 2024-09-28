@@ -7,8 +7,8 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_나_일반_질문;
-import static com.atwoz.interview.fixture.InterviewFixture.인터뷰_나_일반_질문_id;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_나_일반_질문;
+import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_나_일반_질문_id;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;

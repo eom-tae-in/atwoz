@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.interview.fixture.InterviewCreateRequestFixture.인터뷰_나_질문_요청;
-import static com.atwoz.interview.fixture.InterviewUpdateRequestFixture.인터뷰_수정_질문_요청;
+import static com.atwoz.interview.fixture.interview.InterviewCreateRequestFixture.인터뷰_나_질문_요청;
+import static com.atwoz.interview.fixture.interview.InterviewUpdateRequestFixture.인터뷰_수정_질문_요청;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
