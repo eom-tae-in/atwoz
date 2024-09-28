@@ -4,6 +4,7 @@ import com.atwoz.global.domain.BaseEntity;
 import com.atwoz.interview.domain.interview.Interview;
 import com.atwoz.interview.exception.exceptions.MemberInterviewNotFoundException;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class MemberInterviews extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private Long memberId;
 
     @JoinColumn(name = MEMBER_INTERVIEWS_COLUMN)
