@@ -8,11 +8,14 @@ import com.atwoz.interview.domain.memberinterview.MemberInterviews;
 import com.atwoz.interview.domain.memberinterview.MemberInterviewsRepository;
 import com.atwoz.interview.exception.exceptions.InterviewNotFoundException;
 import com.atwoz.interview.exception.exceptions.MemberInterviewNotSubmittedException;
+import com.atwoz.interview.infrastructure.interview.dto.InterviewResponse;
 import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewDetailResponse;
 import com.atwoz.interview.infrastructure.memberinterview.dto.MemberInterviewSimpleResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +76,8 @@ public class MemberInterviewsFakeRepository implements MemberInterviewsRepositor
     @Override
     public List<MemberInterviewSimpleResponse> findMemberInterviewsByType(final Long memberId, final String type) {
         InterviewType interviewType = InterviewType.findByName(type);
-        return map.values().stream()
+        List<InterviewResponse> interviews = interviewRepository.findByInterviewType(interviewType);
+        List<MemberInterviewSimpleResponse> submittedInterviews = map.values().stream()
                 .filter(memberInterviews -> memberId.equals(memberInterviews.getMemberId()))
                 .findAny()
                 .orElseThrow(MemberInterviewNotSubmittedException::new)
@@ -85,5 +89,20 @@ public class MemberInterviewsFakeRepository implements MemberInterviewsRepositor
                         memberInterview.getInterview().getQuestion(),
                         memberInterview.isSubmitted()))
                 .toList();
+        List<Long> submittedInterviewIds = submittedInterviews.stream()
+                .map(MemberInterviewSimpleResponse::id)
+                .toList();
+        List<MemberInterviewSimpleResponse> notSubmittedInterviews = interviews.stream()
+                .filter(interview -> !submittedInterviewIds.contains(interview.id()))
+                .map(response -> new MemberInterviewSimpleResponse(response.id(), response.question(), false))
+                .toList();
+
+        List<MemberInterviewSimpleResponse> responses = new ArrayList<>();
+        responses.addAll(notSubmittedInterviews);
+        responses.addAll(submittedInterviews);
+
+        responses.sort(Comparator.comparing(MemberInterviewSimpleResponse::id));
+
+        return responses;
     }
 }
