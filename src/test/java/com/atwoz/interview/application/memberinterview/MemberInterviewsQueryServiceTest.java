@@ -93,13 +93,7 @@ class MemberInterviewsQueryServiceTest {
 
             Interview interviewOne = interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "내가 생각하는 내 장점과 단점은 이거다!"));
             Interview interviewTwo = interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "나의 평일/주말 생활 패턴"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "일상에서 느끼는 나의 소소한 행복"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "남사친/여사친에 대한 나의 생각"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "나의 인간관계 스타일"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "호감을 느끼는 사람의 유형/타입"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "추구하는 만남 횟수와 연락 빈도"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "내가 연인을 사랑하는 방식"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "연인에게 바라는 점"));
+            saveOtherInterviews();
 
             MemberInterviews memberInterviews = memberInterviewsRepository.save(MemberInterviews.createWithMemberId(memberId));
             memberInterviews.submitInterview(interviewOne, "답변1");
@@ -134,13 +128,7 @@ class MemberInterviewsQueryServiceTest {
 
             Interview interviewOne = interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "내가 생각하는 내 장점과 단점은 이거다!"));
             Interview interviewTwo = interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "나의 평일/주말 생활 패턴"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "일상에서 느끼는 나의 소소한 행복"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "남사친/여사친에 대한 나의 생각"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "나의 인간관계 스타일"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "호감을 느끼는 사람의 유형/타입"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "추구하는 만남 횟수와 연락 빈도"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "내가 연인을 사랑하는 방식"));
-            interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "연인에게 바라는 점"));
+            saveOtherInterviews();
 
             MemberInterviews memberInterviews = memberInterviewsRepository.save(MemberInterviews.createWithMemberId(memberId));
             memberInterviews.submitInterview(interviewOne, "답변1");
@@ -150,5 +138,15 @@ class MemberInterviewsQueryServiceTest {
             assertThatThrownBy(() -> memberInterviewsQueryService.findMemberInterviewsByType(memberId, type))
                     .isInstanceOf(InterviewTypeNotFoundException.class);
         }
+    }
+
+    private void saveOtherInterviews() {
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.ME, "일상에서 느끼는 나의 소소한 행복"));
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "남사친/여사친에 대한 나의 생각"));
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "나의 인간관계 스타일"));
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.RELATIONSHIP, "호감을 느끼는 사람의 유형/타입"));
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "추구하는 만남 횟수와 연락 빈도"));
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "내가 연인을 사랑하는 방식"));
+        interviewRepository.save(인터뷰_타입_질문(InterviewType.COUPLE, "연인에게 바라는 점"));
     }
 }
