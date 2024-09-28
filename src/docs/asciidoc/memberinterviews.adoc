@@ -1,0 +1,53 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== MemberInterviews
+
+=== 인터뷰 답변 기록 (POST /api/members/me/interviews/{interviewId})
+
+==== 요청
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_응시/http-request.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_응시/request-headers.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_응시/path-parameters.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_응시/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_응시/http-response.adoc[]
+
+=== 인터뷰 답변 수정 (PATCH /api/members/me/interviews/{interviewId})
+
+==== 요청
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_수정/http-request.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_수정/request-headers.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_수정/path-parameters.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_수정/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_수정/http-response.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_수정/response-fields.adoc[]
+
+=== 인터뷰 상세 조회 (GET /api/members/me/interviews/{interviewId})
+
+==== 요청
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_단일_조회/http-request.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_단일_조회/request-headers.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_단일_조회/path-parameters.adoc[]
+
+==== 응답
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_단일_조회/http-response.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_단일_조회/response-fields.adoc[]
+
+=== 인터뷰 타입으로 목록 조회 (GET /api/members/me/interviews?type={type})
+
+==== 요청
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_목록_조회/http-request.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_목록_조회/request-headers.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_목록_조회/request-parts.adoc[]
+
+==== 응답
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_목록_조회/http-response.adoc[]
+include::{snippets}/member-interviews-controller-web-mvc-test/회원_인터뷰_목록_조회/response-fields.adoc[]

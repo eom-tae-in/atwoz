@@ -1,0 +1,42 @@
+:toc: left
+:source-highlighter: highlightjs
+:sectlinks:
+:toclevels: 2
+:sectlinks:
+:sectnums:
+
+== Interview
+
+=== 인터뷰 질문 등록 (POST /api/interviews)
+
+==== 요청
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_등록/http-request.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_등록/request-headers.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_등록/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_등록/http-response.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_등록/response-fields.adoc[]
+
+=== 인터뷰 수정 (PATCH /api/interviews/{interviewId})
+
+==== 요청
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_수정/http-request.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_수정/request-headers.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_수정/path-parameters.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_수정/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_수정/http-response.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_수정/response-fields.adoc[]
+
+=== 인터뷰 타입으로 조회 (GET /api/interviews?type={type})
+
+==== 요청
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_목록_타입_조회/http-request.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_목록_타입_조회/request-headers.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_목록_타입_조회/request-parts.adoc[]
+
+==== 응답
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_목록_타입_조회/http-response.adoc[]
+include::{snippets}/interview-controller-web-mvc-test/인터뷰_목록_타입_조회/response-fields.adoc[]
