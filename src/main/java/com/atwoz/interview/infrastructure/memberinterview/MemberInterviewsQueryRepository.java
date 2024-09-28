@@ -32,9 +32,10 @@ public class MemberInterviewsQueryRepository {
                 .where(interview.id.eq(interviewId))
                 .fetchOne();
 
-        MemberInterview answeredMemberInterview = jpaQueryFactory.select(memberInterview)
-                .leftJoin(memberInterviews1.memberInterviews, memberInterview)
-                .leftJoin(interview)
+        MemberInterview answeredMemberInterview = jpaQueryFactory.selectFrom(memberInterview)
+                .innerJoin(memberInterviews1)
+                .on(memberInterviews1.memberInterviews.contains(memberInterview))
+                .leftJoin(memberInterview.interview, interview)
                 .fetchJoin()
                 .where(memberInterviews1.memberId.eq(memberId), interview.id.eq(interviewId))
                 .fetchOne();
