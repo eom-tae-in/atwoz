@@ -21,7 +21,11 @@ public class MemberInterviewsService {
     private final InterviewRepository interviewRepository;
     private final MemberInterviewsRepository memberInterviewsRepository;
 
-    public void submitInterview(final Long interviewId, final Long memberId, final MemberInterviewSubmitRequest request) {
+    public void submitInterview(
+            final Long interviewId,
+            final Long memberId,
+            final MemberInterviewSubmitRequest request)
+    {
         Interview targetInterview = findInterviewById(interviewId);
         MemberInterviews memberInterviews = memberInterviewsRepository.findByMemberId(memberId)
                 .orElseGet(() -> createNewMemberInterviewsWithMemberId(memberId));
@@ -38,7 +42,11 @@ public class MemberInterviewsService {
         return memberInterviewsRepository.save(memberInterviews);
     }
 
-    public MemberInterview updateMemberInterviewAnswer(final Long interviewId, final Long memberId, final MemberInterviewUpdateRequest request) {
+    public MemberInterview updateMemberInterviewAnswer(
+            final Long interviewId,
+            final Long memberId,
+            final MemberInterviewUpdateRequest request
+    ) {
         MemberInterviews memberInterviews = memberInterviewsRepository.findByMemberId(memberId)
                 .orElseThrow(MemberInterviewNotSubmittedException::new);
         memberInterviews.updateInterviewAnswer(interviewId, request.answer());

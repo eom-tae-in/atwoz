@@ -29,7 +29,11 @@ public class InterviewFixture {
                 .build();
     }
 
-    public static Interview 인터뷰_타입_질문_id(final InterviewType type, final String question, final Long id) {
+    public static Interview 인터뷰_타입_질문_id(
+            final InterviewType type,
+            final String question,
+            final Long id)
+    {
         return Interview.builder()
                 .id(id)
                 .interviewType(type)
