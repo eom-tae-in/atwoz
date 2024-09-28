@@ -28,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/members/me/interviews")
 @RestController
-public class MemberInterviewController {
+public class MemberInterviewsController {
 
     private final MemberInterviewsService memberInterviewsService;
     private final MemberInterviewsQueryService memberInterviewsQueryService;

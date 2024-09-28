@@ -10,6 +10,8 @@ import com.atwoz.alert.application.AlertQueryService;
 import com.atwoz.alert.application.AlertService;
 import com.atwoz.interview.application.interview.InterviewQueryService;
 import com.atwoz.interview.application.interview.InterviewService;
+import com.atwoz.interview.application.memberinterview.MemberInterviewsQueryService;
+import com.atwoz.interview.application.memberinterview.MemberInterviewsService;
 import com.atwoz.member.application.auth.MemberAuthService;
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
@@ -168,4 +170,10 @@ public class MockBeanInjection {
 
     @MockBean
     protected InterviewQueryService interviewQueryService;
+
+    @MockBean
+    protected MemberInterviewsService memberInterviewsService;
+
+    @MockBean
+    protected MemberInterviewsQueryService memberInterviewsQueryService;
 }
