@@ -1,10 +1,10 @@
 package com.atwoz.mission.domain.membermission;
 
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionAlreadyRewardedException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
+import com.atwoz.profile.domain.vo.Gender;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

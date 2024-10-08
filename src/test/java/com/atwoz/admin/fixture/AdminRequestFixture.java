@@ -1,7 +1,6 @@
 package com.atwoz.admin.fixture;
 
 import com.atwoz.admin.application.auth.dto.AdminLoginRequest;
-import com.atwoz.admin.application.auth.dto.AdminProfileSignUpRequest;
 import com.atwoz.admin.application.auth.dto.AdminSignUpRequest;
 
 public class AdminRequestFixture {
@@ -16,10 +15,8 @@ public class AdminRequestFixture {
                 EMAIL,
                 PASSWORD,
                 PASSWORD,
-                new AdminProfileSignUpRequest(
-                        NAME,
-                        PHONE_NUMBER
-                )
+                NAME,
+                PHONE_NUMBER
         );
     }
 

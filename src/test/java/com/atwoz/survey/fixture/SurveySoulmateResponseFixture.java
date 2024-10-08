@@ -1,6 +1,6 @@
 package com.atwoz.survey.fixture;
 
-import com.atwoz.member.domain.member.Member;
+import com.atwoz.profile.domain.Profile;
 import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
 
 public class SurveySoulmateResponseFixture {
@@ -9,13 +9,13 @@ public class SurveySoulmateResponseFixture {
         return new SurveySoulmateResponse(1L, "nickname", "서울시", "강남구", 25);
     }
 
-    public static SurveySoulmateResponse 소울메이트_응답_회원(final Member member) {
+    public static SurveySoulmateResponse 소울메이트_응답_프로필(final Profile profile) {
         return new SurveySoulmateResponse(
-                member.getId(),
-                member.getNickname(),
-                member.getMemberProfile().getProfile().getLocation().getCity(),
-                member.getMemberProfile().getProfile().getLocation().getSector(),
-                member.getMemberProfile().getProfile().getPhysicalProfile().getAge()
+                profile.getMemberId(),
+                profile.getNickname(),
+                profile.getLocation().getCity(),
+                profile.getLocation().getSector(),
+                profile.getPhysicalProfile().getAge()
         );
     }
 }

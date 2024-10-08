@@ -1,13 +1,13 @@
 package com.atwoz.mission.intrastructure.membermission;
 
 import com.atwoz.helper.IntegrationHelper;
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
 import com.atwoz.mission.intrastructure.membermission.dto.MemberMissionSimpleResponse;
+import com.atwoz.profile.domain.vo.Gender;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;

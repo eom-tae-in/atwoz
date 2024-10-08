@@ -1,14 +1,12 @@
 package com.atwoz.survey.ui.membersurvey;
 
+import com.atwoz.global.fixture.PhoneNumberGenerator;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.domain.member.profile.Hobby;
-import com.atwoz.member.domain.member.profile.HobbyRepository;
-import com.atwoz.member.domain.member.profile.Style;
-import com.atwoz.member.domain.member.profile.StyleRepository;
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
+import com.atwoz.profile.domain.ProfileRepository;
+import com.atwoz.profile.domain.vo.Gender;
 import com.atwoz.survey.application.membersurvey.dto.SurveySubmitRequest;
 import com.atwoz.survey.domain.survey.SurveyRepository;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
@@ -17,18 +15,15 @@ import com.atwoz.survey.ui.membersurvey.dto.SurveySoulmateResponses;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_성별_취미목록_스타일목록;
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_취미목록_스타일목록;
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
-import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
-import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
+import static com.atwoz.member.fixture.member.회원_픽스처.회원_생성_전화번호;
+import static com.atwoz.profile.fixture.프로필_픽스처.프로필_생성_회원아이디_성별;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_선택_과목_질문_두개씩;
 import static com.atwoz.survey.fixture.SurveyFixture.연애고사_필수_과목_질문_30개씩;
 import static io.restassured.http.ContentType.JSON;
@@ -50,42 +45,31 @@ class MemberSurveysControllerAcceptanceFixture extends IntegrationHelper {
     private SurveyRepository surveyRepository;
 
     @Autowired
-    private HobbyRepository hobbyRepository;
+    private ProfileRepository profileRepository;
 
-    @Autowired
-    private StyleRepository styleRepository;
-
-    private List<Hobby> hobbies;
-
-    private List<Style> styles;
+    private PhoneNumberGenerator phoneNumberGenerator;
 
     @BeforeEach
-    void init() {
-        hobbies = List.of(취미_생성(hobbyRepository, "hobby1", "code1"));
-        styles = List.of(스타일_생성(styleRepository, "style1", "code1"));
+    void setup() {
+        phoneNumberGenerator = new PhoneNumberGenerator();
     }
 
     protected Member 회원_생성() {
-        return memberRepository.save(회원_생성_취미목록_스타일목록(hobbies, styles));
+        return memberRepository.save(회원_생성_전화번호(phoneNumberGenerator.generatePhoneNumber()));
     }
 
-    protected Member 회원_생성(final String nickname, final String phoneNumber) {
-        return memberRepository.save(회원_생성_닉네임_전화번호_취미목록_스타일목록(
-                nickname,
-                phoneNumber,
-                hobbies,
-                styles
-        ));
+    protected Member 남성_회원_생성() {
+        Member member = memberRepository.save(회원_생성_전화번호(phoneNumberGenerator.generatePhoneNumber()));
+        profileRepository.save(프로필_생성_회원아이디_성별(member.getId(), Gender.MALE));
+
+        return member;
     }
 
-    protected Member 회원_생성(final String nickname, final String phoneNumber, final Gender gender) {
-        return memberRepository.save(회원_생성_닉네임_전화번호_성별_취미목록_스타일목록(
-                nickname,
-                phoneNumber,
-                gender,
-                hobbies,
-                styles
-        ));
+    protected Member 여성_회원_생성() {
+        Member member = memberRepository.save(회원_생성_전화번호(phoneNumberGenerator.generatePhoneNumber()));
+        profileRepository.save(프로필_생성_회원아이디_성별(member.getId(), Gender.FEMALE));
+
+        return member;
     }
 
     protected String 토큰_생성(final Member member) {

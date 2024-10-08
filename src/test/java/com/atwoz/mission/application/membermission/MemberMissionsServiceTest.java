@@ -1,6 +1,5 @@
 package com.atwoz.mission.application.membermission;
 
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
@@ -13,6 +12,7 @@ import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoun
 import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
 import com.atwoz.mission.intrastructure.membermission.MemberMissionsFakeRepository;
 import com.atwoz.mission.intrastructure.mission.MissionFakeRepository;
+import com.atwoz.profile.domain.vo.Gender;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;

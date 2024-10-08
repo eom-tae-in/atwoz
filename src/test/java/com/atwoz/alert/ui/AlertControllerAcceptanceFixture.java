@@ -4,17 +4,13 @@ import com.atwoz.alert.domain.Alert;
 import com.atwoz.alert.domain.AlertRepository;
 import com.atwoz.alert.infrastructure.dto.AlertPagingResponse;
 import com.atwoz.alert.infrastructure.dto.AlertSearchResponse;
+import com.atwoz.global.fixture.PhoneNumberGenerator;
 import com.atwoz.helper.IntegrationHelper;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.domain.member.profile.Hobby;
-import com.atwoz.member.domain.member.profile.HobbyRepository;
-import com.atwoz.member.domain.member.profile.Style;
-import com.atwoz.member.domain.member.profile.StyleRepository;
 import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
-import java.util.List;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,9 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import static com.atwoz.alert.fixture.AlertFixture.알림_생성_제목_날짜_회원id_주입;
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_닉네임_전화번호_취미목록_스타일목록;
-import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
-import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
+import static com.atwoz.member.fixture.member.회원_픽스처.회원_생성_전화번호;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -41,33 +35,15 @@ public class AlertControllerAcceptanceFixture extends IntegrationHelper {
     @Autowired
     private AlertRepository alertRepository;
 
-    @Autowired
-    private HobbyRepository hobbyRepository;
-
-    @Autowired
-    private StyleRepository styleRepository;
-
-    private Long id = 0L;
-
-    private List<Hobby> hobbies;
-
-    private List<Style> styles;
+    private PhoneNumberGenerator phoneNumberGenerator;
 
     @BeforeEach
     void init() {
-        hobbies = List.of(취미_생성(hobbyRepository, "hobby1", "code1"));
-        styles = List.of(스타일_생성(styleRepository, "style1", "code1"));
+        phoneNumberGenerator = new PhoneNumberGenerator();
     }
 
     protected Member 회원_생성() {
-        id++;
-
-        return memberRepository.save(회원_생성_닉네임_전화번호_취미목록_스타일목록(
-                "nickname" + id,
-                "000-0000-000" + id,
-                hobbies,
-                styles
-        ));
+        return memberRepository.save(회원_생성_전화번호(phoneNumberGenerator.generatePhoneNumber()));
     }
 
     protected String 토큰_생성(final Member member) {

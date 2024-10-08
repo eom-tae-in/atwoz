@@ -1,116 +1,130 @@
 package com.atwoz.member.domain.member;
 
-import com.atwoz.member.application.member.dto.update.MemberUpdateRequest;
-import com.atwoz.member.domain.member.profile.physical.YearManager;
-import com.atwoz.member.domain.member.profile.vo.ProfileAccessStatus;
-import com.atwoz.member.domain.member.vo.MemberGrade;
-import com.atwoz.member.domain.member.vo.MemberStatus;
-import com.atwoz.member.fixture.member.generator.UniqueMemberFieldsGenerator;
-import com.atwoz.member.infrastructure.member.physical.FakeYearManager;
+import com.atwoz.global.fixture.PhoneNumberGenerator;
+import com.atwoz.member.domain.member.vo.MemberAccountStatus;
+import com.atwoz.member.infrastructure.member.dto.MemberAccountStatusResponse;
+import com.atwoz.member.infrastructure.member.dto.MemberContactInfoResponse;
+import com.atwoz.member.infrastructure.member.dto.MemberNotificationsResponse;
+import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성;
-import static com.atwoz.member.fixture.member.dto.request.InternalProfileInitializeRequestFixture.내부_프로필_초기화_요청_생성_연도관리자;
-import static com.atwoz.member.fixture.member.dto.request.InternalProfileUpdateRequestFixture.내부_프로필_업데이트_요청_생성_연도관리자;
-import static com.atwoz.member.fixture.member.dto.request.MemberUpdateRequestFixture.회원_업데이트_요청;
+import static com.atwoz.member.fixture.member.회원_응답_픽스처.회원_계정_상태_조회_응답_픽스처.회원_계정_상태_조회_응답_생성_회원계정상태;
+import static com.atwoz.member.fixture.member.회원_응답_픽스처.회원_연락처_정보_조회_응답_픽스처.회원_연락처_정보_조회_응답_생성_연락처;
+import static com.atwoz.member.fixture.member.회원_응답_픽스처.회원_푸시_알림_조회_응답_픽스처.회원_푸시_알림_조회_응답_생성_회원푸시알림목록;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class MemberTest {
 
-    private UniqueMemberFieldsGenerator uniqueMemberFieldsGenerator;
+    private Member member;
 
-    private YearManager yearManager;
+    private PhoneNumberGenerator phoneNumberGenerator;
+
+    // TODO: 아직 미흡한 테스트가 있음. 인증 기능 구현 완료시 최신화 진행
 
     @BeforeEach
     void setup() {
-        uniqueMemberFieldsGenerator = new UniqueMemberFieldsGenerator();
-        yearManager = new FakeYearManager();
+        member = Member.createWithOAuth("01011111111");
+        phoneNumberGenerator = new PhoneNumberGenerator();
     }
 
-    @Test
-    void OAuth_인증을_완료하면_회원이_생성된다() {
-        // when
-        Member member = OAUth_인증_완료한_회원_생성();
 
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(member.getMemberProfile().getProfile().getPhysicalProfile().getGender().getName())
-                    .isNotEmpty();
-            softly.assertThat(member.getPhoneNumber()).isNotEmpty();
-            softly.assertThat(member.getMemberStatus()).isEqualTo(MemberStatus.ACTIVE);
-            softly.assertThat(member.getMemberGrade()).isEqualTo(MemberGrade.SILVER);
-            softly.assertThat(member.getMemberProfile().getProfileAccessStatus())
-                    .isEqualTo(ProfileAccessStatus.WAITING);
-        });
-    }
+    @Nested
+    class 회원_정보_변경 {
 
-    @Test
-    void PASS_인증을_완료하면_회원이_생성된다() {
-        // when
-        Member member = PASS_인증_완료한_회원_생성();
+        @Test
+        void 회원의_푸시_알림_정보를_변경한다() {
+            // given
+            boolean isLikeReceivedNotificationOn = true;
+            boolean isNewMessageNotificationOn = true;
+            boolean isProfileExchangeNotificationOn = true;
+            boolean isProfileImageChangeNotificationOn = true;
+            boolean isLongTimeLoLoginNotificationOn = true;
+            boolean isInterviewWritingRequestNotificationOn = true;
+            MemberNotificationsResponse before = 회원_푸시_알림_조회_응답_생성_회원푸시알림목록(member.getMemberPushNotifications());
 
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(member.getMemberProfile().getProfile().getPhysicalProfile().getGender().getName())
-                    .isNotEmpty();
-            softly.assertThat(member.getPhoneNumber()).isNotEmpty();
-            softly.assertThat(member.getMemberStatus()).isEqualTo(MemberStatus.ACTIVE);
-            softly.assertThat(member.getMemberGrade()).isEqualTo(MemberGrade.SILVER);
-            softly.assertThat(member.getMemberProfile().getProfileAccessStatus())
-                    .isEqualTo(ProfileAccessStatus.WAITING);
-        });
-    }
+            // when
+            member.updatePushNotifications(
+                    isLikeReceivedNotificationOn,
+                    isNewMessageNotificationOn,
+                    isProfileExchangeNotificationOn,
+                    isProfileImageChangeNotificationOn,
+                    isLongTimeLoLoginNotificationOn,
+                    isInterviewWritingRequestNotificationOn
+            );
 
-    @Test
-    void 회원_정보를_초기화한다() {
-        // given
-        Member member = PASS_인증_완료한_회원_생성();
-        String nickname = uniqueMemberFieldsGenerator.generateNickname();
-        Long recommenderId = 2L;
+            // then
+            MemberNotificationsResponse after = 회원_푸시_알림_조회_응답_생성_회원푸시알림목록(member.getMemberPushNotifications());
 
-        // when
-        member.initializeWith(nickname, recommenderId, 내부_프로필_초기화_요청_생성_연도관리자(yearManager));
+            assertSoftly(softly -> {
+                softly.assertThat(after).usingRecursiveComparison()
+                        .isNotEqualTo(before);
+                softly.assertThat(after.isLikeReceivedNotificationOn())
+                        .isEqualTo(isLikeReceivedNotificationOn);
+                softly.assertThat(after.isNewMessageNotificationOn())
+                        .isEqualTo(isNewMessageNotificationOn);
+                softly.assertThat(after.isProfileExchangeNotificationOn())
+                        .isEqualTo(isProfileExchangeNotificationOn);
+                softly.assertThat(after.isProfileImageChangeNotificationOn())
+                        .isEqualTo(isProfileImageChangeNotificationOn);
+                softly.assertThat(after.isLongTimeLoLoginNotificationOn())
+                        .isEqualTo(isLongTimeLoLoginNotificationOn);
+                softly.assertThat(after.isInterviewWritingRequestNotificationOn())
+                        .isEqualTo(isInterviewWritingRequestNotificationOn);
+            });
+        }
 
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(member.getNickname()).isEqualTo(nickname);
-            softly.assertThat(member.getRecommenderId()).isEqualTo(recommenderId);
-            softly.assertThat(member.getPhoneNumber()).isNotEmpty();
-            softly.assertThat(member.getMemberProfile()).isNotNull();
-            softly.assertThat(member.getMemberStatus()).isEqualTo(MemberStatus.ACTIVE);
-            softly.assertThat(member.getMemberGrade()).isEqualTo(MemberGrade.SILVER);
-        });
-    }
+        @Test
+        void 회원의_계정_상태_정보를_변경한다() {
+            // given
+            MemberAccountStatusResponse before = 회원_계정_상태_조회_응답_생성_회원계정상태(member.getMemberAccountStatus());
+            String accessStatus = MemberAccountStatus.INACTIVE.getStatus();
 
-    @Test
-    void 회원_정보를_수정한다() {
-        // given
-        Member member = 회원_생성();
-        MemberUpdateRequest memberUpdateRequest = 회원_업데이트_요청();
+            // when
+            member.updateAccountStatus(accessStatus);
 
-        // when
-        member.updateWith(memberUpdateRequest.nickname(), 내부_프로필_업데이트_요청_생성_연도관리자(yearManager));
+            // then
+            MemberAccountStatusResponse after = 회원_계정_상태_조회_응답_생성_회원계정상태(member.getMemberAccountStatus());
+            assertSoftly(softly -> {
+                softly.assertThat(after).usingRecursiveComparison()
+                        .isNotEqualTo(before);
+                softly.assertThat(after.status()).isEqualTo(accessStatus);
+            });
+        }
 
-        // then
-        assertSoftly(softly -> {
-            softly.assertThat(member.getNickname()).isEqualTo(memberUpdateRequest.nickname());
-            softly.assertThat(member.getPhoneNumber()).isNotEmpty();
-            softly.assertThat(member.getMemberProfile()).isNotNull();
-            softly.assertThat(member.getMemberStatus()).isEqualTo(MemberStatus.ACTIVE);
-            softly.assertThat(member.getMemberGrade()).isEqualTo(MemberGrade.SILVER);
-        });
-    }
+        @Test
+        void 회원의_연락처_정보를_변경한다() {
+            // given
+            MemberContactInfoResponse before = 회원_연락처_정보_조회_응답_생성_연락처(member.getContact());
+            String contactType = "카카오톡 아이디";
+            String contactValue = "atwoz";
 
-    private Member OAUth_인증_완료한_회원_생성() {
-        return Member.createWithOAuth(uniqueMemberFieldsGenerator.generatePhoneNumber());
-    }
+            // when
+            member.updateContact(contactType, contactValue);
 
-    private Member PASS_인증_완료한_회원_생성() {
-        return Member.createWithPass("남성", uniqueMemberFieldsGenerator.generatePhoneNumber());
+            // then
+            MemberContactInfoResponse after = 회원_연락처_정보_조회_응답_생성_연락처(member.getContact());
+            assertSoftly(softly -> {
+                softly.assertThat(after).usingRecursiveComparison()
+                        .isNotEqualTo(before);
+                softly.assertThat(after.contactType()).isEqualTo(contactType);
+                softly.assertThat(after.contactValue()).isEqualTo(contactValue);
+            });
+        }
+
+        @Test
+        void 회원의_최신_방문_일을_변경한다() {
+            // when
+            member.updateLastVisitDate();
+
+            // then
+            assertThat(member.getLatestVisitDate()).isEqualTo(LocalDate.now());
+        }
     }
 }
