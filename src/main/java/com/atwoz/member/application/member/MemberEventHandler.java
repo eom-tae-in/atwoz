@@ -1,7 +1,8 @@
 package com.atwoz.member.application.member;
 
-import com.atwoz.member.application.auth.event.ValidatedLoginEvent;
 import com.atwoz.member.application.member.event.ValidatedMemberExistenceEvent;
+import com.atwoz.member.domain.member.MemberRepository;
+import com.atwoz.member.exception.exceptions.member.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -10,16 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberEventHandler {
 
-    private final MemberService memberService;
-
-    @EventListener
-    public void registerIfNotMemberExist(final ValidatedLoginEvent event) {
-        memberService.create(event.getPhoneNumber());
-    }
+    private final MemberRepository memberRepository;
 
     @EventListener
     public void validateMemberExist(final ValidatedMemberExistenceEvent event) {
-        memberService.validateMemberExist(event.memberId());
+        if (memberRepository.existsById(event.memberId())) {
+            throw new MemberNotFoundException();
+        }
     }
 }
 

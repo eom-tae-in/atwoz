@@ -1,11 +1,11 @@
 package com.atwoz.mission.domain.membermission;
 
 import com.atwoz.global.domain.BaseEntity;
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyChallengeMissionExistedException;
 import com.atwoz.mission.exception.membermission.exceptions.AlreadyDailyMissionExistedLimitException;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionNotFoundException;
+import com.atwoz.profile.domain.vo.Gender;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,8 +25,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static com.atwoz.member.domain.member.profile.physical.vo.Gender.FEMALE;
-import static com.atwoz.member.domain.member.profile.physical.vo.Gender.MALE;
+import static com.atwoz.profile.domain.vo.Gender.FEMALE;
+import static com.atwoz.profile.domain.vo.Gender.MALE;
 
 @Getter
 @EqualsAndHashCode(of = "id", callSuper = false)

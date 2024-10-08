@@ -2,10 +2,10 @@ package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.infrastructure.member.dto.InternalProfileFilterRequest;
-import com.atwoz.member.infrastructure.member.dto.MemberResponse;
-import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
-import java.util.List;
+import com.atwoz.member.domain.member.vo.Contact;
+import com.atwoz.member.infrastructure.member.dto.MemberAccountStatusResponse;
+import com.atwoz.member.infrastructure.member.dto.MemberContactInfoResponse;
+import com.atwoz.member.infrastructure.member.dto.MemberNotificationsResponse;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     private final MemberJpaRepository memberJpaRepository;
     private final MemberQueryRepository memberQueryRepository;
-    private final MemberJdbcRepository memberJdbcRepository;
 
     @Override
     public Member save(final Member member) {
@@ -24,84 +23,37 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findById(final Long id) {
-        return memberJpaRepository.findById(id);
+    public Optional<Member> findById(final Long memberId) {
+        return memberJpaRepository.findById(memberId);
     }
 
     @Override
-    public Optional<Member> findByPhoneNumber(final String phoneNumber) {
-        return memberJpaRepository.findByPhoneNumber(phoneNumber);
+    public MemberNotificationsResponse findMemberNotifications(final Long memberId) {
+        return memberQueryRepository.findMemberNotifications(memberId);
     }
 
     @Override
-    public Optional<Member> findByNickname(final String nickname) {
-        return memberJpaRepository.findByNickname(nickname);
+    public MemberAccountStatusResponse findMemberAccountStatus(final Long memberId) {
+        return memberQueryRepository.findMemberAccountStatus(memberId);
     }
 
     @Override
-    public MemberResponse findMemberWithId(final Long id) {
-        return memberQueryRepository.findMemberWithProfile(id);
+    public MemberContactInfoResponse findMemberContactInfo(final Long memberId) {
+        return memberQueryRepository.findMemberContactInfo(memberId);
     }
 
     @Override
-    public List<ProfileResponse> findTodayProfiles(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                                   final Long memberId) {
-        return memberJdbcRepository.findTodayProfiles(internalProfileFilterRequest, memberId);
+    public boolean existsById(final Long memberId) {
+        return memberJpaRepository.existsById(memberId);
     }
 
     @Override
-    public ProfileResponse findProfileByPopularity(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                                   final Long memberId) {
-        return memberQueryRepository.findProfileByPopularity(internalProfileFilterRequest, memberId);
+    public boolean existsByContact(final Contact contact) {
+        return memberJpaRepository.existsByContact(contact);
     }
 
     @Override
-    public ProfileResponse findProfileByTodayVisit(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                                   final Long memberId) {
-        return memberQueryRepository.findProfileByTodayVisit(internalProfileFilterRequest, memberId);
-    }
-
-    @Override
-    public ProfileResponse findNearbyProfile(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                             final Long memberId) {
-        return memberQueryRepository.findNearbyProfile(internalProfileFilterRequest, memberId);
-    }
-
-    @Override
-    public ProfileResponse findRecentProfile(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                             final Long memberId) {
-        return memberQueryRepository.findRecentProfile(internalProfileFilterRequest, memberId);
-    }
-
-    @Override
-    public ProfileResponse findProfileByReligion(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                                 final Long memberId) {
-        return memberQueryRepository.findProfileByReligion(internalProfileFilterRequest, memberId);
-    }
-
-    @Override
-    public ProfileResponse findProfileByHobbies(final InternalProfileFilterRequest internalProfileFilterRequest,
-                                                final Long memberId) {
-        return memberQueryRepository.findProfileByHobbies(internalProfileFilterRequest, memberId);
-    }
-
-    @Override
-    public boolean existsById(final Long id) {
-        return memberJpaRepository.existsById(id);
-    }
-
-    @Override
-    public boolean existsByPhoneNumber(final String phoneNumber) {
-        return memberJpaRepository.existsByPhoneNumber(phoneNumber);
-    }
-
-    @Override
-    public boolean existsByNickname(final String nickname) {
-        return memberJpaRepository.existsByNickname(nickname);
-    }
-
-    @Override
-    public void deleteById(final Long id) {
-        memberJpaRepository.deleteById(id);
+    public void deleteById(final Long memberId) {
+        memberJpaRepository.deleteById(memberId);
     }
 }

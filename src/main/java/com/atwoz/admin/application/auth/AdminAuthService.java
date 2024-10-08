@@ -2,7 +2,6 @@ package com.atwoz.admin.application.auth;
 
 import com.atwoz.admin.application.auth.dto.AdminAccessTokenResponse;
 import com.atwoz.admin.application.auth.dto.AdminLoginRequest;
-import com.atwoz.admin.application.auth.dto.AdminProfileSignUpRequest;
 import com.atwoz.admin.application.auth.dto.AdminSignUpRequest;
 import com.atwoz.admin.application.auth.dto.AdminTokenResponse;
 import com.atwoz.admin.domain.admin.Admin;
@@ -37,13 +36,12 @@ public class AdminAuthService {
     }
 
     private Admin createAdmin(final AdminSignUpRequest adminSignUpRequest) {
-        AdminProfileSignUpRequest adminProfileSignUpRequest = adminSignUpRequest.adminProfileSignUpRequest();
         return Admin.createWith(
                 adminSignUpRequest.email(),
                 adminSignUpRequest.password(),
                 adminSignUpRequest.confirmPassword(),
-                adminProfileSignUpRequest.name(),
-                adminProfileSignUpRequest.phoneNumber()
+                adminSignUpRequest.name(),
+                adminSignUpRequest.phoneNumber()
         );
     }
 

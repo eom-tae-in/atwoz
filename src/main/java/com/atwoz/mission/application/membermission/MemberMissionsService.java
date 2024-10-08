@@ -1,6 +1,5 @@
 package com.atwoz.mission.application.membermission;
 
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
 import com.atwoz.mission.domain.membermission.MemberMission;
 import com.atwoz.mission.domain.membermission.MemberMissions;
 import com.atwoz.mission.domain.membermission.MemberMissionsRepository;
@@ -8,6 +7,7 @@ import com.atwoz.mission.domain.mission.Mission;
 import com.atwoz.mission.domain.mission.MissionRepository;
 import com.atwoz.mission.exception.membermission.exceptions.MemberMissionsNotFoundException;
 import com.atwoz.mission.exception.mission.exceptions.MissionNotFoundException;
+import com.atwoz.profile.domain.vo.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
