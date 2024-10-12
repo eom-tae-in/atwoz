@@ -1,23 +1,18 @@
 package com.atwoz.survey.infrastructure.membersurvey;
 
-import com.atwoz.member.domain.member.profile.physical.vo.Gender;
+import com.atwoz.profile.domain.vo.Gender;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyAnswerResponse;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyQuestionResponse;
 import com.atwoz.survey.infrastructure.membersurvey.dto.MemberSurveyResponse;
 import com.atwoz.survey.infrastructure.membersurvey.dto.SurveySoulmateResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static com.atwoz.member.domain.member.QMember.member;
-import static com.atwoz.member.domain.member.QMemberProfile.memberProfile;
-import static com.atwoz.member.domain.member.profile.QProfile.profile;
-import static com.atwoz.member.domain.member.profile.physical.QPhysicalProfile.physicalProfile;
-import static com.atwoz.member.domain.member.profile.vo.QLocation.location;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
+import static com.atwoz.profile.domain.QProfile.profile;
 import static com.atwoz.survey.domain.membersurvey.QMemberSurvey.memberSurvey;
 import static com.atwoz.survey.domain.membersurvey.QMemberSurveys.memberSurveys1;
 import static com.querydsl.core.types.Projections.constructor;
@@ -47,11 +42,11 @@ public class MemberSurveysQueryRepository {
 
     private List<MemberSurveyAnswerResponse> convertMemberSurveys(final Long memberId) {
         return jpaQueryFactory.select(constructor(MemberSurveyAnswerResponse.class,
-                memberSurveys1.memberId,
-                memberSurvey.surveyId,
-                memberSurvey.questionId,
-                memberSurvey.answerNumber)
-        ).from(memberSurveys1)
+                        memberSurveys1.memberId,
+                        memberSurvey.surveyId,
+                        memberSurvey.questionId,
+                        memberSurvey.answerNumber)
+                ).from(memberSurveys1)
                 .join(memberSurveys1.memberSurveys, memberSurvey)
                 .where(memberSurveys1.memberId.eq(memberId))
                 .fetch();
@@ -70,16 +65,14 @@ public class MemberSurveysQueryRepository {
     }
 
     private Gender extractMemberGender(final Long memberId) {
-        return jpaQueryFactory.select(physicalProfile.gender)
-                .from(member)
-                .join(member.memberProfile, memberProfile)
-                .join(memberProfile.profile, profile)
-                .join(profile.physicalProfile, physicalProfile)
-                .where(member.id.eq(memberId))
-                .fetchOne();
+        return jpaQueryFactory.select(profile.physicalProfile.gender)
+                .from(profile)
+                .where(profile.memberId.eq(memberId))
+                .fetchFirst();
     }
 
-    private boolean isMatched(final List<MemberSurveyAnswerResponse> memberResponse, final List<MemberSurveyAnswerResponse> otherResponse) {
+    private boolean isMatched(final List<MemberSurveyAnswerResponse> memberResponse,
+                              final List<MemberSurveyAnswerResponse> otherResponse) {
         int matchedSurveyAnswer = 0;
         for (MemberSurveyAnswerResponse member : memberResponse) {
             for (MemberSurveyAnswerResponse other : otherResponse) {
@@ -97,20 +90,17 @@ public class MemberSurveysQueryRepository {
                 member.answerNumber().equals(other.answerNumber());
     }
 
-    private SurveySoulmateResponse convertSoulmateResponse(final Long id) {
+    private SurveySoulmateResponse convertSoulmateResponse(final Long memberId) {
+
         return jpaQueryFactory.select(constructor(SurveySoulmateResponse.class,
-                        member.id,
-                        member.nickname,
-                        location.city,
-                        location.sector,
-                        physicalProfile.age
-                ))
-                .from(member)
-                .join(member.memberProfile, memberProfile)
-                .join(memberProfile.profile, profile)
-                .join(profile.physicalProfile, physicalProfile)
-                .where(member.id.eq(id))
-                .fetchOne();
+                        profile.memberId,
+                        profile.nickname,
+                        profile.location.city,
+                        profile.location.sector,
+                        profile.physicalProfile.age
+                )).from(profile)
+                .where(profile.memberId.eq(memberId))
+                .fetchFirst();
     }
 
     public Optional<MemberSurveyResponse> findMemberSurvey(final Long memberId, final Long surveyId) {

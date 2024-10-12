@@ -3,15 +3,14 @@ package com.atwoz.memberlike.infrastructure;
 import com.atwoz.memberlike.domain.MemberLike;
 import com.atwoz.memberlike.domain.MemberLikeRepository;
 import com.atwoz.memberlike.infrastructure.dto.MemberLikeSimpleResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 public class MemberLikeFakeRepository implements MemberLikeRepository {
 
@@ -148,5 +147,11 @@ public class MemberLikeFakeRepository implements MemberLikeRepository {
                 .toList();
 
         return new PageImpl<>(responses, pageable, total);
+    }
+
+    public List<MemberLike> getMemberLikes() {
+        return map.values()
+                .stream()
+                .toList();
     }
 }

@@ -8,19 +8,17 @@ import com.atwoz.admin.ui.auth.support.resolver.AdminAuthArgumentResolver;
 import com.atwoz.admin.ui.auth.support.resolver.AdminRefreshTokenExtractionArgumentResolver;
 import com.atwoz.alert.application.AlertQueryService;
 import com.atwoz.alert.application.AlertService;
+import com.atwoz.hobby.application.HobbyQueryService;
+import com.atwoz.hobby.application.HobbyService;
 import com.atwoz.interview.application.interview.InterviewQueryService;
 import com.atwoz.interview.application.interview.InterviewService;
 import com.atwoz.interview.application.memberinterview.MemberInterviewsQueryService;
 import com.atwoz.interview.application.memberinterview.MemberInterviewsService;
+import com.atwoz.job.application.JobQueryService;
+import com.atwoz.job.application.JobService;
 import com.atwoz.member.application.auth.MemberAuthService;
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
-import com.atwoz.member.application.member.profile.hobby.HobbyQueryService;
-import com.atwoz.member.application.member.profile.hobby.HobbyService;
-import com.atwoz.member.application.member.profile.style.StyleQueryService;
-import com.atwoz.member.application.member.profile.style.StyleService;
-import com.atwoz.member.application.selfintro.SelfIntroQueryService;
-import com.atwoz.member.application.selfintro.SelfIntroService;
 import com.atwoz.member.domain.auth.JsonMapper;
 import com.atwoz.member.domain.auth.MemberTokenProvider;
 import com.atwoz.member.domain.member.MemberRepository;
@@ -37,6 +35,8 @@ import com.atwoz.mission.application.membermission.MemberMissionsService;
 import com.atwoz.mission.application.mission.MissionQueryService;
 import com.atwoz.mission.application.mission.MissionService;
 import com.atwoz.report.application.ReportService;
+import com.atwoz.selfintro.application.SelfIntroQueryService;
+import com.atwoz.selfintro.application.SelfIntroService;
 import com.atwoz.survey.application.membersurvey.MemberSurveysQueryService;
 import com.atwoz.survey.application.membersurvey.MemberSurveysService;
 import com.atwoz.survey.application.survey.SurveyService;
@@ -159,10 +159,10 @@ public class MockBeanInjection {
 
     // Style
     @MockBean
-    protected StyleService styleService;
+    protected JobService jobService;
 
     @MockBean
-    protected StyleQueryService styleQueryService;
+    protected JobQueryService jobQueryService;
 
     // Interview
     @MockBean

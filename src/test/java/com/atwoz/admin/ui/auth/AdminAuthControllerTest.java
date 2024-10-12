@@ -70,9 +70,8 @@ class AdminAuthControllerTest extends MockBeanInjection {
                                         fieldWithPath("email").description("이메일"),
                                         fieldWithPath("password").description("비밀번호"),
                                         fieldWithPath("confirmPassword").description("비밀번호 확인"),
-                                        fieldWithPath("adminProfileSignUpRequest").description("관리자 프로필 정보"),
-                                        fieldWithPath("adminProfileSignUpRequest.name").description("이름"),
-                                        fieldWithPath("adminProfileSignUpRequest.phoneNumber").description("전화번호")
+                                        fieldWithPath("name").description("이름"),
+                                        fieldWithPath("phoneNumber").description("전화번호")
                                 ),
                                 responseHeaders(
                                         headerWithName(SET_COOKIE).description("발급된 리프레쉬 토큰")

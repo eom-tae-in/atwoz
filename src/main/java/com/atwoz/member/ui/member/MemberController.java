@@ -2,28 +2,24 @@ package com.atwoz.member.ui.member;
 
 import com.atwoz.member.application.member.MemberQueryService;
 import com.atwoz.member.application.member.MemberService;
-import com.atwoz.member.application.member.dto.ProfileFilterRequest;
-import com.atwoz.member.application.member.dto.initial.MemberInitializeRequest;
-import com.atwoz.member.application.member.dto.update.MemberUpdateRequest;
-import com.atwoz.member.infrastructure.member.dto.MemberResponse;
-import com.atwoz.member.infrastructure.member.dto.ProfileResponse;
+import com.atwoz.member.application.member.dto.MemberAccountStatusPatchRequest;
+import com.atwoz.member.application.member.dto.MemberContactInfoDuplicationCheckResponse;
+import com.atwoz.member.application.member.dto.MemberContactInfoPatchRequest;
+import com.atwoz.member.application.member.dto.MemberNotificationsPatchRequest;
+import com.atwoz.member.infrastructure.member.dto.MemberAccountStatusResponse;
+import com.atwoz.member.infrastructure.member.dto.MemberContactInfoResponse;
+import com.atwoz.member.infrastructure.member.dto.MemberNotificationsResponse;
 import com.atwoz.member.ui.auth.support.AuthMember;
-import com.atwoz.member.ui.member.dto.TodayProfilesResponse;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,80 +29,58 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberQueryService memberQueryService;
 
-    @GetMapping("/{nickname}/existence")
-    public ResponseEntity<Void> checkMemberExists(@PathVariable final String nickname) {
-        memberQueryService.checkMemberExists(nickname);
+    // TODO: 회원 조회 기능
+    // TODO: 회원 정보 변경 기능
+
+    @GetMapping("/me/notifications")
+    public ResponseEntity<MemberNotificationsResponse> findMemberNotifications(@AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findMemberNotifications(memberId));
+    }
+
+    @GetMapping("/me/statuses/account")
+    public ResponseEntity<MemberAccountStatusResponse> findMemberAccountStatus(@AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findMemberAccountStatus(memberId));
+    }
+
+    @GetMapping("/me/contact-info")
+    public ResponseEntity<MemberContactInfoResponse> findMemberContactInfo(@AuthMember final Long memberId) {
+        return ResponseEntity.ok(memberQueryService.findMemberContactInfo(memberId));
+    }
+
+    @GetMapping("/{contactType}/{contactValue}/duplication")
+    public ResponseEntity<MemberContactInfoDuplicationCheckResponse> checkContactInfoDuplicated(
+            @PathVariable final String contactType,
+            @PathVariable final String contactValue
+    ) {
+        return ResponseEntity.ok(memberQueryService.checkContactInfoDuplicated(contactType, contactValue));
+    }
+
+    @PatchMapping("/me/notifications")
+    public ResponseEntity<Void> patchMemberNotifications(
+            @AuthMember final Long memberId,
+            @RequestBody @Valid final MemberNotificationsPatchRequest request
+    ) {
+        memberService.patchMemberNotifications(memberId, request);
         return ResponseEntity.ok()
                 .build();
     }
 
-    @PostMapping("/me")
-    public ResponseEntity<Void> initializeMember(@AuthMember final Long memberId,
-                                                 @Valid @RequestBody final MemberInitializeRequest memberInitializeRequest) {
-        memberService.initializeMember(memberId, memberInitializeRequest);
-        return ResponseEntity.status(CREATED)
+    @PatchMapping("/me/statuses/account")
+    public ResponseEntity<Void> patchMemberAccountStatus(
+            @AuthMember final Long memberId,
+            @RequestBody @Valid final MemberAccountStatusPatchRequest request
+    ) {
+        memberService.patchMemberAccountStatus(memberId, request);
+        return ResponseEntity.ok()
                 .build();
     }
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponse> findMember(@PathVariable final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findMember(memberId));
-    }
-
-    @GetMapping("/profiles/today")
-    public ResponseEntity<TodayProfilesResponse> findTodayProfiles(
-            @ModelAttribute final ProfileFilterRequest profileFilterRequest,
-            @AuthMember final Long memberId) {
-        List<ProfileResponse> todayProfiles = memberQueryService.findTodayProfiles(profileFilterRequest, memberId);
-        return ResponseEntity.ok(new TodayProfilesResponse(todayProfiles));
-    }
-
-    @GetMapping("/profiles/popularity")
-    public ResponseEntity<ProfileResponse> findProfileByPopularity(
-            @ModelAttribute final ProfileFilterRequest profileFilterRequest,
-            @AuthMember final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findProfileByPopularity(profileFilterRequest, memberId));
-    }
-
-    @GetMapping("/profiles/today-visit")
-    public ResponseEntity<ProfileResponse> findProfileByTodayVisit(
-            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
-            @AuthMember final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findProfileByTodayVisit(profileFilterRequest, memberId));
-    }
-
-    @GetMapping("/profiles/nearby")
-    public ResponseEntity<ProfileResponse> findNearbyProfile(
-            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
-            @AuthMember final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findNearbyProfile(profileFilterRequest, memberId));
-    }
-
-    @GetMapping("/profiles/recency")
-    public ResponseEntity<ProfileResponse> findRecentProfile(
-            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
-            @AuthMember final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findRecentProfile(profileFilterRequest, memberId));
-    }
-
-    @GetMapping("/profiles/religion")
-    public ResponseEntity<ProfileResponse> findProfileByReligion(
-            @ModelAttribute @Valid final ProfileFilterRequest profileFilterRequest,
-            @AuthMember final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findProfileByReligion(profileFilterRequest, memberId));
-    }
-
-    @GetMapping("/profiles/hobbies")
-    public ResponseEntity<ProfileResponse> findProfileByHobbies(
-            @ModelAttribute @Valid final ProfileFilterRequest request,
-            @AuthMember final Long memberId) {
-        return ResponseEntity.ok(memberQueryService.findProfileByHobbies(request, memberId));
-    }
-
-    @PatchMapping("/me")
-    public ResponseEntity<Void> updateMember(@AuthMember final Long memberId,
-                                             @Valid @RequestBody final MemberUpdateRequest memberUpdateRequest) {
-        memberService.updateMember(memberId, memberUpdateRequest);
+    @PatchMapping("/me/contact-info")
+    public ResponseEntity<Void> patchMemberContact(
+            @AuthMember final Long memberId,
+            @RequestBody @Valid final MemberContactInfoPatchRequest request
+    ) {
+        memberService.patchMemberContact(memberId, request);
         return ResponseEntity.ok()
                 .build();
     }

@@ -43,7 +43,7 @@ public class AdminAuthConfig implements WebMvcConfigurer {
         return new PathMatcherInterceptor(adminLoginValidCheckerInterceptor)
                 .excludePathPattern("/**", OPTIONS)
                 .addPathPatterns("/api/members/hobbies/**", GET, POST, PATCH, DELETE)
-                .addPathPatterns("/api/members/styles/**", GET, POST, PATCH, DELETE);
+                .addPathPatterns("/api/members/jobs/**", GET, POST, PATCH, DELETE);
     }
 
     @Override

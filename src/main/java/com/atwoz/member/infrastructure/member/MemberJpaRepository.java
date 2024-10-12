@@ -1,17 +1,20 @@
 package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
+import com.atwoz.member.domain.member.vo.Contact;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberJpaRepository extends JpaRepository<Member, Long> {
 
-    Optional<Member> findByPhoneNumber(String phoneNumber);
+    Member save(Member member);
 
-    Optional<Member> findByNickname(String nickname);
+    Optional<Member> findById(Long memberId);
 
-    boolean existsByPhoneNumber(String email);
+    boolean existsById(Long memberId);
 
-    boolean existsByNickname(String nickname);
+    boolean existsByContact(Contact contact);
+
+    void deleteById(Long memberId);
 }
 

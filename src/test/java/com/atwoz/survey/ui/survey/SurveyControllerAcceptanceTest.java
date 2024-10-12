@@ -1,11 +1,12 @@
 package com.atwoz.survey.ui.survey;
 
-import com.atwoz.member.domain.member.Member;
+import com.atwoz.admin.domain.admin.Admin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import static com.atwoz.admin.fixture.AdminFixture.관리자_생성;
 import static com.atwoz.survey.fixture.SurveyCreateRequestFixture.연애고사_필수_과목_질문_두개씩_생성_요청;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -14,12 +15,12 @@ class SurveyControllerAcceptanceTest extends SurveyControllerAcceptanceFixture {
 
     private static final String 연애고사_url = "/api/surveys";
 
-    private Member 관리자;
+    private Admin 관리자;
     private String 토큰;
 
     @BeforeEach
     void setup() {
-        관리자 = 회원_생성();
+        관리자 = 관리자_생성();
         토큰 = 토큰_생성(관리자);
     }
 

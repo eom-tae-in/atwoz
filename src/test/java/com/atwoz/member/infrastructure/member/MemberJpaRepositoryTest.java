@@ -1,9 +1,7 @@
 package com.atwoz.member.infrastructure.member;
 
 import com.atwoz.member.domain.member.Member;
-import com.atwoz.member.infrastructure.member.profile.hobby.HobbyJpaRepository;
-import com.atwoz.member.infrastructure.member.profile.style.StyleJpaRepository;
-import java.util.List;
+import com.atwoz.member.domain.member.vo.Contact;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -13,9 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
-import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
-import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -27,73 +22,45 @@ class MemberJpaRepositoryTest {
     @Autowired
     private MemberJpaRepository memberRepository;
 
-    @Autowired
-    private HobbyJpaRepository hobbyJpaRepository;
-
-    @Autowired
-    private StyleJpaRepository styleJpaRepository;
-
     private Member member;
 
+
+    // TODO: 이거 나중에 변경해야함
     @BeforeEach
     void setup() {
-        member = 회원_생성_취미목록_스타일목록(
-                List.of(취미_생성(hobbyJpaRepository, "hobby1", "code1")),
-                List.of(스타일_생성(styleJpaRepository, "style1", "code1"))
-        );
+        member = Member.createWithOAuth("01011111111");
         memberRepository.save(member);
     }
 
-    @Nested
-    class 회원_조회 {
+    @Test
+    void 회원을_저장한다() {
+        // given
+        Member createdMember = Member.createWithOAuth("01012345678");
 
-        @Test
-        void 아이디_값으로_회원을_찾는다() {
-            // given
-            Long memberId = member.getId();
+        // when
+        Member savedMember = memberRepository.save(createdMember);
 
-            // when
-            Optional<Member> result = memberRepository.findById(memberId);
-
-            // then
-            assertSoftly(softly -> {
-                softly.assertThat(result).isPresent();
-                softly.assertThat(result.get()).usingRecursiveComparison().isEqualTo(member);
-            });
-        }
-
-        @Test
-        void 전화번호_값으로_회원을_찾는다() {
-            // given
-            String phoneNumber = member.getPhoneNumber();
-
-            // when
-            Optional<Member> result = memberRepository.findByPhoneNumber(phoneNumber);
-
-            // then
-            assertSoftly(softly -> {
-                softly.assertThat(result).isPresent();
-                softly.assertThat(result.get()).usingRecursiveComparison().isEqualTo(member);
-            });
-        }
-
-        @Test
-        void 닉네임으로_회원을_찾는다() {
-            // given
-            String nickname = member.getNickname();
-
-            // when
-            Optional<Member> foundMember = memberRepository.findByNickname(nickname);
-
-            // then
-            assertSoftly(softly -> {
-                softly.assertThat(foundMember).isPresent();
-                softly.assertThat(foundMember.get())
-                        .usingRecursiveComparison()
-                        .isEqualTo(member);
-            });
-        }
+        // then
+        assertThat(savedMember).usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(createdMember);
     }
+
+    @Test
+    void 아이디_값으로_회원을_찾는다() {
+        // given
+        Long memberId = member.getId();
+
+        // when
+        Optional<Member> result = memberRepository.findById(memberId);
+
+        // then
+        assertSoftly(softly -> {
+            softly.assertThat(result).isPresent();
+            softly.assertThat(result.get()).usingRecursiveComparison().isEqualTo(member);
+        });
+    }
+
 
     @Nested
     class 회원_존재_확인 {
@@ -111,29 +78,16 @@ class MemberJpaRepositoryTest {
         }
 
         @Test
-        void 전화번호_값으로_회원의_존재를_확인한다() {
+        void 연락처_정보로_회원의_존재를_확인한다() {
             // given
-            String phoneNumber = member.getPhoneNumber();
+            Contact contact = member.getContact();
 
             // when
-            boolean result = memberRepository.existsByPhoneNumber(phoneNumber);
+            boolean result = memberRepository.existsByContact(contact);
 
             // then
             assertThat(result).isTrue();
         }
-
-        @Test
-        void 닉네임_값으로_회원의_존재를_확인한다() {
-            // given
-            String nickname = member.getNickname();
-
-            // when
-            boolean result = memberRepository.existsByNickname(nickname);
-
-            // then
-            assertThat(result).isTrue();
-        }
-
     }
 
     @Test

@@ -32,11 +32,13 @@ public class MemberAuthService {
         MemberInfoResponse memberInfoResponse = oAuthRequester.getMemberInfo(accessToken, provider);
         Member createdMember = Member.createWithOAuth(DEFAULT_PHONE_NUMBER);
         memberRepository.save(createdMember);
-        createdMember.updateVisitStatus();
+        createdMember.updateLastVisitDate();
         Events.raise(new AlertTokenCreatedEvent(createdMember.getId(), request.token()));
 
         return memberTokenProvider.createAccessToken(createdMember.getId());
     }
+
+    // TODO: test로 회원 가입할 수 있는 기능 추가 받는 데이터:
 
     //TODO: test를 위해 임시로 구현한 메서드입니다. 나중에 삭제해야합니다.
     public String testLogin(final TestLoginRequest request) {

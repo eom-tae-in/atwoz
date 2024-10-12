@@ -14,26 +14,18 @@ import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewUpdateResponse;
 import com.atwoz.interview.ui.memberinterview.dto.MemberInterviewsResponse;
 import com.atwoz.member.domain.member.Member;
 import com.atwoz.member.domain.member.MemberRepository;
-import com.atwoz.member.domain.member.profile.Hobby;
-import com.atwoz.member.domain.member.profile.HobbyRepository;
-import com.atwoz.member.domain.member.profile.Style;
-import com.atwoz.member.domain.member.profile.StyleRepository;
+import com.atwoz.member.fixture.member.회원_픽스처;
 import com.atwoz.member.infrastructure.auth.MemberJwtTokenProvider;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-import java.util.Optional;
 import static com.atwoz.interview.fixture.interview.InterviewFixture.인터뷰_타입_질문;
-import static com.atwoz.member.fixture.member.domain.MemberFixture.회원_생성_취미목록_스타일목록;
-import static com.atwoz.member.fixture.member.generator.HobbyGenerator.취미_생성;
-import static com.atwoz.member.fixture.member.generator.StyleGenerator.스타일_생성;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -52,29 +44,13 @@ public class MemberInterviewsControllerAcceptanceFixture extends IntegrationHelp
     private MemberRepository memberRepository;
 
     @Autowired
-    private HobbyRepository hobbyRepository;
-
-    @Autowired
-    private StyleRepository styleRepository;
-
-    @Autowired
     private InterviewRepository interviewRepository;
 
     @Autowired
     private MemberInterviewsRepository memberInterviewsRepository;
 
-    private List<Hobby> hobbies;
-
-    private List<Style> styles;
-
-    @BeforeEach
-    void init() {
-        hobbies = List.of(취미_생성(hobbyRepository, "hobby1", "code1"));
-        styles = List.of(스타일_생성(styleRepository, "style1", "code1"));
-    }
-
     protected Member 회원_생성() {
-        return memberRepository.save(회원_생성_취미목록_스타일목록(hobbies, styles));
+        return memberRepository.save(회원_픽스처.회원_생성());
     }
 
     protected String 토큰_생성(final Member member) {
