@@ -8,11 +8,11 @@ public interface JobJpaRepository extends JpaRepository<Job, Long> {
 
     Job save(Job job);
 
-    Optional<Job> findJobById(Long styleId);
+    Optional<Job> findJobById(Long jobId);
 
-    Optional<Job> findJobByName(String styleName);
+    Optional<Job> findJobByName(String jobName);
 
-    Optional<Job> findJobByCode(String styleCode);
+    Optional<Job> findJobByCode(String jobCode);
 
-    void deleteJobById(Long styleId);
+    void deleteJobById(Long jobId);
 }

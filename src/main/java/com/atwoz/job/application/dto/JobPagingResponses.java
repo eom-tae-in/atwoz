@@ -14,10 +14,6 @@ public record JobPagingResponses(
         int totalPages,
         long totalElements
 ) {
-
-    private static final int NEXT_PAGE = 1;
-    private static final int NO_MORE_PAGE = -1;
-
     public static JobPagingResponses of(
             final Page<JobPagingResponse> jobPagingResponses,
             final Pageable pageable,

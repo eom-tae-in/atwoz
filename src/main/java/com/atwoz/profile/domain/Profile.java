@@ -40,7 +40,6 @@ public class Profile extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // memberId로 member 간접 참조
     @Column(nullable = false)
     private Long memberId;
 

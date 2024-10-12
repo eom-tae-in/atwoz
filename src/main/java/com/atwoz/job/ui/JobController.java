@@ -41,13 +41,16 @@ public class JobController {
     }
 
     @GetMapping
-    public ResponseEntity<JobPagingResponses> findJobsWithPaging(@PageableDefault(sort = "id") final Pageable pageable) {
+    public ResponseEntity<JobPagingResponses> findJobsWithPaging(
+            @PageableDefault(sort = "id") final Pageable pageable) {
         return ResponseEntity.ok(jobQueryService.findJobsWithPaging(pageable));
     }
 
     @PatchMapping("/{jobId}")
-    public ResponseEntity<Void> updateJob(@PathVariable("jobId") final Long jobId,
-                                          @RequestBody @Valid final JobUpdateRequest jobUpdateRequest) {
+    public ResponseEntity<Void> updateJob(
+            @PathVariable("jobId") final Long jobId,
+            @RequestBody @Valid final JobUpdateRequest jobUpdateRequest
+    ) {
         jobService.updateJob(jobId, jobUpdateRequest);
         return ResponseEntity.ok()
                 .build();

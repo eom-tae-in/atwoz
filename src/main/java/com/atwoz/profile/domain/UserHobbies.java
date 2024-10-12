@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class UserHobbies {
 

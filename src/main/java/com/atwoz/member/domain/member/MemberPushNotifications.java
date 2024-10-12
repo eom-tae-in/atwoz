@@ -3,11 +3,13 @@ package com.atwoz.member.domain.member;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,14 +29,14 @@ public class MemberPushNotifications {
     private boolean isInterviewWritingRequestNotificationOn;
 
     public static MemberPushNotifications createWith() {
-        return new MemberPushNotifications(
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-        );
+        return MemberPushNotifications.builder()
+                .isLikeReceivedNotificationOn(false)
+                .isNewMessageNotificationOn(false)
+                .isProfileExchangeNotificationOn(false)
+                .isProfileImageChangeNotificationOn(false)
+                .isLongTimeLoLoginNotificationOn(false)
+                .isInterviewWritingRequestNotificationOn(false)
+                .build();
     }
 
     public void update(

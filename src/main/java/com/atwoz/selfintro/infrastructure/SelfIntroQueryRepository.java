@@ -64,7 +64,6 @@ public class SelfIntroQueryRepository {
                 .fetchFirst();
     }
 
-
     private BooleanBuilder applyFilterConditions(final SelfIntroFilterRequest request, final Gender foundGender) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 

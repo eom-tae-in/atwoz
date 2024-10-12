@@ -11,13 +11,13 @@ public class 직업_응답_픽스처 {
 
     public static class 직업_단건_조회_응답_픽스처 {
 
-        private static final String DEFAULT_STYLE_NAME = "style";
-        private static final String DEFAULT_STYLE_CODE = "code";
+        private static final String DEFAULT_JOB_NAME = "job";
+        private static final String DEFAULT_JOB_CODE = "code";
 
         public static JobSingleResponse 직업_단건_조회_응답_생성() {
             return new JobSingleResponse(
-                    DEFAULT_STYLE_NAME,
-                    DEFAULT_STYLE_CODE
+                    DEFAULT_JOB_NAME,
+                    DEFAULT_JOB_CODE
             );
         }
 
@@ -31,9 +31,9 @@ public class 직업_응답_픽스처 {
 
     public static class 직업_페이징_조회_응답_픽스처 {
 
-        private static final long DEFAULT_HOBBY_ID = 1L;
-        private static final String DEFAULT_STYLE_NAME = "style";
-        private static final String DEFAULT_STYLE_CODE = "code";
+        private static final long DEFAULT_JOB_ID = 1L;
+        private static final String DEFAULT_JOB_NAME = "job";
+        private static final String DEFAULT_JOB_CODE = "code";
         private static final int DEFAULT_NOW_PAGE = 0;
         private static final int DEFAULT_NEXT_PAGE = 1;
         private static final int DEFAULT_TOTAL_PAGES = 2;
@@ -41,9 +41,9 @@ public class 직업_응답_픽스처 {
 
         public static JobPagingResponse 직업_페이징_조회_응답_생성() {
             return new JobPagingResponse(
-                    DEFAULT_HOBBY_ID,
-                    DEFAULT_STYLE_NAME,
-                    DEFAULT_STYLE_CODE
+                    DEFAULT_JOB_ID,
+                    DEFAULT_JOB_NAME,
+                    DEFAULT_JOB_CODE
             );
         }
 

@@ -16,7 +16,7 @@ public class HobbyEventHandler {
     private final HobbyRepository hobbyRepository;
 
     @EventListener(ProfileFetchStartedEvent.class)
-    public void savePopupsTags(final ProfileFetchStartedEvent event) {
+    public void checkHobbyExists(final ProfileFetchStartedEvent event) {
         if (hobbyRepository.findHobbyByCode(event.hobbyCode()).isEmpty()) {
             throw new HobbyNotFoundException();
         }

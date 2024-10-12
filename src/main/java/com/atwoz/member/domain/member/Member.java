@@ -84,7 +84,7 @@ public class Member extends SoftDeleteBaseEntity {
 //                .build();
 //    }
 
-    // TODO: 회원 가입 및 로그인 진행 시 해당 메서드를 추가하여 최근 방문일을 갱싱해줘야 한다.
+    // TODO: 회원 가입 및 로그인 진행 시 해당 메서드를 추가하여 최근 방문일을 갱신해줘야 한다.
     public void updateLastVisitDate() {
         latestVisitDate = LocalDate.now();
     }
